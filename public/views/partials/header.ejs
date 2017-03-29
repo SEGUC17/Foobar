@@ -1,0 +1,94 @@
+<nav class="navbar navbar-fixed-top" style="margin: 0; background-color: #333">
+  <div class="container-fluid" style="margin: 0 5%">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">MET PORTFOLIO</a>
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false" style ="background-color:black;">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar" style="background-color:white"></span>
+        <span class="icon-bar" style="background-color:white"></span>
+        <span class="icon-bar" style="background-color:white"></span>
+      </button>
+
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <% if(user){ %>
+          <li><a href="/profile" ><span class="fa fa-user" style="margin-right:5px;"></span>Profile</a></li>
+          <li><a href="/logout" ><span class="fa fa-user" style="margin-right:5px;"></span>Logout</a></li>
+        <% }else{ %>
+          <li><a href="/login" ><span class="fa fa-user" style="margin-right:5px;"></span>Login</a></li>
+          <li><a href="/signup" ><span class="fa fa-user" style="margin-right:5px;"></span>Signup</a></li>
+        <%}%>
+        <form class="navbar-form navbar-right" role="search">
+            <div class="form-group">
+                <input type="text" class="form-control" name="search" placeholder="Search">
+            </div>
+            <button type="submit" class="btn btn-success">Search</button>
+        </form>
+
+      </ul>
+    </div>
+    <!-- /.navbar-collapse -->
+  </div>
+  <!-- /.container-fluid -->
+</nav>
+
+<!-- Dropdown code -->
+<!-- <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Features <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+              <li><a href="/blog">Blog</a></li>
+          </ul>
+        </li>
+        <br class="dropdown_br" style="display:none"> -->
+
+<style>
+    .navbar-default {
+        padding-left: 30px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        border: 0;
+        border-radius: 0 !important;
+        background: #333;
+    }
+
+    .navbar .navbar-brand {
+        text-transform: uppercase;
+        font-size: 1.5em;
+        text-decoration: none;
+        color: white;
+        transition: color 0.3s ease;
+        cursor: pointer;
+    }
+
+    .navbar .navbar-brand:hover {
+        color: #18bc9c;
+        transition: color 0.3s ease;
+    }
+
+    #bs-example-navbar-collapse-1 > ul.nav.navbar-nav.navbar-right > li > a{
+      background-color: inherit;
+      color: white;
+    }
+
+    #bs-example-navbar-collapse-1 > ul.nav.navbar-nav.navbar-right > li > a:hover{
+        color: #18bc9c;
+        transition: color 0.3s ease;
+        background: none;
+      }
+
+    * {
+        font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-weight: bolder;
+    }
+
+    .row {
+        margin: 0;
+    }
+
+</style>

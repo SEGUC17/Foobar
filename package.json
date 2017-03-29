@@ -1,0 +1,33 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Foobar",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt-nodejs": "latest",
+    "body-parser": "^1.16.1",
+    "connect-flash": "~0.1.1",
+    "cookie-parser": "~1.0.0",
+    "ejs": "^2.5.5",
+    "express": "^4.14.1",
+    "express-paginate": "^0.2.2",
+    "express-session": "~1.0.0",
+    "method-override": "~1.0.0",
+    "mongoose": "^4.8.2",
+    "mongoose-file": "latest",
+    "mongoose-pagination": "^1.0.0",
+    "morgan": "~1.0.0",
+    "multer": "latest",
+    "passport": "~0.1.17",
+    "passport-local": "~0.1.6",
+    "passport-facebook" : "~1.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
+  }
+}
