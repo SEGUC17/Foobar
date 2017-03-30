@@ -16,14 +16,14 @@ var uploads = path.join(uploads_base, "u");
 // define the schema for our user model
 var userSchema = mongoose.Schema({
 	name: String,
-	local: {
+	// local: {
 
-		email: {
-			type: String,
-			unique: true
-		},
-		password: String,
+	email: {
+		type: String,
+		unique: true
 	},
+	password: String,
+	// },
 	type: Number,
 	is_deleted: Boolean
 		//1 for admin, 2 for Student, 3 Service Provider

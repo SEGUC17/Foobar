@@ -1,7 +1,7 @@
 var path = require('path')
 var multer = require('multer')
 var crypto = require("crypto")
-
+var testController = require('./controllers/testController')
 var storage = multer.diskStorage({
   destination: 'public/uploads/',
   filename: function(req, file, cb) {
@@ -34,7 +34,9 @@ module.exports = function(app, passport) {
   });
 
 
-  // app.get('/', homeController.getAllStudents);
+  app.get('/', function(req, res) {
+    testController.createUser("name")
+  });
   // app.post('/profile', upload.single('work_img') , profileController.createWork);
   //
   // app.post('/changedp', upload.single('profile_img'), profileController.changedp);
