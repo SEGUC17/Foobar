@@ -12,7 +12,7 @@ var ServiceProviderSchema = mongoose.Schema({
   fields: [String],
   phone_number: String,
   is_blocked: Boolean,
-  is_deleted: Boolean
+  is_deleted: Boolean,
   first_login: Boolean
 
 });

@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var announcementSchema = mongoose.Schema({
 	title: String,
 	announcer_id: String,
-	content: Text,
+	content: String,
 	type: String
 });
 
