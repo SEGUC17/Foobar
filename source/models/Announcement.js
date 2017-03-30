@@ -5,7 +5,8 @@ var mongoose = require('mongoose');
 var announcementSchema = mongoose.Schema({
 	title: String,
 	announcer_id: String,
-	content: Text
+	content: Text,
+	type: String
 });
 
 // create the model for users and expose it to our app

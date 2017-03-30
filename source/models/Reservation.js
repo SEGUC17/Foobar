@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 
 // define the schema for our user model
 var reservationSchema = mongoose.Schema({
-	user_id: int,
+	user_id: Number,
 	offer_id: String,
 	service_provider_id: String,
 	reservation_date: Date,
