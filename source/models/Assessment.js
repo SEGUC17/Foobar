@@ -2,11 +2,11 @@
 const mongoose = require('mongoose');
 
 // define the schema for our user model
-const videoSchema = mongoose.Schema({
-	user_id: String,
-	title: String,
-	url: String
+const assessmentSchema = mongoose.Schema({
+  user_id: String,
+  sp_id: String,
+  rating: Number
 });
 
 // create the model for users and expose it to our app
-module.exports = mongoose.model('Video', videoSchema);
+module.exports = mongoose.model('Assessment', assessmentSchema);

@@ -22,8 +22,9 @@ app.set('view engine', 'ejs');
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.urlencoded({
-  extended: false
+  extended: true
 }));
+app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 
 // Required for Passport
@@ -57,4 +58,4 @@ app.use(function(req, res, next) {
 // Start the server
 app.listen(3000, function() {
   console.log("Magic happens on port 3000");
-})
+});
