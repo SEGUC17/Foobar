@@ -8,7 +8,11 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const mongoose = require('mongoose');
-const router = require('./source/routes/index');
+const indexRouter = require('./source/routes/index');
+const adminRouter = require('./source/routes/admin');
+const spRouter = require('./source/routes/sP');
+const studentRouter = require('./source/routes/student');
+const userRouter = require('./source/routes/user');
 
 const app = express();
 
@@ -17,7 +21,11 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
-app.use('/', router);
+app.use('/api/', indexRouter);
+app.use('/api/admins/', adminRouter);
+app.use('/api/sPs/', spRouter);
+app.use('/api/students/', studentRouter);
+app.use('/api/users/', userRouter);
 app.use(express.static('public'));
 
 // Configure app
@@ -41,7 +49,7 @@ require('./source/config/passport')(passport);
 
 const DB_URI = 'mongodb://localhost:27017/portfolio';
 mongoose.connect(DB_URI);
-// app.use(router);
+// app.use(indexRouter);
 
 // GlOBAL VARS
 // app.use(function(req, res, next) {
