@@ -13,11 +13,20 @@ const nodemailer = require('nodemailer'); //a dependency that sends an email to 
 let Offer = require('../models/Offer');
 let Student = require('../models/Student');
 // const application = require('../models/pendingSP');
-
+const jwt = require('../auth/jwt');
 
 const adminController = {
 
   approveOrDisapproveSP: function(req, res) { //approving or disapproving an applied SP
+    const token = req.headers['jwt-token'];
+
+    jwt.verify(token, function(decoded) {
+      console.log('Decoded =>', decoded)
+    });
+
+    return;
+
+
     var sP_id = req.body.id;
     //if approve is selected
     if (req.body.approve) {

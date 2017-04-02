@@ -19,9 +19,9 @@ module.exports = {
       }, secret));
     });
   },
-  verify: function(token) {
+  verify: function(token, cb) {
     jwt.verify(token, secret, function(err, decoded) {
-      console.log(decoded.isAdmin);
+      cb(decoded);
     });
   }
 };
