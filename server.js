@@ -8,6 +8,7 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const mongoose = require('mongoose');
+const router = require('./source/routes/index');
 
 const app = express();
 
@@ -15,6 +16,8 @@ app.use(bodyParser.urlencoded({
   extended: true,
 }));
 app.use(bodyParser.json());
+
+app.use('/', router);
 app.use(express.static('public'));
 
 // Configure app

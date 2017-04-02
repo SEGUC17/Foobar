@@ -10,10 +10,10 @@ const interestController = require('../controllers/interestController');
 //routes for admin user
 
 
-router.get('/', function(req, res) { //admin home page
-  // res.render('index');
-  console.log('admin homepage is here');
-});
+// router.get('/', function(req, res) { //admin home page
+//   // res.render('index');
+//   console.log('admin homepage is here');
+// });
 
 router.get('/announcements/view', announcementController.getAllAnnouncements); //viewing announcements
 
@@ -21,7 +21,7 @@ router.get('/pendingSPRequests/', pendingSPController.getAllPendingSP); //viewin
 
 router.post('/pendingSPRequests', adminController.approveOrDisapproveSP); //approving/disapproving pending sp requests
 
-router.get('/sP/:id', sPController.getSPProfile); //view a specific SP profile
+router.get('/sP/:id', sPController.getSPProfile); // view a specific SP profile
 
 router.get('/sPs/', sPController.getAllSPProfiles); //viewing all SP profiles
 
