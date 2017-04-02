@@ -13,7 +13,8 @@ const adminRouter = require('./source/routes/admin');
 const spRouter = require('./source/routes/sP');
 const studentRouter = require('./source/routes/student');
 const userRouter = require('./source/routes/user');
-
+// Testing
+const User = require('./source/models/User');
 const app = express();
 
 app.use(bodyParser.urlencoded({
@@ -60,6 +61,15 @@ mongoose.connect(DB_URI);
 //   // res.locals.username = req.username;
 //   next();
 // });
+
+// Testing
+
+new User({
+  name: 'ali',
+  password: 'foot',
+  type: 1,
+}).save();
+
 
 // Start the server
 app.listen(3000, function() {
