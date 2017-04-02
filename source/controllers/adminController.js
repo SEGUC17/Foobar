@@ -18,13 +18,13 @@ const jwt = require('../auth/jwt');
 const adminController = {
 
   approveOrDisapproveSP: function(req, res) { //approving or disapproving an applied SP
-    const token = req.headers['jwt-token'];
-
-    jwt.verify(token, function(decoded) {
-      console.log('Decoded =>', decoded)
-    });
-
-    return;
+    // const token = req.headers['jwt-token'];
+    //
+    // jwt.verify(token, function(decoded) {
+    //   console.log('Decoded =>', decoded)
+    // });
+    //
+    // return;
 
 
     var sP_id = req.body.id;

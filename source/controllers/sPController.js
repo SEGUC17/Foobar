@@ -1,56 +1,77 @@
 const SP = require('../models/ServiceProvider');
 const Announcement = require('../models/Announcement');
 const Review = require('../models/Review');
-const Video = require("../models/Video");
+const Video = require('../models/Video');
 const Reservation = require('../models/Reservation');
 const Assessment = require('../models/Assessment');
-
+const jwt = require('../auth/jwt');
 
 const spController = {
   postAnnouncement: function(req, res) {
-    const announcement = new Announcement(req.body);
-    announcement.announcer_id = req.user.id;
-    announcement.type = 'SPannouncement';
-
-    announcement.save(function(err, announcement) {
-      if (err) {
-        res.send(err.message);
+    const token = req.headers['jwt-token'];
+    jwt.verify(token, function(decoded) {
+      if (decoded.type == 3) {
+        let announcement = new Announcement({
+          title: req.body.title,
+          announcer_id: decoded.id,
+          content: req.body.content,
+          type: 'ServiceProvider',
+        }).save(function(err, announcement) {
+          if (err) {
+            res.json({
+              err: 'error',
+            });
+          } else {
+            console.log(announcement);
+          }
+        });
       } else {
-        console.log(announcement);
+        res.json({
+          err: 'not authorized',
+        });
       }
     });
   },
   viewReviews: function(req, res) {
-    const reviews = Review.find({
-      sp_id: req.user.id
-    }, function(err, reviews) {
-      if (err) {
-        res.send(err.message);
+    const token = req.headers['jwt-token'];
+    jwt.verify(token, function(decoded) {
+      if (decoded.type == 3) {
+        const reviews = Review.find({
+          sp_id: decoded.id,
+        }, function(err, reviews) {
+          if (err) {
+            res.send(err.message);
+          } else {
+            console.log(reviews);
+          }
+        });
       } else {
-        console.log(reviews);
+        res.json({
+          err: 'not authorized',
+        });
       }
     });
   },
   assessStudent: function(req, res) {
-    // req.params.id
-    const assessment = new Assessment();
-    assessment.sp_id = req.user.id;
-    Reservation.find({
-      service_provider_id: req.user.id,
-      user_id: req.params.id,
-    }, function(err, student) {
-      if (err) {
-        res.send(err.message);
-      } else {
-        assessment.user_id = req.params.id;
-        assessment.sp_id = req.user.id;
-        assessment.rating = req.body.rating;
-        assessment.save(function(err, assessment) {
+    const token = req.headers['jwt-token'];
+    jwt.verify(token, function(decoded) {
+      if (decoded.type === 3) {
+        const assessment = new Assessment({
+          sp_id: decoded.id,
+          user_id: req.params.id,
+          rating: req.body.rating,
+        }).save(function(err, assessment) {
           if (err) {
-            res.send(err.message);
+            res.json({
+              err: 'error',
+            });
           } else {
             console.log(assessment);
           }
+        });
+      } else {
+        res.json({
+          err: 'not authorized',
         });
       }
     });
@@ -62,7 +83,8 @@ const spController = {
         res.send(err.message);
       } else {
         //res.render('spProfiles', {profiles:profiles});
-        console.log('summary of SP profiles retrieved successfully');
+        console.log(
+          'summary of SP profiles retrieved successfully');
       }
     });
   },
@@ -81,7 +103,6 @@ const spController = {
         sPProfile: providerProfile
       });
     });
-
   },
   //method used to add a video to the database
   addVideoByURL: function(req, res) {
@@ -98,8 +119,6 @@ const spController = {
     newVideo.save();
 
   },
-
-
   //getting the embeded video
   getVideo: function(req, res) {
 
@@ -114,10 +133,7 @@ const spController = {
         }
       });
     };
-
-
   }
-
 };
 
 module.exports = spController;

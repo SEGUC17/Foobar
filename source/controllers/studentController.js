@@ -1,25 +1,45 @@
-let User = require('../models/User');
-let Offer = require('../models/Offer');
-let Reservation = require('../models/Reservation');
-let Skill = require('../models/Skill');
-let Tag = require('../models/Tag');
-let StudentInterest = require('../models/StudentInterest');
-let Review = require('../models/Review');
+const User = require('../models/User');
+const Offer = require('../models/Offer');
+const Reservation = require('../models/Reservation');
+const Skill = require('../models/Skill');
+const Tag = require('../models/Tag');
+const StudentInterest = require('../models/StudentInterest');
+const Review = require('../models/Review');
+const jwt = require('../auth/jwt');
+
 // const ServiceProvider = require('../models/ServiceProvider');
 
 const StudentController = {
   addReview: function(req, res) {
-    const review = new Review(req.body);
-    review.reviewer_id = req.user.id;
-    review.sp_id = req.body.id;
-
-    review.save(function(err, review) {
-      if (err) {
-        res.send(err.message);
-      } else {
-        console.log(review);
-      }
+    const token = req.headers['jwt-token'];
+    jwt.verify(token, function(decoded) {
+      console.log('Decoded =>', decoded);
+      console.log('id=>', decoded.id);
+      let review = new Review({
+        rating: req.body.rating,
+        reviewer_id: decoded.id,
+        content: req.body.content,
+        sp_id: req.params.id,
+      }).save(function(err, review) {
+        if (err) {
+          res.json({
+            err: 'error',
+          });
+        } else {
+          console.log(review);
+        }
+      });
     });
+    // const review = new Review(req.body);
+    // review.reviewer_id = req.user.id;
+    // review.sp_id = req.body.id;
+    // review.save(function(err, review) {
+    //   if (err) {
+    //     res.send(err.message);
+    //   } else {
+    //     console.log(review);
+    //   }
+    // });
   },
   search: function(req, res) {
     const search = new RegExp('^' + req.query.search + '$', "i")
@@ -80,7 +100,7 @@ const StudentController = {
         if (offer.due_date < Date.now) {
           Console.log("You can't register now");
         } else {
-          let reservation = new Reservation({
+          const reservation = new Reservation({
             user_id: req.user.id,
             offer_id: offer.id,
             service_provider_id: offer.sp_id,
@@ -149,7 +169,7 @@ const StudentController = {
               student_id: student.user_d
             }, function(err) {
               if (err) {
-                Console.log("Can't delete Student Interest");
+                Console.log("Can't deconste Student Interest");
               }
             });
 

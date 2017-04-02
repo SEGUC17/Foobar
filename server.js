@@ -1,5 +1,4 @@
 // Require Dependencies
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
@@ -14,7 +13,11 @@ const spRouter = require('./source/routes/sP');
 const studentRouter = require('./source/routes/student');
 const userRouter = require('./source/routes/user');
 // Testing
-const User = require('./source/models/User');
+// const User = require('./source/models/User');
+// const Review = require('./source/models/Review');
+// const Reservation = require('./source/models/Reservation');
+
+
 const app = express();
 
 app.use(bodyParser.urlencoded({
@@ -64,11 +67,26 @@ mongoose.connect(DB_URI);
 
 // Testing
 
-new User({
-  name: 'ali',
-  password: 'foot',
-  type: 1,
-}).save();
+// new User({
+//   name: 'willi',
+//   password: 'foot',
+//   type: 3,
+// }).save();
+//
+// new Review({
+//   rating: 10,
+//   sp_id: '58e11d35e7c4701649421877',
+// }).save();
+//
+// new Review({
+//   rating: 20,
+//   sp_id: '58e11d35e7c4701649421877',
+// }).save();
+//
+// new Reservation({
+//   user_id: 1,
+//   service_provider_id: '58e11d35e7c4701649421877',
+// }).save();
 
 
 // Start the server

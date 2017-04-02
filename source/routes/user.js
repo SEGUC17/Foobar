@@ -1,6 +1,6 @@
 const express = require('express');
 const jwt = require('../auth/jwt');
-
+const User = require('../models/User');
 
 const router = express.Router();
 
@@ -29,14 +29,32 @@ router.post('/login', function(req, res) {
   }, function(token) {
     if (!token) {
       res.status(404).json({
-        error: "Credentials not found"
+        error: 'Credentials not found',
       });
     } else {
       res.json({
-        token
+        token,
       });
     }
-  })
+  });
+});
+
+router.post('/signup', function(req, res) {
+  let user = new User({
+    name: req.body.username,
+    password: req.body.password,
+    email: req.body.email,
+    type: 2,
+    is_deleted: false,
+  }).save(function(err, user) {
+    if (err) {
+      res.json({
+        err: 'error',
+      });
+    } else {
+      console.log(user);
+    }
+  });
 });
 
 // module.exports = function() {
@@ -46,9 +64,6 @@ router.post('/login', function(req, res) {
 // LOGIN ===============================
 // =====================================
 // show the login form
-
-
-
 // app.get('/', homeController.getAllStudents);
 // app.post('/profile', upload.single('work_img') , profileController.createWork);
 //

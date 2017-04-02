@@ -15,7 +15,9 @@ module.exports = {
       }
 
       cb(jwt.sign({
-        role: user.type,
+        id: user.id,
+        name: user.name,
+        type: user.type,
       }, secret));
     });
   },
