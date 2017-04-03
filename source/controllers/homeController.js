@@ -19,7 +19,7 @@ let homeController = {
           // Return
           res.json("Studdent logged in");
         }
-      })
+      });
     } else if (user && user.type == 3) {
       SP.find({
         user_id: req.user.id
@@ -30,11 +30,11 @@ let homeController = {
           // Return
           res.json("Service Provider logged in");
         }
-      })
+      });
     }
   },
   viewOffers: function(req, res) {
-    const user = res.locals.user
+    const user = res.locals.user;
     if (user && user.type == 2) {
       SI.find({
         student_id: user.id
@@ -62,11 +62,11 @@ let homeController = {
                   // Return
                   res.json('Viewing offers');
                 }
-              })
+              });
             }
-          })
+          });
         }
-      })
+      });
     } else {
       Offer.find({}, {
         limit: 10
@@ -79,11 +79,11 @@ let homeController = {
             offers: offers
           });
         }
-      })
+      });
     }
 
   }
 
-}
+};
 
 module.exports = homeController;
