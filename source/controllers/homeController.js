@@ -6,10 +6,10 @@ let SP = require('../models/ServiceProvider');
 
 let homeController = {
   findProfile: function(req, res) {
-    var type = req.user.type;
-    if (type == 1) {
-      Console.log("Admin logged in");
-    } else if (type == 2) {
+    const user = res.locals.user;
+    if (user && user.type == 1) {
+      res.json("Admin logged in");
+    } else if (user && user.type == 2) {
       Student.find({
         user_id: req.user.id
       }, function(err, student) {
@@ -17,10 +17,10 @@ let homeController = {
           res.send(err.message);
         else {
           // Return
-          Console.log("Studdent logged in");
+          res.json("Studdent logged in");
         }
-      });
-    } else if (type == 3) {
+      })
+    } else if (user && user.type == 3) {
       SP.find({
         user_id: req.user.id
       }, function(err, sp) {
@@ -28,14 +28,14 @@ let homeController = {
           res.send(err.message);
         else {
           // Return
-          Console.log("Service Provider logged in");
+          res.json("Service Provider logged in");
         }
-      });
+      })
     }
   },
   viewOffers: function(req, res) {
-
-    if (user.type == 2) {
+    const user = res.locals.user
+    if (user && user.type == 2) {
       SI.find({
         student_id: user.id
       }, function(err, studentinterests) {
@@ -47,6 +47,7 @@ let homeController = {
               $in: studentinterests.interest_id
             }
           }, function(err, interests) {
+
             if (err)
               res.send(err.message);
             else {
@@ -59,14 +60,13 @@ let homeController = {
                   res.send(err.message);
                 else {
                   // Return
-                  Console.log("Viewing offers");
+                  res.json('Viewing offers');
                 }
-              });
+              })
             }
-          });
+          })
         }
-      });
-
+      })
     } else {
       Offer.find({}, {
         limit: 10
@@ -75,13 +75,15 @@ let homeController = {
           res.send(err.message);
         else {
           // Return
-          Console.log("Viewing offers");
+          res.json({
+            offers: offers
+          });
         }
-      });
+      })
     }
 
   }
 
-};
+}
 
 module.exports = homeController;

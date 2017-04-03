@@ -1,12 +1,13 @@
-// load all the things we need
-var LocalStrategy = require('passport-local').Strategy;
-var FacebookStrategy = require('passport-facebook').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
+const FacebookStrategy = require('passport-facebook').Strategy;
 
 // load up the user model
-var User = require('../models/User');
+const User = require('../models/User');
+const Student = require('../models/Student');
+const StudentInterest = require('../models/StudentInterest');
 
 // load the auth variables
-var configAuth = require('./auth');
+const configAuth = require('./auth');
 
 // expose this function to our app using module.exports
 module.exports = function(passport) {
@@ -136,13 +137,52 @@ module.exports = function(passport) {
             newUser.local.email = email;
             newUser.local.password = newUser.generateHash(
               password);
+            newUser.type = 2;
+
+            var newStudent = new Student();
+            newStudent.user_id = newUser.id;
+            newStudent.university = req.body.university;
+            newStudent.address = req.body.address;
+            newStudent.birthdate = req.body.birthdate;
+            newStudent.description = req.body.description;
+            newStudent.is_deleted = false;
+
+            const interests = req.body.interests;
+
+            if (interests) {
+              for (var i = 0; i < interests.length; i++) {
+                var newInterset = new StudentInterest({
+                  student_id: newUser.id,
+                  interest_id: interests[i]
+                });
+              }
+
+              newInterset.save(function(err) {
+                if (err)
+                  res.json("Student interest saving error ");
+              })
+            };
+
+            // do your updates here
+            if (req.file) {
+              newUser.profileimg.name = req.file.filename;
+              newUser.profileimg.path = req.file.path;
+              newUser.profileimg.size = req.file.size;
+            }
 
             // save the user
             newUser.save(function(err) {
               if (err)
                 throw err;
-              return done(null, newUser);
+              else {
+                newStudent.save(function(err) {
+                  if (err)
+                    throw err;
+                  return done(null, newUser);
+                });
+              }
             });
+
           }
 
         });
@@ -176,13 +216,11 @@ module.exports = function(passport) {
 
         // if no user is found, return the message
         if (!user)
-          return done(null, false, req.flash('loginMessage',
-            'No user found.')); // req.flash is the way to set flashdata using connect-flash
+          return done(null, false); // req.flash is the way to set flashdata using connect-flash
 
         // if the user is found but the password is wrong
         if (!user.validPassword(password))
-          return done(null, false, req.flash('loginMessage',
-            'Oops! Wrong password.')); // create the loginMessage and save it to session as flashdata
+          return done(null, false); // create the loginMessage and save it to session as flashdata
 
         // all is well, return successful user
         return done(null, user);
