@@ -8,7 +8,10 @@ const Assessment = require('../models/Assessment');
 
 const spController = {
   postAnnouncement: function(req, res) {
-    const announcement = new Announcement(req.body);
+    // const announcement = new Announcement(req.body);
+    const announcement = new Announcement();
+    announcement.title = req.body.title;
+    announcement.content = req.body.content;
     announcement.announcer_id = req.user.id;
     announcement.type = 'SPannouncement';
 
@@ -16,6 +19,7 @@ const spController = {
       if (err) {
         res.send(err.message);
       } else {
+        res.json("Ay Haga")
         console.log(announcement);
       }
     });
@@ -62,24 +66,25 @@ const spController = {
         res.send(err.message);
       } else {
         //res.render('spProfiles', {profiles:profiles});
+        res.json(profiles);
         console.log('summary of SP profiles retrieved successfully');
       }
     });
-  },
+  }, 
 
   getSPProfile: function(req, res) { //viewing a specific SP profile
     var query = {
-      user_id: req.body.id
+      user_id: req.params.id //Recently Changed to Params 
     };
 
     SP.findOne(query, function(err, providerProfile) {
       if (err) console.log(err);
 
       console.log(req);
-
-      res.render('spProfile', {
-        sPProfile: providerProfile
-      });
+      res.json(providerProfile);
+      // res.render('spProfile', {
+      //   sPProfile: providerProfile
+    
     });
 
   },

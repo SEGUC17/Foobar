@@ -43,7 +43,10 @@ const adminController = {
         is_deleted: false
       });
 
-      newUser.save(); //saving user instance
+      newUser.save(function(err, userSuccess){
+        if(err)
+          res.send(err);
+      }); //saving user instance
 
       //creating new SP account
       var newSP = new SP({
@@ -53,9 +56,12 @@ const adminController = {
         is_deleted: false
       });
 
-      newSP.save(); //saving SP instance
+      newSP.save(function(err, sPSuccess){
+        if(err)
+          res.send(err);
+      }); //saving SP instance
 
-
+      res.send('Removed him from PendingSP Collection and Added to user collection as: ' + newUser + "and to the SP collection as: " + newSP);
       // create reusable transporter object using the default SMTP transport
       let transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -94,6 +100,7 @@ const adminController = {
         upsert: true,
         new: true
       }, function(err, sP) {
+        res.send('Disapproved successfully ' + sP);
         console.log(sP);
       });
     }

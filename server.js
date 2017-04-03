@@ -1,6 +1,6 @@
 //Require Dependencies
 var express = require('express');
-var router = require('./source/routes');
+//var router = require('./source/routes');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var flash = require('connect-flash');
@@ -38,8 +38,22 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-require('./source/routes.js')(app, passport);
+require('./source/routes/user.js')(app, passport);
 require('./source/config/passport')(passport);
+
+var routes = require('./source/routes/index');
+var user = require('./source/routes/user');
+var admin = require('./source/routes/admin');
+var student = require('./source/routes/student');
+var sP = require('./source/routes/sP');
+
+
+app.use('/',routes);
+app.use('/user',user);
+app.use('/admin',admin);
+app.use('/student',student);
+app.use('/sP',sP);
+
 
 mongoose.connect(DB_URI);
 // app.use(router);

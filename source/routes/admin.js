@@ -25,9 +25,9 @@ router.get('/sP/:id', sPController.getSPProfile); //view a specific SP profile
 
 router.get('/sPs/', sPController.getAllSPProfiles); //viewing all SP profiles
 
-router.post('sP/:id/reviews', reviewController.deleteReview); //deleting a review
+router.post('/sP/:id/reviews', reviewController.deleteReview); //deleting a review
 
-router.post('addInterest', interestController.addInterest); //adding an interest option
+router.post('/addInterest', interestController.addInterest); //adding an interest option
 
 router.post('/admin', adminController.addAdmin); // admin can add another admin
 

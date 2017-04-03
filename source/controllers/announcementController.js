@@ -11,7 +11,9 @@ let announcementController = {
         res.send(err.message);
 
         console.log("error");
-      } else {
+      } else{
+      //Updated 
+              res.json(announcements);
         console.log('announcements retrieved successfully');
         // res.render('viewAnnouncements', {announcements:announcements});
       }
