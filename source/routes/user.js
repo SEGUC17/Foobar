@@ -1,7 +1,7 @@
 var path = require('path');
 var multer = require('multer');
 var crypto = require("crypto");
-
+// for doing images uploads
 var storage = multer.diskStorage({
   destination: 'public/uploads/',
   filename: function(req, file, cb) {
@@ -34,16 +34,6 @@ module.exports = function(app, passport) {
   });
 
 
-  // app.get('/', homeController.getAllStudents);
-  // app.post('/profile', upload.single('work_img') , profileController.createWork);
-  //
-  // app.post('/changedp', upload.single('profile_img'), profileController.changedp);
-  //
-  //
-  // app.get('/portfolio/:id', portfolioController.getAllWorks);
-
-  // process the login form
-  // app.post('/login', do all our passport stuff here);
 
   // =====================================
   // SIGNUP ==============================
@@ -67,11 +57,6 @@ module.exports = function(app, passport) {
       // res.redirect('/profile');
     });
 
-  // app.post('/login', passport.authenticate('local-login', {
-  //   successRedirect: '/profile', // redirect to the secure profile section
-  //   failureRedirect: '/login', // redirect back to the signup page if there is an error
-  //   failureFlash: true // allow flash messages
-  // }));
 
   app.post('/login',
     passport.authenticate('local-login'),
@@ -97,19 +82,13 @@ module.exports = function(app, passport) {
       failureRedirect: '/'
     }));
 
-  // process the signup form
-  // app.post('/signup', do all our passport stuff here);
+
 
   // =====================================
   // PROFILE SECTION =====================
   // =====================================
-  // we will want this protected so you have to be logged in to visit
-  // we will use route middleware to verify this (the isLoggedIn function)
-  // app.get('/profile', isLoggedIn, profileController.getAllWorks)
 
-  // =====================================
   // LOGOUT ==============================
-  // =====================================
   app.get('/logout', function(req, res) {
     req.logout();
     res.redirect('/');

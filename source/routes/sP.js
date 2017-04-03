@@ -6,6 +6,8 @@ const offerController = require('../controllers/offerController');
 const sPController = require('../controllers/sPController');
 const multer = require('multer');
 const crypto = require("crypto");
+
+//using multer to upload images to sp profile
 const storage = multer.diskStorage({ //specifying storage path for images
   destination: 'public/uploads/',
   filename: function(req, file, cb) {
