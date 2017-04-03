@@ -1,6 +1,7 @@
 var path = require('path');
 var multer = require('multer');
 var crypto = require("crypto");
+
 var storage = multer.diskStorage({
   destination: 'public/uploads/',
   filename: function(req, file, cb) {
@@ -58,17 +59,28 @@ module.exports = function(app, passport) {
   });
 
   //process the signup form
-  app.post('/signup', passport.authenticate('local-signup', {
-    successRedirect: '/profile', // redirect to the secure profile section
-    failureRedirect: '/signup', // redirect back to the signup page if there is an error
-    failureFlash: true // allow flash messages
-  }));
+  app.post('/signup', passport.authenticate('local-signup'),
+    function(req, res) {
+      // If this function gets called, authentication was successful.
+      // `req.user` contains the authenticated user.
+      res.send("Signup was successful!");
+      // res.redirect('/profile');
+    });
 
-  app.post('/login', passport.authenticate('local-login', {
-    successRedirect: '/profile', // redirect to the secure profile section
-    failureRedirect: '/login', // redirect back to the signup page if there is an error
-    failureFlash: true // allow flash messages
-  }));
+  // app.post('/login', passport.authenticate('local-login', {
+  //   successRedirect: '/profile', // redirect to the secure profile section
+  //   failureRedirect: '/login', // redirect back to the signup page if there is an error
+  //   failureFlash: true // allow flash messages
+  // }));
+
+  app.post('/login',
+    passport.authenticate('local-login'),
+    function(req, res) {
+      // If this function gets called, authentication was successful.
+      // `req.user` contains the authenticated user.
+      res.send(req.user);
+      // res.redirect('/profile');
+    });
 
   // =====================================
   // FACEBOOK ROUTES =====================
