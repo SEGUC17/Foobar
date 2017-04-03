@@ -1,4 +1,4 @@
-let Interest = require("../models/Interests");
+let Interests = require("../models/Interests");
 
 let interestController = {
 
@@ -11,6 +11,7 @@ let interestController = {
       name: name
     });
     newInterest.save();
+    res.json(name);
   }
 
 };

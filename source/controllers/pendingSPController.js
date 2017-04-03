@@ -8,10 +8,11 @@ let pendingSPController = {
 
       if (err) { //if error occurred
         res.send(err.message);
-
+        
         console.log("error");
       } else {
         //  res.render('viewPendingSP', {pendingSP:pendingSP});
+        res.json(pendingSP);
         console.log('pending SP requests retrieved successfully');
       }
     });
