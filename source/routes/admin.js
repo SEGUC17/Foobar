@@ -12,7 +12,7 @@ const interestController = require('../controllers/interestController');
 
 router.get('/', function(req, res) { //admin home page
   // res.render('index');
-  console.log('admin homepage is here');
+  res.send('admin homepage is here');
 });
 
 router.get('/announcements/view', announcementController.getAllAnnouncements); //viewing announcements
