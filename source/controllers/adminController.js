@@ -43,8 +43,8 @@ const adminController = {
         is_deleted: false
       });
 
-      newUser.save(function(err, userSuccess){
-        if(err)
+      newUser.save(function(err, userSuccess) {
+        if (err)
           res.send(err);
       }); //saving user instance
 
@@ -56,12 +56,14 @@ const adminController = {
         is_deleted: false
       });
 
-      newSP.save(function(err, sPSuccess){
-        if(err)
+      newSP.save(function(err, sPSuccess) {
+        if (err)
           res.send(err);
       }); //saving SP instance
 
-      res.send('Removed him from PendingSP Collection and Added to user collection as: ' + newUser + "and to the SP collection as: " + newSP);
+      res.send(
+        'Removed him from PendingSP Collection and Added to user collection as: ' +
+        newUser + "and to the SP collection as: " + newSP);
       // create reusable transporter object using the default SMTP transport
       let transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -227,9 +229,9 @@ const adminController = {
                   found = true;
                   break;
                 }
-              };
+              }
             }
-          })
+          });
 
           if (found) {
             sp.is_blocked = true;
@@ -239,20 +241,19 @@ const adminController = {
 
           sp.save(function(err, sp) {
             if (err) {
-              res.send(err.message)
+              res.send(err.message);
               Console.log(err);
             } else {
               // Return
               Console.log("Deleted");
             }
-          })
+          });
         }
-      })
+      });
     } else {
       Console.log("You don't have accesss");
     }
   },
-
   addAdmin: function(req, res) {
     User.find({
       local: {
@@ -279,47 +280,30 @@ const adminController = {
     });
   },
   deleteStudent: function(req, res) {
-      if (user.type == 1) { // Checking if admin
-        Student.findOne({
-          id: req.params.sp_id
-        }, function(err, student) {
-          if (err)
-            res.send(err.message);
-          else {
+    if (user.type == 1) { // Checking if admin
+      Student.findOne({
+        id: req.params.sp_id
+      }, function(err, student) {
+        if (err)
+          res.send(err.message);
+        else {
 
-            student.is_deleted = true;
-            student.save(function(err, sp) {
-              if (err) {
-                res.send(err.message);
-                console.log(err);
-              } else {
-                // Return
-                Console.log("Deleted");
-              }
-            });
-          }
-        });
-      } else {
-        Console.log("You don't have accesss");
-      }
+          student.is_deleted = true;
+          student.save(function(err, sp) {
+            if (err) {
+              res.send(err.message);
+              console.log(err);
+            } else {
+              // Return
+              Console.log("Deleted");
+            }
+          });
+        }
+      });
+    } else {
+      Console.log("You don't have accesss");
     }
-    // approve : function(sp_id){
-    //   var tempMap = [];
-    //   var n =0;
-    //       application.find([], function(err, application) {
-    //
-    //
-    //           application.forEach(function(application) {
-    //
-    //             tempMap[n] = application;
-    //   n++;
-    //           });
-    // res.send(tempMap);
-    //
-    //         });
-    //
-    //
-    // }
+  }
 
 
 

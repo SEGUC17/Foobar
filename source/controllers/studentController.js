@@ -8,6 +8,32 @@ let Review = require('../models/Review');
 // const ServiceProvider = require('../models/ServiceProvider');
 
 const StudentController = {
+
+
+
+  approveReservation: function(req, res) {
+
+    Reservation.findOne({
+      id: req.params.id
+    }, function(err, reservation) {
+      if (err)
+        res.send(err.message);
+      else {
+        reservation.status = 1;
+        reservation.save(function(err, reservation) {
+          if (err) {
+            res.send(err.message);
+            console.log(err);
+          } else {
+            res.send("Approved successfully");
+          }
+        });
+      }
+
+    });
+  },
+
+
   addReview: function(req, res) {
     const review = new Review(req.body);
     review.reviewer_id = req.user.id;
@@ -29,7 +55,7 @@ const StudentController = {
     }, function(err, tagsarray) {
       if (err)
         res.send(err.message);
-    })
+    });
 
     Offer.find({
       $and: [{
@@ -57,7 +83,7 @@ const StudentController = {
           //Render offers
         }
       }
-    })
+    });
   },
   seeProgress: function(req, res) {
     Skill.find({
@@ -77,34 +103,38 @@ const StudentController = {
       if (err)
         res.send(err.message);
       else {
-        if (offer.due_date < Date.now) {
+        if (offer.due_date < Date.now()) {
           Console.log("You can't register now");
         } else {
-          let reservation = new Reservation({
-            user_id: req.user.id,
-            offer_id: offer.id,
-            service_provider_id: offer.sp_id,
-            reservation_date: Date.now(),
-            status: 2
-          });
-          reservation.save(function(err, reservation) {
-            if (err) {
-              res.send(err.message);
-              console.log(err);
-            } else {
-              offer.slots_available = offer.slots_available - 1;
-              offer.save(function(err, reservation) {
-                if (err) {
-                  res.send(err.message);
-                  console.log(err);
-                } else {
-                  res.json({
-                    message: "yo"
-                  });
-                }
-              });
-            }
-          });
+          if (offer.slots_available > 0) {
+            const reservation = new Reservation({
+              user_id: req.user.id,
+              offer_id: offer.id,
+              service_provider_id: offer.sp_id,
+              reservation_date: Date.now(),
+              status: 2
+            });
+            reservation.save(function(err, reservation) {
+              if (err) {
+                res.send(err.message);
+                console.log(err);
+              } else {
+                offer.slots_available = offer.slots_available - 1;
+                offer.save(function(err, reservation) {
+                  if (err) {
+                    res.send(err.message);
+                    console.log(err);
+                  } else {
+                    res.json({
+                      message: "yo"
+                    });
+                  }
+                });
+              }
+            });
+          } else {
+            Console.log("There are no places in this course");
+          }
         }
       }
     });
@@ -120,10 +150,10 @@ const StudentController = {
           user_id: user.id
         }, function(err, student) {
           //Render
-          Console.log("Found the hoe.");
+          console.log("Found the hoe.");
+
         });
       }
-
     });
   },
   editStudent: function(req, res) {
