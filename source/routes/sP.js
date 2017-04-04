@@ -27,7 +27,7 @@ var upload = multer({
 
 router.get('/', function(req, res) { //SP home page
   // res.render('index');
-  console.log('SP homepage is here');
+  res.send('SP homepage is here');
 });
 
 router.get('/announcements/view', announcementController.getAllAnnouncements); //viewing announcements
