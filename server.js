@@ -16,7 +16,6 @@ var app = express();
 
 
 
-app.set('view engine', 'ejs');
 
 // Configure app
 app.use(morgan('dev')); // log every request to the console
@@ -41,15 +40,21 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 require('./source/routes/user.js')(app, passport);
 require('./source/config/passport')(passport);
 
-var routes = require('./source/routes/index');
+app.get('/', function(req, res) {
+  res.send('Homepage is here');
+});
+
+// var routes = require('./source/routes/index'); // Causes passport.authenticate error
+
 var user = require('./source/routes/user');
 var admin = require('./source/routes/admin');
 var student = require('./source/routes/student');
 var sP = require('./source/routes/sP');
 
 
-app.use('/',routes);
-app.use('/user',user);
+// app.use('/',routes); // Causes passport.authenticate error
+
+app.use('/',user);
 app.use('/admin',admin);
 app.use('/student',student);
 app.use('/sP',sP);

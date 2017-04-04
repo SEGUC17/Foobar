@@ -1,7 +1,7 @@
 var path = require('path');
 var multer = require('multer');
 var crypto = require("crypto");
-// for doing images uploads
+// Image upload
 var storage = multer.diskStorage({
   destination: 'public/uploads/',
   filename: function(req, file, cb) {
@@ -48,25 +48,37 @@ module.exports = function(app, passport) {
     });
   });
 
-  //process the signup form
-  app.post('/signup', passport.authenticate('local-signup'),
-    function(req, res) {
-      // If this function gets called, authentication was successful.
-      // `req.user` contains the authenticated user.
-      res.send("Signup was successful!");
-      // res.redirect('/profile');
-    });
 
+  app.post('/signup', function(req, res, next) {
+    passport.authenticate('local-signup', function(err, user, info) {
+      if (err) { res.send(err); }
+      if (!user) { 
+        res.send(info.message); 
+      }else{
+        res.send("Signup was successful!");
+      }
+    })(req, res, next);
+  });
 
-  app.post('/login',
-    passport.authenticate('local-login'),
-    function(req, res) {
-      // If this function gets called, authentication was successful.
-      // `req.user` contains the authenticated user.
-      res.send("Login successful!");
-      res.send(req.user);
-      // res.redirect('/profile');
-    });
+  app.post('/login', function(req, res, next) {
+    passport.authenticate('local-login', function(err, user, info) {
+      if (err) { res.send(err); }
+      if (!user) { 
+        res.send(info.message); 
+      } else{
+        res.send(user);
+      }
+    })(req, res, next);
+  });
+
+  // app.post('/login',
+  //   passport.authenticate('local-login'),
+  //   function(req, res) {
+  //     // If this function gets called, authentication was successful.
+  //     // `req.user` contains the authenticated user.
+  //     res.send(req.user);
+  //     // res.redirect('/profile');
+  //   });
 
   // =====================================
   // FACEBOOK ROUTES =====================
