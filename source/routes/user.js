@@ -79,7 +79,6 @@ module.exports = function(app, passport) {
     res.send(req.user);
   });
 
-};
 
   // app.post('/login',
   //   passport.authenticate('local-login'),
