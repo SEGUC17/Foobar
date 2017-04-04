@@ -60,16 +60,26 @@ module.exports = function(app, passport) {
     })(req, res, next);
   });
 
-  app.post('/login', function(req, res, next) {
-    passport.authenticate('local-login', function(err, user, info) {
-      if (err) { res.send(err); }
-      if (!user) { 
-        res.send(info.message); 
-      } else{
-        res.send(user);
-      }
-    })(req, res, next);
+  // app.post('/login', function(req, res, next) {
+  //   passport.authenticate('local-login', function(err, user, info) {
+  //     if (err) { res.send(err); }
+  //     if (!user) { 
+  //       res.send(info.message); 
+  //     } else{
+  //       res.send(user);
+  //     }
+  //   })(req, res, next);
+  // });
+
+ app.post('/login',
+  passport.authenticate('local-login'),
+  function(req, res) {
+    // If this function gets called, authentication was successful.
+    // `req.user` contains the authenticated user.
+    res.send(req.user);
   });
+
+};
 
   // app.post('/login',
   //   passport.authenticate('local-login'),
