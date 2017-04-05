@@ -110,7 +110,7 @@ module.exports = function(app, passport) {
 
   app.get('/admin/reviewdata', adminController.reviewDataAnalysis); // review data analysis
 
-  app.post('/admin/adminAnnouncement', adminController.adminPostAnnouncement); // admin can post announcements
+  app.post('/admin/adminAnnouncement', isLoggedIn, adminController.adminPostAnnouncement); // admin can post announcements
 
 
 
@@ -123,29 +123,29 @@ module.exports = function(app, passport) {
 
   app.get('/sp/announcements/view', announcementController.getAllAnnouncements); //viewing announcements
 
-  app.post('/sp/announcements/post', sPController.postAnnouncement); //posting announcements
+  app.post('/sp/announcements/post', isLoggedIn, sPController.postAnnouncement); //posting announcements
 
-  app.get('/sp/reviews/view', sPController.viewReviews); //viewing reviews
+  app.get('/sp/reviews/view', isLoggedIn, sPController.viewReviews); //viewing reviews
 
-  app.post('/sp/students/assess/:id', sPController.assessStudent); // service provider assessing student
+  app.post('/sp/students/assess/:id', isLoggedIn, sPController.assessStudent); // service provider assessing student
 
-  app.get('/sp/reservations/view', reservationController.getReservations); //viewing his reservations
+  app.get('/sp/reservations/view', isLoggedIn, reservationController.getReservations); //viewing his reservations
 
-  app.post('/sp/offers/create', offerController.createOffer); //posting a new offer
+  app.post('/sp/offers/create', isLoggedIn, offerController.createOffer); //posting a new offer
 
   // app.post('/images/upload', upload.single('image'), sPController.uploadImage); //adding an image to his profile
 
-  app.post('/sp/videos/upload', sPController.addVideoByURL);
+  app.post('/sp/videos/upload', isLoggedIn, sPController.addVideoByURL);
 
   //Student
 
-  app.get('/student/profile', homeController.findProfile);
+  app.get('/student/profile', isLoggedIn, homeController.findProfile);
 
   app.get('/announcements/view', announcementController.getAllAnnouncements); //viewing announcements
 
-  app.post('/serviceproviders/add/:id', studentController.addReview); // student can add review for ServiceProvider
+  app.post('/serviceproviders/add/:id', isLoggedIn, studentController.addReview); // student can add review for ServiceProvider
 
-  app.get('/reservations/view', reservationController.getReservations); //viewing his reservations
+  app.get('/student/reservations/view', isLoggedIn, reservationController.getReservations); //viewing his reservations
 
   app.get('/sP/:id', sPController.getSPProfile); //viewing a specific SP profile
 
@@ -157,9 +157,9 @@ module.exports = function(app, passport) {
 
   app.post('/student/offers/:id', studentController.applyOffer); // Student could apply for an offer
 
-  app.get('/student/', homeController.viewOffers); // Student can view offers
+  app.get('/student/', isLoggedIn, homeController.viewOffers); // Student can view offers
 
-  app.post('/sP/apply', pendingSPController.apply); // service provider can apply
+  app.post('/sP/apply', pendingSPController.Apply); // service provider can apply
 
 
 };
