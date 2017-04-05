@@ -170,14 +170,20 @@ const StudentController = {
           if (err)
             res.send(err.message);
           else {
-            user.name = req.body.name;
-            student.university = req.body.university;
-            student.address = req.body.address;
-            student.birthdate = req.body.birthdate;
-            student.description = req.body.description;
+            // user.name = req.body.name;
+            // student.university = req.body.university;
+            // student.address = req.body.address;
+            // student.birthdate = req.body.birthdate;
+            // student.description = req.body.description;
+
+            var name = req.body.name;
+            var university = req.body.university;
+            var address = req.body.address;
+            var birthdate = req.body.birthdate;
+            var description = req.body.description;
 
             StudentInterest.remove({
-              student_id: student.user_d
+              student_id: student.user_id
             }, function(err) {
               if (err) {
                 Console.log("Can't delete Student Interest");
@@ -186,7 +192,7 @@ const StudentController = {
 
             for (var i = 0; i < Interests.length; i++) {
               var newInterset = new StudentInterest({
-                student_id: newUser.id,
+                student_id: user.id,
                 interest_id: Interests[i]
               });
 
@@ -197,19 +203,41 @@ const StudentController = {
               });
             }
 
-            user.save(function(err) {
+            User.update({id:user.id}, {name:name}, function(err, u1){
               if (err)
-                console.log('error');
-              else {
-                student.save(function(err) {
-                  if (err)
-                    console.log('error');
-                  else {}
-                  // Render
-
-                });
-              }
+            res.send(err.message);
+          else {
+            console.log('uname updated');
+          }
             });
+            Student.update({id:user.id}, {
+              university:university, 
+              address:address,
+              birthdate:birthdate,
+              description:description
+            }, function(err, student1) {
+          if (err)
+            res.send(err.message);
+          else {
+            console.log('student updated');
+          }
+        });
+
+
+
+            // user.save(function(err) {
+            //   if (err)
+            //     console.log('error');
+            //   else {
+            //     student.save(function(err) {
+            //       if (err)
+            //         console.log('error');
+            //       else {}
+            //       // Render
+
+            //     });
+            //   }
+            // });
 
           }
         });
