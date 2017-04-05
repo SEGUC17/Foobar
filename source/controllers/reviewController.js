@@ -8,7 +8,7 @@ let reviewController = {
     Review.findByIdAndRemove(review_id, function(err, review) {
       if (err)
         res.send(err);
-      else{
+      else {
         res.send("Deleted this review: " + review);
         console.log('review deleted');
       }

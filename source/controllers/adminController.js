@@ -17,6 +17,7 @@ let Student = require('../models/Student');
 
 const adminController = {
 
+
   approveOrDisapproveSP: function(req, res) { //approving or disapproving an applied SP
     var sP_id = req.body.id;
     //if approve is selected
@@ -27,21 +28,19 @@ const adminController = {
       var phone_number = req.body.phone_number;
       var description = req.body.description;
       var password = generatePassword();
-
-      //removing the pending sP instance
       PendingSP.findByIdAndRemove(sP_id, function(err) {
         if (err)
           res.send(err);
       });
 
       //creating new user since he is approved
-      var newUser = new User({
-        name: name,
-        email: email,
-        password: password,
-        type: 3,
-        is_deleted: false
-      });
+      var newUser = new User();
+
+      newUser.name = name;
+      newUser.type = 3;
+      newUser.is_deleted = false;
+      newUser.local.email = email;
+      newUser.local.password = password;
 
       newUser.save(function(err, userSuccess) {
         if (err)
