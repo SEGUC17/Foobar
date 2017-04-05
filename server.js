@@ -15,8 +15,6 @@ var DB_URI = "mongodb://localhost:27017/portfolio";
 var app = express();
 
 
-
-
 // Configure app
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
@@ -37,27 +35,12 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-require('./source/routes/user.js')(app, passport);
+require('./source/routes.js')(app, passport);
 require('./source/config/passport')(passport);
 
 app.get('/', function(req, res) {
   res.send('Homepage is here');
 });
-
-// var routes = require('./source/routes/index'); // Causes passport.authenticate error
-
-var user = require('./source/routes/user');
-var admin = require('./source/routes/admin');
-var student = require('./source/routes/student');
-var sP = require('./source/routes/sP');
-
-
-// app.use('/',routes); // Causes passport.authenticate error
-
-app.use('/',user);
-app.use('/admin',admin);
-app.use('/student',student);
-app.use('/sP',sP);
 
 
 mongoose.connect(DB_URI);
