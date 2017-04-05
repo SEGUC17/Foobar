@@ -8,7 +8,7 @@ let pendingSPController = {
 
       if (err) { //if error occurred
         res.send(err.message);
-        
+
         console.log("error");
       } else {
         //  res.render('viewPendingSP', {pendingSP:pendingSP});
@@ -28,7 +28,7 @@ let pendingSPController = {
     pending.email = req.body.email;
     pending.phone_number = req.body.phone_number;
     pending.description = req.body.description;
-    pending.is_declined = 'false';
+    pending.is_declined = false;
     // name : 'alaa',
     // email :'hey',
     // phone_number : 121,
