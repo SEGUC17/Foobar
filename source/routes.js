@@ -155,11 +155,11 @@ module.exports = function(app, passport) {
 
   app.post('/student/:id', studentController.editStudent); // Student could edit his profile
 
-  app.post('/offers/:id', studentController.applyOffer); // Student could apply for an offer
+  app.post('/student/offers/:id', studentController.applyOffer); // Student could apply for an offer
 
-  app.get('/student', homeController.viewOffers); // Student can view offers
+  app.get('/student/', homeController.viewOffers); // Student can view offers
 
-  app.post('/sp/apply', pendingSPController.apply); // service provider can apply
+  app.post('/sP/apply', pendingSPController.apply); // service provider can apply
 
 
 };
