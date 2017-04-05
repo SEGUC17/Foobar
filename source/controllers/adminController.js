@@ -17,6 +17,7 @@ let Student = require('../models/Student');
 
 const adminController = {
 
+
   approveOrDisapproveSP: function(req, res) { //approving or disapproving an applied SP
     var sP_id = req.body.id;
     //if approve is selected
@@ -27,21 +28,19 @@ const adminController = {
       var phone_number = req.body.phone_number;
       var description = req.body.description;
       var password = generatePassword();
-
-      //removing the pending sP instance
       PendingSP.findByIdAndRemove(sP_id, function(err) {
         if (err)
           res.send(err);
       });
 
       //creating new user since he is approved
-      var newUser = new User({
-        name: name,
-        email: email,
-        password: password,
-        type: 3,
-        is_deleted: false
-      });
+      var newUser = new User();
+
+      newUser.name = name;
+      newUser.type = 3;
+      newUser.is_deleted = false;
+      newUser.local.email = email;
+      newUser.local.password = password;
 
       newUser.save(function(err, userSuccess) {
         if (err)
@@ -108,42 +107,38 @@ const adminController = {
     }
 
   },
-  sortByFrequencyAndRemoveDuplicates: function(array) {
-    let frequency = {},
-      value = 0;
+  sortByFrequencyAndFilter: function(myArray) {
+    var newArray = [];
+    var freq = {};
 
-    // compute frequencies of each value
-    for (var i = 0; i < array.length; i++) {
-      value = array[i];
-      if (value in frequency) {
-        frequency[value]++;
-      } else {
-        frequency[value] = 1;
-      }
+    //Count Frequency of Occurances
+    var i = myArray.length - 1;
+    for (var i; i > -1; i--) {
+      var value = myArray[i];
+      freq[value] == null ? freq[value] = 1 : freq[value]++;
     }
 
-    // make array from the frequency object to de-duplicate
-    var uniques = [];
-    for (value in frequency) {
-      uniques.push(value);
+    //Create Array of Filtered Values
+    for (var value in freq) {
+      newArray.push(value);
     }
 
-    // sort the uniques array in descending order by frequency
-    function compareFrequency(a, b) {
-      return frequency[b] - frequency[a];
+    //Define Sort Function and Return Sorted Results
+    function compareFreq(a, b) {
+      return freq[b] - freq[a];
     }
 
-    return uniques.sort(compareFrequency);
+    return newArray.sort(compareFreq);
   },
 
   adminPostAnnouncement: function(req, res) {
 
-
+    const user = res.locals.user;
 
     announcement = new Announcement({
-      title: 'Test',
-      announcer_id: 1,
-      content: 'Hello world',
+      title: req.body.title,
+      announcer_id: user.id,
+      content: req.body.content,
       type: 'Admin'
     });
 
@@ -159,49 +154,45 @@ const adminController = {
     });
   },
   reviewDataAnalysis: function(req, res) {
+
     var userMap = [];
+    var tempInterest = [];
     var k = 0;
-    interest.find([], function(err, interests) {
+    var x = 0;
+
+    StudentInterest.find([], function(err, interests) {
 
 
-      interests.forEach(function(interest) {
+      interests.forEach(function(StudentInterest) {
 
-        userMap[k] = interest.name;
+        userMap[k] = StudentInterest.interest_id;
         k++;
       });
-
-      AdminController.sortByFrequencyAndRemoveDuplicates(userMap);
-      var least = userMap[userMap.length - 1];
+      interest.find([], function(err, inter) {
 
 
-      var count = 1;
-      var tempCount = 0;
-      var popular = userMap[0];
-      console.log(userMap[0]);
-      var min = 0;
-      var temp = 0;
-      for (var i = 0; i < (userMap.length); i++) {
+        userMap.forEach(function(stud) {
+          inter.forEach(function(interest) {
 
-        temp = userMap[i];
-        tempCount = 0;
-      }
+            if (stud == interest._id) {
 
-      for (var j = 1; j < userMap.length; j++) {
-        if (temp === userMap[j])
-          tempCount++;
-
-      }
-      if (tempCount > count) {
-        popular = temp;
-        count = tempCount;
-      }
+              tempInterest[x] = interest.name;
+              x++;
+            }
+          });
+        });
+        var temp = adminController.sortByFrequencyAndFilter(
+          tempInterest);
+        most = temp[0];
+        least = temp[temp.length - 1];
+        res.send('Most Frequent Interest is ' + ">>" + most +
+          " --  " +
+          "The following is the Interests frequency sorted descendengly" +
+          ">>>" + temp + "-----" +
+          "The least frequent interest is " + " " + least);
 
 
-
-      res.send('Most Frequent Interest is ' + ">>" + popular + " --  " +
-        "The following is the Interests frequency sorted descendengly" +
-        ">>>" + userMap + "-----" + "The least frequent interest is " +
-        " " + least);
+      });
     });
 
 
