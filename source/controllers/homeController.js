@@ -6,7 +6,7 @@ let SP = require('../models/ServiceProvider');
 
 let homeController = {
   findProfile: function(req, res) {
-    const user = res.locals.user;
+    const user = req.user;
     if (user && user.type == 1) {
       res.json("Admin logged in");
     } else if (user && user.type == 2) {
@@ -17,7 +17,10 @@ let homeController = {
           res.send(err.message);
         else {
           // Return
-          res.json("Studdent logged in");
+          res.json({
+            message: "Student logged in",
+            user: user
+          });
         }
       });
     } else if (user && user.type == 3) {
@@ -31,6 +34,8 @@ let homeController = {
           res.json("Service Provider logged in");
         }
       });
+    } else{
+      res.send("No user logged in");
     }
   },
   viewOffers: function(req, res) {
