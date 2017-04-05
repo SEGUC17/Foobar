@@ -154,7 +154,7 @@ const adminController = {
       }
     });
   },
-  review_data_analysis: function(req, res) {
+  reviewDataAnalysis: function(req, res) {
 
     var userMap = [];
     var tempInterest = [];

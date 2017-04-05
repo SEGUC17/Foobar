@@ -1,24 +1,26 @@
 // Requiremenets
-const announcementController = require('../source/controllers/announcementController');
+const announcementController = require(
+  '../source/controllers/announcementController');
 const pendingSPController = require('../source/controllers/pendingSPController');
 const adminController = require('../source/controllers/adminController');
 const reviewController = require('../source/controllers/reviewController');
 const sPController = require('../source/controllers/sPController');
 const interestController = require('../source/controllers/interestController');
-const reservationController = require('../source/controllers/reservationController');
+const reservationController = require(
+  '../source/controllers/reservationController');
 const offerController = require('../source/controllers/offerController');
 const studentController = require('../source/controllers/studentController');
 const homeController = require('../source/controllers/homeController');
 
 var path = require('path');
-var multer  = require('multer');
+var multer = require('multer');
 var crypto = require("crypto");
 
 // For Uploading Pictures
 var storage = multer.diskStorage({
   destination: 'public/uploads/',
-  filename: function (req, file, cb) {
-    crypto.pseudoRandomBytes(16, function (err, raw) {
+  filename: function(req, file, cb) {
+    crypto.pseudoRandomBytes(16, function(err, raw) {
       if (err) return cb(err)
 
       cb(null, raw.toString('hex') + path.extname(file.originalname))
@@ -26,50 +28,62 @@ var storage = multer.diskStorage({
   }
 })
 
-var upload = multer({ storage: storage });
+var upload = multer({
+  storage: storage
+});
 
 module.exports = function(app, passport) {
 
-    // =====================================
-    // LOGIN ===============================
-    // =====================================
+  // =====================================
+  // LOGIN ===============================
+  // =====================================
 
-    // show the login form
-    app.get('/login', function(req, res) {
-        // render the page and pass in any flash data if it exists
-        res.render('login.ejs', { message: req.flash('loginMessage'), pagetitle: "Login", user : req.user }); 
+  // show the login form
+  app.get('/login', function(req, res) {
+    // render the page and pass in any flash data if it exists
+    res.render('login.ejs', {
+      message: req.flash('loginMessage'),
+      pagetitle: "Login",
+      user: req.user
     });
+  });
 
-    // show the signup form
-    app.get('/signup', function(req, res) {
-        // render the page and pass in any flash data if it exists
-        res.render('signup.ejs', { message: req.flash('signupMessage'), pagetitle: "Signup", user : req.user });
+  // show the signup form
+  app.get('/signup', function(req, res) {
+    // render the page and pass in any flash data if it exists
+    res.render('signup.ejs', {
+      message: req.flash('signupMessage'),
+      pagetitle: "Signup",
+      user: req.user
     });
+  });
 
-    //process the signup form
-    app.post('/signup', function(req, res, next) {
-        passport.authenticate('local-signup', function(err, user, info) {
-          if (err) { res.send(err); }
-          if (!user) { 
-            res.send(info.message); 
-          }else{
-            res.send("Signup was successful!");
-          }
-        })(req, res, next);
-      });
+  //process the signup form
+  app.post('/signup', function(req, res, next) {
+    passport.authenticate('local-signup', function(err, user, info) {
+      if (err) {
+        res.send(err);
+      }
+      if (!user) {
+        res.send(info.message);
+      } else {
+        res.send("Signup was successful!");
+      }
+    })(req, res, next);
+  });
 
-    //process the login form
-    app.post('/login', passport.authenticate('local-login'), function(req, res) {
-      // If this function gets called, authentication was successful.
-      // `req.user` contains the authenticated user.
-      res.send(req.user);
-    });
+  //process the login form
+  app.post('/login', passport.authenticate('local-login'), function(req, res) {
+    // If this function gets called, authentication was successful.
+    // `req.user` contains the authenticated user.
+    res.send(req.user);
+  });
 
-    //destroy user session
-    app.get('/logout', function(req, res) {
-        req.logout();
-        res.redirect('/');
-    });
+  //destroy user session
+  app.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+  });
 
 
   //ADMIN FUNCTIONS
@@ -94,7 +108,13 @@ module.exports = function(app, passport) {
 
   app.delete('/admin/admin/sp/:id', adminController.deleteSP); // admin can delete serviceprovider
 
-// Service Provider
+  app.get('/admin/reviewdata', adminController.reviewDataAnalysis); // review data analysis
+
+  app.post('/admin/adminAnnouncement', adminController.adminPostAnnouncement); // admin can post announcements
+
+
+
+  // Service Provider
 
   app.get('/sp', function(req, res) { //SP home page
     // res.render('index');
@@ -113,11 +133,11 @@ module.exports = function(app, passport) {
 
   app.post('/sp/offers/create', offerController.createOffer); //posting a new offer
 
-// app.post('/images/upload', upload.single('image'), sPController.uploadImage); //adding an image to his profile
+  // app.post('/images/upload', upload.single('image'), sPController.uploadImage); //adding an image to his profile
 
   app.post('/sp/videos/upload', sPController.addVideoByURL);
 
-//Student
+  //Student
 
   app.get('/student/profile', homeController.findProfile);
 
@@ -139,15 +159,17 @@ module.exports = function(app, passport) {
 
   app.get('/student', homeController.viewOffers); // Student can view offers
 
+  app.post('/sp/apply', pendingSPController.apply); // service provider can apply
+
 
 };
 
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
 
-    // if user is authenticated in the session, carry on 
-    if (req.isAuthenticated())
-        return next();
-    // if they aren't redirect them to the home page
-    res.redirect('/');
+  // if user is authenticated in the session, carry on
+  if (req.isAuthenticated())
+    return next();
+  // if they aren't redirect them to the home page
+  res.redirect('/');
 }
