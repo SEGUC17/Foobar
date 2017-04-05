@@ -35,11 +35,12 @@ const StudentController = {
 
 
   addReview: function(req, res) {
-    const review = new Review(req.body);
-    review.reviewer_id = req.user.id;
-    review.sp_id = req.body.id;
+    const user = req.user;
+    const review = new Review({
+      reviewer_id: user.id,
+      sp_id = req.body.id,
 
-    review.save(function(err, review) {
+    }).save(function(err, review) {
       if (err) {
         res.send(err.message);
       } else {
