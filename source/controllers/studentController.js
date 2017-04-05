@@ -5,6 +5,8 @@ let Skill = require('../models/Skill');
 let Tag = require('../models/Tag');
 let StudentInterest = require('../models/StudentInterest');
 let Review = require('../models/Review');
+let Student = require('../models/Student');
+let Interests = require('../models/Interests');
 // const ServiceProvider = require('../models/ServiceProvider');
 
 const StudentController = {
