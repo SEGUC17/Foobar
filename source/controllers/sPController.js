@@ -12,7 +12,7 @@ const spController = {
     const announcement = new Announcement({
       title: req.body.title,
       content: req.body.content,
-      announcer_id = user.id,
+      announcer_id: user.id,
       type: 'SPannouncement'
 
     }).save(function(err, announcement) {
@@ -81,6 +81,7 @@ const spController = {
   },
   //method used to add a video to the database
   addVideoByURL: function(req, res) {
+
     var user_id = req.user.id;
     var title = req.body.title;
     var url = req.body.videoURL;

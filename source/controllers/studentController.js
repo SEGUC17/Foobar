@@ -38,7 +38,7 @@ const StudentController = {
     const user = req.user;
     const review = new Review({
       reviewer_id: user.id,
-      sp_id = req.body.id,
+      sp_id: req.body.id,
 
     }).save(function(err, review) {
       if (err) {
