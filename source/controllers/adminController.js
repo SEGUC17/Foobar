@@ -5,7 +5,7 @@ let Admin = require('../models/User');
 let SP = require('../models/ServiceProvider');
 let PendingSP = require('../models/PendingSP');
 let User = require('../models/User');
-var generatePassword = require('password-generator'); // a dependency that generates random password
+const generatePassword = require('password-generator'); // a dependency that generates random password
 // 'use strict';
 const nodemailer = require('nodemailer'); //a dependency that sends an email to user
 // const user = require('../models/User');
