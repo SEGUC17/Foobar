@@ -62,12 +62,12 @@ module.exports = function(app, passport) {
   app.post('/signup', function(req, res, next) {
     passport.authenticate('local-signup', function(err, user, info) {
       if (err) {
-        res.send(err);
+        res.json(err);
       }
       if (!user) {
-        res.send(info.message);
+        res.json(info.message);
       } else {
-        res.send("Signup was successful!");
+        res.json("Signup was successful!");
       }
     })(req, res, next);
   });
@@ -76,7 +76,7 @@ module.exports = function(app, passport) {
   app.post('/login', passport.authenticate('local-login'), function(req, res) {
     // If this function gets called, authentication was successful.
     // `req.user` contains the authenticated user.
-    res.send(req.user);
+    res.json(req.user);
   });
 
   //destroy user session
@@ -119,7 +119,7 @@ module.exports = function(app, passport) {
 
   app.get('/sp', function(req, res) { //SP home page
     // res.render('index');
-    res.send('SP homepage is here');
+    res.json('SP homepage is here');
   });
 
   app.get('/sp/announcements/view', announcementController.getAllAnnouncements); //viewing announcements

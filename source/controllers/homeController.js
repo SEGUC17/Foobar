@@ -18,7 +18,7 @@ let homeController = {
         user_id: req.user.id
       }, function(err, student) {
         if (err)
-          res.send(err.message);
+          res.json(err.message);
         else {
           // Return
           res.json({
@@ -32,14 +32,14 @@ let homeController = {
         user_id: req.user.id
       }, function(err, sp) {
         if (err)
-          res.send(err.message);
+          res.json(err.message);
         else {
           // Return
           res.json("Service Provider logged in");
         }
       });
-    } else{
-      res.send("No user logged in");
+    } else {
+      res.json("No user logged in");
     }
   },
   viewOffers: function(req, res) {
@@ -49,7 +49,7 @@ let homeController = {
         student_id: user.id
       }, function(err, studentinterests) {
         if (err)
-          res.send(err.message);
+          res.json(err.message);
         else {
           Interest.find({
             id: {
@@ -58,7 +58,7 @@ let homeController = {
           }, function(err, interests) {
 
             if (err)
-              res.send(err.message);
+              res.json(err.message);
             else {
               Offer.find({
                 field: {
@@ -66,7 +66,7 @@ let homeController = {
                 }
               }, function(err, offers) {
                 if (err)
-                  res.send(err.message);
+                  res.json(err.message);
                 else {
                   // Return
                   res.json('Viewing offers');
@@ -81,7 +81,7 @@ let homeController = {
         limit: 10
       }, function(err, offers) {
         if (err)
-          res.send(err.message);
+          res.json(err.message);
         else {
           // Return
           res.json({
@@ -92,54 +92,57 @@ let homeController = {
     }
 
   },
-  resetPassword: function(req, res){
+  resetPassword: function(req, res) {
     var email = req.body.email;
     var password = generatePassword();
     User.findOne({
-          'local.email': email
-        }, function(err, user) {
-          // if there are any errors, return the error
-          if (err)
-            res.send(err);
-          else //a user is found with the submitted email
-          { 
-              User.findByIdAndUpdate(user.id, {
-                $set: {
-                  'local.password': user.generateHash(password)
-                }
-              }, {
-                safe: true,
-                upsert: true,
-                new: true
-              }, function(err, newUser) {
-                res.send('Password resetted successfully to ' + password + ' , and an email was sent to the user with the new password.');
-                console.log(newUser);
-              });
+      'local.email': email
+    }, function(err, user) {
+      // if there are any errors, return the error
+      if (err)
+        res.json(err);
+      else //a user is found with the submitted email
+      {
+        User.findByIdAndUpdate(user.id, {
+          $set: {
+            'local.password': user.generateHash(password)
           }
+        }, {
+          safe: true,
+          upsert: true,
+          new: true
+        }, function(err, newUser) {
+          res.json('Password resetted successfully to ' + password +
+            ' , and an email was sent to the user with the new password.'
+          );
+          console.log(newUser);
         });
-        let transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'foobar.se@gmail.com',
-          pass: 'foobar1234'
-        }
-      });
+      }
+    });
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'foobar.se@gmail.com',
+        pass: 'foobar1234'
+      }
+    });
 
-      // setup email data with unicode symbols
-      let mailOptions = {
-        from: ' "Foobar" <foobar.se@gmail.com>', // sender address
-        to: email, // list of receivers
-        subject: 'Password reset inquiry ✔', // Subject line
-        text: 'Dear Sir/Madam, you have requested to reset your password for our system. You can now login using your email and password = ' + password // plain text body
-      };
+    // setup email data with unicode symbols
+    let mailOptions = {
+      from: ' "Foobar" <foobar.se@gmail.com>', // sender address
+      to: email, // list of receivers
+      subject: 'Password reset inquiry ✔', // Subject line
+      text: 'Dear Sir/Madam, you have requested to reset your password for our system. You can now login using your email and password = ' +
+        password // plain text body
+    };
 
-      // send mail with defined transport object
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          return console.log(error);
-        }
-        console.log('Message %s sent: %s', info.messageId, info.response);
-      });
+    // send mail with defined transport object
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return console.log(error);
+      }
+      console.log('Message %s sent: %s', info.messageId, info.response);
+    });
 
 
   }
