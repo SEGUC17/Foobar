@@ -19,7 +19,7 @@ const spController = {
       if (err) {
         res.send(err.message);
       } else {
-        res.json("Ay Haga")
+        res.json("Ay Haga");
         console.log(announcement);
       }
     });
@@ -82,7 +82,8 @@ const spController = {
   //method used to add a video to the database
   addVideoByURL: function(req, res) {
 
-    var user_id = req.user.id;
+    const user = req.user;
+    const user_id = user.id;
     var title = req.body.title;
     var url = req.body.videoURL;
     //creating the new video instance in the database
@@ -97,24 +98,32 @@ const spController = {
   },
 
 
-  //getting the embeded video
+  //getting the embeded video object for the front end to embed it
   getVideo: function(req, res) {
-
-    var id = req.spid; //id that will be passed by the form as a hidden variable of the current sp
-    //getting the videos of the currently signed in service provider
-    getVideoById = function(id, out) {
-      Video.findById(id, function(err, videos) {
-        if (err)
-          console.log(err);
-        else {
-          res.json(videos);
-        }
-      });
+    // const id = req.params.id;
+    // //var id = req.spid; //id that will be passed by the form as a hidden variable of the current sp
+    // //getting the videos of the currently viewed service provider
+    // getVideoById = function(id, out) {
+    //   Video.findById(id, function(err, videos) {
+    //     if (err)
+    //       console.log(err);
+    //     else {
+    //       res.json(videos);
+    //     }
+    //   });
+    // };
+    //old method above new method below
+    var query = {
+      user_id: req.params.id //Recently Changed to Params
     };
 
+    Video.find(query, function(err, video) {
+      if (err) console.log(err);
 
+      console.log(req);
+      res.json(video);
+    });
   }
-
 };
 
 module.exports = spController;

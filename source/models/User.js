@@ -19,8 +19,7 @@ const userSchema = mongoose.Schema({
 		},
 		password: String,
 	},
-	type: Number,
-	is_deleted: Boolean
+	type: Number
 		// 1 for admin, 2 for Student, 3 Service Provider
 });
 
