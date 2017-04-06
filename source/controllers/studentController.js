@@ -221,7 +221,7 @@ const StudentController = {
           if (err)
             res.send(err.message);
           else {
-            console.log('student updated');
+            res.send('student updated');
           }
         });
 

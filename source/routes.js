@@ -103,7 +103,7 @@ module.exports = function(app, passport) {
 
   app.post('/admin/addInterest', interestController.addInterest); // adding an interest option
 
-  app.post('/admin/admin', adminController.addAdmin); // admin can add another admin
+  app.post('/admin/', adminController.addAdmin); // admin can add another admin
 
   app.delete('/admin/students/:id', adminController.deleteStudent); // admin can delete a student
 

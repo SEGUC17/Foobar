@@ -201,10 +201,9 @@ const adminController = {
 
   deleteSP: function(req, res) {
     let found = false;
-    if (user.type == 1) { // Checking if admin
-      SP.findOne({
-        id: req.params.sp_id
-      }, function(err, sp) {
+    const user = req.user;
+    if (user && user.type == 1) { // Checking if admin
+      SP.findById(req.params.id, function(err, sp) {
         if (err)
           res.send(err.message);
         else {
@@ -236,7 +235,7 @@ const adminController = {
               Console.log(err);
             } else {
               // Return
-              Console.log("Deleted");
+              res.send("Deleted");
             }
           });
         }
@@ -246,41 +245,45 @@ const adminController = {
     }
   },
   addAdmin: function(req, res) {
-    User.find({
-      local: {
-        email: req.body.email
-      }
-    }, function(err, user) {
-      if (err)
-        res.send(err.message);
-      else
-      if (user) {
-        res.send("Change email hoe.");
-      } else {
-        let user = new User(req.body);
-        user.type = 1;
-        user.save(function(err, project) {
-          if (err) {
-            res.send(err.message);
-            console.log(err);
-          } else {
-            // Return
-            res.send("Cool job, new admin");
-          }
-        });
-      }
-    });
-  },
-  deleteStudent: function(req, res) {
     const user = req.user;
-    if (user.type == 1) { // Checking if admin
+    if (user && user.type == 1){
       User.findOne({
-        id: req.params.sp_id
-      }, function(err, student) {
+        'local.emai': req.body.email
+      }, function(err, admin) {
         if (err)
           res.send(err.message);
         else {
-
+            if (admin) {
+              res.send("Change email hoe.");
+            } else {
+              let user = new User();
+              user.local.email = req.body.email;
+              var password = generatePassword();
+              user.local.password = user.generateHash(password);
+              user.type = 1;
+              user.save(function(err, project) {
+                if (err) {
+                  res.send(err.message);
+                  console.log(err);
+                } else {
+                  res.send("Cool job, new admin. Password is: "+password);
+                }
+              });
+            }
+          }
+      });
+    }  else {
+      res.send("You don't have accesss");
+    }
+  },
+  deleteStudent: function(req, res) {
+    const user = req.user;
+    if (user && user.type === 1) { // Checking if admin
+      Student.findById(req.params.id, function(err, student) {
+        if (err)
+          res.send(err.message);
+        else {
+          if (student){
           student.is_deleted = true;
           student.save(function(err, sp) {
             if (err) {
@@ -291,6 +294,9 @@ const adminController = {
              res.send("Deleted");
             }
           });
+          } else{
+             res.send("Not found");
+          }
         }
       });
     } else {
