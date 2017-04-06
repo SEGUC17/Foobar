@@ -1,6 +1,6 @@
 //Require Dependencies
 var express = require('express');
-var router = require('./source/routes');
+//var router = require('./source/routes');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 var flash = require('connect-flash');
@@ -15,15 +15,13 @@ var DB_URI = "mongodb://localhost:27017/portfolio";
 var app = express();
 
 
-
-app.set('view engine', 'ejs');
-
 // Configure app
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.urlencoded({
-  extended: false
+  extended: true
 }));
+app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 
 // Required for Passport
@@ -39,6 +37,11 @@ app.use(flash()); // use connect-flash for flash messages stored in session
 
 require('./source/routes.js')(app, passport);
 require('./source/config/passport')(passport);
+
+app.get('/', function(req, res) {
+  res.send('Homepage is here');
+});
+
 
 mongoose.connect(DB_URI);
 // app.use(router);
@@ -57,4 +60,4 @@ app.use(function(req, res, next) {
 // Start the server
 app.listen(3000, function() {
   console.log("Magic happens on port 3000");
-})
+});

@@ -1,11 +1,11 @@
 // load the things we need
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 // define the schema for our user model
-var announcementSchema = mongoose.Schema({
+const announcementSchema = mongoose.Schema({
 	title: String,
 	announcer_id: String,
-	content: Text,
+	content: String,
 	type: String
 });
 

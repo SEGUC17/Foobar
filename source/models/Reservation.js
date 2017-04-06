@@ -1,9 +1,9 @@
 // load the things we need
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 // define the schema for our user model
-var reservationSchema = mongoose.Schema({
-	user_id: Number,
+const reservationSchema = mongoose.Schema({
+	user_id: String,
 	offer_id: String,
 	service_provider_id: String,
 	reservation_date: Date,

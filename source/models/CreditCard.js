@@ -1,9 +1,8 @@
-
 // load the things we need
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 // define the schema for our user model
-var ccSchema = mongoose.Schema({
+const ccSchema = mongoose.Schema({
 	user_id: String,
 	number: String,
 	name: String,

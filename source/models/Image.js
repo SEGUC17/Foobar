@@ -1,26 +1,25 @@
 // load the things we need
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
+const path = require('path');
+const filePluginLib = require('mongoose-file');
 
-var path = require('path');
+const filePlugin = filePluginLib.filePlugin;
+const make_upload_to_model = filePluginLib.make_upload_to_model;
 
-var filePluginLib = require('mongoose-file');
-var filePlugin = filePluginLib.filePlugin;
-var make_upload_to_model = filePluginLib.make_upload_to_model;
-
-var uploads_base = path.join(__dirname, "uploads");
-var uploads = path.join(uploads_base, "u");
+const uploads_base = path.join(__dirname, 'uploads');
+const uploads = path.join(uploads_base, 'u');
 
 // define the schema for our user model
-var imageSchema = mongoose.Schema({
+const imageSchema = mongoose.Schema({
 	user_id: String,
 	title: String,
 	caption: String
 });
 
 imageSchema.plugin(filePlugin, {
-    name: "img",
-    upload_to: make_upload_to_model(uploads, 'photos'),
-    relative_to: uploads_base
+	name: 'img',
+	upload_to: make_upload_to_model(uploads, 'photos'),
+	relative_to: uploads_base
 });
 
 // create the model for users and expose it to our app

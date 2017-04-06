@@ -1,11 +1,11 @@
 // load the things we need
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 // define the schema for our user model
-var reviewSchema = mongoose.Schema({
+const reviewSchema = mongoose.Schema({
 	rating: Number,
 	reviewer_id: String,
-	content: Text,
+	content: String,
 	sp_id: String
 });
 

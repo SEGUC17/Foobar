@@ -1,7 +1,22 @@
-var path = require('path')
-var multer = require('multer')
-var crypto = require("crypto")
-var testController = require('./controllers/testController')
+// Requiremenets
+const announcementController = require(
+  '../source/controllers/announcementController');
+const pendingSPController = require('../source/controllers/pendingSPController');
+const adminController = require('../source/controllers/adminController');
+const reviewController = require('../source/controllers/reviewController');
+const sPController = require('../source/controllers/sPController');
+const interestController = require('../source/controllers/interestController');
+const reservationController = require(
+  '../source/controllers/reservationController');
+const offerController = require('../source/controllers/offerController');
+const studentController = require('../source/controllers/studentController');
+const homeController = require('../source/controllers/homeController');
+
+var path = require('path');
+var multer = require('multer');
+var crypto = require("crypto");
+
+// For Uploading Pictures
 var storage = multer.diskStorage({
   destination: 'public/uploads/',
   filename: function(req, file, cb) {
@@ -19,10 +34,10 @@ var upload = multer({
 
 module.exports = function(app, passport) {
 
-
   // =====================================
   // LOGIN ===============================
   // =====================================
+
   // show the login form
   app.get('/login', function(req, res) {
     // render the page and pass in any flash data if it exists
@@ -33,23 +48,6 @@ module.exports = function(app, passport) {
     });
   });
 
-
-  app.get('/', function(req, res) {
-    testController.createUser("name")
-  });
-  // app.post('/profile', upload.single('work_img') , profileController.createWork);
-  //
-  // app.post('/changedp', upload.single('profile_img'), profileController.changedp);
-  //
-  //
-  // app.get('/portfolio/:id', portfolioController.getAllWorks);
-
-  // process the login form
-  // app.post('/login', do all our passport stuff here);
-
-  // =====================================
-  // SIGNUP ==============================
-  // =====================================
   // show the signup form
   app.get('/signup', function(req, res) {
     // render the page and pass in any flash data if it exists
@@ -61,50 +59,110 @@ module.exports = function(app, passport) {
   });
 
   //process the signup form
-  app.post('/signup', passport.authenticate('local-signup', {
-    successRedirect: '/profile', // redirect to the secure profile section
-    failureRedirect: '/signup', // redirect back to the signup page if there is an error
-    failureFlash: true // allow flash messages
-  }));
+  app.post('/signup', function(req, res, next) {
+    passport.authenticate('local-signup', function(err, user, info) {
+      if (err) {
+        res.send(err);
+      }
+      if (!user) {
+        res.send(info.message);
+      } else {
+        res.send("Signup was successful!");
+      }
+    })(req, res, next);
+  });
 
-  app.post('/login', passport.authenticate('local-login', {
-    successRedirect: '/profile', // redirect to the secure profile section
-    failureRedirect: '/login', // redirect back to the signup page if there is an error
-    failureFlash: true // allow flash messages
-  }));
+  //process the login form
+  app.post('/login', passport.authenticate('local-login'), function(req, res) {
+    // If this function gets called, authentication was successful.
+    // `req.user` contains the authenticated user.
+    res.send(req.user);
+  });
 
-  // =====================================
-  // FACEBOOK ROUTES =====================
-  // =====================================
-  // route for facebook authentication and login
-  app.get('/auth/facebook', passport.authenticate('facebook', {
-    scope: 'email'
-  }));
-
-  // handle the callback after facebook has authenticated the user
-  app.get('/auth/facebook/callback',
-    passport.authenticate('facebook', {
-      successRedirect: '/profile',
-      failureRedirect: '/'
-    }));
-
-  // process the signup form
-  // app.post('/signup', do all our passport stuff here);
-
-  // =====================================
-  // PROFILE SECTION =====================
-  // =====================================
-  // we will want this protected so you have to be logged in to visit
-  // we will use route middleware to verify this (the isLoggedIn function)
-  // app.get('/profile', isLoggedIn, profileController.getAllWorks)
-
-  // =====================================
-  // LOGOUT ==============================
-  // =====================================
+  //destroy user session
   app.get('/logout', function(req, res) {
     req.logout();
     res.redirect('/');
   });
+
+  app.post('/resetPassword', homeController.resetPassword);
+
+  //ADMIN FUNCTIONS
+
+  app.get('/admin/announcements/view', announcementController.getAllAnnouncements); // viewing announcements
+
+  app.get('/admin/pendingSPRequests/', pendingSPController.getAllPendingSP); // viewing pending sp requests
+
+  app.post('/admin/pendingSPRequests', adminController.approveOrDisapproveSP); // approving/disapproving pending sp requests
+
+  app.get('/admin/sP/:id', sPController.getSPProfile); // view a specific SP profile
+
+  app.get('/admin/sPs/', sPController.getAllSPProfiles); // viewing all SP profiles
+
+  app.post('/admin/sP/:id/reviews', reviewController.deleteReview); // deleting a review
+
+  app.post('/admin/addInterest', interestController.addInterest); // adding an interest option
+
+  app.post('/admin/admin', adminController.addAdmin); // admin can add another admin
+
+  app.delete('/admin/admin/students/:id', adminController.deleteStudent); // admin can delete a student
+
+  app.delete('/admin/admin/sp/:id', adminController.deleteSP); // admin can delete serviceprovider
+
+  app.get('/admin/reviewdata', adminController.reviewDataAnalysis); // review data analysis
+
+  app.post('/admin/adminAnnouncement', isLoggedIn, adminController.adminPostAnnouncement); // admin can post announcements
+
+
+
+  // Service Provider
+
+  app.get('/sp', function(req, res) { //SP home page
+    // res.render('index');
+    res.send('SP homepage is here');
+  });
+
+  app.get('/sp/announcements/view', announcementController.getAllAnnouncements); //viewing announcements
+
+  app.post('/sp/announcements/post', isLoggedIn, sPController.postAnnouncement); //posting announcements
+
+  app.get('/sp/reviews/view', isLoggedIn, sPController.viewReviews); //viewing reviews
+
+  app.post('/sp/students/assess/:id', isLoggedIn, sPController.assessStudent); // service provider assessing student
+
+  app.get('/sp/reservations/view', isLoggedIn, reservationController.getReservations); //viewing his reservations
+
+  app.post('/sp/offers/create', isLoggedIn, offerController.createOffer); //posting a new offer
+
+  // app.post('/images/upload', upload.single('image'), sPController.uploadImage); //adding an image to his profile
+
+  app.post('/sp/videos/upload', isLoggedIn, sPController.addVideoByURL);
+
+  //Student
+
+  app.get('/student/profile', isLoggedIn, homeController.findProfile);
+
+  app.get('/student/announcements/view', announcementController.getAllAnnouncements); //viewing announcements
+
+  app.post('/student/serviceproviders/add/:id', isLoggedIn, studentController.addReview); // student can add review for ServiceProvider
+
+  app.get('/student/reservations/view', isLoggedIn, reservationController.getReservations); //viewing his reservations
+
+  app.get('/sP/:id', sPController.getSPProfile); //viewing a specific SP profile
+
+  app.get('/sPs/', sPController.getAllSPProfiles); //viewing a summary of all SP profiles
+
+  app.get('/student/:id', studentController.viewStudent); // Student could view his profile
+
+  app.post('/student/:id', studentController.editStudent); // Student could edit his profile
+
+  app.post('/student/offers/:id', studentController.applyOffer); // Student could apply for an offer
+
+  app.get('/student', isLoggedIn, homeController.viewOffers); // Student can view offers
+
+  app.post('/sP/apply', pendingSPController.Apply); // service provider can apply
+
+
 };
 
 // route middleware to make sure a user is logged in

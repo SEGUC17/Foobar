@@ -1,36 +1,31 @@
 // load the things we need
-var mongoose = require('mongoose');
-var bcrypt = require('bcrypt-nodejs');
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt-nodejs');
+const path = require('path');
+const filePluginLib = require('mongoose-file');
 
-var path = require('path');
+const filePlugin = filePluginLib.filePlugin;
+const make_upload_to_model = filePluginLib.make_upload_to_model;
 
-var filePluginLib = require('mongoose-file');
-var filePlugin = filePluginLib.filePlugin;
-var make_upload_to_model = filePluginLib.make_upload_to_model;
-
-var uploads_base = path.join(__dirname, "uploads");
-var uploads = path.join(uploads_base, "u");
-
-
-
+const uploads_base = path.join(__dirname, 'uploads');
+const uploads = path.join(uploads_base, 'u');
 // define the schema for our user model
-var userSchema = mongoose.Schema({
+const userSchema = mongoose.Schema({
 	name: String,
-	// local: {
-
-	email: {
-		type: String,
-		unique: true
+	local: {
+		email: {
+			type: String,
+			unique: true
+		},
+		password: String,
 	},
-	password: String,
-	// },
 	type: Number,
 	is_deleted: Boolean
-		//1 for admin, 2 for Student, 3 Service Provider
+		// 1 for admin, 2 for Student, 3 Service Provider
 });
 
 userSchema.plugin(filePlugin, {
-	name: "profileimg",
+	name: 'profileimg',
 	upload_to: make_upload_to_model(uploads, 'photos'),
 	relative_to: uploads_base
 });
