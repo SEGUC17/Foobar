@@ -19,15 +19,15 @@ const StudentController = {
       id: req.params.id
     }, function(err, reservation) {
       if (err)
-        res.send(err.message);
+        res.json(err.message);
       else {
         reservation.status = 1;
         reservation.save(function(err, reservation) {
           if (err) {
-            res.send(err.message);
+            res.json(err.message);
             console.log(err);
           } else {
-            res.send("Approved successfully");
+            res.json("Approved successfully");
           }
         });
       }
@@ -44,7 +44,7 @@ const StudentController = {
 
     }).save(function(err, review) {
       if (err) {
-        res.send(err.message);
+        res.json(err.message);
       } else {
         console.log(review);
       }
@@ -57,7 +57,7 @@ const StudentController = {
       name: search
     }, function(err, tagsarray) {
       if (err)
-        res.send(err.message);
+        res.json(err.message);
     });
 
     Offer.find({
@@ -80,7 +80,7 @@ const StudentController = {
       }],
       function(err, offers) {
         if (err)
-          res.send(err.message);
+          res.json(err.message);
         else {
           console.log("found offers");
           //Render offers
@@ -93,7 +93,7 @@ const StudentController = {
       user_id: user.id
     }, function(err, skills) {
       if (err)
-        res.send(err.message);
+        res.json(err.message);
       else {
         //Render Skills
       }
@@ -104,7 +104,7 @@ const StudentController = {
       id: req.params.id
     }, function(err, offer) {
       if (err)
-        res.send(err.message);
+        res.json(err.message);
       else {
         if (offer.due_date < Date.now()) {
           Console.log("You can't register now");
@@ -119,13 +119,13 @@ const StudentController = {
             });
             reservation.save(function(err, reservation) {
               if (err) {
-                res.send(err.message);
+                res.json(err.message);
                 console.log(err);
               } else {
                 offer.slots_available = offer.slots_available - 1;
                 offer.save(function(err, reservation) {
                   if (err) {
-                    res.send(err.message);
+                    res.json(err.message);
                     console.log(err);
                   } else {
                     res.json({
@@ -147,7 +147,7 @@ const StudentController = {
       id: req.params.id
     }, function(err, user) {
       if (err)
-        res.send(err.message);
+        res.json(err.message);
       else {
         Student.find({
           user_id: user.id
@@ -164,13 +164,13 @@ const StudentController = {
       id: req.params.id
     }, function(err, user) {
       if (err)
-        res.send(err.message);
+        res.json(err.message);
       else {
         Student.find({
           user_id: user.id
         }, function(err, student) {
           if (err)
-            res.send(err.message);
+            res.json(err.message);
           else {
             // user.name = req.body.name;
             // student.university = req.body.university;
@@ -205,25 +205,31 @@ const StudentController = {
               });
             }
 
-            User.update({id:user.id}, {name:name}, function(err, u1){
+            User.update({
+              id: user.id
+            }, {
+              name: name
+            }, function(err, u1) {
               if (err)
-            res.send(err.message);
-          else {
-            console.log('uname updated');
-          }
+                res.json(err.message);
+              else {
+                console.log('uname updated');
+              }
             });
-            Student.update({id:user.id}, {
-              university:university, 
-              address:address,
-              birthdate:birthdate,
-              description:description
+            Student.update({
+              id: user.id
+            }, {
+              university: university,
+              address: address,
+              birthdate: birthdate,
+              description: description
             }, function(err, student1) {
-          if (err)
-            res.send(err.message);
-          else {
-            res.send('student updated');
-          }
-        });
+              if (err)
+                res.json(err.message);
+              else {
+                res.json('student updated');
+              }
+            });
 
 
 

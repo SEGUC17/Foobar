@@ -39,7 +39,7 @@ require('./source/routes.js')(app, passport);
 require('./source/config/passport')(passport);
 
 app.get('/', function(req, res) {
-  res.send('Homepage is here');
+  res.json('Homepage is here');
 });
 
 

@@ -17,7 +17,7 @@ const spController = {
 
     }).save(function(err, announcement) {
       if (err) {
-        res.send(err.message);
+        res.json(err.message);
       } else {
         res.json("Ay Haga");
         console.log(announcement);
@@ -30,7 +30,7 @@ const spController = {
       sp_id: user.id
     }, function(err, reviews) {
       if (err) {
-        res.send(err.message);
+        res.json(err.message);
       } else {
         console.log(reviews);
       }
@@ -44,7 +44,7 @@ const spController = {
       rating: req.body.rating,
     }).save(function(err, assessment) {
       if (err) {
-        res.send(err.message);
+        res.json(err.message);
       } else {
         console.log(assessment);
       }
@@ -54,7 +54,7 @@ const spController = {
     SP.find(function(err, profiles) {
 
       if (err) {
-        res.send(err.message);
+        res.json(err.message);
       } else {
         //res.render('spProfiles', {profiles:profiles});
         res.json(profiles);

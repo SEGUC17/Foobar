@@ -7,7 +7,7 @@ let pendingSPController = {
     PendingSP.find(function(err, pendingSP) {
 
       if (err) { //if error occurred
-        res.send(err.message);
+        res.json(err.message);
 
         console.log("error");
       } else {

@@ -7,9 +7,9 @@ let reviewController = {
     var review_id = req.body.id;
     Review.findByIdAndRemove(review_id, function(err, review) {
       if (err)
-        res.send(err);
+        res.json(err);
       else {
-        res.send("Deleted this review: " + review);
+        res.json("Deleted this review: " + review);
         console.log('review deleted');
       }
     });
