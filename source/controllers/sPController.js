@@ -8,14 +8,14 @@ const Assessment = require('../models/Assessment');
 
 const spController = {
   postAnnouncement: function(req, res) {
-    // const announcement = new Announcement(req.body);
-    const announcement = new Announcement();
-    announcement.title = req.body.title;
-    announcement.content = req.body.content;
-    announcement.announcer_id = req.user.id;
-    announcement.type = 'SPannouncement';
+    const user = req.user;
+    const announcement = new Announcement({
+      title: req.body.title,
+      content: req.body.content,
+      announcer_id: user.id,
+      type: 'SPannouncement'
 
-    announcement.save(function(err, announcement) {
+    }).save(function(err, announcement) {
       if (err) {
         res.send(err.message);
       } else {
@@ -25,8 +25,9 @@ const spController = {
     });
   },
   viewReviews: function(req, res) {
+    const user = req.user;
     const reviews = Review.find({
-      sp_id: req.user.id
+      sp_id: user.id
     }, function(err, reviews) {
       if (err) {
         res.send(err.message);
@@ -36,26 +37,16 @@ const spController = {
     });
   },
   assessStudent: function(req, res) {
-    // req.params.id
-    const assessment = new Assessment();
-    assessment.sp_id = req.user.id;
-    Reservation.find({
-      service_provider_id: req.user.id,
+    const user = req.user;
+    const assessment = new Assessment({
+      sp_id: user.id,
       user_id: req.params.id,
-    }, function(err, student) {
+      rating: req.body.rating,
+    }).save(function(err, assessment) {
       if (err) {
         res.send(err.message);
       } else {
-        assessment.user_id = req.params.id;
-        assessment.sp_id = req.user.id;
-        assessment.rating = req.body.rating;
-        assessment.save(function(err, assessment) {
-          if (err) {
-            res.send(err.message);
-          } else {
-            console.log(assessment);
-          }
-        });
+        console.log(assessment);
       }
     });
   },
@@ -70,11 +61,11 @@ const spController = {
         console.log('summary of SP profiles retrieved successfully');
       }
     });
-  }, 
+  },
 
   getSPProfile: function(req, res) { //viewing a specific SP profile
     var query = {
-      user_id: req.params.id //Recently Changed to Params 
+      user_id: req.params.id //Recently Changed to Params
     };
 
     SP.findOne(query, function(err, providerProfile) {
@@ -84,12 +75,13 @@ const spController = {
       res.json(providerProfile);
       // res.render('spProfile', {
       //   sPProfile: providerProfile
-    
+
     });
 
   },
   //method used to add a video to the database
   addVideoByURL: function(req, res) {
+
     var user_id = req.user.id;
     var title = req.body.title;
     var url = req.body.videoURL;

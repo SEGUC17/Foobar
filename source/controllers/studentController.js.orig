@@ -6,7 +6,10 @@ let Tag = require('../models/Tag');
 let StudentInterest = require('../models/StudentInterest');
 let Review = require('../models/Review');
 let Student = require('../models/Student');
+<<<<<<< HEAD
+=======
 let Interests = require('../models/Interests');
+>>>>>>> 96f7c513d64d87ed135873b61c454b898474b387
 // const ServiceProvider = require('../models/ServiceProvider');
 
 const StudentController = {

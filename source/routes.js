@@ -1,24 +1,26 @@
 // Requiremenets
-const announcementController = require('../source/controllers/announcementController');
+const announcementController = require(
+  '../source/controllers/announcementController');
 const pendingSPController = require('../source/controllers/pendingSPController');
 const adminController = require('../source/controllers/adminController');
 const reviewController = require('../source/controllers/reviewController');
 const sPController = require('../source/controllers/sPController');
 const interestController = require('../source/controllers/interestController');
-const reservationController = require('../source/controllers/reservationController');
+const reservationController = require(
+  '../source/controllers/reservationController');
 const offerController = require('../source/controllers/offerController');
 const studentController = require('../source/controllers/studentController');
 const homeController = require('../source/controllers/homeController');
 
 var path = require('path');
-var multer  = require('multer');
+var multer = require('multer');
 var crypto = require("crypto");
 
 // For Uploading Pictures
 var storage = multer.diskStorage({
   destination: 'public/uploads/',
-  filename: function (req, file, cb) {
-    crypto.pseudoRandomBytes(16, function (err, raw) {
+  filename: function(req, file, cb) {
+    crypto.pseudoRandomBytes(16, function(err, raw) {
       if (err) return cb(err)
 
       cb(null, raw.toString('hex') + path.extname(file.originalname))
@@ -26,51 +28,64 @@ var storage = multer.diskStorage({
   }
 })
 
-var upload = multer({ storage: storage });
+var upload = multer({
+  storage: storage
+});
 
 module.exports = function(app, passport) {
 
-    // =====================================
-    // LOGIN ===============================
-    // =====================================
+  // =====================================
+  // LOGIN ===============================
+  // =====================================
 
-    // show the login form
-    app.get('/login', function(req, res) {
-        // render the page and pass in any flash data if it exists
-        res.render('login.ejs', { message: req.flash('loginMessage'), pagetitle: "Login", user : req.user }); 
+  // show the login form
+  app.get('/login', function(req, res) {
+    // render the page and pass in any flash data if it exists
+    res.render('login.ejs', {
+      message: req.flash('loginMessage'),
+      pagetitle: "Login",
+      user: req.user
     });
+  });
 
-    // show the signup form
-    app.get('/signup', function(req, res) {
-        // render the page and pass in any flash data if it exists
-        res.render('signup.ejs', { message: req.flash('signupMessage'), pagetitle: "Signup", user : req.user });
+  // show the signup form
+  app.get('/signup', function(req, res) {
+    // render the page and pass in any flash data if it exists
+    res.render('signup.ejs', {
+      message: req.flash('signupMessage'),
+      pagetitle: "Signup",
+      user: req.user
     });
+  });
 
-    //process the signup form
-    app.post('/signup', function(req, res, next) {
-        passport.authenticate('local-signup', function(err, user, info) {
-          if (err) { res.send(err); }
-          if (!user) { 
-            res.send(info.message); 
-          }else{
-            res.send("Signup was successful!");
-          }
-        })(req, res, next);
-      });
+  //process the signup form
+  app.post('/signup', function(req, res, next) {
+    passport.authenticate('local-signup', function(err, user, info) {
+      if (err) {
+        res.send(err);
+      }
+      if (!user) {
+        res.send(info.message);
+      } else {
+        res.send("Signup was successful!");
+      }
+    })(req, res, next);
+  });
 
-    //process the login form
-    app.post('/login', passport.authenticate('local-login'), function(req, res) {
-      // If this function gets called, authentication was successful.
-      // `req.user` contains the authenticated user.
-      res.send(req.user);
-    });
+  //process the login form
+  app.post('/login', passport.authenticate('local-login'), function(req, res) {
+    // If this function gets called, authentication was successful.
+    // `req.user` contains the authenticated user.
+    res.send(req.user);
+  });
 
-    //destroy user session
-    app.get('/logout', function(req, res) {
-        req.logout();
-        res.redirect('/');
-    });
+  //destroy user session
+  app.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+  });
 
+  app.post('/resetPassword', homeController.resetPassword);
 
   //ADMIN FUNCTIONS
 
@@ -94,7 +109,13 @@ module.exports = function(app, passport) {
 
   app.delete('/admin/sp/:id', adminController.deleteSP); // admin can delete serviceprovider
 
-// Service Provider
+  app.get('/admin/reviewdata', adminController.reviewDataAnalysis); // review data analysis
+
+  app.post('/admin/adminAnnouncement', isLoggedIn, adminController.adminPostAnnouncement); // admin can post announcements
+
+
+
+  // Service Provider
 
   app.get('/sp', function(req, res) { //SP home page
     // res.render('index');
@@ -103,29 +124,29 @@ module.exports = function(app, passport) {
 
   app.get('/sp/announcements/view', announcementController.getAllAnnouncements); //viewing announcements
 
-  app.post('/sp/announcements/post', sPController.postAnnouncement); //posting announcements
+  app.post('/sp/announcements/post', isLoggedIn, sPController.postAnnouncement); //posting announcements
 
-  app.get('/sp/reviews/view', sPController.viewReviews); //viewing reviews
+  app.get('/sp/reviews/view', isLoggedIn, sPController.viewReviews); //viewing reviews
 
-  app.post('/sp/students/assess/:id', sPController.assessStudent); // service provider assessing student
+  app.post('/sp/students/assess/:id', isLoggedIn, sPController.assessStudent); // service provider assessing student
 
-  app.get('/sp/reservations/view', reservationController.getReservations); //viewing his reservations
+  app.get('/sp/reservations/view', isLoggedIn, reservationController.getReservations); //viewing his reservations
 
-  app.post('/sp/offers/create', offerController.createOffer); //posting a new offer
+  app.post('/sp/offers/create', isLoggedIn, offerController.createOffer); //posting a new offer
 
-// app.post('/images/upload', upload.single('image'), sPController.uploadImage); //adding an image to his profile
+  // app.post('/images/upload', upload.single('image'), sPController.uploadImage); //adding an image to his profile
 
-  app.post('/sp/videos/upload', sPController.addVideoByURL);
+  app.post('/sp/videos/upload', isLoggedIn, sPController.addVideoByURL);
 
-//Student
+  //Student
 
-  app.get('/student/profile', homeController.findProfile);
+  app.get('/student/profile', isLoggedIn, homeController.findProfile);
 
-  app.get('/announcements/view', announcementController.getAllAnnouncements); //viewing announcements
+  app.get('/student/announcements/view', announcementController.getAllAnnouncements); //viewing announcements
 
-  app.post('/serviceproviders/add/:id', studentController.addReview); // student can add review for ServiceProvider
+  app.post('/student/serviceproviders/add/:id', isLoggedIn, studentController.addReview); // student can add review for ServiceProvider
 
-  app.get('/reservations/view', reservationController.getReservations); //viewing his reservations
+  app.get('/student/reservations/view', isLoggedIn, reservationController.getReservations); //viewing his reservations
 
   app.get('/sP/:id', sPController.getSPProfile); //viewing a specific SP profile
 
@@ -135,9 +156,11 @@ module.exports = function(app, passport) {
 
   app.post('/student/:id', studentController.editStudent); // Student could edit his profile
 
-  app.post('/offers/:id', studentController.applyOffer); // Student could apply for an offer
+  app.post('/student/offers/:id', studentController.applyOffer); // Student could apply for an offer
 
-  app.get('/student', homeController.viewOffers); // Student can view offers
+  app.get('/student', isLoggedIn, homeController.viewOffers); // Student can view offers
+
+  app.post('/sP/apply', pendingSPController.Apply); // service provider can apply
 
 
 };
@@ -145,9 +168,9 @@ module.exports = function(app, passport) {
 // route middleware to make sure a user is logged in
 function isLoggedIn(req, res, next) {
 
-    // if user is authenticated in the session, carry on 
-    if (req.isAuthenticated())
-        return next();
-    // if they aren't redirect them to the home page
-    res.redirect('/');
+  // if user is authenticated in the session, carry on
+  if (req.isAuthenticated())
+    return next();
+  // if they aren't redirect them to the home page
+  res.redirect('/');
 }
