@@ -30,7 +30,7 @@ const adminController = {
       var password = generatePassword();
       PendingSP.findByIdAndRemove(sP_id, function(err) {
         if (err)
-          res.send(err);
+          res.json(err);
       });
 
       //creating new user since he is approved
@@ -44,7 +44,7 @@ const adminController = {
 
       newUser.save(function(err, userSuccess) {
         if (err)
-          res.send(err);
+          res.json(err);
       }); //saving user instance
 
       //creating new SP account
@@ -57,10 +57,10 @@ const adminController = {
 
       newSP.save(function(err, sPSuccess) {
         if (err)
-          res.send(err);
+          res.json(err);
       }); //saving SP instance
 
-      res.send(
+      res.json(
         'Removed him from PendingSP Collection and Added to user collection as: ' +
         newUser + "and to the SP collection as: " + newSP);
       // create reusable transporter object using the default SMTP transport
@@ -101,7 +101,7 @@ const adminController = {
         upsert: true,
         new: true
       }, function(err, sP) {
-        res.send('Disapproved successfully ' + sP);
+        res.json('Disapproved successfully ' + sP);
         console.log(sP);
       });
     }
@@ -146,9 +146,9 @@ const adminController = {
 
     announcement.save(function(err, announcement) {
       if (err)
-        res.send(err.message);
+        res.json(err.message);
       else {
-        res.send(announcement);
+        res.json(announcement);
         return 1;
       }
     });
@@ -185,7 +185,7 @@ const adminController = {
           tempInterest);
         most = temp[0];
         least = temp[temp.length - 1];
-        res.send('Most Frequent Interest is ' + ">>" + most +
+        res.json('Most Frequent Interest is ' + ">>" + most +
           " --  " +
           "The following is the Interests frequency sorted descendengly" +
           ">>>" + temp + "-----" +
@@ -205,14 +205,14 @@ const adminController = {
     if (user && user.type == 1) { // Checking if admin
       SP.findById(req.params.id, function(err, sp) {
         if (err)
-          res.send(err.message);
+          res.json(err.message);
         else {
 
           Offer.find({
             sp_id: sp.id
           }, function(err, offers) {
             if (err)
-              res.send(err.message);
+              res.json(err.message);
             else {
               for (var i = 0; i < offers.length; i++) {
                 if (offers[i].end_date > Date.now()) {
@@ -231,11 +231,11 @@ const adminController = {
 
           sp.save(function(err, sp) {
             if (err) {
-              res.send(err.message);
+              res.json(err.message);
               Console.log(err);
             } else {
               // Return
-              res.send("Deleted");
+              res.json("Deleted");
             }
           });
         }
@@ -246,34 +246,35 @@ const adminController = {
   },
   addAdmin: function(req, res) {
     const user = req.user;
-    if (user && user.type == 1){
+    if (user && user.type == 1) {
       User.findOne({
         'local.emai': req.body.email
       }, function(err, admin) {
         if (err)
-          res.send(err.message);
+          res.json(err.message);
         else {
-            if (admin) {
-              res.send("Change email hoe.");
-            } else {
-              let user = new User();
-              user.local.email = req.body.email;
-              var password = generatePassword();
-              user.local.password = user.generateHash(password);
-              user.type = 1;
-              user.save(function(err, project) {
-                if (err) {
-                  res.send(err.message);
-                  console.log(err);
-                } else {
-                  res.send("Cool job, new admin. Password is: "+password);
-                }
-              });
-            }
+          if (admin) {
+            res.json("Change email hoe.");
+          } else {
+            let user = new User();
+            user.local.email = req.body.email;
+            var password = generatePassword();
+            user.local.password = user.generateHash(password);
+            user.type = 1;
+            user.save(function(err, project) {
+              if (err) {
+                res.json(err.message);
+                console.log(err);
+              } else {
+                res.json("Cool job, new admin. Password is: " +
+                  password);
+              }
+            });
           }
+        }
       });
-    }  else {
-      res.send("You don't have accesss");
+    } else {
+      res.json("You don't have accesss");
     }
   },
   deleteStudent: function(req, res) {
@@ -281,26 +282,26 @@ const adminController = {
     if (user && user.type === 1) { // Checking if admin
       Student.findById(req.params.id, function(err, student) {
         if (err)
-          res.send(err.message);
+          res.json(err.message);
         else {
-          if (student){
-          student.is_deleted = true;
-          student.save(function(err, sp) {
-            if (err) {
-              res.send(err.message);
-              console.log(err);
-            } else {
-              // Return
-             res.send("Deleted");
-            }
-          });
-          } else{
-             res.send("Not found");
+          if (student) {
+            student.is_deleted = true;
+            student.save(function(err, sp) {
+              if (err) {
+                res.json(err.message);
+                console.log(err);
+              } else {
+                // Return
+                res.json("Deleted");
+              }
+            });
+          } else {
+            res.json("Not found");
           }
         }
       });
     } else {
-      res.send("You don't have accesss");
+      res.json("You don't have accesss");
     }
   }
 

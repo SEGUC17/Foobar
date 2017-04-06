@@ -8,12 +8,12 @@ let announcementController = {
     Announcement.find(function(err, announcements) {
 
       if (err) {
-        res.send(err.message);
+        res.json(err.message);
 
         console.log("error");
-      } else{
-      //Updated 
-              res.json(announcements);
+      } else {
+        //Updated
+        res.json(announcements);
         console.log('announcements retrieved successfully');
         // res.render('viewAnnouncements', {announcements:announcements});
       }
