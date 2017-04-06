@@ -90,9 +90,9 @@ module.exports = function(app, passport) {
 
   app.post('/admin/admin', adminController.addAdmin); // admin can add another admin
 
-  app.delete('/admin/admin/students/:id', adminController.deleteStudent); // admin can delete a student
+  app.delete('/admin/students/:id', adminController.deleteStudent); // admin can delete a student
 
-  app.delete('/admin/admin/sp/:id', adminController.deleteSP); // admin can delete serviceprovider
+  app.delete('/admin/sp/:id', adminController.deleteSP); // admin can delete serviceprovider
 
 // Service Provider
 

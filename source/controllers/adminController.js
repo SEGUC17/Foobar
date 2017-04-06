@@ -264,7 +264,7 @@ const adminController = {
         res.send(err.message);
       else
       if (user) {
-        Console.log("Change email hoe.");
+        res.send("Change email hoe.");
       } else {
         let user = new User(req.body);
         user.type = 1;
@@ -274,14 +274,16 @@ const adminController = {
             console.log(err);
           } else {
             // Return
+            res.send("Cool job, new admin");
           }
         });
       }
     });
   },
   deleteStudent: function(req, res) {
+    const user = req.user;
     if (user.type == 1) { // Checking if admin
-      Student.findOne({
+      User.findOne({
         id: req.params.sp_id
       }, function(err, student) {
         if (err)
@@ -295,13 +297,13 @@ const adminController = {
               console.log(err);
             } else {
               // Return
-              Console.log("Deleted");
+             res.send("Deleted");
             }
           });
         }
       });
     } else {
-      Console.log("You don't have accesss");
+      res.send("You don't have accesss");
     }
   }
 
