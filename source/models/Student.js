@@ -7,6 +7,7 @@ const studentSchema = mongoose.Schema({
 	university: String,
 	address: String,
 	birthdate: Date,
+	is_deleted: Boolean,
 	description: String
 });
 
