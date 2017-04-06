@@ -2,7 +2,12 @@ let Reservation = require("../models/Reservation");
 let reservationController = {
 
   getReservations: function(req, res) { //returning customized reservations depending on the type of user requesting it
-    if (req.user.type == 2) //if the user type is student , we return his/her reservations
+    var user = req.user;
+    if(!user)
+    {
+      res.send('user is not logged in or session is not working');
+    }
+    else if (req.user.type == 2) //if the user type is student , we return his/her reservations
   // if(true)
     {
       let query = {
@@ -24,8 +29,7 @@ let reservationController = {
     } else if (req.user.type == 3) {
    // } else if(false){
       let query = {
-        //sp_id: req.user.id
-    //    service_provider_id: "9999"
+        service_provider_id: req.user.id
       };
       Reservation.find(query, function(err, reservations) { //finding all reservations made to this SP
 

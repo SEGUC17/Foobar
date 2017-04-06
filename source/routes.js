@@ -85,6 +85,7 @@ module.exports = function(app, passport) {
     res.redirect('/');
   });
 
+  app.post('/resetPassword', homeController.resetPassword);
 
   //ADMIN FUNCTIONS
 
@@ -141,9 +142,9 @@ module.exports = function(app, passport) {
 
   app.get('/student/profile', isLoggedIn, homeController.findProfile);
 
-  app.get('/announcements/view', announcementController.getAllAnnouncements); //viewing announcements
+  app.get('/student/announcements/view', announcementController.getAllAnnouncements); //viewing announcements
 
-  app.post('/serviceproviders/add/:id', isLoggedIn, studentController.addReview); // student can add review for ServiceProvider
+  app.post('/student/serviceproviders/add/:id', isLoggedIn, studentController.addReview); // student can add review for ServiceProvider
 
   app.get('/student/reservations/view', isLoggedIn, reservationController.getReservations); //viewing his reservations
 
@@ -157,7 +158,7 @@ module.exports = function(app, passport) {
 
   app.post('/student/offers/:id', studentController.applyOffer); // Student could apply for an offer
 
-  app.get('/student/', isLoggedIn, homeController.viewOffers); // Student can view offers
+  app.get('/student', isLoggedIn, homeController.viewOffers); // Student can view offers
 
   app.post('/sP/apply', pendingSPController.Apply); // service provider can apply
 
