@@ -141,7 +141,7 @@ module.exports = function(app, passport) {
 
   //Student
 
-  app.get('/student/profile', homeController.findProfile);
+  app.get('/student/profile', isLoggedIn , homeController.findProfile);
 
   app.get('/student/announcements/view', announcementController.getAllAnnouncements); //viewing announcements
 
