@@ -40,9 +40,10 @@ const adminController = {
           name,
           type: 3,
           is_deleted: false,
-          'local.email': email,
-          'local.password': password,
+          'local.email': email
         });
+        
+        newUser.local.password = newUser.generateHash(password);
 
         newUser.save((err) => {
           if (err) {
