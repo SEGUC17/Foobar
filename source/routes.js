@@ -1,11 +1,13 @@
 // Requiremenets
-const announcementController = require('../source/controllers/announcementController');
+const announcementController = require(
+  '../source/controllers/announcementController');
 const pendingSPController = require('../source/controllers/pendingSPController');
 const adminController = require('../source/controllers/adminController');
 const reviewController = require('../source/controllers/reviewController');
 const sPController = require('../source/controllers/sPController');
 const interestController = require('../source/controllers/interestController');
-const reservationController = require('../source/controllers/reservationController');
+const reservationController = require(
+  '../source/controllers/reservationController');
 const offerController = require('../source/controllers/offerController');
 const studentController = require('../source/controllers/studentController');
 const homeController = require('../source/controllers/homeController');
@@ -95,7 +97,7 @@ function spLoggedIn(req, res, next) {
 }
 
 
-module.exports = function (app, passport) {
+module.exports = function(app, passport) {
   // =====================================
   // LOGIN ===============================
   // =====================================
@@ -165,7 +167,7 @@ module.exports = function (app, passport) {
 
   // ADMIN FUNCTIONS
 
-  app.get('/admin/announcements/view', adminLoggedIn, announcementController.getAllAnnouncements); // viewing announcements
+  app.get('/admin/announcements/view', announcementController.getAllAnnouncements); // viewing announcements
 
   app.get('/admin/pendingSPRequests/', adminLoggedIn, pendingSPController.getAllPendingSP); // viewing pending sp requests
 
@@ -218,11 +220,14 @@ module.exports = function (app, passport) {
 
   app.get('/student/profile', studentLoggedIn, homeController.findProfile);
 
-  app.get('/student/announcements/view', studentLoggedIn, announcementController.getAllAnnouncements); // viewing announcements
+  app.get('/student/announcements/view', studentLoggedIn,
+    announcementController.getAllAnnouncements); // viewing announcements
 
-  app.post('/student/serviceproviders/add/:id', studentLoggedIn, studentController.addReview); // student can add review for ServiceProvider
+  app.post('/student/serviceproviders/add/:id', studentLoggedIn,
+    studentController.addReview); // student can add review for ServiceProvider
 
-  app.get('/student/reservations/view', studentLoggedIn, reservationController.getReservations); // viewing his reservations
+  app.get('/student/reservations/view', studentLoggedIn,
+    reservationController.getReservations); // viewing his reservations
 
   app.get('/sP/:id', studentLoggedIn, sPController.getSPProfile); // viewing a specific SP profile
   // this will be handled in the frontend so we can embed the videos
@@ -241,4 +246,3 @@ module.exports = function (app, passport) {
 
   app.post('/sP/apply', studentLoggedIn, pendingSPController.Apply); // service provider can apply
 };
-

@@ -8,12 +8,14 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const mongoose = require('mongoose');
-
+var cors = require('cors');
 const DB_URI = 'mongodb://localhost:27017/portfolio';
 
 const app = express();
 
-
+app.use(cors({
+  origin: 'http://localhost:8080'
+}));
 // Configure app
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
