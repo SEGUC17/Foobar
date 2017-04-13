@@ -1,24 +1,25 @@
-let Announcement = require("../models/Announcement");
+const Announcement = require('../models/Announcement');
 
-
-let announcementController = {
-
-  getAllAnnouncements: function(req, res) { //viewing all announcements
-
-    Announcement.find(function(err, announcements) {
-
+const announcementController = {
+  getAllAnnouncements(req, res) { // viewing all announcements
+    Announcement.find((err, announcements) => {
       if (err) {
-        res.json(err.message);
-
-        console.log("error");
-      } else {
-        //Updated
-        res.json(announcements);
-        console.log('announcements retrieved successfully');
-        // res.render('viewAnnouncements', {announcements:announcements});
+        res.status(500).json({
+          status: 'error',
+          message: err,
+        });
+        return undefined; // Return breaks the function
       }
+      // Else part
+      res.status(200).json({
+        status: 'success',
+        data: {
+          announcements,
+        },
+      });
+      return undefined;
     });
-  }
+  },
 
 
 };

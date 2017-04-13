@@ -1,20 +1,24 @@
-let Review = require("../models/Review");
+const Review = require('../models/Review');
 
-let reviewController = {
-
-
-  deleteReview: function(req, res) { //deleting the requested review
-    var review_id = req.body.id;
-    Review.findByIdAndRemove(review_id, function(err, review) {
-      if (err)
-        res.json(err);
-      else {
-        res.json("Deleted this review: " + review);
-        console.log('review deleted');
+const reviewController = {
+  deleteReview(req, res) { // deleting the requested review
+    const reviewId = req.body.id;
+    Review.findByIdAndRemove(reviewId, (err) => {
+      if (err) {
+        res.status(500).json({
+          status: 'error',
+          message: err.message,
+        });
+      } else {
+        res.status(200).json({
+          status: 'success',
+          data: {
+            message: 'Deleted successfully',
+          },
+        });
       }
     });
-  }
-
+  },
 };
 
 module.exports = reviewController;

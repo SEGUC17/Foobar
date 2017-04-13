@@ -5,15 +5,15 @@ const mongoose = require('mongoose');
 const pendingSPSchema = mongoose.Schema({
   name: {
     type: String,
-    unique: true
+    unique: true,
   },
   email: {
     type: String,
-    unique: true
+    unique: true,
   },
   phone_number: String,
   Description: String,
-  is_declined: Boolean
+  is_declined: Boolean,
 });
 
 // create the model for users and expose it to our app

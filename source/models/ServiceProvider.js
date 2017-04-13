@@ -5,14 +5,15 @@
     price_category: String,
     user_id: {
       type: String,
-      index: true
+      index: true,
     },
     location: String,
     description: String,
     fields: [String],
     phone_number: String,
     is_blocked: Boolean,
-    first_login: Boolean
+    first_login: Boolean,
+    is_deleted: Boolean,
 
   });
 

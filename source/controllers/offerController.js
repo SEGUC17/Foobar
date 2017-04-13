@@ -1,12 +1,11 @@
-let Offer = require("../models/Offer");
+const Offer = require('../models/Offer');
 
-let offerController = {
+const offerController = {
 
-  createOffer: function(req, res) { //posting new offer
+  createOffer(req, res) { // posting new offer
     const user = req.user;
-    //making a new offer instance and saving it
-    var newOffer = new Offer({
-      //updated
+    // making a new offer instance and saving it
+    const newOffer = new Offer({
       title: req.body.title,
       price: req.body.price,
       sp_id: user.id,
@@ -15,13 +14,23 @@ let offerController = {
       description: req.body.description,
       due_date: req.body.due_date,
       start_date: req.body.start_date,
-      end_date: req.body.end_date
+      end_date: req.body.end_date,
     });
-    newOffer.save();
-    res.json(newOffer.capacity);
-    console.log('new offer posted successfully');
-
-  }
+    newOffer.save((err) => {
+      if (err) {
+        res.status(500).json({
+          status: 'error',
+          message: err.message,
+        });
+      }
+    });
+    res.status(200).json({
+      status: 'success',
+      data: {
+        newOffer,
+      },
+    });
+  },
 
 
 };
