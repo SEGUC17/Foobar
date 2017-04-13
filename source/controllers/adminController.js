@@ -15,118 +15,125 @@ const StudentInterest = require('../models/StudentInterest');
 const adminController = {
 
   approveOrDisapproveSP(req, res) { // approving or disapproving an applied SP
-    const spId = req.body.id;
+    const user = req.user;
+    if (user && user.type === 1) {
+      const spId = req.body.id;
     // if approve is selected
-    if (req.body.approve) {
+      if (req.body.approve) {
       // getting the attributes before removing
-      const name = req.body.name;
-      const email = req.body.email;
-      const phoneNumber = req.body.phone_number;
-      const description = req.body.description;
-      const password = generatePassword();
-      PendingSP.findByIdAndRemove(spId, (err) => {
-        if (err) {
-          res.status(500).json({
-            status: 'error',
-            message: err,
-          });
-        }
-      });
+        const name = req.body.name;
+        const email = req.body.email;
+        const phoneNumber = req.body.phone_number;
+        const description = req.body.description;
+        const password = generatePassword();
+        PendingSP.findByIdAndRemove(spId, (err) => {
+          if (err) {
+            res.status(500).json({
+              status: 'error',
+              message: err,
+            });
+          }
+        });
 
       // creating new user since he is approved
-      const newUser = new User({
-        name,
-        type: 3,
-        is_deleted: false,
-        'local.email': email,
-        'local.password': password,
-      });
+        const newUser = new User({
+          name,
+          type: 3,
+          is_deleted: false,
+          'local.email': email,
+          'local.password': password,
+        });
 
-      newUser.save((err) => {
-        if (err) {
-          res.status(500).json({
-            status: 'error',
-            message: err,
-          });
-        }
-      }); // saving user instance
+        newUser.save((err) => {
+          if (err) {
+            res.status(500).json({
+              status: 'error',
+              message: err,
+            });
+          }
+        }); // saving user instance
 
       // creating new SP account
-      const newSP = new SP({
-        description,
-        phoneNumber,
-        is_blocked: false,
-        is_deleted: false,
-      });
+        const newSP = new SP({
+          description,
+          phoneNumber,
+          is_blocked: false,
+          is_deleted: false,
+        });
 
-      newSP.save((err) => {
-        if (err) {
-          res.status(500).json({
-            status: 'error',
-            message: err,
-          });
-        }
-      }); // saving SP instance
+        newSP.save((err) => {
+          if (err) {
+            res.status(500).json({
+              status: 'error',
+              message: err,
+            });
+          }
+        }); // saving SP instance
 
-      res.status(200).json({
-        status: 'success',
-        data: { // Data can be null if, for example, delete request was sent
-          message: `Removed him from PendingSP Collection and Added to user collection as:${newUser}and to the SP collection as:${newSP}`,
-        },
-      });
-
-      // create reusable transporter object using the default SMTP transport
-      const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-          user: 'foobar.se@gmail.com',
-          pass: 'foobar1234',
-        },
-      });
-
-      // setup email data with unicode symbols
-      const mailOptions = {
-        from: ' "Foobar" <foobar.se@gmail.com>', // sender address
-        to: email, // list of receivers
-        subject: 'System Approval ✔', // Subject line
-        text: `Congratulations! You have been approved to our system and now you can login using your email and password:${
-          password}`, // plain text body
-      };
-
-      // send mail with defined transport object
-      transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          console.log(error);
-          return undefined;
-        }
-        console.log('Message %s sent: %s', info.messageId, info.response);
-        return undefined;
-      });
-    } else if (req.body.disapprove) {
-      // if disapprove is selected
-      // finding the target sp and setting is_declined attr. to true
-      PendingSP.findByIdAndUpdate(spId, {
-        $set: {
-          is_declined: true,
-        },
-      }, {
-        safe: true,
-        upsert: true,
-        new: true,
-      }, (err, sP) => {
         res.status(200).json({
           status: 'success',
           data: { // Data can be null if, for example, delete request was sent
-            message: `Disapproved successfully ${sP}`,
+            message: `Removed him from PendingSP Collection and Added to user collection as:${newUser}and to the SP collection as:${newSP}`,
           },
         });
+
+      // create reusable transporter object using the default SMTP transport
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: 'foobar.se@gmail.com',
+            pass: 'foobar1234',
+          },
+        });
+
+      // setup email data with unicode symbols
+        const mailOptions = {
+          from: ' "Foobar" <foobar.se@gmail.com>', // sender address
+          to: email, // list of receivers
+          subject: 'System Approval ✔', // Subject line
+          text: `Congratulations! You have been approved to our system and now you can login using your email and password:${
+          password}`, // plain text body
+        };
+
+      // send mail with defined transport object
+        transporter.sendMail(mailOptions, (error, info) => {
+          if (error) {
+            console.log(error);
+            return undefined;
+          }
+          console.log('Message %s sent: %s', info.messageId, info.response);
+          return undefined;
+        });
+      } else if (req.body.disapprove) {
+      // if disapprove is selected
+      // finding the target sp and setting is_declined attr. to true
+        PendingSP.findByIdAndUpdate(spId, {
+          $set: {
+            is_declined: true,
+          },
+        }, {
+          safe: true,
+          upsert: true,
+          new: true,
+        }, (err, sP) => {
+          res.status(200).json({
+            status: 'success',
+            data: { // Data can be null if, for example, delete request was sent
+              message: `Disapproved successfully ${sP}`,
+            },
+          });
+        });
+      }
+    } else {
+      res.status(403).json({
+        status: 'error',
+        message: 'Forbidden access',
       });
     }
   },
   sortByFrequencyAndFilter(myArray) {
     const newArray = [];
     const freq = [];
-
     // Count Frequency of Occurances
     let i = myArray.length - 1;
     for (i; i > -1; i = -1) {
@@ -180,38 +187,46 @@ const adminController = {
     });
   },
   reviewDataAnalysis(req, res) {
-    const userMap = [];
-    const tempInterest = [];
-    let k = 0;
-    let x = 0;
+    const user = req.user;
+    if (user && user.type === 1) {
+      const userMap = [];
+      const tempInterest = [];
+      let k = 0;
+      let x = 0;
 
-    StudentInterest.find([], (sIerr, interests) => {
-      interests.forEach((element) => {
-        userMap[k] = element.interest_id;
-        k += 1;
-      });
-      interest.find([], (err, inter) => {
-        userMap.forEach((stud) => {
-          inter.forEach((element) => {
-            if (stud === element.id) {
-              tempInterest[x] = interest.name;
-              x += 1;
-            }
+      StudentInterest.find([], (sIerr, interests) => {
+        interests.forEach((element) => {
+          userMap[k] = element.interest_id;
+          k += 1;
+        });
+        interest.find([], (err, inter) => {
+          userMap.forEach((stud) => {
+            inter.forEach((element) => {
+              if (stud === element.id) {
+                tempInterest[x] = interest.name;
+                x += 1;
+              }
+            });
+          });
+          const temp = adminController.sortByFrequencyAndFilter(
+          tempInterest);
+          const most = temp[0];
+          const least = temp[temp.length - 1];
+          res.status(200).json({
+            status: 'success',
+            data: {
+              most,
+              least,
+            },
           });
         });
-        const temp = adminController.sortByFrequencyAndFilter(
-          tempInterest);
-        const most = temp[0];
-        const least = temp[temp.length - 1];
-        res.status(200).json({
-          status: 'success',
-          data: {
-            most,
-            least,
-          },
-        });
       });
-    });
+    } else {
+      res.status(403).json({
+        status: 'error',
+        message: 'Forbidden access',
+      });
+    }
   },
 
   deleteSP(req, res) {
@@ -267,7 +282,7 @@ const adminController = {
     } else {
       res.status(403).json({
         status: 'error',
-        message: 'You are unauthorized',
+        message: 'Forbidden access',
       });
     }
   },
@@ -309,7 +324,7 @@ const adminController = {
     } else {
       res.status(403).json({
         status: 'error',
-        message: 'You are unauthorized',
+        message: 'Forbidden access',
       });
     }
   },
@@ -347,12 +362,10 @@ const adminController = {
           });
         }
       });
-    } else {
-      res.status(403).json({
-        status: 'error',
-        message: 'You are unauthorized',
-      });
-    }
+    } res.status(403).json({
+      status: 'error',
+      message: 'Forbidden access',
+    });
   },
 
 };

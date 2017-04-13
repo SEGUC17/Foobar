@@ -3,6 +3,7 @@ const LocalStrategy = require('passport-local').Strategy;
 // Requirements
 const User = require('../models/User');
 const Student = require('../models/Student');
+const SP = require('../models/ServiceProvider');
 const StudentInterest = require('../models/StudentInterest');
 
 
@@ -134,17 +135,44 @@ module.exports = function (passport) {
       User.findOne({
         'local.email': email,
       }, (err, user) => {
-        // if there are any errors, return the error before anything else
         if (err) { return done(err); }
-
+        // if there are any errors, return the error before anything else
         // if no user is found, return the message
         if (!user) { return done(null, false, { message: 'User is not found' }); } // req.flash is the way to set flashdata using connect-flash
 
         // if the user is found but the password is wrong
         if (!user.validPassword(password)) { return done(null, false, { message: 'Oops, incorrect password' }); } // create the loginMessage and save it to session as flashdata
 
-        // all is well, return successful user
-        return done(null, user);
+        if (user.type === 2) {
+          console.log('here');
+          Student.findOne({
+            user_id: user.id,
+          }, (finderr, student) => {
+            console.log(student);
+            if (finderr) {
+              return done(null, false, { message: 'Finding error' });
+            } else if (student.is_deleted === true) {
+              return done(null, false, { message: 'Your account has been deleted' });
+            }
+            // all is well, return successful user
+            return done(null, user);
+          });
+        } else if (user.type === 3) {
+          SP.finfindOne({
+            user_id: user.id,
+          }, (finderr, sp) => {
+            if (finderr) {
+              return done(null, false, { message: 'Finding error' });
+            } else if (sp.is_deleted) {
+              return done(null, false, { message: 'Your account has been deleted' });
+            }
+            // all is well, return successful user
+            return done(null, user);
+          });
+        } else {
+          return done(null, user);
+        }
+        return undefined;
       });
     }));
 };

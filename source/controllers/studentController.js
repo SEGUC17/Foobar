@@ -207,7 +207,7 @@ const StudentController = {
           if (finderr) {
             res.status(500).json({
               status: 'error',
-              message: err.message,
+              message: finderr.message,
             });
           } else {
           // Render
