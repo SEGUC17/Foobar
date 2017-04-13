@@ -8,47 +8,61 @@ const Assessment = require('../models/Assessment');
 const spController = {
   postAnnouncement(req, res) {
     const user = req.user;
-    const announcement = new Announcement({
-      title: req.body.title,
-      content: req.body.content,
-      announcer_id: user.id,
-      type: 'SPannouncement',
-    });
-    announcement.save((err) => {
-      if (err) {
-        res.status(500).json({
-          status: 'error',
-          message: err.message,
-        });
-      } else {
-        res.status(200).json({
-          status: 'success',
-          data: {
-            announcement,
-          },
-        });
-      }
-    });
+    if (user && user.type === 3) {
+      const announcement = new Announcement({
+        title: req.body.title,
+        content: req.body.content,
+        announcer_id: user.id,
+        type: 'SPannouncement',
+      });
+      announcement.save((err) => {
+        if (err) {
+          res.status(500).json({
+            status: 'error',
+            message: err.message,
+          });
+        } else {
+          res.status(200).json({
+            status: 'success',
+            data: {
+              announcement,
+            },
+          });
+        }
+      });
+    } else {
+      res.status(403).json({
+        status: 'error',
+        message: 'Forbidden access',
+      });
+    }
   },
   viewReviews(req, res) {
     const user = req.user;
-    Review.find({
-      sp_id: user.id,
-    }, (err, reviews) => {
-      if (err) {
-        res.status(500).json({
-          status: 'error',
-          message: err.message,
-        });
-      } else {
-        res.status(200).json({
-          status: 'success',
-          data: {
-            reviews,
-          },
-        });
-      }
-    });
+    if (user && user.type === 3) {
+      Review.find({
+        sp_id: user.id,
+      }, (err, reviews) => {
+        if (err) {
+          res.status(500).json({
+            status: 'error',
+            message: err.message,
+          });
+        } else {
+          res.status(200).json({
+            status: 'success',
+            data: {
+              reviews,
+            },
+          });
+        }
+      });
+    } else {
+      res.status(403).json({
+        status: 'error',
+        message: 'Forbidden access',
+      });
+    }
   },
   assessStudent(req, res) {
     const user = req.user;

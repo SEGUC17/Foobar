@@ -33,19 +33,65 @@ const upload = multer({
   storage,
 });
 
-// will be added to all the functions that require login when it we are not using postman
-// route middleware to make sure a user is logged in
-function isLoggedIn(req, res, next) {
+function adminLoggedIn(req, res, next) {
   // if user is authenticated in the session, carry on
   if (req.isAuthenticated()) {
-    return next();
+    console.log('admin authed');
+    if (req.user.type === 1) {
+      return next();
+    }
+    res.status(403).json({
+      status: 'error',
+      message: 'You must be a logged in admin to access this resource',
+    });
   }
   // if they aren't redirect them to the home page
   res.status(403).json({
     status: 'error',
-    message: 'You must be logged in to access this resource',
+    message: 'You must be a logged in admin to access this resource',
   });
-  return undefined;
+  res.redirect('/');
+}
+
+// will be added to all the functions that require login when it we are not using postman
+// route middleware to make sure a user is logged in
+function studentLoggedIn(req, res, next) {
+  // if user is authenticated in the session, carry on
+  if (req.isAuthenticated()) {
+    console.log('student authed');
+    console.log(req.user.type);
+    if (req.user.type === 2) {
+      return next();
+    }
+    res.status(403).json({
+      status: 'error',
+      message: 'You must be a logged in student to access this resource',
+    });
+    return undefined;
+  }
+  // if they aren't redirect them to the home page
+  res.status(403).json({
+    status: 'error',
+    message: 'You must be a logged in student to access this resource',
+  });
+}
+
+function spLoggedIn(req, res, next) {
+  // if user is authenticated in the session, carry on
+  if (req.isAuthenticated()) {
+    if (req.user.type === 3) {
+      return next();
+    }
+    res.status(403).json({
+      status: 'error',
+      message: 'You must be a logged in service provider to access this resource',
+    });
+  }
+  // if they aren't redirect them to the home page
+  res.status(403).json({
+    status: 'error',
+    message: 'You must be a logged in service provider to access this resource',
+  });
 }
 
 
@@ -119,80 +165,80 @@ module.exports = function (app, passport) {
 
   // ADMIN FUNCTIONS
 
-  app.get('/admin/announcements/view', isLoggedIn, announcementController.getAllAnnouncements); // viewing announcements
+  app.get('/admin/announcements/view', adminLoggedIn, announcementController.getAllAnnouncements); // viewing announcements
 
-  app.get('/admin/pendingSPRequests/', isLoggedIn, pendingSPController.getAllPendingSP); // viewing pending sp requests
+  app.get('/admin/pendingSPRequests/', adminLoggedIn, pendingSPController.getAllPendingSP); // viewing pending sp requests
 
-  app.post('/admin/pendingSPRequests', isLoggedIn, adminController.approveOrDisapproveSP); // approving/disapproving pending sp requests
+  app.post('/admin/pendingSPRequests', adminLoggedIn, adminController.approveOrDisapproveSP); // approving/disapproving pending sp requests
 
-  app.get('/admin/sP/:id', isLoggedIn, sPController.getSPProfile); // view a specific SP profile
+  app.get('/admin/sP/:id', adminLoggedIn, sPController.getSPProfile); // view a specific SP profile
 
-  app.get('/admin/sPs/', isLoggedIn, sPController.getAllSPProfiles); // viewing all SP profiles
+  app.get('/admin/sPs/', adminLoggedIn, sPController.getAllSPProfiles); // viewing all SP profiles
 
-  app.post('/admin/sP/:id/reviews', isLoggedIn, reviewController.deleteReview); // deleting a review
+  app.post('/admin/sP/:id/reviews', adminLoggedIn, reviewController.deleteReview); // deleting a review
 
-  app.post('/admin/addInterest', isLoggedIn, interestController.addInterest); // adding an interest option
+  app.post('/admin/addInterest', adminLoggedIn, interestController.addInterest); // adding an interest option
 
-  app.post('/admin/', isLoggedIn, adminController.addAdmin); // admin can add another admin
+  app.post('/admin/', adminLoggedIn, adminController.addAdmin); // admin can add another admin
 
-  app.delete('/admin/students/:id', isLoggedIn, adminController.deleteStudent); // admin can delete a student
+  app.delete('/admin/students/:id', adminLoggedIn, adminController.deleteStudent); // admin can delete a student
 
-  app.delete('/admin/sp/:id', isLoggedIn, adminController.deleteSP); // admin can delete serviceprovider
+  app.delete('/admin/sp/:id', adminLoggedIn, adminController.deleteSP); // admin can delete serviceprovider
 
-  app.get('/admin/reviewdata', isLoggedIn, adminController.reviewDataAnalysis); // review data analysis
+  app.get('/admin/reviewdata', adminLoggedIn, adminController.reviewDataAnalysis); // review data analysis
 
-  app.post('/admin/adminAnnouncement', isLoggedIn, adminController.adminPostAnnouncement); // admin can post announcements
+  app.post('/admin/adminAnnouncement', adminLoggedIn, adminController.adminPostAnnouncement); // admin can post announcements
 
   // Service Provider
 
-  app.get('/sp', isLoggedIn, (req, res) => { // SP home page
+  app.get('/sp', spLoggedIn, (req, res) => { // SP home page
     // res.render('index');
     res.json('SP homepage is here');
   });
 
-  app.get('/sp/announcements/view', isLoggedIn, announcementController.getAllAnnouncements); // viewing announcements
+  app.get('/sp/announcements/view', spLoggedIn, announcementController.getAllAnnouncements); // viewing announcements
 
-  app.post('/sp/announcements/post', isLoggedIn, sPController.postAnnouncement); // posting announcements
+  app.post('/sp/announcements/post', spLoggedIn, sPController.postAnnouncement); // posting announcements
 
-  app.get('/sp/reviews/view', isLoggedIn, sPController.viewReviews); // viewing reviews
+  app.get('/sp/reviews/view', spLoggedIn, sPController.viewReviews); // viewing reviews
 
-  app.post('/sp/students/assess/:id', isLoggedIn, sPController.assessStudent); // service provider assessing student
+  app.post('/sp/students/assess/:id', spLoggedIn, sPController.assessStudent); // service provider assessing student
 
-  app.get('/sp/reservations/view', isLoggedIn, reservationController.getReservations); // viewing his reservations
+  app.get('/sp/reservations/view', spLoggedIn, reservationController.getReservations); // viewing his reservations
 
-  app.post('/sp/offers/create', isLoggedIn, offerController.createOffer); // posting a new offer
+  app.post('/sp/offers/create', spLoggedIn, offerController.createOffer); // posting a new offer
 
   // app.post('/images/upload', upload.single('image'), sPController.uploadImage);
   // adding an image to his profile
 
-  app.post('/sp/videos/upload', isLoggedIn, sPController.addVideoByURL);
+  app.post('/sp/videos/upload', spLoggedIn, sPController.addVideoByURL);
 
 
   // Student
 
-  app.get('/student/profile', isLoggedIn, homeController.findProfile);
+  app.get('/student/profile', studentLoggedIn, homeController.findProfile);
 
-  app.get('/student/announcements/view', isLoggedIn, announcementController.getAllAnnouncements); // viewing announcements
+  app.get('/student/announcements/view', studentLoggedIn, announcementController.getAllAnnouncements); // viewing announcements
 
-  app.post('/student/serviceproviders/add/:id', isLoggedIn, studentController.addReview); // student can add review for ServiceProvider
+  app.post('/student/serviceproviders/add/:id', studentLoggedIn, studentController.addReview); // student can add review for ServiceProvider
 
-  app.get('/student/reservations/view', isLoggedIn, reservationController.getReservations); // viewing his reservations
+  app.get('/student/reservations/view', studentLoggedIn, reservationController.getReservations); // viewing his reservations
 
-  app.get('/sP/:id', isLoggedIn, sPController.getSPProfile); // viewing a specific SP profile
+  app.get('/sP/:id', studentLoggedIn, sPController.getSPProfile); // viewing a specific SP profile
   // this will be handled in the frontend so we can embed the videos
-  app.get('/sP/videos/:id', isLoggedIn, sPController.getVideo); // viewing the video of a specific sp
+  app.get('/sP/videos/:id', studentLoggedIn, sPController.getVideo); // viewing the video of a specific sp
 
 
-  app.get('/sPs/', isLoggedIn, sPController.getAllSPProfiles); // viewing a summary of all SP profiles
+  app.get('/sPs/', studentLoggedIn, sPController.getAllSPProfiles); // viewing a summary of all SP profiles
 
-  app.get('/student/:id', isLoggedIn, studentController.viewStudent); // Student could view his profile
+  app.get('/student/:id', studentLoggedIn, studentController.viewStudent); // Student could view his profile
 
-  app.post('/student/:id', isLoggedIn, studentController.editStudent); // Student could edit his profile
+  app.post('/student/:id', studentLoggedIn, studentController.editStudent); // Student could edit his profile
 
-  app.post('/student/offers/:id', isLoggedIn, studentController.applyOffer); // Student could apply for an offer
+  app.post('/student/offers/:id', studentLoggedIn, studentController.applyOffer); // Student could apply for an offer
 
-  app.get('/student', homeController.viewOffers); // Student can view offers
+  app.get('/student', studentLoggedIn, homeController.viewOffers); // Student can view offers
 
-  app.post('/sP/apply', isLoggedIn, pendingSPController.Apply); // service provider can apply
+  app.post('/sP/apply', studentLoggedIn, pendingSPController.Apply); // service provider can apply
 };
 

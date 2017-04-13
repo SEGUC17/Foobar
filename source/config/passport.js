@@ -144,11 +144,9 @@ module.exports = function (passport) {
         if (!user.validPassword(password)) { return done(null, false, { message: 'Oops, incorrect password' }); } // create the loginMessage and save it to session as flashdata
 
         if (user.type === 2) {
-          console.log('here');
           Student.findOne({
             user_id: user.id,
           }, (finderr, student) => {
-            console.log(student);
             if (finderr) {
               return done(null, false, { message: 'Finding error' });
             } else if (student.is_deleted === true) {
