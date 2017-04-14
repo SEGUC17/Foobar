@@ -1,16 +1,19 @@
 let Review = require("../models/Review");
+const jwt = require('../auth/jwt');
+
 
 let reviewController = {
 
 
   deleteReview: function(req, res) { //deleting the requested review
     var review_id = req.body.id;
-    Review.findByIdAndRemove(review_id, function(err) {
+    Review.findByIdAndRemove(review_id, function(err, review) {
       if (err)
-        res.send(err);
-      else
+        res.json(err);
+      else {
+        res.json("Deleted this review: " + review);
         console.log('review deleted');
-
+      }
     });
   }
 

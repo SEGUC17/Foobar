@@ -4,6 +4,7 @@ const announcementController = require('../controllers/announcementController');
 const reservationController = require('../controllers/reservationController');
 const offerController = require('../controllers/offerController');
 const sPController = require('../controllers/sPController');
+const pendingSPController = require('../controllers/pendingSPController');
 const multer = require('multer');
 const crypto = require("crypto");
 const storage = multer.diskStorage({ //specifying storage path for images
@@ -39,6 +40,8 @@ router.post('/students/assess/:id', sPController.assessStudent); // service prov
 router.get('/reservations/view', reservationController.getReservations); //viewing his reservations
 
 router.post('/offers/create', offerController.createOffer); //posting a new offer
+
+router.post('/sP/apply', pendingSPController.Apply); // service provider can apply
 
 // router.post('/images/upload', upload.single('image'), sPController.uploadImage); //adding an image to his profile
 

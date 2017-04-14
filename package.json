@@ -30,6 +30,7 @@
     "passport-facebook": "~1.0.2",
     "passport-local": "~0.1.6",
     "password-generator": "^2.1.0"
+
   },
   "devDependencies": {
     "eslint": "^3.19.0",

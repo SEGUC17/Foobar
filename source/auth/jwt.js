@@ -7,7 +7,7 @@ const secret = 'ilovescotchscotchyscotchscotch';
 module.exports = {
   generate: function(credentials, cb) {
     User.findOne({
-      name: credentials.username,
+      email: credentials.email,
       password: credentials.password
     }, function(err, user) {
       if (!user) {

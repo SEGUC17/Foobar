@@ -1,20 +1,26 @@
 let Announcement = require("../models/Announcement");
+const jwt = require('../auth/jwt');
 
 
 let announcementController = {
 
   getAllAnnouncements: function(req, res) { //viewing all announcements
+    const token = req.headers['jwt-token'];
+    jwt.verify(token, function(decoded) {
+      Announcement.find(function(err, announcements) {
 
-    Announcement.find(function(err, announcements) {
+        if (err) {
 
-      if (err) {
-        res.send(err.message);
-
-        console.log("error");
-      } else {
-        console.log('announcements retrieved successfully');
-        // res.render('viewAnnouncements', {announcements:announcements});
-      }
+          res.json({
+            err: err
+          });
+        } else {
+          res.json({
+            announcement: announcements
+          });
+          // res.render('viewAnnouncements', {announcements:announcements});
+        }
+      });
     });
   }
 

@@ -13,9 +13,10 @@ const spRouter = require('./source/routes/sP');
 const studentRouter = require('./source/routes/student');
 const userRouter = require('./source/routes/user');
 // Testing
-// const User = require('./source/models/User');
+const User = require('./source/models/User');
 // const Review = require('./source/models/Review');
-// const Reservation = require('./source/models/Reservation');
+const ServiceProvider = require('./source/models/ServiceProvider');
+
 
 
 const app = express();
@@ -67,11 +68,15 @@ mongoose.connect(DB_URI);
 
 // Testing
 
-// new User({
-//   name: 'willi',
-//   password: 'foot',
-//   type: 3,
-// }).save();
+// new ServiceProvider({
+//   user_id: '58f11208225df24837f438cf'
+// }).save(function(err, user) {
+//   if (err) {
+//     console.log(err.message)
+//   } else {
+//     console.log(user);
+//   }
+// });
 //
 // new Review({
 //   rating: 10,
