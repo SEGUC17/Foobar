@@ -1,23 +1,20 @@
 <template>
 
 <div class="hello">
-<button class="" v-on:click="created">test</button>
-<div>{{msg}}</div>
-
-
+<div class="bg-content">
  <div class="container">
     <div class="row">
           <div class="span12"> 
         <!-- slider -->
         <div class="flexslider">
               <ul class="slides">
-            <!--<li> <img src="./assets/img/slide-1.jpg" alt="" > </li>
-            <li> <img src="./assets/img/slide-2.jpg" alt="" > </li>
-            <li> <img src="./asset/img/slide-3.jpg" alt="" > </li>
-            <li> <img src="./assets/img/slide-4.jpg" alt="" > </li>
-            <li> <img src="./assets/img/slide-5.jpg" alt="" > </li>-->
+            <li> <img src="~assets/img/slide-1.jpg" alt="" > </li>
+            <li> <img src="~assets/img/slide-2.jpg" alt="" > </li>
+            <li> <img src="~assets/img/slide-3.jpg" alt="" > </li>
+            <li> <img src="~assets/img/slide-4.jpg" alt="" > </li>
+            <li> <img src="~assets/img/slide-5.jpg" alt="" > </li>
           </ul>
-            </div>
+        </div>
         <span id="responsiveFlag"></span>
         <div class="block-slogan">
               <h2>Namaskar!</h2>
@@ -27,7 +24,10 @@
           </div>
             </div>
       </div>
-        </div>
+    </div>
+    <center><button class="" v-on:click="created">Get all announcements</button></center>
+    <div>{{msg}}</div>
+  </div>
   </div>
 
   </div>
