@@ -16,7 +16,9 @@ let announcementController = {
           });
         } else {
           res.status(200).json({
-            announcement: announcements
+            data: {
+              announcements
+            }
           });
           // res.render('viewAnnouncements', {announcements:announcements});
         }

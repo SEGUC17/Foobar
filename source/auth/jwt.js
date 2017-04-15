@@ -25,5 +25,6 @@ module.exports = {
     jwt.verify(token, secret, function(err, decoded) {
       cb(decoded);
     });
-  }
+  },
+
 };

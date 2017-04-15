@@ -173,6 +173,19 @@ let homeController = {
     });
 
 
+  },
+  getsignedvals: function(req, res) {
+
+
+    const token = req.body.token;
+    jwt.verify(token, function(decoded) {
+
+
+      res.json(decoded);
+
+
+
+    });
   }
 };
 

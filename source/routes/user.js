@@ -108,6 +108,9 @@
 
   });
   router.post('/resetPW', homeController.resetPassword); //viewing announcements
+  router.post('/decode', homeController.getsignedvals); //decoding token from front end
+
+
 
   // module.exports = function() {
 
