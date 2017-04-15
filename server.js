@@ -12,6 +12,7 @@ const adminRouter = require('./source/routes/admin');
 const spRouter = require('./source/routes/sP');
 const studentRouter = require('./source/routes/student');
 const userRouter = require('./source/routes/user');
+const cors = require('cors');
 // Testing
 const User = require('./source/models/User');
 const Review = require('./source/models/Review');
@@ -22,6 +23,10 @@ const PendingSP = require('./source/models/PendingSP');
 
 
 const app = express();
+
+app.use(cors({
+  origin: 'http://localhost:8080',
+}));
 
 app.use(bodyParser.urlencoded({
   extended: true,
