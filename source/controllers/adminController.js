@@ -32,7 +32,9 @@ const adminController = {
           var password = generatePassword();
           PendingSP.findByIdAndRemove(sP_id, function(err) {
             if (err)
-              res.json(err);
+              res.status(500).json({
+                err: err.message
+              });
           });
 
           //creating new user since he is approved
@@ -46,7 +48,9 @@ const adminController = {
 
           newUser.save(function(err, userSuccess) {
             if (err)
-              res.json(err);
+              res.status(500).json({
+                err: err.message
+              });
           }); //saving user instance
 
           //creating new SP account
@@ -59,12 +63,15 @@ const adminController = {
 
           newSP.save(function(err, sPSuccess) {
             if (err)
-              res.json(err);
+              res.status(500).json({
+                err: err.message
+              });
           }); //saving SP instance
 
-          res.json(
-            'Removed him from PendingSP Collection and Added to user collection as: ' +
-            newUser + "and to the SP collection as: " + newSP);
+          res.status(200).json({
+            success: 'Removed him from PendingSP Collection and Added to user collection as: ' +
+              newUser + "and to the SP collection as: " + newSP
+          });
           // create reusable transporter object using the default SMTP transport
           let transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -86,7 +93,9 @@ const adminController = {
           // send mail with defined transport object
           transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
-              return console.log(error);
+              res.status(500).json({
+                err: error.message
+              });
             }
             console.log('Message %s sent: %s', info.messageId, info
               .response);
@@ -104,12 +113,14 @@ const adminController = {
             upsert: true,
             new: true
           }, function(err, sP) {
-            res.json('Disapproved successfully ' + sP);
-            console.log(sP);
+            res.status(200).json({
+              mss: 'Disapproved successfully ' + sP
+            });
+
           });
         }
       } else {
-        res.json({
+        res.status(500).json({
           err: 'unauthorized access'
         });
       }
@@ -144,7 +155,7 @@ const adminController = {
 
 
       } else {
-        res.json({
+        res.status(500).json({
           err: 'unauthorized access'
         });
       }
@@ -166,18 +177,18 @@ const adminController = {
 
         announcement.save(function(err, announcement) {
           if (err)
-            res.json({
+            res.status(500).json({
               err: err.message
             });
           else {
-            res.json({
+            res.status(200).json({
               obj: announcement
             });
             return 1;
           }
         });
       } else {
-        res.json({
+        res.status(500).json({
           err: 'unauthorized access'
         });
       }
@@ -217,21 +228,22 @@ const adminController = {
               tempInterest);
             most = temp[0];
             least = temp[temp.length - 1];
-            res.json('Most Frequent Interest is ' + ">>" +
-              most +
-              " --  " +
-              "The following is the Interests frequency sorted descendengly" +
-              ">>>" + temp + "-----" +
-              "The least frequent interest is " + " " +
-              least
-            );
+            res.status(200).json({
+              mssg: 'Most Frequent Interest is ' + ">>" +
+                most +
+                " --  " +
+                "The following is the Interests frequency sorted descendengly" +
+                ">>>" + temp + "-----" +
+                "The least frequent interest is " + " " +
+                least
+            });
 
 
           });
         });
 
       } else {
-        res.json({
+        res.status(500).json({
           err: 'unauthorized access'
         });
       }
@@ -248,14 +260,18 @@ const adminController = {
 
         SP.findById(req.params.id, function(err, sp) {
           if (err)
-            res.json(err.message);
+            res.status(500).json({
+              err: err.message
+            });
           else {
 
             Offer.find({
               sp_id: sp.id
             }, function(err, offers) {
               if (err)
-                res.json(err.message);
+                res.status(500).json({
+                  err: err.message
+                });
               else {
                 for (var i = 0; i < offers.length; i++) {
                   if (offers[i].end_date > Date.now()) {
@@ -274,17 +290,21 @@ const adminController = {
 
             sp.save(function(err, sp) {
               if (err) {
-                res.json(err.message);
-                Console.log(err);
+                res.status(500).json({
+                  err: err.message
+                });
+
               } else {
                 // Return
-                res.json("Deleted");
+                res.status(200).json({
+                  mssg: "Deleted"
+                });
               }
             });
           }
         });
       } else {
-        res.json({
+        res.status(500).json({
           err: 'unauthorized access'
         });
       }
@@ -299,10 +319,14 @@ const adminController = {
           'local.emai': req.body.email
         }, function(err, admin) {
           if (err)
-            res.json(err.message);
+            res.status(500).json({
+              err: err.message
+            });
           else {
             if (admin) {
-              res.json("Change email hoe.");
+              res.status(200).json({
+                mssg: "Change email hoe."
+              });
             } else {
               let user = new User();
               user.local.email = req.body.email;
@@ -311,19 +335,22 @@ const adminController = {
               user.type = 1;
               user.save(function(err, project) {
                 if (err) {
-                  res.json(err.message);
-                  console.log(err);
+                  res.status(500).json({
+                    err: err.message
+                  });
+
                 } else {
-                  res.json(
-                    "Cool job, new admin. Password is: " +
-                    password);
+                  res.status(200).json({
+                    mssg: "Cool job, new admin. Password is: " +
+                      password
+                  });
                 }
               });
             }
           }
         });
       } else {
-        res.json({
+        res.status(500).json({
           err: 'unauthorized access'
         });
       }
@@ -335,26 +362,34 @@ const adminController = {
         if (decoded.type === 1) {
           Student.findById(req.params.id, function(err, student) {
             if (err)
-              res.json(err.message);
+              res.status(500).json({
+                err: err.message
+              });
             else {
               if (student) {
                 student.is_deleted = true;
                 student.save(function(err, sp) {
                   if (err) {
-                    res.json(err.message);
-                    console.log(err);
+                    res.status(500).json({
+                      err: err.message
+                    });
+
                   } else {
                     // Return
-                    res.json("Deleted");
+                    res.status(500).json({
+                      mssg: "Deleted"
+                    });
                   }
                 });
               } else {
-                res.json("Not found");
+                res.status(500).json({
+                  mssg: "Not found"
+                });
               }
             }
           });
         } else {
-          res.json({
+          res.status(500).json({
             err: 'unauthorized access'
           });
         }

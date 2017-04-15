@@ -25,22 +25,27 @@ const StudentController = {
           id: req.params.id
         }, function(err, reservation) {
           if (err)
-            res.json(err.message);
+            res.status(500).json({
+              err: err.message
+            });
           else {
             reservation.status = 1;
             reservation.save(function(err, reservation) {
               if (err) {
-                res.json(err.message);
-                console.log(err);
+                res.status(500).json({
+                  err: err.message
+                });
               } else {
-                res.json("Approved successfully");
+                res.status(200).json({
+                  mssg: "Approved successfully"
+                });
               }
             });
           }
 
         });
       } else {
-        res.json({
+        res.status(500).json({
           err: 'unauthorized access'
         });
       }
@@ -60,13 +65,17 @@ const StudentController = {
 
         }).save(function(err, review) {
           if (err) {
-            res.json(err.message);
+            res.status(500).json({
+              err: err.message
+            });
           } else {
-            res.json(review);
+            res.status(200).json({
+              obj: review
+            });
           }
         });
       } else {
-        res.json({
+        res.status(500).json({
           err: 'unauthorized access'
         });
       }
@@ -78,8 +87,11 @@ const StudentController = {
     Tag.find({
       name: search
     }, function(err, tagsarray) {
-      if (err)
-        res.json(err.message);
+      if (err) {
+        res.status(500).json({
+          err: err.message
+        });
+      }
     });
 
     Offer.find({
@@ -92,7 +104,7 @@ const StudentController = {
           description: search
         }, {
           offer_id: {
-            $in: tagsarray.offer_id
+            $in: tagarray.offer_id
           }
         }]
       }, {
@@ -102,9 +114,13 @@ const StudentController = {
       }],
       function(err, offers) {
         if (err)
-          res.json(err.message);
+          res.status(500).json({
+            err: err.message
+          });
         else {
-          console.log("found offers");
+          res.json({
+            mssg: "found offers"
+          });
           //Render offers
         }
       }
@@ -118,13 +134,15 @@ const StudentController = {
           user_id: decoded.id
         }, function(err, skills) {
           if (err)
-            res.json(err.message);
+            res.status(500).json({
+              err: err.message
+            });
           else {
             res.json(skills);
           }
         });
       } else {
-        res.json({
+        res.status(500).json({
           err: 'unauthorized access'
         });
       }
@@ -138,11 +156,17 @@ const StudentController = {
           'id': ObjectId(req.params.id)
         }, function(err, offer) {
           if (err)
-            res.json(err.message);
+            res.status(500).json({
+              err: err.message
+            });
           else {
-            console.log(offer);
+            res.json({
+              obj: offer
+            });
             if (offer.due_date < Date.now()) {
-              res.json("You can't register now");
+              res.json({
+                mssg: "You can't register now"
+              });
             } else {
               if (offer.capacity > 0) {
                 const reservation = new Reservation({
@@ -154,13 +178,17 @@ const StudentController = {
                 });
                 reservation.save(function(err, reservation) {
                   if (err) {
-                    res.json(err.message);
+                    res.status(500).json({
+                      err: err.message
+                    });
                   } else {
                     offer.capacity = offer.capacity -
                       1;
                     offer.save(function(err, reservation) {
                       if (err) {
-                        res.json(err.message);
+                        res.status(500).json({
+                          err: err.message
+                        });
                         console.log(err);
                       } else {
                         res.json({
@@ -171,14 +199,15 @@ const StudentController = {
                   }
                 });
               } else {
-                res.json("There are no places in this course");
+                res.json({
+                  mssg: "There are no places in this course"
+                });
               }
             }
           }
         });
       } else {
-
-        res.json({
+        res.status(500).json({
           err: 'unauthorized access'
         });
       }
@@ -189,7 +218,9 @@ const StudentController = {
       _id: req.params.id
     }, function(err, user) {
       if (err)
-        res.json(err.message);
+        res.status(500).json({
+          err: err.message
+        });
       else {
         Student.find({
           user_id: req.params.id
@@ -211,13 +242,17 @@ const StudentController = {
           id: decoded.id
         }, function(err, user) {
           if (err)
-            res.json(err.message);
+            res.status(500).json({
+              err: err.message
+            });
           else {
             Student.find({
               user_id: decoded.id
             }, function(err, student) {
               if (err)
-                res.json(err.message);
+                res.status(500).json({
+                  err: err.message
+                });
               else {
                 // user.name = req.body.name;
                 // student.university = req.body.university;
@@ -235,9 +270,9 @@ const StudentController = {
                   student_id: student.user_id
                 }, function(err) {
                   if (err) {
-                    res.json(
-                      "Can't delete Student Interest"
-                    );
+                    res.status(500).json({
+                      err: err.message
+                    });
                   }
                 });
 
@@ -249,9 +284,9 @@ const StudentController = {
 
                   newInterset.save(function(err) {
                     if (err)
-                      res.json(
-                        "Student interests updating error "
-                      );
+                      res.json({
+                        mssg: "Student interests updating error "
+                      });
                   });
                 }
 
@@ -261,9 +296,13 @@ const StudentController = {
                   name: name
                 }, function(err, u1) {
                   if (err)
-                    res.json(err.message);
+                    res.status(500).json({
+                      err: err.message
+                    });
                   else {
-                    res.json('uname updated');
+                    res.json({
+                      mssg: 'uname updated'
+                    });
                   }
                 });
                 Student.update({
@@ -275,9 +314,13 @@ const StudentController = {
                   description: description
                 }, function(err, student1) {
                   if (err)
-                    res.json(err.message);
+                    res.status(500).json({
+                      err: err.message
+                    });
                   else {
-                    res.json('student updated');
+                    res.json({
+                      mssg: 'student updated'
+                    });
                   }
                 });
 
@@ -303,7 +346,9 @@ const StudentController = {
 
         });
       } else {
-
+        res.status(500).json({
+          err: 'unauthorized access'
+        });
       }
     });
   }

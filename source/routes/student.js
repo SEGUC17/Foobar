@@ -35,5 +35,9 @@ router.get('/viewoffer', homeController.viewOffers); // Student can view offers
 
 router.get('/profile', homeController.findProfile); // msh3arf feen
 
+router.post('/home', studentController.search); // Student can search offers
+
+router.get('/progress', studentController.seeProgress); //student can see his progress
+
 
 module.exports = router;

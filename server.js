@@ -69,41 +69,41 @@ mongoose.connect(DB_URI);
 // });
 
 // Testing
- 
 
- /*var newUser = new User({
-   email: "admin@hotmail.com",
-   type: 1,
-   is_deleted: false
- });
- newUser.password = "Admin1234";
- newUser.save(function(err,user){
-   if(err)
-    console.log(err);
-    else
+
+/*var newUser = new User({
+  email: "admin@hotmail.com",
+  type: 1,
+  is_deleted: false
+});
+newUser.password = "Admin1234";
+newUser.save(function(err,user){
+  if(err)
+   console.log(err);
+   else
+   console.log(user);
+});*/
+
+
+/*new ServiceProvider({
+  user_id: '58f1fdfd69c86ecc6395cfcb'
+}).save(function(err, user) {
+  if (err) {
+    console.log(err.message)
+  } else {
     console.log(user);
- });*/
+  }
+});*/
 
-
- /*new ServiceProvider({
-   user_id: '58f1fdfd69c86ecc6395cfcb'
- }).save(function(err, user) {
-   if (err) {
-     console.log(err.message)
-   } else {
-     console.log(user);
-   }
- });*/
-
- /*new ServiceProvider({
-   user_id: '58f1ff8ba1f47cccd6e7adfb'
- }).save(function(err, user) {
-   if (err) {
-     console.log(err.message)
-   } else {
-     console.log(user);
-   }
- });*/
+/*new ServiceProvider({
+  user_id: '58f1ff8ba1f47cccd6e7adfb'
+}).save(function(err, user) {
+  if (err) {
+    console.log(err.message)
+  } else {
+    console.log(user);
+  }
+});*/
 //
 /* new Review({
    rating: 10,
@@ -131,13 +131,13 @@ new Reservation({
  }).save();
 */
 
-new PendingSP({
-  name:"Not Courses",
-  email:"notcourses@hotmail.com",
-  phone_number:"01211223344",
-  description:"Test pending sp",
-  is_declined: false
-}).save();
+// new PendingSP({
+//   name:"Not Courses",
+//   email:"notcourses@hotmail.com",
+//   phone_number:"01211223344",
+//   description:"Test pending sp",
+//   is_declined: false
+// }).save();
 
 // Start the server
 app.listen(3000, function() {

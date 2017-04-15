@@ -21,15 +21,19 @@ const spController = {
 
         }).save(function(err, announcement) {
           if (err) {
-            res.json(err.message);
+            res.status(500).json({
+              err: err.message
+            });
           } else {
-            res.json("announcement");
+            res.status.json({
+              obj: announcement
+            });
 
           }
         });
       } else {
-        res.json({
-          err: 'unauthorized access'
+        res.status(500).json({
+          err: err.message
         });
       }
     });
@@ -42,14 +46,18 @@ const spController = {
           sp_id: decoded.id
         }, function(err, reviews) {
           if (err) {
-            res.json(err.message);
+            res.status(500).json({
+              err: err.message
+            });
           } else {
-            res.json(reviews);
+            res.status(200).json({
+              obj: reviews
+            });
           }
         });
       } else {
-        res.json({
-          err: 'unauthorized access'
+        res.status(500).json({
+          err: err.message
         });
       }
     });
@@ -64,14 +72,18 @@ const spController = {
           rating: req.body.rating,
         }).save(function(err, assessment) {
           if (err) {
-            res.json(err.message);
+            res.status(500).json({
+              err: err.message
+            });
           } else {
-            res.json(assessment);
+            res.status(200).json({
+              obj: assessment
+            });
           }
         });
       } else {
-        res.json({
-          err: 'unauthorized access'
+        res.status(500).json({
+          err: err.message
         });
       }
     });
@@ -83,12 +95,15 @@ const spController = {
       SP.find(function(err, profiles) {
 
         if (err) {
-          res.json(err.message);
+          res.status(500).json({
+            err: err.message
+          });
         } else {
           //res.render('spProfiles', {profiles:profiles});
-          res.json(profiles);
-          console.log(
-            'summary of SP profiles retrieved successfully');
+          res.status(200).json({
+            obj: profiles,
+            mssg: 'summary of SP profiles retrieved successfully'
+          });
         }
       });
 
@@ -102,14 +117,14 @@ const spController = {
 
     SP.findOne(query, function(err, providerProfile) {
       if (err) {
-        res.json(err);
+        res.status(500).json({
+          err: err.message
+        });
       } else {
-        res.json(providerProfile);
+        res.status(200).json({
+          obj: providerProfile
+        });
       }
-
-      // res.render('spProfile', {
-      //   sPProfile: providerProfile
-
     });
 
   },
@@ -130,15 +145,17 @@ const spController = {
         });
         newVideo.save(function(err, video) {
           if (err) {
-            res.json(err)
+            res.status(500).json({
+              err: err.message
+            });
           } else {
-            res.json({
+            res.status(200).json({
               video: video
             });
           }
         });
       } else {
-        res.json({
+        res.status(500).json({
           err: 'unauthorized access'
         });
       }
@@ -167,10 +184,13 @@ const spController = {
     };
 
     Video.find(query, function(err, video) {
-      if (err) console.log(err);
-
-      console.log(req);
-      res.json(video);
+      if (err)
+        res.status(500).json({
+          err: err.message
+        });
+      res.status(200).json({
+        obj: video
+      });
     });
   }
 };

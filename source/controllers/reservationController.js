@@ -10,18 +10,20 @@ let reservationController = {
       {
         let query = {
           user_id: decoded.id
-            //  user_id: "1111"
         };
         Reservation.find(query, function(err, reservations) { //finding all reservations made by this student
 
           if (err) {
-            res.json(err.message);
-
-            console.log("error");
+            res.status(500).json({
+              err: err.message
+            });
           } else {
             //res.render('viewReservations', {reservations:reservations});
-            console.log('reservations retrieved succesfully');
-            res.json(reservations);
+
+            res.status(200).json({
+              obj: reservations,
+              mssg: 'reservations retrieved succesfully'
+            });
           }
         });
       } else if (decoded.type == 3) {
@@ -32,13 +34,17 @@ let reservationController = {
         Reservation.find(query, function(err, reservations) { //finding all reservations made to this SP
 
           if (err) {
-            res.json(err.message);
+            res.status(500).json({
+              err: err.message
+            });
 
-            console.log("error");
+
           } else {
             //res.render('viewReservations', {reservations:reservations});
-            console.log('reservations retrieved successfully');
-            res.json(reservations);
+            res.status(200).json({
+              obj: reservations,
+              mssg: 'reservations retrieved succesfully'
+            });
           }
         });
       }

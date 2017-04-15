@@ -11,18 +11,23 @@ let pendingSPController = {
         PendingSP.find(function(err, pendingSP) {
 
           if (err) { //if error occurred
-            res.json(err.message);
+            res.status(500).json({
+              err: err.message
+            });
 
-            console.log("error");
+
           } else {
             //  res.render('viewPendingSP', {pendingSP:pendingSP});
-            res.json(pendingSP);
-            console.log(
-              'pending SP requests retrieved successfully');
+            res.status(200).json({
+              obj: pendingSP
+            });
+            res.status(200).json({
+              mssg: 'pending SP requests retrieved successfully'
+            });
           }
         });
       } else {
-        res.json({
+        res.status(500).json({
           err: 'unauthorized access'
         });
       }
@@ -49,9 +54,13 @@ let pendingSPController = {
       // is_declined : true
       pending.save(function(err, pending) {
         if (err) {
-          res.json(err.message);
+          res.status(500).json({
+            err: err.message
+          });
         } else {
-          res.json(pending);
+          res.status(200).json({
+            obj: pending
+          });
         }
       });
 

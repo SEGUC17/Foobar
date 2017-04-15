@@ -16,10 +16,12 @@ let interestController = {
           name: name
         });
         newInterest.save();
-        res.json(name);
+        res.status(200).json({
+          err: name
+        });
 
       } else {
-        res.json({
+        res.status(500).json({
           err: 'unauthorized access'
         });
       }

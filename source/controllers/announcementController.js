@@ -11,11 +11,11 @@ let announcementController = {
 
         if (err) {
 
-          res.json({
-            err: err
+          res.status(500).json({
+            err: err.message
           });
         } else {
-          res.json({
+          res.status(200).json({
             announcement: announcements
           });
           // res.render('viewAnnouncements', {announcements:announcements});

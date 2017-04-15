@@ -54,7 +54,7 @@
     }).save(function(err, user) {
       if (err) {
         res.json({
-          err: 'error',
+          err: 'email is already taken',
         });
       } else {
 

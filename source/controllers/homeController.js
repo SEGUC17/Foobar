@@ -15,16 +15,20 @@ let homeController = {
     const token = req.headers['jwt-token'];
     jwt.verify(token, function(decoded) {
       if (decoded.type == 1) {
-        res.json("Admin logged in");
+        res.status(200).json({
+          mssg: "Admin logged in"
+        });
       } else if (decoded.type == 2) {
         Student.find({
           user_id: decoded.id
         }, function(err, student) {
           if (err)
-            res.json(err.message);
+            res.status(500).json({
+              err: err.message
+            });
           else {
             // Return
-            res.json({
+            res.status(200).json({
               message: "Student logged in",
               user: student
             });
@@ -35,14 +39,20 @@ let homeController = {
           user_id: decoded.id
         }, function(err, sp) {
           if (err)
-            res.json(err.message);
+            res.status(500).json({
+              err: err.message
+            });
           else {
             // Return
-            res.json("Service Provider logged in");
+            res.status(200).json({
+              mssg: "Service Provider logged in"
+            });
           }
         });
       } else {
-        res.json("No user logged in");
+        res.status(500).json({
+          mssg: "No user logged in"
+        });
       }
     });
   },
@@ -54,7 +64,9 @@ let homeController = {
           student_id: decoded.id
         }, function(err, studentinterests) {
           if (err)
-            res.json(err.message);
+            res.status(500).json({
+              err: err.message
+            });
           else {
             Interest.find({
               id: {
@@ -63,7 +75,9 @@ let homeController = {
             }, function(err, interests) {
 
               if (err)
-                res.json(err.message);
+                res.status(500).json({
+                  err: err.message
+                });
               else {
                 Offer.find({
                   field: {
@@ -71,10 +85,14 @@ let homeController = {
                   }
                 }, function(err, offers) {
                   if (err)
-                    res.json(err.message);
+                    res.status(500).json({
+                      err: err.message
+                    });
                   else {
                     // Return
-                    res.json('Viewing offers');
+                    res.status(200).json({
+                      err: 'Viewing offers'
+                    });
                   }
                 });
               }
@@ -86,10 +104,12 @@ let homeController = {
           limit: 10
         }, function(err, offers) {
           if (err)
-            res.json(err.message);
+            res.status(500).json({
+              err: err.message
+            });
           else {
             // Return
-            res.json({
+            res.status(200).json({
               offers: offers
             });
           }

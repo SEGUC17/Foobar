@@ -22,11 +22,13 @@ let offerController = {
           end_date: req.body.end_date
         });
         newOffer.save();
-        res.json(newOffer);
-        console.log('new offer posted successfully');
+        res.status(200).json({
+          offer: newOffer
+        });
+
 
       } else {
-        res.json({
+        res.status(500).json({
           err: 'unauthorized access'
         });
       }
