@@ -9,6 +9,7 @@
             <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
             <div class="nav-collapse nav-collapse_  collapse">
                   <ul class="nav sf-menu">
+<<<<<<< Updated upstream
                 <li class="active"><a href="index.html">Home</a></li>
                 <li><a href="work.html">Work</a></li>
                 <li><a href="blog.html">Blog</a></li>
@@ -20,6 +21,12 @@
                   </ul>
                     </li>
                 <li><a data-toggle="modal" data-target="#myModal">Enter</a></li>
+=======
+                <li class="active"><router-link to="/">Home</router-link></li>
+                <li ><router-link to="/announcements">Announcements</router-link></li>
+                <li ><router-link to="/StudentProfile"> Offers</router-link></li>
+                <li ><router-link to="/sPs">  SPS</router-link></li>
+>>>>>>> Stashed changes
               </ul>
                 </div>
           </div>
