@@ -16,7 +16,7 @@ import './assets/js/jquery.kwicks-1.5.1.js'
 import './assets/js/jquery.easing.1.3.js'
 import './assets/js/jquery.cookie.js'
 import './assets/js/touchTouch.jquery.js'
-// import './assets/js/bootstrap.js'
+import './assets/js/bootstrap.js'
 
 Vue.config.productionTip = false
 
