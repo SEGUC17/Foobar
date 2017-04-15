@@ -27,7 +27,7 @@ let reservationController = {
       } else if (decoded.type == 3) {
         // } else if(false){
         let query = {
-          service_provider_id: req.user.id
+          service_provider_id: decoded.id
         };
         Reservation.find(query, function(err, reservations) { //finding all reservations made to this SP
 

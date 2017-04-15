@@ -14,8 +14,10 @@ const studentRouter = require('./source/routes/student');
 const userRouter = require('./source/routes/user');
 // Testing
 const User = require('./source/models/User');
-// const Review = require('./source/models/Review');
+const Review = require('./source/models/Review');
 const ServiceProvider = require('./source/models/ServiceProvider');
+const Reservation = require('./source/models/Reservation');
+const PendingSP = require('./source/models/PendingSP');
 
 
 
@@ -67,32 +69,75 @@ mongoose.connect(DB_URI);
 // });
 
 // Testing
+ 
 
-// new ServiceProvider({
-//   user_id: '58f11208225df24837f438cf'
-// }).save(function(err, user) {
-//   if (err) {
-//     console.log(err.message)
-//   } else {
-//     console.log(user);
-//   }
-// });
+ /*var newUser = new User({
+   email: "admin@hotmail.com",
+   type: 1,
+   is_deleted: false
+ });
+ newUser.password = "Admin1234";
+ newUser.save(function(err,user){
+   if(err)
+    console.log(err);
+    else
+    console.log(user);
+ });*/
+
+
+ /*new ServiceProvider({
+   user_id: '58f1fdfd69c86ecc6395cfcb'
+ }).save(function(err, user) {
+   if (err) {
+     console.log(err.message)
+   } else {
+     console.log(user);
+   }
+ });*/
+
+ /*new ServiceProvider({
+   user_id: '58f1ff8ba1f47cccd6e7adfb'
+ }).save(function(err, user) {
+   if (err) {
+     console.log(err.message)
+   } else {
+     console.log(user);
+   }
+ });*/
 //
-// new Review({
-//   rating: 10,
-//   sp_id: '58e11d35e7c4701649421877',
-// }).save();
+/* new Review({
+   rating: 10,
+   sp_id: '58f1fdfd69c86ecc6395cfcb',
+ }).save();
+
+ new Review({
+   rating: 8,
+   sp_id: '58f1fdfd69c86ecc6395cfcb',
+ }).save();
 //
 // new Review({
 //   rating: 20,
 //   sp_id: '58e11d35e7c4701649421877',
 // }).save();
 //
-// new Reservation({
-//   user_id: 1,
-//   service_provider_id: '58e11d35e7c4701649421877',
-// }).save();
+ new Reservation({
+   user_id: "58f1fbaa4cb3e4cbb57a0bf1",
+   service_provider_id: '58f1fdfd69c86ecc6395cfcb',
+ }).save();
 
+new Reservation({
+   user_id: "58f1fbaa4cb3e4cbb57a0bf1",
+   service_provider_id: '58f1ff8ba1f47cccd6e7adfb',
+ }).save();
+*/
+
+new PendingSP({
+  name:"Not Courses",
+  email:"notcourses@hotmail.com",
+  phone_number:"01211223344",
+  description:"Test pending sp",
+  is_declined: false
+}).save();
 
 // Start the server
 app.listen(3000, function() {

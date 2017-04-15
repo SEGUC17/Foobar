@@ -104,7 +104,7 @@ let homeController = {
     var password = generatePassword();
     //  console.log(password);
     User.findOne({
-      'local.email': email
+      email: email
     }, function(err, user) {
       // if there are any errors, return the error
       if (err)
@@ -113,7 +113,7 @@ let homeController = {
       {
         User.findByIdAndUpdate(user.id, {
           $set: {
-            'local.password': password
+            password: password
           }
         }, {
           safe: true,
