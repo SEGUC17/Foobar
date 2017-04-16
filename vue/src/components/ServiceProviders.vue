@@ -2,7 +2,7 @@
   <div>
 
 <ul>
-  <li v-for =" serviceprovider in serviceproviders">{{serviceprovider._id}}</li>
+  <li v-for = "serviceprovider in serviceproviders"><router-link :to = "{ name: 'service provider' , params: { id: serviceprovider._id }}" v-model ="spid"> {{serviceprovider._id}} </router-link></li>
 </ul>
 
 
@@ -21,7 +21,7 @@ created(){
 },
 methods:{
     getAllServiceProviders: function () {
-      this.$http.get('http://localhost:3000/sPs').then(response => {
+      this.$http.get('http://localhost:3000/api/students/sPs').then(response => {
 
         this.serviceproviders=response.data.data.profiles
       })

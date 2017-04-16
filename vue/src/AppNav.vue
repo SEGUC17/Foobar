@@ -8,20 +8,23 @@
             <h1 class="brand brand_"><a href="index.html"><img alt="" src="./assets/img/logo.png" style ="height:70px"> </a></h1>
             <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
             <div class="nav-collapse nav-collapse_  collapse">
-                  <ul class="nav sf-menu">
-                <li class="active"><a href="index.html">Home</a></li>
-                <li><a href="work.html">Work</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li class="sub-menu"><a href="process.html" v-if="!user.authenticated">Process</a>
-                      <ul>
-                    <li><a href="#">Process 01</a></li>
-                    <li><a href="#">Process 02</a></li>
-                    <li><a href="#">Process 03</a></li>
-                  </ul>
-                    </li>
+          <ul class="nav sf-menu">
+                
                 <li><a  data-toggle="modal" data-target="#myModal" v-if= "!this.user.authenticated" >Enter</a></li>
                 <li><a  data-toggle="modal"  v-if= "this.user.authenticated" >logout</a></li>
 
+                <li><a data-toggle="modal" data-target="#addInterest">Add Interest</a></li>
+                <li><a data-toggle="modal" data-target="#postAnnouncement">Post Announcement</a></li>
+                <li><a data-toggle="modal" data-target="#myModal2">Edit admins</a></li>
+
+                <li class="active"><router-link to="/">Home</router-link></li>
+                <li ><router-link to="/announcements">Announcements</router-link></li>
+                <br>
+                <li ><router-link to="/pendingSp">View Pending Service Providers</router-link></li>
+                <li ><router-link  to="/StudentProfile"> Student Profile</router-link></li>
+                <li ><router-link  to="/sPs">  SPS</router-link></li>
+
+               
               </ul>
                 </div>
           </div>
@@ -29,6 +32,172 @@
       </div>
         </div>
   </div>
+ <div class="modal hide fade" id ="myModal2">
+
+  <div class="modal-body" style="padding-left:6%">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <div class="row">
+                    <div class="col-md-8" style="">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#Add" data-toggle="tab">Add Admin</a></li>
+                            <li><a href="#Delete" data-toggle="tab">Delete Admin</a></li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="Add">
+                                <center>
+                                <form role="form" class="">
+                                <div class="form-group">
+                                    <label  for="email" class="col-sm-2 control-label">
+                                        Name</label>
+                                    <div class="col-sm-10">
+                                        <input  type="text" class="form-control" id="adminname" placeholder="Enter your name here" v-model="adminname" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email" class="col-sm-2 control-label">
+                                        Email</label>
+                                    <div class="col-sm-10">
+                                        <input type="email" class="form-control" id="adminemail" placeholder="Enter the email here"  v-model="adminemail"  />
+                                    </div>
+
+                                </div>
+
+
+
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <button @click="addAdmin()" type="submit" class="btn btn-success btn-sm">
+                                            Submit</button>
+
+
+                                    </div>
+                                </div>
+                                </form>
+                             </center>
+                            </div>
+                            <div class="tab-pane" id="Delete">
+                                <center>
+                                <form role="form" class="">
+                                <div class="form-group">
+                                    <label for="email" class="col-sm-2 control-label">
+                                        Admin ID </label>
+                                    <div class="col-sm-10">
+                                        <input type="email" class="form-control" id="email" placeholder="Enter the ID here" />
+                                    </div>
+                                </div>
+
+
+
+
+
+
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <button type="button" class="btn btn-warning btn-sm">
+                                            Delete</button>
+                                    </div>
+                                </div>
+                                </form>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+  </div>
+
+  </div>
+
+  <div class="modal hide fade" id ="addInterest">
+
+  <div class="modal-body" style="padding-left:6%">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <div class="row">
+                    <div class="col-md-8" style="">
+                        <!-- Nav tabs -->
+                       
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="Login">
+                                <center>
+                                <form role="form" class="">
+                                <div class="form-group">
+                                    <label for="email" class="col-sm-2 control-label">
+                                        Add Interest</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="interestName" v-model="interestName" placeholder="Interest Name" />
+                                    </div>
+                                </div>
+                              
+
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary btn-sm" @click="addInterest()">
+                                            Submit</button>
+                                            <br>
+                                    </div>
+                                </div>
+                                </form>
+                             </center>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+                  </div>
+                </div>
+
+<div class="modal hide fade" id ="postAnnouncement">
+  <div class="modal-body" style="padding-left:6%">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>                         <div class="row">
+                    <div class="col-md-8" style="">
+                        <!-- Nav tabs -->
+                       
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="Login">
+                                <center>
+                                <form role="form" class="">
+                                <div class="form-group">
+                                    <label for="email" class="col-sm-2 control-label">
+                                        Post Announcement</label>
+                                    
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="AnnTitle" v-model="Title" placeholder="Title" />
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control"  v-model="Announcement" id="Announcement"  placeholder="Announcement" /> </textarea> 
+                                    </div>
+                                </div>
+                              
+
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <button type="submit" class="btn btn-primary btn-sm" @click="postAnnouncementAdmin()">
+                                            Submit</button>
+                                            <br>
+                                    </div>
+                                </div>
+                                </form>
+                             </center>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+                  </div>
+                </div>
+
 
   <div class="modal hide fade" id ="myModal">
 
@@ -127,11 +296,13 @@ data () {
 
       },
       error: '',
-
-
-
-
-
+       show : true ,
+      interestName :"",
+       Announcement :"",
+       adminEmail :"",
+       Title: "" ,
+       adminname : "",
+      adminemail: "",
   // User object will let us check authentication status
   user: {
     authenticated: false
@@ -189,6 +360,18 @@ methods: {
       'Authorization': 'Bearer ' + localStorage.getItem('id_token')
     }
   },
+   addInterest: function(){
+        this.$http.post("http://localhost:3000/api/admins/addInterest",{name: this.interestName}).then(console.log(this.interestName))
+    } ,
+    postAnnouncementAdmin: function(){
+        // this.$http.post("http://localhost:3000/api/admins/addInterest",{name: this.interestName}).then(console.log(this.interestName))
+        console.log(this.Announcement);
+    },
+     addAdmin: function () {
+      this.$http.post('http://localhost:3000/api/admins/admin',{name: this.adminname , email: this.adminemail  } ).then(
+ console.log(this.adminname)
+      )
+    }
 
 }
 

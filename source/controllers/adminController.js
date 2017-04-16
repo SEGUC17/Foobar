@@ -335,11 +335,12 @@ const adminController = {
   },
 
   addAdmin: function(req, res) {
-    const token = req.headers['jwt-token'];
-    jwt.verify(token, function(decoded) {
-      if (decoded.type === 1) {
+    // const token = req.headers['jwt-token'];
+    // jwt.verify(token, function(decoded) {
+    //   if (decoded.type === 1) {
         User.findOne({
-          'local.emai': req.body.email,
+          'local.email': req.body.email,
+          
         }, (err, admin) => {
           if (err) {
             res.json(err.message);
@@ -350,11 +351,11 @@ const adminController = {
             });
           } else {
             const password = generatePassword();
-            const newuser = new User({
-              'local.email': req.body.email,
-              'local.password': user.generateHash(password),
-              type: 1,
-            });
+            let newuser = new User()
+              newuser.email= req.body.email;
+              newuser.password= newuser.generateHash(password);
+              newusertype= 1;
+            
             newuser.save((newusererr) => {
               if (newusererr) {
                 res.status(500).json({
@@ -372,12 +373,13 @@ const adminController = {
             });
           }
         });
-      } else {
-        res.status(500).json({
-          err: 'unauthorized access'
-        });
-      }
-    });
+       
+    //   else {
+    //     res.status(500).json({
+    //       err: 'unauthorized access'
+    //     });
+    //   }
+    // });
   },
   deleteStudent: function(req, res) {
       const token = req.headers['jwt-token'];

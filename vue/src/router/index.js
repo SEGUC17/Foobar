@@ -4,6 +4,7 @@ import Hello from '@/components/Hello'
 import Announcements from '@/components/Announcements'
 import ServiceProviders from '@/components/ServiceProviders.vue'
 import StudentProfile from '@/components/StudentProfile.vue'
+import pendingSp from '@/components/pendingSp.vue'
 import vueResource from 'vue-resource'
 Vue.use(Router)
 Vue.use(vueResource)
@@ -21,6 +22,14 @@ export default new Router({
   }, {
     path: '/StudentProfile',
     component: StudentProfile
-  }],
+  }, {
+    path: '/pendingSp',
+    component: pendingSp
+  }, {
+        path: '/sps/:id',
+        name:'service provider',
+        component: StudentProfile
+      }
+      ],
   mode: 'history'
 })

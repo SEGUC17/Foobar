@@ -5,9 +5,9 @@ const jwt = require('../auth/jwt');
 let pendingSPController = {
 
   getAllPendingSP: function(req, res) { //viewing all pending SP requests
-    const token = req.headers['jwt-token'];
-    jwt.verify(token, function(decoded) {
-      if (decoded.type === 1) {
+    // const token = req.headers['jwt-token'];
+    // jwt.verify(token, function(decoded) {
+    //   if (decoded.type === 1) {
         PendingSP.find(function(err, pendingSP) {
 
           if (err) { //if error occurred
@@ -27,12 +27,12 @@ let pendingSPController = {
             });
           }
         });
-      } else {
-        res.status(500).json({
-          err: 'unauthorized access'
-        });
-      }
-    });
+    //   } else {
+    //     res.status(500).json({
+    //       err: 'unauthorized access'
+    //     });
+    //   }
+    // });
   },
 
 
