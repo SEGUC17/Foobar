@@ -21,6 +21,5 @@ export default new Router({
   }, {
     path: '/StudentProfile',
     component: StudentProfile
-  }],
-  mode: 'history'
+  }]
 })

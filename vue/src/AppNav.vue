@@ -19,8 +19,8 @@
                     <li><a href="#">Process 03</a></li>
                   </ul>
                     </li>
-                <li><a  data-toggle="modal" data-target="#myModal" v-if= "!this.user.authenticated" >Enter</a></li>
-                <li><a  data-toggle="modal"  v-if= "this.user.authenticated" >logout</a></li>
+                <li  v-if = "!this.user.authenticated" ><a><button data-toggle="modal" data-target="#myModal"  >Enter</button></a></li>
+                <li v-else  ><a><button  v-on:click="logout">logout</button></a></li>
 
               </ul>
                 </div>
@@ -129,36 +129,44 @@ data () {
       error: '',
 
 
-
-
-
   // User object will let us check authentication status
   user: {
     authenticated: false
   },}},
+
+ created() {
+
+if(localStorage.getItem('id_token')!=null){
+  this.user.authenticated=true
+}
+
+ },
+
+
 methods: {
   // Send a request to the login URL and save the returned JWT
   login : function() {
-    this.$http.post('http://localhost:3000/api/users/login', {
-	"email":this.creds.username,
-	"password":  this.creds.password
+    var app = this;
+    app.$http.post('http://localhost:3000/api/users/login', {
+	"email":app.creds.username,
+	"password":  app.creds.password
 }).then(data => {
+
       localStorage.setItem('id_token', data.body.token)
 
-      this.user.authenticated = true
-      console.log(data.body.token+" "+this.user.authenticated)
+      app.user.authenticated = true
+      console.log(data.body.token+" "+app.user.authenticated)
 
 
     //
     })
-    this.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
+    app.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
 
       console.log(decode.body)
 
     })
 
   },
-
   signup : function() {
     this.$http.post('http://localhost:3000/api/users/signup', {"email":this.creds.email,"password":this.creds.password}).then(data => {
       console.log('success');
