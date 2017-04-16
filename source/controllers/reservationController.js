@@ -15,14 +15,17 @@ let reservationController = {
 
           if (err) {
             res.status(500).json({
-              err: err.message
+              status: 'error',
+              message: err.message,
             });
           } else {
             //res.render('viewReservations', {reservations:reservations});
 
             res.status(200).json({
-              obj: reservations,
-              mssg: 'reservations retrieved succesfully'
+              status: 'success',
+              data: {
+                reservations,
+              },
             });
           }
         });
@@ -35,15 +38,17 @@ let reservationController = {
 
           if (err) {
             res.status(500).json({
-              err: err.message
+              status: 'error',
+              message: err.message,
             });
-
 
           } else {
             //res.render('viewReservations', {reservations:reservations});
             res.status(200).json({
-              obj: reservations,
-              mssg: 'reservations retrieved succesfully'
+              status: 'success',
+              data: {
+                reservations
+              },
             });
           }
         });

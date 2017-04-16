@@ -23,7 +23,10 @@ let offerController = {
         });
         newOffer.save();
         res.status(200).json({
-          offer: newOffer
+          status: 'success',
+          data: {
+            newOffer
+          },
         });
 
 

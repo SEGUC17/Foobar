@@ -31,10 +31,12 @@ const adminController = {
           var description = req.body.description;
           var password = generatePassword();
           PendingSP.findByIdAndRemove(sP_id, function(err) {
-            if (err)
+            if (err) {
               res.status(500).json({
-                err: err.message
+                status: 'error',
+                message: err,
               });
+            }
           });
 
           //creating new user since he is approved
@@ -47,10 +49,12 @@ const adminController = {
           newUser.password = password;
 
           newUser.save(function(err, userSuccess) {
-            if (err)
+            if (err) {
               res.status(500).json({
-                err: err.message
+                status: 'error',
+                message: err,
               });
+            }
           }); //saving user instance
 
           //creating new SP account
@@ -62,15 +66,19 @@ const adminController = {
           });
 
           newSP.save(function(err, sPSuccess) {
-            if (err)
+            if (err) {
               res.status(500).json({
-                err: err.message
+                status: 'error',
+                message: err,
               });
+            }
           }); //saving SP instance
 
           res.status(200).json({
-            success: 'Removed him from PendingSP Collection and Added to user collection as: ' +
-              newUser + "and to the SP collection as: " + newSP
+            status: 'success',
+            data: { // Data can be null if, for example, delete request was sent
+              message: `Removed him from PendingSP Collection and Added to user collection as:${newUser}and to the SP collection as:${newSP}`,
+            },
           });
           // create reusable transporter object using the default SMTP transport
           let transporter = nodemailer.createTransport({
@@ -92,13 +100,14 @@ const adminController = {
 
           // send mail with defined transport object
           transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
+            if (err) {
               res.status(500).json({
-                err: error.message
+                status: 'error',
+                message: err,
               });
             }
-            console.log('Message %s sent: %s', info.messageId, info
-              .response);
+            console.log('Message %s sent: %s', info.messageId,
+              info.response);
           });
 
         } //if disapprove is selected
@@ -114,7 +123,10 @@ const adminController = {
             new: true
           }, function(err, sP) {
             res.status(200).json({
-              mss: 'Disapproved successfully ' + sP
+              status: 'success',
+              data: { // Data can be null if, for example, delete request was sent
+                message: `Disapproved successfully ${sP}`,
+              },
             });
 
           });
@@ -176,15 +188,20 @@ const adminController = {
 
 
         announcement.save(function(err, announcement) {
-          if (err)
+          if (err) {
             res.status(500).json({
-              err: err.message
+              status: 'error',
+              message: err,
             });
-          else {
+            return undefined;
+          } else {
             res.status(200).json({
-              obj: announcement
+              status: 'success',
+              data: {
+                announcement: annposted,
+              },
             });
-            return 1;
+            return undefined;
           }
         });
       } else {
@@ -229,13 +246,11 @@ const adminController = {
             most = temp[0];
             least = temp[temp.length - 1];
             res.status(200).json({
-              mssg: 'Most Frequent Interest is ' + ">>" +
-                most +
-                " --  " +
-                "The following is the Interests frequency sorted descendengly" +
-                ">>>" + temp + "-----" +
-                "The least frequent interest is " + " " +
-                least
+              status: 'success',
+              data: {
+                most,
+                least,
+              },
             });
 
 
@@ -244,7 +259,8 @@ const adminController = {
 
       } else {
         res.status(500).json({
-          err: 'unauthorized access'
+          status: 'error',
+          err: 'unauthorized access',
         });
       }
     });
@@ -259,20 +275,22 @@ const adminController = {
 
 
         SP.findById(req.params.id, function(err, sp) {
-          if (err)
+          if (err) {
             res.status(500).json({
-              err: err.message
+              status: 'error',
+              message: err,
             });
-          else {
+          } else {
 
             Offer.find({
               sp_id: sp.id
             }, function(err, offers) {
-              if (err)
+              if (err) {
                 res.status(500).json({
-                  err: err.message
+                  status: 'error',
+                  message: err,
                 });
-              else {
+              } else {
                 for (var i = 0; i < offers.length; i++) {
                   if (offers[i].end_date > Date.now()) {
                     found = true;
@@ -291,8 +309,10 @@ const adminController = {
             sp.save(function(err, sp) {
               if (err) {
                 res.status(500).json({
-                  err: err.message
+                  status: 'error',
+                  message: err,
                 });
+
 
               } else {
                 // Return
@@ -304,8 +324,11 @@ const adminController = {
           }
         });
       } else {
-        res.status(500).json({
-          err: 'unauthorized access'
+        res.status(200).json({
+          status: 'success',
+          data: {
+            message: 'Deleted successfully',
+          },
         });
       }
     });
@@ -316,37 +339,37 @@ const adminController = {
     jwt.verify(token, function(decoded) {
       if (decoded.type === 1) {
         User.findOne({
-          'local.emai': req.body.email
-        }, function(err, admin) {
-          if (err)
+          'local.emai': req.body.email,
+        }, (err, admin) => {
+          if (err) {
+            res.json(err.message);
+          } else if (admin) {
             res.status(500).json({
-              err: err.message
+              status: 'error',
+              message: 'Change email',
             });
-          else {
-            if (admin) {
-              res.status(200).json({
-                mssg: "Change email hoe."
-              });
-            } else {
-              let user = new User();
-              user.local.email = req.body.email;
-              var password = generatePassword();
-              user.local.password = user.generateHash(password);
-              user.type = 1;
-              user.save(function(err, project) {
-                if (err) {
-                  res.status(500).json({
-                    err: err.message
-                  });
-
-                } else {
-                  res.status(200).json({
-                    mssg: "Cool job, new admin. Password is: " +
-                      password
-                  });
-                }
-              });
-            }
+          } else {
+            const password = generatePassword();
+            const newuser = new User({
+              'local.email': req.body.email,
+              'local.password': user.generateHash(password),
+              type: 1,
+            });
+            newuser.save((newusererr) => {
+              if (newusererr) {
+                res.status(500).json({
+                  status: 'error',
+                  message: newusererr,
+                });
+              } else {
+                res.status(200).json({
+                  status: 'success',
+                  data: {
+                    message: `Cool job, new admin. Password is: ${password}`,
+                  },
+                });
+              }
+            });
           }
         });
       } else {
@@ -363,7 +386,8 @@ const adminController = {
           Student.findById(req.params.id, function(err, student) {
             if (err)
               res.status(500).json({
-                err: err.message
+                status: 'error',
+                message: err,
               });
             else {
               if (student) {
@@ -371,26 +395,31 @@ const adminController = {
                 student.save(function(err, sp) {
                   if (err) {
                     res.status(500).json({
-                      err: err.message
+                      status: 'error',
+                      message: err,
                     });
 
                   } else {
-                    // Return
-                    res.status(500).json({
-                      mssg: "Deleted"
+                    res.status(200).json({
+                      status: 'success',
+                      data: {
+                        message: 'Deleted',
+                      },
                     });
                   }
                 });
               } else {
-                res.status(500).json({
-                  mssg: "Not found"
+                res.status(404).json({
+                  status: 'error',
+                  message: 'Not found',
                 });
               }
             }
           });
         } else {
-          res.status(500).json({
-            err: 'unauthorized access'
+          res.status(403).json({
+            status: 'error',
+            message: 'Forbidden access',
           });
         }
       });

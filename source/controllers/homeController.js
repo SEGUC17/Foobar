@@ -16,7 +16,10 @@ let homeController = {
     jwt.verify(token, function(decoded) {
       if (decoded.type == 1) {
         res.status(200).json({
-          mssg: "Admin logged in"
+          status: 'success',
+          data: {
+            message: 'Admin logged in',
+          },
         });
       } else if (decoded.type == 2) {
         Student.find({
@@ -24,13 +27,14 @@ let homeController = {
         }, function(err, student) {
           if (err)
             res.status(500).json({
-              err: err.message
+              status: 'error',
+              message: err.message,
             });
           else {
             // Return
             res.status(200).json({
-              message: "Student logged in",
-              user: student
+              message: 'Student logged in',
+              user: student,
             });
           }
         });
@@ -40,18 +44,24 @@ let homeController = {
         }, function(err, sp) {
           if (err)
             res.status(500).json({
-              err: err.message
+              status: 'error',
+              message: err.message,
             });
+
           else {
             // Return
             res.status(200).json({
-              mssg: "Service Provider logged in"
+              status: 'success',
+              data: {
+                message: 'Service Provider logged in',
+              },
             });
           }
         });
       } else {
-        res.status(500).json({
-          mssg: "No user logged in"
+        res.status(404).json({
+          status: 'error',
+          message: 'No user found',
         });
       }
     });
@@ -63,35 +73,42 @@ let homeController = {
         SI.find({
           student_id: decoded.id
         }, function(err, studentinterests) {
-          if (err)
+          if (err) {
             res.status(500).json({
-              err: err.message
+              status: 'error',
+              message: err.message,
             });
-          else {
+          } else {
             Interest.find({
               id: {
                 $in: studentinterests.interest_id
               }
             }, function(err, interests) {
 
-              if (err)
+              if (err) {
                 res.status(500).json({
-                  err: err.message
+                  status: 'error',
+                  message: err.message,
                 });
-              else {
+              } else {
                 Offer.find({
                   field: {
                     $in: interests.name
                   }
                 }, function(err, offers) {
-                  if (err)
+                  if (err) {
                     res.status(500).json({
-                      err: err.message
+                      status: 'error',
+                      message: err.message,
                     });
-                  else {
+                  } else {
                     // Return
                     res.status(200).json({
-                      err: 'Viewing offers'
+                      status: 'success',
+                      data: {
+                        message: 'Viewing offers',
+                        offers,
+                      },
                     });
                   }
                 });
@@ -103,11 +120,12 @@ let homeController = {
         Offer.find({}, {
           limit: 10
         }, function(err, offers) {
-          if (err)
+          if (err) {
             res.status(500).json({
-              err: err.message
+              status: 'error',
+              message: err.message,
             });
-          else {
+          } else {
             // Return
             res.status(200).json({
               offers: offers
@@ -143,7 +161,7 @@ let homeController = {
           res.json('Password resetted successfully to ' + password +
             ' , and an email was sent to the user with the new password.'
           );
-          console.log(newUser);
+          //  console.log(newUser);
         });
       }
     });

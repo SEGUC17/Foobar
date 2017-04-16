@@ -26,18 +26,23 @@ const StudentController = {
         }, function(err, reservation) {
           if (err)
             res.status(500).json({
-              err: err.message
+              status: 'error',
+              message: err.message,
             });
           else {
             reservation.status = 1;
             reservation.save(function(err, reservation) {
               if (err) {
                 res.status(500).json({
-                  err: err.message
+                  status: 'error',
+                  message: err.message,
                 });
               } else {
                 res.status(200).json({
-                  mssg: "Approved successfully"
+                  status: 'success',
+                  data: {
+                    message: 'Approved',
+                  },
                 });
               }
             });
@@ -66,11 +71,15 @@ const StudentController = {
         }).save(function(err, review) {
           if (err) {
             res.status(500).json({
-              err: err.message
+              status: 'error',
+              message: err.message,
             });
           } else {
             res.status(200).json({
-              obj: review
+              status: 'success',
+              data: {
+                review,
+              },
             });
           }
         });
@@ -81,49 +90,58 @@ const StudentController = {
       }
     });
   },
-  search: function(req, res) {
-    const search = new RegExp('^' + req.query.search + '$', "i")
-
+  search(req, res) {
+    const search = new RegExp(`^${req.query.search}$`, 'i');
+    let tagsfound = [];
     Tag.find({
-      name: search
-    }, function(err, tagsarray) {
+      name: search,
+    }, (err, tagsarray) => {
       if (err) {
         res.status(500).json({
-          err: err.message
+          status: 'error',
+          message: err.message,
         });
+      } else {
+        tagsfound = tagsarray;
       }
     });
-
+    const tagsarraysids = [];
+    tagsfound.forEach((element) => {
+      tagsarraysids.push(element.offer_id);
+    }, this);
     Offer.find({
       $and: [{
         $or: [{
-          title: search
+          title: search,
         }, {
-          field: search
+          field: search,
         }, {
-          description: search
+          description: search,
         }, {
           offer_id: {
-            $in: tagarray.offer_id
-          }
-        }]
+            $in: tagsarraysids,
+          },
+        }],
       }, {
         due_date: {
-          $lt: Date.now()
-        }
+          $lt: Date.now(),
+        },
       }],
       function(err, offers) {
-        if (err)
+        if (err) {
           res.status(500).json({
-            err: err.message
+            status: 'error',
+            message: err.message,
           });
-        else {
-          res.json({
-            mssg: "found offers"
+        } else {
+          res.status(200).json({
+            status: 'success',
+            data: {
+              offers,
+            },
           });
-          //Render offers
         }
-      }
+      },
     });
   },
   seeProgress: function(req, res) {
@@ -133,12 +151,18 @@ const StudentController = {
         Skill.find({
           user_id: decoded.id
         }, function(err, skills) {
-          if (err)
+          if (err) {
             res.status(500).json({
-              err: err.message
+              status: 'error',
+              message: err.message,
             });
-          else {
-            res.json(skills);
+          } else {
+            es.status(200).json({
+              status: 'success',
+              data: {
+                skills,
+              },
+            });
           }
         });
       } else {
@@ -157,15 +181,17 @@ const StudentController = {
         }, function(err, offer) {
           if (err)
             res.status(500).json({
-              err: err.message
+              status: 'error',
+              message: err.message,
             });
           else {
             res.json({
               obj: offer
             });
             if (offer.due_date < Date.now()) {
-              res.json({
-                mssg: "You can't register now"
+              res.status(403).json({
+                status: 'error',
+                message: "You can't register now",
               });
             } else {
               if (offer.capacity > 0) {
@@ -179,7 +205,8 @@ const StudentController = {
                 reservation.save(function(err, reservation) {
                   if (err) {
                     res.status(500).json({
-                      err: err.message
+                      status: 'error',
+                      message: err.message,
                     });
                   } else {
                     offer.capacity = offer.capacity -
@@ -187,20 +214,25 @@ const StudentController = {
                     offer.save(function(err, reservation) {
                       if (err) {
                         res.status(500).json({
-                          err: err.message
+                          status: 'error',
+                          message: err.message,
                         });
                         console.log(err);
                       } else {
-                        res.json({
-                          message: "yo"
+                        res.status(200).json({
+                          status: 'success',
+                          data: {
+                            reservation,
+                          },
                         });
                       }
                     });
                   }
                 });
               } else {
-                res.json({
-                  mssg: "There are no places in this course"
+                res.status(304).json({
+                  status: 'error',
+                  message: 'No spots available',
                 });
               }
             }
@@ -219,16 +251,20 @@ const StudentController = {
     }, function(err, user) {
       if (err)
         res.status(500).json({
-          err: err.message
+          status: 'error',
+          message: err.message,
         });
       else {
         Student.find({
           user_id: req.params.id
         }, function(err, student) {
           //Render
-          res.json({
-            student: student,
-            user: user
+          res.status(200).json({
+            status: 'success',
+            data: {
+              student: student,
+              user: user
+            }
           });
         });
       }
@@ -243,7 +279,8 @@ const StudentController = {
         }, function(err, user) {
           if (err)
             res.status(500).json({
-              err: err.message
+              status: 'error',
+              message: err.message,
             });
           else {
             Student.find({
@@ -251,7 +288,8 @@ const StudentController = {
             }, function(err, student) {
               if (err)
                 res.status(500).json({
-                  err: err.message
+                  status: 'error',
+                  message: err.message,
                 });
               else {
                 // user.name = req.body.name;
@@ -271,7 +309,8 @@ const StudentController = {
                 }, function(err) {
                   if (err) {
                     res.status(500).json({
-                      err: err.message
+                      status: 'error',
+                      message: err.message,
                     });
                   }
                 });
@@ -297,7 +336,8 @@ const StudentController = {
                 }, function(err, u1) {
                   if (err)
                     res.status(500).json({
-                      err: err.message
+                      status: 'error',
+                      message: err.message,
                     });
                   else {
                     res.json({
@@ -315,7 +355,8 @@ const StudentController = {
                 }, function(err, student1) {
                   if (err)
                     res.status(500).json({
-                      err: err.message
+                      status: 'error',
+                      message: err.message,
                     });
                   else {
                     res.json({
@@ -352,6 +393,6 @@ const StudentController = {
       }
     });
   }
-}
+};
 
 module.exports = StudentController;
