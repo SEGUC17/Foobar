@@ -16,10 +16,10 @@
             </div>
         <span id="responsiveFlag"></span>
         <div class="block-slogan">
-              <h2>Namaskar!</h2>
+              <h2>FOOBAR</h2>
               <div>
-            <p>This template is designed and developed over the Bootstrap frontend framework. Which is a free front-end framework for designers. Template is fully <i>responsive</i> and <i>compatible</i> with all the major browsers.</p>
-            <p style="text-align:center; padding-top:20px;"><a href="#" class="btn btn-1">Download Bootstrap</a></p>
+            <p>Foobar is a society where  students can find their interests and choose to upgrade and develop it as many service providers arrive here and post their offers.</p>
+            <!-- <p style="text-align:center; padding-top:20px;"><a href="#" class="btn btn-1">Download Bootstrap</a></p> -->
           </div>
             </div>
       </div>
@@ -33,7 +33,7 @@
         <div class="container">
     		<div class="row">
         <article class="span12">
-        <h4>Our Work</h4>
+        <h4>Our Service Providers</h4>
          </article>
         <div class="clear"></div>
          <ul class="portfolio clearfix">
@@ -51,22 +51,22 @@
     </div>
     <div class="row-2">
         <div class="container">
-        	<h3>Completly Customizable and Responsive</h3>
-            <h3>Easy to Use. Totally Free to Download. Made with love!</h3>
-            <p>The complete template is created using the Bootstrap framework, which is highly customizable with lots of options.</p>
-            <a href="#" class="btn btn-1">Download</a>
+        	<h3>Foobar is here for your help</h3>
+
+            <p>Searching for new skills to learn? <i>we are here to get you offers that matches your interests</i></p>
+            <!-- <a href="#" class="btn btn-1">Download</a> -->
       </div>
         </div>
     <div class="row-1">
         <div class="container">
         <div class="row">
         <article class="span12">
-        <h4>From blog</h4>
+        <h4>Choose an interest?</h4>
          </article>
               <ul class="thumbnails thumbnails-1">
             <li class="span3">
                   <div class="thumbnail thumbnail-1">
-                <h3>Web Design</h3>
+                <h3>Music</h3>
                 <img  src="~assets/img/blog-featured-01.jpg" alt="">
                 <section>
                 		<a href="#"><h3>At vero eos et accusamus et iusto </h3></a>

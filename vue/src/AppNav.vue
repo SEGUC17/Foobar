@@ -9,7 +9,7 @@
             <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
             <div class="nav-collapse nav-collapse_  collapse">
                   <ul class="nav sf-menu">
-                <li class="active"><a href="index.html">Home</a></li>
+                <li class=""><a href="index.html">Home</a></li>
                 <li><a href="work.html">Work</a></li>
                 <li><a href="blog.html">Blog</a></li>
                 <li class="sub-menu"><a href="process.html" v-if="!user.authenticated">Process</a>
@@ -19,8 +19,8 @@
                     <li><a href="#">Process 03</a></li>
                   </ul>
                     </li>
-                <li  v-if = "!this.user.authenticated" ><a><button data-toggle="modal" data-target="#myModal"  >Enter</button></a></li>
-                <li v-else  ><a><button  v-on:click="logout">logout</button></a></li>
+                <li  v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
+                <li class="" v-else ><a  v-on:click="logout">logout</a></li>
 
               </ul>
                 </div>
@@ -65,7 +65,7 @@
                                     <div class="col-sm-2">
                                     </div>
                                     <div class="col-sm-10">
-                                      <center>  <button class="btn btn-primary btn-sm" v-on:click="login">
+                                      <center>  <button class="btn btn-primary btn-sm " type="submit" v-on:click="login">
                                             Submit</button></center>
                                             <br>
                                         <a href="javascript:;">Forgot your password?</a>
@@ -95,7 +95,7 @@
                                     <div class="col-sm-2">
                                     </div>
                                     <div class="col-sm-10">
-                                        <button class="btn btn-primary btn-sm" v-on:click="signup">
+                                        <button class="btn btn-primary btn-sm" type="button" v-on:click="signup">
                                             Save & Continue</button>
                                     </div>
                                 </div>
