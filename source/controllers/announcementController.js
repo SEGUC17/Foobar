@@ -12,13 +12,15 @@ let announcementController = {
         if (err) {
 
           res.status(500).json({
-            err: err.message
+            status: 'error',
+            message: err,
           });
         } else {
           res.status(200).json({
+            status: 'success',
             data: {
-              announcements
-            }
+              announcements,
+            },
           });
           // res.render('viewAnnouncements', {announcements:announcements});
         }

@@ -11,12 +11,18 @@ let reviewController = {
       if (decoded.type == 1) {
         var review_id = req.body.id;
         Review.findByIdAndRemove(review_id, function(err, review) {
-          if (err)
+          if (err) {
             res.status(500).json({
-              err: err.message
+              status: 'error',
+              message: err.message,
             });
-          else {
-            res.status(200).json("Deleted this review: " + review);
+          } else {
+            res.status(200).json({
+              status: 'success',
+              data: {
+                message: 'Deleted successfully',
+              },
+            });
           }
         });
       } else {

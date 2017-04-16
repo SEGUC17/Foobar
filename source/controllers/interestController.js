@@ -17,7 +17,10 @@ let interestController = {
         });
         newInterest.save();
         res.status(200).json({
-          err: name
+          status: 'success',
+          data: {
+            name,
+          },
         });
 
       } else {

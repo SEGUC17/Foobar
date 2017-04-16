@@ -22,11 +22,15 @@ const spController = {
         }).save(function(err, announcement) {
           if (err) {
             res.status(500).json({
-              err: err.message
+              status: 'error',
+              message: err.message,
             });
           } else {
-            res.status.json({
-              obj: announcement
+            res.status(200).json({
+              status: 'success',
+              data: {
+                announcement,
+              },
             });
 
           }
@@ -46,12 +50,17 @@ const spController = {
           sp_id: decoded.id
         }, function(err, reviews) {
           if (err) {
+
             res.status(500).json({
-              err: err.message
+              status: 'error',
+              message: err.message,
             });
           } else {
             res.status(200).json({
-              obj: reviews
+              status: 'success',
+              data: {
+                reviews,
+              },
             });
           }
         });
@@ -73,7 +82,8 @@ const spController = {
         }).save(function(err, assessment) {
           if (err) {
             res.status(500).json({
-              err: err.message
+              status: 'error',
+              message: err.message,
             });
           } else {
             res.status(200).json({
@@ -82,8 +92,11 @@ const spController = {
           }
         });
       } else {
-        res.status(500).json({
-          err: err.message
+        res.status(200).json({
+          status: 'success',
+          data: {
+            assessment,
+          },
         });
       }
     });
@@ -96,13 +109,18 @@ const spController = {
 
         if (err) {
           res.status(500).json({
-            err: err.message
+            status: 'error',
+            message: err.message,
           });
+
         } else {
           //res.render('spProfiles', {profiles:profiles});
           res.status(200).json({
-            obj: profiles,
-            mssg: 'summary of SP profiles retrieved successfully'
+            status: 'success',
+            data: {
+              message: 'summary of SP profiles retrieved successfully',
+              profiles,
+            },
           });
         }
       });
@@ -118,11 +136,15 @@ const spController = {
     SP.findOne(query, function(err, providerProfile) {
       if (err) {
         res.status(500).json({
-          err: err.message
+          status: 'error',
+          message: err.message,
         });
       } else {
         res.status(200).json({
-          obj: providerProfile
+          status: 'success',
+          data: {
+            providerProfile,
+          },
         });
       }
     });
@@ -146,11 +168,14 @@ const spController = {
         newVideo.save(function(err, video) {
           if (err) {
             res.status(500).json({
-              err: err.message
+              status: 'error',
+              message: err,
             });
+
           } else {
             res.status(200).json({
-              video: video
+              status: 'success',
+              data: video.url,
             });
           }
         });
@@ -186,10 +211,14 @@ const spController = {
     Video.find(query, function(err, video) {
       if (err)
         res.status(500).json({
-          err: err.message
+          status: 'error',
+          message: err.message,
         });
       res.status(200).json({
-        obj: video
+        status: 'success',
+        data: {
+          video,
+        },
       });
     });
   }

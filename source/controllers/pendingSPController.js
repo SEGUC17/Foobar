@@ -12,17 +12,18 @@ let pendingSPController = {
 
           if (err) { //if error occurred
             res.status(500).json({
-              err: err.message
+              status: 'error',
+              message: err.message,
             });
 
 
           } else {
             //  res.render('viewPendingSP', {pendingSP:pendingSP});
             res.status(200).json({
-              obj: pendingSP
-            });
-            res.status(200).json({
-              mssg: 'pending SP requests retrieved successfully'
+              status: 'success',
+              data: {
+                pendingSP,
+              },
             });
           }
         });
@@ -55,11 +56,13 @@ let pendingSPController = {
       pending.save(function(err, pending) {
         if (err) {
           res.status(500).json({
-            err: err.message
+            status: 'error',
+            message: err.message,
           });
         } else {
           res.status(200).json({
-            obj: pending
+            status: 'success',
+            data: 'success',
           });
         }
       });
