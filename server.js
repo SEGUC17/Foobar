@@ -77,8 +77,13 @@ mongoose.connect(DB_URI);
 // });
 
 // Testing
-
-
+//
+// new User({
+//     email: 'admin@gmail.com',
+//     type: 1,
+//     is_deleted: false,
+//     password: '1'
+//   }).save()
 /*var newUser = new User({
   email: "admin@hotmail.com",
   type: 1,

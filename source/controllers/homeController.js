@@ -34,7 +34,8 @@ let homeController = {
             // Return
             res.status(200).json({
               message: 'Student logged in',
-              user: student,
+              student: student,
+              name: decoded.name
             });
           }
         });

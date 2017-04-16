@@ -1,7 +1,7 @@
 <template>
-<header>
+<header >
   <div class="container clearfix">
-    <div class="row">
+    <div class="row" v-if="this.user.type==0">
           <div class="span12">
         <div class="navbar navbar_">
               <div class="container">
@@ -12,7 +12,7 @@
                 <li class=""><a href="index.html">Home</a></li>
                 <li><a href="work.html">Work</a></li>
                 <li><a href="blog.html">Blog</a></li>
-                <li class="sub-menu"><a href="process.html" v-if="!user.authenticated">Process</a>
+                <li class="sub-menu"><a href="process.html" v-if="user.authenticated">Process</a>
                       <ul>
                     <li><a href="#">Process 01</a></li>
                     <li><a href="#">Process 02</a></li>
@@ -20,7 +20,7 @@
                   </ul>
                     </li>
                 <li  v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
-                <li class="" v-else ><a  v-on:click="logout">logout</a></li>
+                <li class="" v-else ><a  v-on:click="logout">visitor</a></li>
 
               </ul>
                 </div>
@@ -28,7 +28,64 @@
             </div>
       </div>
         </div>
+        <div class="row" v-if="this.user.type==1">
+              <div class="span12">
+            <div class="navbar navbar_">
+                  <div class="container">
+                <h1 class="brand brand_"><a href="index.html"><img alt="" src="./assets/img/logo.png" style ="height:70px"> </a></h1>
+                <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
+                <div class="nav-collapse nav-collapse_  collapse">
+                      <ul class="nav sf-menu">
+                        <li></li>
+                    <li><a href="work.html">Post</a></li>
+
+                    <li class="sub-menu"><a href="process.html" v-if="this.user.authenticated && this.user.type==1">View</a>
+                          <ul>
+                        <li><a href="#"><router-link to='/viewAdmins'>Admins</router-link></a></li>
+                        <li><a href="#">Students</a></li>
+                        <li><a href="#">Service Providers</a></li>
+                        <li><a href="#">Interests</a></li>
+
+                      </ul>
+                        </li>
+                    <li  v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
+                    <li class="" v-else ><a  v-on:click="logout">logout</a></li>
+
+                  </ul>
+                    </div>
+              </div>
+                </div>
+          </div>
+            </div>
+        <div class="row" v-if="this.user.type==2">
+              <div class="span12">
+            <div class="navbar navbar_">
+                  <div class="container">
+                <h1 class="brand brand_"><a href="index.html"><img alt="" src="./assets/img/logo.png" style ="height:70px"> </a></h1>
+                <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
+                <div class="nav-collapse nav-collapse_  collapse">
+                      <ul class="nav sf-menu">
+                    <li class=""><a href="index.html">Home</a></li>
+                    <li><a href="work.html">Work</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li class="sub-menu"><a href="process.html" v-if="user.authenticated">Process</a>
+                          <ul>
+                        <li><a href="#">Process 01</a></li>
+                        <li><a href="#">Process 02</a></li>
+                        <li><a href="#">Process 03</a></li>
+                      </ul>
+                        </li>
+                    <li  v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
+                    <li class="" v-else ><a  v-on:click="logout">logout</a></li>
+
+                  </ul>
+                    </div>
+              </div>
+                </div>
+          </div>
+            </div>
   </div>
+
 
   <div class="modal hide fade" id ="myModal">
 
@@ -95,7 +152,7 @@
                                     <div class="col-sm-2">
                                     </div>
                                     <div class="col-sm-10">
-                                        <button class="btn btn-primary btn-sm" type="button" v-on:click="signup">
+                                        <button class="btn btn-primary btn-sm"  v-on:click="signup">
                                             Save & Continue</button>
                                     </div>
                                 </div>
@@ -118,6 +175,7 @@ export default {
 
 
 data () {
+
     return {
       // We need to initialize the component with any
       // properties that will be used in it
@@ -131,14 +189,20 @@ data () {
 
   // User object will let us check authentication status
   user: {
-    authenticated: false
+    authenticated: false,
+    type: 0
   },}},
 
  created() {
 
 if(localStorage.getItem('id_token')!=null){
   this.user.authenticated=true
+
+  this.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
+  this.user.type = decode.body.type
+})
 }
+
 
  },
 
@@ -157,15 +221,13 @@ methods: {
       app.user.authenticated = true
       console.log(data.body.token+" "+app.user.authenticated)
 
+      app.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
+        this.user.type = decode.body.type
+        console.log(this.user.type)
 
+      })
     //
     })
-    app.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
-
-      console.log(decode.body)
-
-    })
-
   },
   signup : function() {
     this.$http.post('http://localhost:3000/api/users/signup', {"email":this.creds.email,"password":this.creds.password}).then(data => {
@@ -178,7 +240,8 @@ methods: {
   logout : function() {
     localStorage.removeItem('id_token')
     this.user.authenticated = false
-    console.log('loggedout')
+    this.user.type = 0;
+    console.log('loggedout' + this.user.type)
   },
 
   checkAuth() {

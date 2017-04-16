@@ -5,6 +5,7 @@ import Announcements from '@/components/Announcements'
 import ServiceProviders from '@/components/ServiceProviders.vue'
 import StudentProfile from '@/components/StudentProfile.vue'
 import vueResource from 'vue-resource'
+import viewadmin from '@/components/viewadmin.vue'
 Vue.use(Router)
 Vue.use(vueResource)
 
@@ -21,5 +22,8 @@ export default new Router({
   }, {
     path: '/StudentProfile',
     component: StudentProfile
-  }]
+  }, {
+    path: '/viewAdmins',
+    component: viewadmin
+  }, ]
 })
