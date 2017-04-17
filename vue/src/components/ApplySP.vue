@@ -1,6 +1,7 @@
 <template>
+    <center>
   <form role="form" class="">
-    <h2>Enter your info: </h2>
+    <h2>Enter your info </h2>
         <div class="form-group">
             <label for="name" class="col-sm-2 control-label">Name:</label>
             <div class="col-sm-10">
@@ -25,7 +26,7 @@
         <div class="form-group">
             <label for="description" class="col-sm-2 control-label">Description:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="description" placeholder="Description" v-model="description" />
+                <textarea type="text" class="form-control" rows="5" id="description" v-model="description"></textarea>
             </div>
         </div>
         
@@ -33,10 +34,11 @@
             <div class="col-sm-2">
             </div>
             <div class="col-sm-10">
-                <button class="btn btn-primary btn-sm"  v-on:click="applySP"> Apply</button>
+              <router-link to="/"><button class="btn btn-primary btn-sm"  v-on:click="applySP"> Apply</button></router-link>
             </div>
         </div>
     </form>
+    </center>
 </template>
 
 <script>
