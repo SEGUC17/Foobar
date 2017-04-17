@@ -77,7 +77,7 @@ mongoose.connect(DB_URI);
 // });
 
 // Testing
-//
+// //
 // new User({
 //     email: 'admin@gmail.com',
 //     type: 1,

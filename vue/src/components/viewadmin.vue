@@ -52,7 +52,8 @@ methods:{
     addAdmin: function () {
           this.$http.post('http://localhost:3000/api/admins/admin',{email:this.adminemail},{headers : { 'jwt-token' : localStorage.getItem('id_token')}} ).then(response => {
             this.msg="Admin has been added"
-          console.log(response.data);
+           this.admins.push(this.adminemail)
+           this.adminemail=''
 
           })
         },
