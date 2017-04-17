@@ -34,7 +34,9 @@ router.post('/admin', adminController.addAdmin); // admin can add another admin
 router.delete('/admin/students/:id', adminController.deleteStudent); // admin can delete a student
 
 router.delete('/admin/sp/:id', adminController.deleteSP); // admin can delete serviceprovider
-router.get('/admins', adminController.getAllAdmins);
-router.post('/adminpost', adminController.adminPostAnnouncement);
+
+router.get('/admins', adminController.getAllAdmins); // admin can get all admins
+
+router.post('/adminpost', adminController.adminPostAnnouncement); // admin can post announcements
 
 module.exports = router;

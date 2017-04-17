@@ -1,23 +1,23 @@
 <template>
-  <div>
-    <div class="form-group">
-        <label  class="col-sm-2 control-label">
+<div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label">
             Add an Announcement</label>
-        <div class="col-sm-10">
-            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Title" v-model ="title" />
-            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Content" v-model ="content" />
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Title" v-model="title" />
+      <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Content" v-model="content" />
 
 
-            <button @click ="postAnnouncements()" >Post</button>
-            <h5>{{msg}}</h5>
-        </div>
+      <button @click="postAnnouncements()">Post</button>
+      <h5>{{msg}}</h5>
     </div>
-<ul>
-  <li v-for =" announcement in announcements"> {{announcement.title}}</li>
-</ul>
-
-
   </div>
+  <ul>
+    <li v-for=" announcement in announcements"> {{announcement.title}}</li>
+  </ul>
+
+
+</div>
 </template>
 <script>
 export default {

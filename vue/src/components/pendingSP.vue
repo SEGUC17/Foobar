@@ -1,12 +1,29 @@
-<template>
-<div>
+
+  <template>
+
+  <div class="container">
+    <br><br>
+    <center>
+      <h2>Pending service providers</h2></center>
+    <table class="table table-inverse">
+      <thead class="thead-inverse">
+        <tr>
+          <th scope="row">Email</th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="pending in pendings" >
+          <td>{{pending.email}}</td>
+          <td> <a  style="color =red" @click="approve()">✖</a></td>
+          <td> <a  style="color:green" @click="reject()">✔</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
 
-<ul>
-    <li v-for =" pending in pendings"><input type="radio" name="list" value="volvo">{{pending.name}} <button class="btn btn-danger">Delete</button> </li>
-
-  </ul>
-</div></template>
+</template>
 
 <script>
 
@@ -29,6 +46,10 @@ methods:{
 
       })
     },
+    approve: function(){
+        this.$http.post('http://localhost:3000/api/admins/admin',{},{headers : { 'jwt-token' : localStorage.getItem('id_token')}} ).then(response => {
+        })
+    }
 
 
   }

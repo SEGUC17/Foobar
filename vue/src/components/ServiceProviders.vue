@@ -1,12 +1,12 @@
 <template>
-  <div>
+<div>
 
-<ul>
-  <li v-for =" serviceprovider in serviceproviders">{{serviceprovider._id}}</li>
-</ul>
+  <ul>
+    <li v-for=" serviceprovider in serviceproviders">{{serviceprovider._id}}</li>
+  </ul>
 
 
-  </div>
+</div>
 </template>
 <script>
 export default {

@@ -1,24 +1,25 @@
 <template>
 <div>
-<div>
+  <div>
 
-  <div class="form-group">
-      <label  class="col-sm-2 control-label">
+    <div class="form-group">
+      <label class="col-sm-2 control-label">
           Add a new Interest</label>
       <div class="col-sm-10">
-          <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Admin's Name" v-model ="interestname" />
+        <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Admin's Name" v-model="interestname" />
 
-          <button @click ="addInterest()" >add</button>
-          <h5>{{msg}}</h5>
+        <button @click="addInterest()">add</button>
+        <h5>{{msg}}</h5>
       </div>
-  </div>
+    </div>
 
-</div>
-<ul>
+  </div>
+  <ul>
     <!-- <li v-for =" admin in admins"><input type="radio" name="list" value="volvo">{{admin.email}} <button class="btn btn-danger">Delete</button> </li> -->
 
   </ul>
-</div></template>
+</div>
+</template>
 
 <script>
 export default {

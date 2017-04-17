@@ -1,12 +1,12 @@
 <template>
-  <div>
+<div>
 
-<ul>
-  <li> {{student}}</li>
-</ul>
+  <ul>
+    <li> {{student}}</li>
+  </ul>
 
 
-  </div>
+</div>
 </template>
 <script>
 export default {

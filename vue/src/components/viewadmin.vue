@@ -1,24 +1,28 @@
 <template>
-<div>
-<div>
 
-  <div class="form-group">
-      <label  class="col-sm-2 control-label">
-          Add a new admin here</label>
-      <div class="col-sm-10">
-          <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Admin's Name" v-model ="adminname" />
-          <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Admin's Email" v-model="adminemail" />
-          <button @click ="addAdmin()" >add</button>
-          <h5>{{msg}}</h5>
-      </div>
-  </div>
 
+<div class="container">
+  <br><br>
+  <center>
+    <h2>Admins</h2></center>
+  <table class="table table-inverse">
+    <thead class="thead-inverse">
+      <tr>
+        <th scope="row">Email</th>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="admin in admins" :key="admin.email">
+        <td>{{admin.email}}</td>
+        <td> <a class="active" @click="removeadmin({admin})">✖</a></td>
+      </tr>
+    </tbody>
+  </table>
+  <input type="text" placeholder="Add Admin? Enter his email" v-model="adminemail"></input>
+  <button class="btn-primary" @click="addAdmin()">Add</button>
 </div>
-<ul>
-    <li v-for =" admin in admins"><input type="radio" name="list" value="volvo">{{admin.email}} <button class="btn btn-danger">Delete</button> </li>
-
-  </ul>
-</div></template>
+</template>
 
 <script>
 
@@ -29,7 +33,8 @@ export default {
       admins:[],
       adminname : "",
       adminemail: "",
-      msg: ""
+      msg: "",
+      key:''
 
     }
   },
@@ -45,12 +50,19 @@ methods:{
       })
     },
     addAdmin: function () {
-          this.$http.post('http://localhost:3000/api/admins/admin',{name: this.adminname , email: this.adminemail  } ).then(response => {
-      this.msg="Admin has been added"
-          })
-        }
+          this.$http.post('http://localhost:3000/api/admins/admin',{email:this.adminemail},{headers : { 'jwt-token' : localStorage.getItem('id_token')}} ).then(response => {
+            this.msg="Admin has been added"
+          console.log(response.data);
 
+          })
+        },
+        removeadmin: function(admin){
+        this.admins.$splice(2,1)
+        }
   }
 
 }
 </script>
+<style>
+
+</style>
