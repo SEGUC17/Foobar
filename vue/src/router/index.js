@@ -7,6 +7,10 @@ import StudentProfile from '@/components/StudentProfile.vue'
 import vueResource from 'vue-resource'
 import viewadmin from '@/components/viewadmin.vue'
 import SPPostAnnouncement from '@/components/SPPostAnnouncement.vue'
+import ApplySP from '@/components/ApplySP.vue'
+import SPReservations from '@/components/SPReservations.vue'
+import SPReviews from '@/components/SPReviews.vue'
+
 
 Vue.use(Router)
 Vue.use(vueResource)
@@ -21,6 +25,15 @@ export default new Router({
   },{
     path: '/SPPostAnnouncement',
     component: SPPostAnnouncement
+  },{
+    path: '/applySP',
+    component: ApplySP
+  },{
+    path: '/SPReservations',
+    component: SPReservations
+  },{
+    path: '/SPReviews',
+    component: SPReviews
   },{
     path: '/sPs',
     component: ServiceProviders

@@ -46,7 +46,7 @@ let pendingSPController = {
       pending.name = req.body.name;
       pending.email = req.body.email;
       pending.phone_number = req.body.phone_number;
-      pending.description = req.body.description;
+      pending.Description = req.body.description;
       pending.is_declined = false;
       // name : 'alaa',
       // email :'hey',

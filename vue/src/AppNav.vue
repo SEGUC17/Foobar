@@ -19,7 +19,8 @@
                         <li><a href="#">Process 03</a></li>
                     </ul>
                 </li>
-                <li  v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
+                <li v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
+                <li v-if = "!this.user.authenticated"><router-link to="/applySP">Apply as SP</router-link></li>            
                 <li class="" v-else ><a  v-on:click="logout">visitor</a></li>
 
               </ul>
@@ -94,14 +95,14 @@
                             <div class="nav-collapse nav-collapse_  collapse">
                                 <ul class="nav sf-menu">
                                 <li class=""><a href="index.html">Home</a></li>
-                                <li><a href="work.html">Post</a>
+                                <li class="sub-menu"><a href="work.html">Post</a>
                                     <ul>
-                                    <li><a href="/SPPostAnnouncement">Process 01</a></li>
-                                    <li><a href="#">Process 02</a></li>
-                                    <li><a href="#">Process 03</a></li>
+                                    <li ><router-link to="/SPPostAnnouncement">Announcement</router-link></li>
+                                    <li ><router-link to="/SPPostAnnouncement">Offer</router-link></li>
                                     </ul>
                                 </li>
-                                <li><a href="blog.html">View</a></li>                           
+                                <li><router-link to="/SPReservations">View Reservations</router-link></li> 
+                                <li><router-link to="/SPReviews">View Reviews</router-link></li> 
                                 <li  v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
                                 <li class="" v-else ><a  v-on:click="logout">logout</a></li>
 

@@ -4,14 +4,14 @@
             <h2>Enter Announcement Details: </h2>
             <label for="title" class="col-sm-2 control-label">Title:</label>
             <div class="col-sm-10">
-                <input type="email" class="form-control" id="title" placeholder="Title" v-model="title" />
+                <input type="text" class="form-control" id="title" placeholder="Title" v-model="title" />
             </div>
         </div>
         
         <div class="form-group">
             <label for="content" class="col-sm-2 control-label">Content</label>
             <div class="col-sm-10">
-                <input type="content" class="form-control" id="content" placeholder="Content" v-model="content" />
+                <input type="text" class="form-control" id="content" placeholder="Content" v-model="content" />
             </div>
         </div>
         

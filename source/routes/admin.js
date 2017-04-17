@@ -31,7 +31,7 @@ router.post('/addInterest', interestController.addInterest); //adding an interes
 
 router.post('/admin', adminController.addAdmin); // admin can add another admin
 
-router.post('/announcements/create', adminController.adminPostAnnouncement); //deleting a review
+router.post('/announcements/post', adminController.adminPostAnnouncement); //deleting a review
 
 router.delete('/admin/students/:id', adminController.deleteStudent); // admin can delete a student
 
