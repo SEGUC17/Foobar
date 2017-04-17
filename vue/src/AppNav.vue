@@ -13,12 +13,12 @@
                 <li><a href="work.html">Work</a></li>
                 <li><a href="blog.html">Blog</a></li>
                 <li class="sub-menu"><a href="process.html" v-if="user.authenticated">Process</a>
-                      <ul>
-                    <li><a href="#">Process 01</a></li>
-                    <li><a href="#">Process 02</a></li>
-                    <li><a href="#">Process 03</a></li>
-                  </ul>
-                    </li>
+                    <ul>
+                        <li ><router-link  to="/StudentProfile"> Announcement</router-link></li>
+                        <li ><router-link  to="/sPs">  Offer</router-link></li>
+                        <li><a href="#">Process 03</a></li>
+                    </ul>
+                </li>
                 <li  v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
                 <li class="" v-else ><a  v-on:click="logout">visitor</a></li>
 
@@ -96,7 +96,7 @@
                                 <li class=""><a href="index.html">Home</a></li>
                                 <li><a href="work.html">Post</a>
                                     <ul>
-                                    <li><a href="#">Process 01</a></li>
+                                    <li><a href="/SPPostAnnouncement">Process 01</a></li>
                                     <li><a href="#">Process 02</a></li>
                                     <li><a href="#">Process 03</a></li>
                                     </ul>

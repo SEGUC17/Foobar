@@ -27,7 +27,7 @@
 
 <script>
 export default {
-  name: 'postAnnouncement',
+  name: 'SPPostAnnouncement',
   data () {
       return {
     title:'',
@@ -37,7 +37,7 @@ export default {
 methods:{
         postAnnouncement: function () 
         {
-            this.$http.post('http://localhost:3000/api/admins/announcements/create', {"title":this.title,"content":this.content}).then(data => {
+            this.$http.post('http://localhost:3000/api/sPs/announcements/post', {"title":this.title,"content":this.content}).then(data => {
             console.log('success');
                     })
         }

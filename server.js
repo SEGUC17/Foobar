@@ -36,11 +36,11 @@ app.use(bodyParser.json());
 
 
 
-app.use('/api/', indexRouter);
-app.use('/api/admins/', adminRouter);
-app.use('/api/sPs/', spRouter);
-app.use('/api/students/', studentRouter);
-app.use('/api/users/', userRouter);
+app.use('/api', indexRouter);
+app.use('/api/admins', adminRouter);
+app.use('/api/sPs', spRouter);
+app.use('/api/students', studentRouter);
+app.use('/api/users', userRouter);
 app.use(express.static('public'));
 
 // Configure app

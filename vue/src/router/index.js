@@ -6,7 +6,7 @@ import ServiceProviders from '@/components/ServiceProviders.vue'
 import StudentProfile from '@/components/StudentProfile.vue'
 import vueResource from 'vue-resource'
 import viewadmin from '@/components/viewadmin.vue'
-import PostAnnouncement from '@/components/PostAnnouncement.vue'
+import SPPostAnnouncement from '@/components/SPPostAnnouncement.vue'
 
 Vue.use(Router)
 Vue.use(vueResource)
@@ -19,8 +19,8 @@ export default new Router({
     path: '/announcements',
     component: Announcements
   },{
-    path: '/PostAnnouncement',
-    component: PostAnnouncement
+    path: '/SPPostAnnouncement',
+    component: SPPostAnnouncement
   },{
     path: '/sPs',
     component: ServiceProviders
