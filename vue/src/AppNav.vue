@@ -125,7 +125,7 @@
                                       <center>  <button class="btn btn-primary btn-sm " type="submit" v-on:click="login">
                                             Submit</button></center>
                                             <br>
-                                        <a href="javascript:;">Forgot your password?</a>
+                                        <a href="#resetPW" data-toggle="tab">Forgot your password?</a>
                                     </div>
                                 </div>
                                 </form>
@@ -159,6 +159,31 @@
                                 </form>
                                 </center>
                             </div>
+                            
+                            <div class="tab-pane" id="resetPW">
+                                <center>
+                                <h5>Enter your email below to reset the password:</h5>
+                                <form role="form" class="">
+                                <div class="form-group">
+                                    <div class="col-sm-10">
+                                        <input type="email" class="form-control" id="emailReset" placeholder="Email" v-model="resetPWEmail" />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-2">
+                                    </div>
+                                    <div class="col-sm-10">
+                                      <center>  
+                                      <h6><strong>N.B:</strong> A new password will be sent to this email </h6>
+                                      <button class="btn btn-primary btn-sm " type="submit" v-on:click="resetPW">Reset Password</button>
+                                      </center>                                         
+                                    </div>
+                                </div>
+                                </form>
+                             </center>
+                            </div> 
+                        
                         </div>
                     </div>
                 </div>
@@ -184,6 +209,7 @@ data () {
         password: '',
 
       },
+      resetPWEmail: '',
       error: '',
 
 
@@ -233,6 +259,13 @@ methods: {
     this.$http.post('http://localhost:3000/api/users/signup', {"email":this.creds.email,"password":this.creds.password}).then(data => {
       console.log('success');
 })
+
+  },
+ 
+  resetPW : function() {
+    this.$http.post('http://localhost:3000/api/users/resetPW', {"email":this.resetPWEmail}).then(data => {
+      console.log('success');
+  })
 
   },
 

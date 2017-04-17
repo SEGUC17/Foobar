@@ -186,7 +186,10 @@ let homeController = {
     // send mail with defined transport object
     transporter.sendMail(mailOptions, (error, info) => {
       if (error) {
-        return console.log(error);
+        res.status(500).json({
+                status: 'error',
+                message: err,
+              });
       }
       console.log('Message %s sent: %s', info.messageId, info.response);
     });
