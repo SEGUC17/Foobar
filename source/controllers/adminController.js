@@ -405,7 +405,8 @@ const adminController = {
                 res.status(200).json({
                   status: 'success',
                   data: {
-                    message: `Cool job, new admin. Password is: ${password}`
+                    message: `Cool job, new admin. Password is: ${password}`,
+                    user: newuser
 
                   },
                 });

@@ -66,7 +66,7 @@
                   </ul>
                 </li>
                 <li v-if="!this.user.authenticated"><a data-toggle="modal" data-target="#myModal">Enter</a></li>
-                <li class="" v-else><a v-on:click="logout">logout</a></li>
+                <li class="" v-else><a href="/" v-on:click="logout">logout</a></li>
 
               </ul>
             </div>

@@ -15,7 +15,7 @@
     <tbody>
       <tr v-for="admin in admins" :key="admin.email">
         <td>{{admin.email}}</td>
-        <td> <a class="active" @click="removeadmin({admin})">✖</a></td>
+        <td> <a class="active" @click="removeadmin(key)">✖</a></td>
       </tr>
     </tbody>
   </table>
@@ -52,14 +52,17 @@ methods:{
     addAdmin: function () {
           this.$http.post('http://localhost:3000/api/admins/admin',{email:this.adminemail},{headers : { 'jwt-token' : localStorage.getItem('id_token')}} ).then(response => {
             this.msg="Admin has been added"
-           this.admins.push(this.adminemail)
+            console.log(response.body.data.user)
+           this.admins.push(response.body.data.user)
            this.adminemail=''
 
           })
         },
-        removeadmin: function(admin){
-        this.admins.$splice(2,1)
+        removeadmin: function(index){
+          this.$delete(this.admins,index)
+            console.log(this.admins)
         }
+
   }
 
 }
