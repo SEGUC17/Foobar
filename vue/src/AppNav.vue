@@ -14,7 +14,7 @@
                 <li><a href="blog.html">Blog</a></li>
                 <li class="sub-menu"><a href="process.html" v-if="user.authenticated">Process</a>
                       <ul>
-                    <li><a href="#">Process 01</a></li>
+                    <li><<router-link to ="/viewAdmins">Admins</router-link></li>
                     <li><a href="#">Process 02</a></li>
                     <li><a href="#">Process 03</a></li>
                   </ul>
@@ -37,15 +37,14 @@
                 <div class="nav-collapse nav-collapse_  collapse">
                       <ul class="nav sf-menu">
                         <li></li>
-                    <li><a href="work.html">Post</a></li>
+                    <li><a href="#"><router-link to='/announcements'>Post</router-link></a></li>
 
                     <li class="sub-menu"><a href="process.html" v-if="this.user.authenticated && this.user.type==1">View</a>
                           <ul>
                         <li><a href="#"><router-link to='/viewAdmins'>Admins</router-link></a></li>
                         <li><a href="#">Students</a></li>
-                        <li><a href="#">Service Providers</a></li>
-                        <li><a href="#">Interests</a></li>
-
+                        <li><a href="#"><router-link to='/pendingSP'>ServiceProviders</router-link></a></li>
+                        <li><a href="#"><router-link to='/viewInterests'>Interests</router-link></a></li>
                       </ul>
                         </li>
                     <li  v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
@@ -70,7 +69,7 @@
                     <li><a href="blog.html">Blog</a></li>
                     <li class="sub-menu"><a href="process.html" v-if="user.authenticated">Process</a>
                           <ul>
-                        <li><a href="#">Process 01</a></li>
+
                         <li><a href="#">Process 02</a></li>
                         <li><a href="#">Process 03</a></li>
                       </ul>

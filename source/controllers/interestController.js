@@ -8,11 +8,11 @@ let interestController = {
   addInterest: function(req, res) {
     const token = req.headers['jwt-token'];
     jwt.verify(token, function(decoded) {
-      if (decoded.type === 1) {
+      // if (decoded.type === 1) {
         var name = req.body.name;
 
         //creating a new Interests instance and saving it
-        var newInterest = new Interests({
+        var newInterest = new Interest({
           name: name
         });
         newInterest.save();
@@ -23,11 +23,11 @@ let interestController = {
           },
         });
 
-      } else {
-        res.status(500).json({
-          err: 'unauthorized access'
-        });
-      }
+      // } else {
+      //   res.status(500).json({
+      //     err: 'unauthorized access'
+      //   });
+      // }
     });
   }
 }

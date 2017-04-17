@@ -16,6 +16,33 @@ let Student = require('../models/Student');
 const jwt = require('../auth/jwt');
 
 const adminController = {
+  getAllAdmins: function(req, res) { //viewing all announcements
+    const token = req.headers['jwt-token'];
+    jwt.verify(token, function(decoded) {
+
+      User.find({type:1},function(err, admins) {
+
+        if (err) {
+
+          res.status(500).json({
+            status: 'error',
+            message: err,
+          });
+        } else {
+          res.status(200).json({
+            status: 'success',
+            data: {
+              admins,
+            },
+          });
+          // res.render('viewAnnouncements', {announcements:announcements});
+        }
+      });
+
+    });
+
+  }
+,
 
   approveOrDisapproveSP: function(req, res) { //approving or disapproving an applied SP
     const token = req.headers['jwt-token'];
@@ -337,9 +364,10 @@ const adminController = {
   addAdmin: function(req, res) {
     const token = req.headers['jwt-token'];
     jwt.verify(token, function(decoded) {
-      if (decoded.type === 1) {
+      // {
         User.findOne({
-          'local.emai': req.body.email,
+          'local.email': req.body.email,
+          'name': req.body.name
         }, (err, admin) => {
           if (err) {
             res.json(err.message);
@@ -351,8 +379,8 @@ const adminController = {
           } else {
             const password = generatePassword();
             const newuser = new User({
-              'local.email': req.body.email,
-              'local.password': user.generateHash(password),
+              'email': req.body.email,
+              'password': password,
               type: 1,
             });
             newuser.save((newusererr) => {
@@ -360,23 +388,21 @@ const adminController = {
                 res.status(500).json({
                   status: 'error',
                   message: newusererr,
+
                 });
               } else {
                 res.status(200).json({
                   status: 'success',
                   data: {
                     message: `Cool job, new admin. Password is: ${password}`,
+
                   },
                 });
               }
             });
           }
         });
-      } else {
-        res.status(500).json({
-          err: 'unauthorized access'
-        });
-      }
+
     });
   },
   deleteStudent: function(req, res) {

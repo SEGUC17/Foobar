@@ -6,6 +6,8 @@ import ServiceProviders from '@/components/ServiceProviders.vue'
 import StudentProfile from '@/components/StudentProfile.vue'
 import vueResource from 'vue-resource'
 import viewadmin from '@/components/viewadmin.vue'
+import interests from '@/components/interests.vue'
+import pendingSP from '@/components/pendingSP.vue'
 Vue.use(Router)
 Vue.use(vueResource)
 
@@ -25,5 +27,14 @@ export default new Router({
   }, {
     path: '/viewAdmins',
     component: viewadmin
-  }, ]
+  },
+  {
+    path: '/viewInterests',
+    component: interests
+  },
+  {
+    path: '/pendingSP',
+    component: pendingSP
+  }
+]
 })
