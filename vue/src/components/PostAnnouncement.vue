@@ -29,8 +29,10 @@
 export default {
   name: 'postAnnouncement',
   data () {
+      return {
     title:'',
     content:''
+  }
   },
 methods:{
         postAnnouncement: function () 
