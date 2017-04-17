@@ -21,9 +21,9 @@ created(){
 },
 methods:{
     getReservations: function () {
-      this.$http.get('http://localhost:3000/api/sPs/reservations/view').then(response => {
+      this.$http.get('http://localhost:3000/api/sPs/reservations/view', {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
 
-        this.announcements=response.data.data.reservations
+        this.reservations=response.data.data.reservations
       })
     }}
 

@@ -1,4 +1,5 @@
 <template>
+<center>
   <form role="form" class="">
         <div class="form-group">
             <h2>Enter Announcement Details: </h2>
@@ -11,7 +12,7 @@
         <div class="form-group">
             <label for="content" class="col-sm-2 control-label">Content</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="content" placeholder="Content" v-model="content" />
+                <textarea class="form-control" id="content" rows="5" v-model="content"></textarea>
             </div>
         </div>
         
@@ -19,10 +20,11 @@
             <div class="col-sm-2">
             </div>
             <div class="col-sm-10">
-                <button class="btn btn-primary btn-sm"  v-on:click="postAnnouncement"> Post Announcement</button>
+               <router-link to="/"> <button class="btn btn-primary btn-sm"  v-on:click="postAnnouncement"> Post Announcement</button></router-link>
             </div>
         </div>
     </form>
+    </center>
 </template>
 
 <script>
@@ -37,7 +39,7 @@ export default {
 methods:{
         postAnnouncement: function () 
         {
-            this.$http.post('http://localhost:3000/api/sPs/announcements/post', {"title":this.title,"content":this.content}).then(data => {
+            this.$http.post('http://localhost:3000/api/sPs/announcements/post', {"title":this.title,"content":this.content}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
             console.log('success');
                     })
         }

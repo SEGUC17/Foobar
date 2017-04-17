@@ -24,7 +24,7 @@ created(){
 },
 methods:{
     getReviews: function () {
-      this.$http.get('http://localhost:3000/api/sPs/reviews/view').then(response => {
+      this.$http.get('http://localhost:3000/api/sPs/reviews/view', {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
 
         this.reviews=response.data.data.reviews
       })

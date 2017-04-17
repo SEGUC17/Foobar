@@ -95,15 +95,10 @@
                             <div class="nav-collapse nav-collapse_  collapse">
                                 <ul class="nav sf-menu">
                                 <li class=""><a href="index.html">Home</a></li>
-                                <li class="sub-menu"><a href="work.html">Post</a>
-                                    <ul>
-                                    <li ><router-link to="/SPPostAnnouncement">Announcement</router-link></li>
-                                    <li ><router-link to="/SPPostAnnouncement">Offer</router-link></li>
-                                    </ul>
-                                </li>
-                                <li><router-link to="/SPReservations">View Reservations</router-link></li> 
-                                <li><router-link to="/SPReviews">View Reviews</router-link></li>
+                                <li ><router-link to="/SPPostAnnouncement">Post Announcement</router-link></li>
                                 <li><router-link to="/SPPostOffer">Post Offer</router-link></li>
+                                <li><router-link to="/SPReservations">View Reservations</router-link></li> 
+                                <li><router-link to="/SPReviews">View Reviews</router-link></li>    
                                 <li><router-link to="/SPAssess">Assess Students</router-link></li>
                                 <li><router-link to="/SPEditProfile">Edit Profile</router-link></li>  
                                 <li  v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
