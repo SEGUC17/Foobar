@@ -4,6 +4,10 @@ const Review = require('../models/Review');
 const Video = require("../models/Video");
 const Reservation = require('../models/Reservation');
 const Assessment = require('../models/Assessment');
+const Offer = require('../models/Offer');
+const Student = require('../models/Student');
+const User = require('../models/User');
+const Interest = require('../models/Interests');
 const jwt = require('../auth/jwt');
 
 
@@ -42,6 +46,44 @@ const spController = {
       }
     });
   },
+  viewStudentsFinishedOffer: function(req, res) {
+    const token = req.headers['jwt-token'];
+    jwt.verify(token, function(decoded) {
+      if (decoded.type === 3) {
+        Offer.find({
+          sp_id: decoded.id,
+          end_date:{ $lt : Date.Now } 
+          }, function(err, offers) {
+            Reservation.find({
+               offer_id: {$in: offers.offer_id}
+              }, function(err, reservations) {
+                User.find({
+                  id: {$in: reservations.user_id}
+                }, function(err, students){
+                  if (err) {
+                    res.status(500).json({
+                      status: 'error',
+                      message: err.message,
+                    });
+                  } else {
+                    res.status(200).json({
+                      status: 'success',
+                      data: {
+                        students
+                      }
+                    });
+                  }
+                });
+             });
+
+        });
+      } else {
+        res.status(500).json({
+          err: err.message
+        });
+      }
+    });
+  },
   viewReviews: function(req, res) {
     const token = req.headers['jwt-token'];
     jwt.verify(token, function(decoded) {
@@ -60,6 +102,34 @@ const spController = {
               status: 'success',
               data: {
                 reviews,
+              },
+            });
+          }
+        });
+      } else {
+        res.status(500).json({
+          err: err.message
+        });
+      }
+    });
+  },
+  viewInterests: function(req, res) { //all interests
+    const token = req.headers['jwt-token'];
+    jwt.verify(token, function(decoded) {
+      if (decoded.type === 3) {
+        const interests = Interest.find({
+        }, function(err, interests) {
+          if (err) {
+
+            res.status(500).json({
+              status: 'error',
+              message: err.message,
+            });
+          } else {
+            res.status(200).json({
+              status: 'success',
+              data: {
+                interests
               },
             });
           }
@@ -221,7 +291,144 @@ const spController = {
         },
       });
     });
+  },editSP: function(req, res) { //SP edits his profile
+    const token = req.headers['jwt-token'];
+    jwt.verify(token, function(decoded) {
+      if (decoded.type === 3) {
+        User.find({
+          id: decoded.id
+        }, function(err, user) {
+          if (err)
+            res.status(500).json({
+              status: 'error',
+              message: err.message,
+            });
+          else {
+            SP.find({
+              user_id: decoded.id
+            }, function(err, sp) {
+              if (err)
+                res.status(500).json({
+                  status: 'error',
+                  message: err.message,
+                });
+              else {
+                
+                var price_category = req.body.price_category
+                var location = req.body.location
+                var description = req.body.description
+                var fields = req.body.fields
+                var phone_number = req.body.phone_number
+
+                SP.update({
+                  user_id: decoded.id
+                }, {
+                  price_category :price_category,
+                  location :location,
+                  description:description,
+                  fields:fields,
+                  phone_number:phone_number
+                }, function(err, sp1) {
+                  if (err)
+                    res.status(500).json({
+                      status: 'error',
+                      message: err.message,
+                    });
+                  else {
+                    res.json({
+                      mssg: 'sp updated'
+                    });
+                  }
+                });
+              }
+            });
+          }
+
+        });
+      } else {
+        res.status(500).json({
+          err: 'unauthorized access'
+        });
+      }
+    });
+  },
+  viewProfile: function(req, res) { //viewing my SP profile
+    const token = req.headers['jwt-token'];
+    jwt.verify(token, function(decoded) {
+      if (decoded.type === 3) {
+        var query = {
+          user_id: decoded.id
+        };
+        SP.findOne(query, function(err, providerProfile) {
+          if (err) {
+            res.status(500).json({
+              status: 'error',
+              message: err.message,
+            });
+          } else {
+            User.find({id:decoded.id}, function(err, user){
+              res.status(200).json({
+              status: 'success',
+              data: {
+                user,
+                providerProfile
+              },
+            });
+            });
+          }
+        });
+    } else {
+        res.status(500).json({
+          err: 'unauthorized access'
+        });
+      }
+    });
+
+  },
+  viewMyInterests: function(req, res) { //SPs interests
+    const token = req.headers['jwt-token'];
+    jwt.verify(token, function(decoded) {
+      if (decoded.type === 3) {
+        const interests = SP.find({
+          user_id: decoded.id
+        }, function(err, sp) {
+          if (err) {
+
+            res.status(500).json({
+              status: 'error',
+              message: err.message,
+            });
+          } else {
+            Interest.find({
+              name: {
+                $in: sp.fields
+              }
+            }, function(err, interests){
+              if (err) {
+                res.status(500).json({
+                  status: 'error',
+                  message: err.message,
+                });
+              } else {
+                res.status(200).json({
+                  status: 'success',
+                  data: {
+                    interests
+                  },
+                });
+              }
+
+            });
+          }
+        });
+      } else {
+        res.status(500).json({
+          err: err.message
+        });
+      }
+    });
   }
+
 };
 
 module.exports = spController;

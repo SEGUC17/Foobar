@@ -26,7 +26,7 @@ methods:{
     getReviews: function () {
       this.$http.get('http://localhost:3000/api/sPs/reviews/view').then(response => {
 
-        this.announcements=response.data.data.reviews
+        this.reviews=response.data.data.reviews
       })
     }}
 

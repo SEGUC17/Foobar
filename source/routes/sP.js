@@ -31,9 +31,19 @@ router.get('/', function(req, res) { //SP home page
 
 router.get('/announcements/view', announcementController.getAllAnnouncements); //viewing announcements
 
+router.get('/profile/view', sPController.viewProfile); //SP viewing his profile
+
 router.post('/announcements/post', sPController.postAnnouncement); //posting announcements
 
+router.post('/profile/edit', sPController.editSP); //SP editing his profile
+
 router.get('/reviews/view', sPController.viewReviews); //viewing reviews
+
+router.get('/interests', sPController.viewInterests); //viewing all interests 
+
+router.get('/sP/interests', sPController.viewMyInterests); //viewing SP's interests 
+
+router.get('/students/offer', sPController.viewStudentsFinishedOffer); //viewing students who finished my offers
 
 router.post('/students/assess/:id', sPController.assessStudent); // service provider assessing student
 

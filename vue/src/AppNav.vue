@@ -102,7 +102,10 @@
                                     </ul>
                                 </li>
                                 <li><router-link to="/SPReservations">View Reservations</router-link></li> 
-                                <li><router-link to="/SPReviews">View Reviews</router-link></li> 
+                                <li><router-link to="/SPReviews">View Reviews</router-link></li>
+                                <li><router-link to="/SPPostOffer">Post Offer</router-link></li>
+                                <li><router-link to="/SPAssess">Assess Students</router-link></li>
+                                <li><router-link to="/SPEditProfile">Edit Profile</router-link></li>  
                                 <li  v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
                                 <li class="" v-else ><a  v-on:click="logout">logout</a></li>
 
