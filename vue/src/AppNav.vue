@@ -84,6 +84,34 @@
                 </div>
           </div>
             </div>
+
+            <div class="row" v-if="this.user.type==3">
+                <div class="span12">
+                    <div class="navbar navbar_">
+                        <div class="container">
+                            <h1 class="brand brand_"><a href="index.html"><img alt="" src="./assets/img/logo.png" style ="height:70px"> </a></h1>
+                            <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
+                            <div class="nav-collapse nav-collapse_  collapse">
+                                <ul class="nav sf-menu">
+                                <li class=""><a href="index.html">Home</a></li>
+                                <li><a href="work.html">Post</a>
+                                    <ul>
+                                    <li><a href="#">Process 01</a></li>
+                                    <li><a href="#">Process 02</a></li>
+                                    <li><a href="#">Process 03</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="blog.html">View</a></li>                           
+                                <li  v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
+                                <li class="" v-else ><a  v-on:click="logout">logout</a></li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
   </div>
 
 
