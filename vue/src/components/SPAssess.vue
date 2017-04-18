@@ -20,7 +20,7 @@
             <div class="col-sm-2">
             </div>
             <div class="col-sm-10">
-                <button class="btn btn-primary btn-sm" v-on:click="assess(student.id)">Assess</button>
+                <button class="btn btn-primary btn-sm" v-on:click="assess(student._id)">Assess</button>
             </div>
         </div>
     </form>

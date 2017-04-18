@@ -47,18 +47,46 @@ const spController = {
     });
   },
   viewStudentsFinishedOffer: function(req, res) {
+    
     const token = req.headers['jwt-token'];
     jwt.verify(token, function(decoded) {
       if (decoded.type === 3) {
+        var d = new Date();
+        var n = d.toISOString();
         Offer.find({
           sp_id: decoded.id,
-          end_date:{ $lt : Date.Now } 
+          end_date:{ $lt : n } 
           }, function(err, offers) {
+            if(err){
+              res.status(500).json({
+                    status: 'error',
+                    message: err.message,
+                  })
+            }else{
+            var offers_ids=[];
+            var i = offers.length - 1;
+            for (i; i > -1; i--) {
+              offers_ids[i]=offers[i].id;
+            }
             Reservation.find({
-               offer_id: {$in: offers.offer_id}
+               offer_id: {$in: offers_ids},
+               is_assessed:false
               }, function(err, reservations) {
+                if(err){
+                    res.status(500).json({
+                    status: 'error',
+                    message: err
+                  });
+                }else{
+                  var reservations_ids=[];
+                var j = reservations.length - 1;
+                for (j; j > -1; j--) {
+                  reservations_ids[j]=reservations[j].user_id;
+                } 
+                console.log(reservations_ids)
+
                 User.find({
-                  id: {$in: reservations.user_id}
+                  _id: {$in: reservations_ids}
                 }, function(err, students){
                   if (err) {
                     res.status(500).json({
@@ -66,6 +94,7 @@ const spController = {
                       message: err.message,
                     });
                   } else {
+                    console.log(students)
                     res.status(200).json({
                       status: 'success',
                       data: {
@@ -74,8 +103,11 @@ const spController = {
                     });
                   }
                 });
+                }
+               
              });
-
+            }
+            
         });
       } else {
         res.status(500).json({
@@ -162,11 +194,8 @@ const spController = {
           }
         });
       } else {
-        res.status(200).json({
-          status: 'success',
-          data: {
-            assessment,
-          },
+        res.status(500).json({
+          err: err.message
         });
       }
     });

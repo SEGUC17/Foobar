@@ -7,7 +7,8 @@ const reservationSchema = mongoose.Schema({
 	offer_id: String,
 	service_provider_id: String,
 	reservation_date: Date,
-	status: String
+	status: String,
+	is_assessed: Boolean
 });
 
 // create the model for users and expose it to our app
