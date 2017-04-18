@@ -246,7 +246,8 @@ const StudentController = {
     });
   },
   viewStudent: function(req, res) {
-    User.find({
+    console.log(req.params.id);
+    User.findOne({
       _id: req.params.id
     }, function(err, user) {
       if (err)
@@ -255,13 +256,16 @@ const StudentController = {
           message: err.message,
         });
       else {
-        Student.find({
+        Student.findOne({
           user_id: req.params.id
         }, function(err, student) {
           //Render
+          console.log(student);
+          console.log(user);
           res.status(200).json({
             status: 'success',
             data: {
+              
               student: student,
               user: user
             }

@@ -19,6 +19,8 @@ router.get('/announcements/view', announcementController.getAllAnnouncements); /
 
 router.get('/pendingSPRequests/', pendingSPController.getAllPendingSP); //viewing pending sp requests
 
+router.get('/reviewData',adminController.reviewDataAnalysis); //reviewing Data
+
 router.post('/pendingSPRequests', adminController.approveOrDisapproveSP); //approving/disapproving pending sp requests
 
 router.get('/sP/:id', sPController.getSPProfile); // view a specific SP profile
@@ -31,8 +33,12 @@ router.post('/addInterest', interestController.addInterest); //adding an interes
 
 router.post('/admin', adminController.addAdmin); // admin can add another admin
 
-router.delete('/admin/students/:id', adminController.deleteStudent); // admin can delete a student
+// router.delete('/admin/students/:id', adminController.deleteStudent); // admin can delete a student
 
-router.delete('/admin/sp/:id', adminController.deleteSP); // admin can delete serviceprovider
+// router.delete('/admin/sp/:id', adminController.deleteSP); // admin can delete serviceprovider
+
+// router.get('/admins', adminController.getAllAdmins); // admin can get all admins
+
+router.post('/adminpost', adminController.adminPostAnnouncement); 
 
 module.exports = router;

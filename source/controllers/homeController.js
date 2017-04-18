@@ -66,77 +66,152 @@ let homeController = {
       }
     });
   },
-  viewOffers: function(req, res) {
-    const token = req.headers['jwt-token'];
-    jwt.verify(token, function(decoded) {
-      if (decoded.type == 2) {
-        SI.find({
-          student_id: decoded.id
-        }, function(err, studentinterests) {
-          if (err) {
-            res.status(500).json({
-              status: 'error',
-              message: err.message,
-            });
-          } else {
-            Interest.find({
-              id: {
-                $in: studentinterests.interest_id
-              }
-            }, function(err, interests) {
+ //  viewOffers: function(req, res) {
+ //    // const token = req.headers['jwt-token'];
+ //    // jwt.verify(token, function(decoded) {
+ //    //   if (decoded.type == 2) {
+ //        SI.find({
+ //          //student_id: decoded.id
+ //          student_id: "58f48099f8a5bdd467b32d40"
 
-              if (err) {
-                res.status(500).json({
-                  status: 'error',
-                  message: err.message,
-                });
-              } else {
-                Offer.find({
-                  field: {
-                    $in: interests.name
-                  }
-                }, function(err, offers) {
-                  if (err) {
-                    res.status(500).json({
-                      status: 'error',
-                      message: err.message,
-                    });
-                  } else {
-                    // Return
-                    res.status(200).json({
-                      status: 'success',
-                      data: {
-                        message: 'Viewing offers',
-                        offers,
-                      },
-                    });
-                  }
-                });
-              }
+
+
+ //        },{ interest_id: 1, _id: 0 }, function(err, studentinterests) {
+ //          if (err) {
+ //            res.status(500).json({
+ //              status: 'error',
+ //              message: err.message,
+ //            });
+ //          } else {
+ //            console.log(studentinterests);
+
+
+ //            Interest.find({
+
+ //              _id: {
+ //               $in: (studentinterests)
+ //              }
+ //            },{ name: 1, _id: 0 }, function(err, interests) {
+
+ //              if (err) {
+ //                res.status(500).json({
+ //                  status: 'error',
+ //                  message: err.message,
+ //                });
+ //              } else {
+ //                console.log(interests);
+ //                Offer.find({
+ //                  field: {
+ //                    $in: interests
+ //                  }
+ //                }, function(err, offers) {
+ //                  if (err) {
+ //                    res.status(500).json({
+ //                      status: 'error',
+ //                      message: err.message,
+ //                    });
+ //                  } else {
+ //                    console.log(offers);
+ //                    // Return
+ //                    res.status(200).json({
+ //                      status: 'success',
+ //                      data: {
+ //                        message: 'Viewing offers',
+ //                        offers,
+ //                      },
+ //                    });
+ //                  }
+ //                });
+ //              }
+ //            });
+ //          }
+ //        });
+ //      } 
+ //      // else {
+ //      //   Offer.find({}, {
+ //      //     limit: 10
+ //      //   }, function(err, offers) {
+ //      //     if (err) {
+ //      //       res.status(500).json({
+ //      //         status: 'error',
+ //      //         message: err.message,
+ //      //       });
+ //      //     } else {
+ //      //       // Return
+ //      //       res.status(200).json({
+ //      //         offers: offers
+ //      //       });
+ //      //     }
+ //      //   });
+ //      // }
+ // //   });
+
+viewOffers: function(req,res){
+    var userMap = [];
+        var tempInterest = [];
+        var offers = [];
+        var k = 0;
+        var x = 0;
+        var z = 0;
+
+  SI.find({student_id: "58f48099f8a5bdd467b32d40"}, function(err, interests) {
+
+    console.log(interests)
+          interests.forEach(function(StudentInterest) {
+
+            userMap[k] = StudentInterest.interest_id;
+            k++;
+          });
+          console.log(userMap);
+          Interest.find([], function(err, inter) {
+
+
+            userMap.forEach(function(stud) {    
+              inter.forEach(function(interest) {
+
+                if (stud == interest._id) {
+
+                  tempInterest[x] = interest.name;
+                  x++;
+                }
+              });
             });
-          }
+            console.log(tempInterest)
+           Offer.find([],function(err,off){
+            tempInterest.forEach(function(name){
+              off.forEach(function(offerfield){
+                if(name==offerfield.field){
+                  offers[z] = offerfield;
+                  z++;
+                }
+
+
+              })
+
+            })
+        console.log(offers);
+        Student.findOne({_id:"58f48099f8a5bdd467b32d40"},function(err,student){
+          if(err){
+            console.log(err)
+          }else{
+          console.log(student)
+
+          res.status(200).json({
+              status: 'success',
+              data: {
+                offers,
+                student
+              
+           }
+          });
+        }
+      });
+
+});
         });
-      } else {
-        Offer.find({}, {
-          limit: 10
-        }, function(err, offers) {
-          if (err) {
-            res.status(500).json({
-              status: 'error',
-              message: err.message,
-            });
-          } else {
-            // Return
-            res.status(200).json({
-              offers: offers
-            });
-          }
-        });
-      }
-    });
-
-
-  },
+});
+}
+,
   resetPassword: function(req, res) {
     var email = req.body.email;
     var password = generatePassword();

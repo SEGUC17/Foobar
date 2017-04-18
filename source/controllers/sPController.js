@@ -3,6 +3,7 @@ const Announcement = require('../models/Announcement');
 const Review = require('../models/Review');
 const Video = require("../models/Video");
 const Reservation = require('../models/Reservation');
+const User = require('../models/User');
 const Assessment = require('../models/Assessment');
 const jwt = require('../auth/jwt');
 
@@ -104,9 +105,25 @@ const spController = {
   getAllSPProfiles: function(req, res) { //viewing a summary of all SP profiles
     const token = req.headers['jwt-token'];
     jwt.verify(token, function(decoded) {
-
+       var userMap = [];
+        var users = [];
+        var k = 0;
+        var x = 0;
       SP.find(function(err, profiles) {
 
+        User.find([], function(err, use) {
+
+
+            profiles.forEach(function(stud) {    
+              use.forEach(function(user) {
+
+                if (stud.user_id == user._id) {
+
+                  users[x] = user ;
+                  x++;
+                }
+              });
+            });
         if (err) {
           res.status(500).json({
             status: 'error',
@@ -120,20 +137,28 @@ const spController = {
             data: {
               message: 'summary of SP profiles retrieved successfully',
               profiles,
+              users
             },
           });
         }
       });
-
     });
-  },
+  
+  });
+  }
+  ,
 
   getSPProfile: function(req, res) { //viewing a specific SP profile
     var query = {
-      user_id: req.params.id //Recently Changed to Params
+      _id: req.params.id //Recently Changed to Params
     };
 
     SP.findOne(query, function(err, providerProfile) {
+      User.findOne({_id:providerProfile.user_id},function(err, user){
+
+console.log(providerProfile);
+console.log(user);
+
       if (err) {
         res.status(500).json({
           status: 'error',
@@ -144,9 +169,10 @@ const spController = {
           status: 'success',
           data: {
             providerProfile,
-          },
+            user
+          }
         });
-      }
+      }});
     });
 
   },

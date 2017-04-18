@@ -12,15 +12,34 @@ const nodemailer = require('nodemailer'); //a dependency that sends an email to 
 // const application = require('../models/pendingSP');
 let Offer = require('../models/Offer');
 let Student = require('../models/Student');
+let StudentInterest = require('../models/StudentInterest');
 // const application = require('../models/pendingSP');
 const jwt = require('../auth/jwt');
+
+
+
+ let transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+              user: 'foobarse2017@gmail.com',
+              pass: '12123434'
+            }
+          });
+ transporter.verify(function(err,mess){
+  if(err){
+    console.log(err);
+  }else{
+    console.log("Okay");
+  }
+
+ });
 
 const adminController = {
 
   approveOrDisapproveSP: function(req, res) { //approving or disapproving an applied SP
-    const token = req.headers['jwt-token'];
-    jwt.verify(token, function(decoded) {
-      if (decoded.type == 1) {
+    // const token = req.headers['jwt-token'];
+   // jwt.verify(token, function(decoded) {
+      if (1) {
         var sP_id = req.body.id;
         //if approve is selected
         if (req.body.approve) {
@@ -81,21 +100,15 @@ const adminController = {
             },
           });
           // create reusable transporter object using the default SMTP transport
-          let transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-              user: 'foobar.se@gmail.com',
-              pass: 'foobar1234'
-            }
-          });
+         
 
           // setup email data with unicode symbols
           let mailOptions = {
-            from: ' "Foobar" <foobar.se@gmail.com>', // sender address
-            to: email, // list of receivers
-            subject: 'System Approval ✔', // Subject line
-            text: 'Congratulations! You have been approved to our system and now you can login using your email and password:' +
-              password, // plain text body
+             // sender address
+            to: 'ahmedashh11@gmail.com', // list of receivers
+            subject: 'System Approval ✔', // Subject line 
+            text: 'Congratulations! You have been approved to our system and now you can login using your email and password: '.concat(
+              password) // plain text body
           };
 
           // send mail with defined transport object
@@ -135,14 +148,14 @@ const adminController = {
         res.status(500).json({
           err: 'unauthorized access'
         });
-      }
-
-    });
+      
+}
+    //});
   },
   sortByFrequencyAndFilter: function(myArray) {
-    const token = req.headers['jwt-token'];
-    jwt.verify(token, function(decoded) {
-      if (decoded.type === 1) {
+    // const token = req.headers['jwt-token'];
+    // jwt.verify(token, function(decoded) {
+    //   if (decoded.type === 1) {
         var newArray = [];
         var freq = {};
 
@@ -166,13 +179,14 @@ const adminController = {
         return newArray.sort(compareFreq);
 
 
-      } else {
-        res.status(500).json({
-          err: 'unauthorized access'
-        });
-      }
-    });
-  },
+       },
+    // else {
+    //     res.status(500).json({
+    //       err: 'unauthorized access'
+    //     });
+    //   }
+    // });
+  // },
 
   adminPostAnnouncement: function(req, res) {
     const token = req.headers['jwt-token'];
@@ -212,26 +226,27 @@ const adminController = {
     });
   },
   reviewDataAnalysis: function(req, res) {
-    const token = req.headers['jwt-token'];
-    jwt.verify(token, function(decoded) {
-      if (decoded.type === 1) {
+    // const token = req.headers['jwt-token'];
+    // jwt.verify(token, function(decoded) {
+      // if (decoded.type === 1) {
         var userMap = [];
         var tempInterest = [];
         var k = 0;
         var x = 0;
 
+
         StudentInterest.find([], function(err, interests) {
+          console.log(interests);
 
+          interests.forEach(function(SI) {
 
-          interests.forEach(function(StudentInterest) {
-
-            userMap[k] = StudentInterest.interest_id;
+            userMap[k] = SI.interest_id;
             k++;
           });
           interest.find([], function(err, inter) {
 
 
-            userMap.forEach(function(stud) {
+            userMap.forEach(function(stud) {    
               inter.forEach(function(interest) {
 
                 if (stud == interest._id) {
@@ -243,6 +258,8 @@ const adminController = {
             });
             var temp = adminController.sortByFrequencyAndFilter(
               tempInterest);
+            console.log(temp);
+
             most = temp[0];
             least = temp[temp.length - 1];
             res.status(200).json({
@@ -257,15 +274,16 @@ const adminController = {
           });
         });
 
-      } else {
-        res.status(500).json({
-          status: 'error',
-          err: 'unauthorized access',
-        });
-      }
-    });
+    //   } else {
+    //     res.status(500).json({
+    //       status: 'error',
+    //       err: 'unauthorized access',
+    //     });
+    //   }
+    // });
 
-  },
+  }
+  ,
 
   deleteSP: function(req, res) {
     const token = req.headers['jwt-token'];

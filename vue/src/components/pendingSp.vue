@@ -2,7 +2,7 @@
   <div>
 
 <ul>
- <li v-for =" Sp in pendingSPs"> {{Sp._id}} <button @click ="Approve(Sp._id,Sp.name)"> Approve 
+ <li v-for =" Sp in pendingSPs"> {{Sp._id}} <button @click ="Approve(Sp._id,Sp.name,Sp.email)"> Approve 
  </button> 
 <button @click ="Decline(Sp._id)">
   Decline
@@ -36,9 +36,15 @@ methods:{
       })
     }
     ,
-    Approve:function(id,name){
-      console.log(id);
-      console.log(name);
+    Approve:function(id,name,email){
+    this.$http.post('http://localhost:3000/api/admins/pendingSPRequests',{approve: true , name: name , id: id ,email: email }).then(response => {
+
+        this.pendingSPs=response.data.data.pendingSP;
+        console.log(pendingSP)
+        
+
+      })
+      
     },
     Decline:function(id){
       console.log(id);

@@ -17,12 +17,17 @@
                 <li><a data-toggle="modal" data-target="#postAnnouncement">Post Announcement</a></li>
                 <li><a data-toggle="modal" data-target="#myModal2">Edit admins</a></li>
 
-                <li class="active"><router-link to="/">Home</router-link></li>
+                <li><router-link to="/">Home</router-link></li>
+                <li><router-link to="/viewOffers">View Offers</router-link></li>
+                <li><router-link to="/viewReservations">View Reservation</router-link></li>
                 <li ><router-link to="/announcements">Announcements</router-link></li>
+     <!--            <router-link :to = "{ name: 'service provider' , params: { id: serviceprovider._id }}" v-model ="spid"> 
+  {{serviceprovider._id}} </router-link> --> 
                 <br>
                 <li ><router-link to="/pendingSp">View Pending Service Providers</router-link></li>
-                <li ><router-link  to="/StudentProfile"> Student Profile</router-link></li>
+                <li ><router-link  :to ="{ name : 'StudentProfile' , params: { Studid : StudId }}"> Student Profile</router-link></li>
                 <li ><router-link  to="/sPs">  SPS</router-link></li>
+                <li ><router-link  to="/reviewData"> Review Data</router-link></li>
 
                
               </ul>
@@ -303,6 +308,7 @@ data () {
        Title: "" ,
        adminname : "",
       adminemail: "",
+      StudId:"58f50f4d14aa397c21ca1ffa",
   // User object will let us check authentication status
   user: {
     authenticated: false
