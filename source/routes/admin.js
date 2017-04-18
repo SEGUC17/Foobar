@@ -15,8 +15,6 @@ const interestController = require('../controllers/interestController');
 //   console.log('admin homepage is here');
 // });
 
-router.get('/announcements/view', announcementController.getAllAnnouncements); //viewing announcements
-
 router.get('/pendingSPRequests/', pendingSPController.getAllPendingSP); //viewing pending sp requests
 
 router.post('/pendingSPRequests', adminController.approveOrDisapproveSP); //approving/disapproving pending sp requests
@@ -37,4 +35,5 @@ router.delete('/admin/students/:id', adminController.deleteStudent); // admin ca
 
 router.delete('/admin/sp/:id', adminController.deleteSP); // admin can delete serviceprovider
 
+router.get('/reviewData', adminController.reviewDataAnalysis);
 module.exports = router;

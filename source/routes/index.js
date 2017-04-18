@@ -1,11 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const stripe = require('stripe')('sk_test_TPfHR1k3VAZJmUVbUkFQojfB');
+const announcementController = require('../controllers/announcementController');
+
 
 // redirecting homepage
 router.get('/', (req, res) => {
   res.render('index');
 });
+
+router.get('/announcements/view', announcementController.getAllAnnouncements); //viewing announcements
 
 router.post('/charge', (req, res) => {
   console.log("paying");

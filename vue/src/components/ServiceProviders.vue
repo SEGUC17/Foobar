@@ -21,7 +21,7 @@ created(){
 },
 methods:{
     getAllServiceProviders: function () {
-      this.$http.get('http://localhost:3000/sPs').then(response => {
+      this.$http.get('http://localhost:3000/api/students/sPs', {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
 
         this.serviceproviders=response.data.data.profiles
       })

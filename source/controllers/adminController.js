@@ -2,6 +2,7 @@
 const Announcement = require('../models/Announcement');
 const interest = require('../models/Interests');
 let Admin = require('../models/User');
+let StudentInterest = require('../models/StudentInterest');
 let SP = require('../models/ServiceProvider');
 let PendingSP = require('../models/PendingSP');
 let User = require('../models/User');
@@ -140,9 +141,7 @@ const adminController = {
     });
   },
   sortByFrequencyAndFilter: function(myArray) {
-    const token = req.headers['jwt-token'];
-    jwt.verify(token, function(decoded) {
-      if (decoded.type === 1) {
+    
         var newArray = [];
         var freq = {};
 
@@ -166,12 +165,8 @@ const adminController = {
         return newArray.sort(compareFreq);
 
 
-      } else {
-        res.status(500).json({
-          err: 'unauthorized access'
-        });
-      }
-    });
+      
+   
   },
 
   adminPostAnnouncement: function(req, res) {

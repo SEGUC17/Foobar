@@ -10,6 +10,7 @@
             <div class="nav-collapse nav-collapse_  collapse">
                   <ul class="nav sf-menu">
                 <li class=""><a href="index.html">Home</a></li>
+                <li ><router-link to="/announcements">Announcements</router-link></li>
                 <li><a href="work.html">Work</a></li>
                 <li><a href="blog.html">Blog</a></li>
                 <li class="sub-menu"><a href="process.html" v-if="user.authenticated">Process</a>
@@ -39,7 +40,8 @@
                       <ul class="nav sf-menu">
                         <li></li>
                     <li><a href="work.html">Post</a></li>
-
+                    <li ><router-link  to="/reviewData"> Review Data</router-link></li>
+                    <li ><router-link to="/announcements">Announcements</router-link></li>
                     <li class="sub-menu"><a href="process.html" v-if="this.user.authenticated && this.user.type==1">View</a>
                           <ul>
                         <li><a href="#"><router-link to='/viewAdmins'>Admins</router-link></a></li>
@@ -65,51 +67,47 @@
                 <h1 class="brand brand_"><a href="index.html"><img alt="" src="./assets/img/logo.png" style ="height:70px"> </a></h1>
                 <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
                 <div class="nav-collapse nav-collapse_  collapse">
-                      <ul class="nav sf-menu">
-                    <li class=""><a href="index.html">Home</a></li>
-                    <li><a href="work.html">Work</a></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li class="sub-menu"><a href="process.html" v-if="user.authenticated">Process</a>
-                          <ul>
-                        <li><a href="#">Process 01</a></li>
-                        <li><a href="#">Process 02</a></li>
-                        <li><a href="#">Process 03</a></li>
-                      </ul>
-                        </li>
-                    <li  v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
-                    <li class="" v-else ><a  v-on:click="logout">logout</a></li>
+                    <ul class="nav sf-menu">
+                        <li><router-link to="/viewOffers">View Offers</router-link></li>
+                        <li ><router-link to="/announcements">Announcements</router-link></li>
+                        <li><router-link to="/viewReservations">View Reservation</router-link></li>
+                     <li ><router-link  :to ="{ name : 'StudentProfile' , params: { Studid : decodeid.body.id }}"> Student Profile</router-link></li>
+                        <li ><router-link  to="/sPs">  SPS</router-link></li>
+                        <li v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
+                        <li class="" v-else ><a  v-on:click="logout">logout</a></li>
 
-                  </ul>
-                    </div>
-              </div>
+                    </ul> 
                 </div>
-          </div>
+              </div>
             </div>
+          </div>
+        </div>
 
-            <div class="row" v-if="this.user.type==3">
-                <div class="span12">
-                    <div class="navbar navbar_">
-                        <div class="container">
-                            <h1 class="brand brand_"><a href="index.html"><img alt="" src="./assets/img/logo.png" style ="height:70px"> </a></h1>
-                            <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
-                            <div class="nav-collapse nav-collapse_  collapse">
-                                <ul class="nav sf-menu">
-                                <li class=""><a href="index.html">Home</a></li>
-                                <li ><router-link to="/SPPostAnnouncement">Post Announcement</router-link></li>
-                                <li><router-link to="/SPPostOffer">Post Offer</router-link></li>
-                                <li><router-link to="/SPReservations">View Reservations</router-link></li> 
-                                <li><router-link to="/SPReviews">View Reviews</router-link></li>    
-                                <li><router-link to="/SPAssess">Assess Students</router-link></li>
-                                <li><router-link to="/SPEditProfile">Edit Profile</router-link></li>  
-                                <li  v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
-                                <li class="" v-else ><a  v-on:click="logout">logout</a></li>
+        <div class="row" v-if="this.user.type==3">
+            <div class="span12">
+                <div class="navbar navbar_">
+                    <div class="container">
+                        <h1 class="brand brand_"><a href="index.html"><img alt="" src="./assets/img/logo.png" style ="height:70px"> </a></h1>
+                        <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
+                        <div class="nav-collapse nav-collapse_  collapse">
+                            <ul class="nav sf-menu">
+                            <li class=""><a href="index.html">Home</a></li>
+                            <li ><router-link to="/announcements">Announcements</router-link></li>
+                            <li ><router-link to="/SPPostAnnouncement">Post Announcement</router-link></li>
+                            <li><router-link to="/SPPostOffer">Post Offer</router-link></li>
+                            <li><router-link to="/SPReservations">View Reservations</router-link></li> 
+                            <li><router-link to="/SPReviews">View Reviews</router-link></li>    
+                            <li><router-link to="/SPAssess">Assess Students</router-link></li>
+                            <li><router-link to="/SPEditProfile">Edit Profile</router-link></li>  
+                            <li  v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
+                            <li class="" v-else ><a  v-on:click="logout">logout</a></li>
 
-                                </ul>
-                            </div>
+                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
   </div>
 
@@ -238,7 +236,7 @@ data () {
       },
       resetPWEmail: '',
       error: '',
-
+     decodeid: '',
 
   // User object will let us check authentication status
   user: {
@@ -252,6 +250,7 @@ if(localStorage.getItem('id_token')!=null){
   this.user.authenticated=true
 
   this.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
+      this.decodeid=decode
   this.user.type = decode.body.type
 })
 }

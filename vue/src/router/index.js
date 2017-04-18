@@ -13,47 +13,86 @@ import SPAssess from '@/components/SPAssess.vue'
 import ApplySP from '@/components/ApplySP.vue'
 import SPReservations from '@/components/SPReservations.vue'
 import SPReviews from '@/components/SPReviews.vue'
+import EditStudentProfile from '@/components/EditStudentProfile.vue'
+import Offers from '@/components/Offers.vue'
+import ReservationStudent from '@/components/ReservationStudent.vue'
+import ReviewInterest from '@/components/ReviewInterest.vue'
+import ServiceProviderProfile from '@/components/ServiceProviderProfile.vue'
 
 
 Vue.use(Router)
 Vue.use(vueResource)
 
 export default new Router({
-  routes: [{
+  routes: [
+    {
     path: '/',
     component: Hello
-  }, {
+    }, 
+    {
     path: '/announcements',
     component: Announcements
-  },{
-    path: '/SPPostAnnouncement',
-    component: SPPostAnnouncement
-  },{
-    path: '/SPPostOffer',
-    component: SPPostOffer
-  },{
-    path: '/SPAssess',
-    component: SPAssess
-  },{
-    path: '/SPEditProfile',
-    component: SPEditProfile
-  },{
-    path: '/applySP',
-    component: ApplySP
-  },{
-    path: '/SPReservations',
-    component: SPReservations
-  },{
-    path: '/SPReviews',
-    component: SPReviews
-  },{
-    path: '/sPs',
-    component: ServiceProviders
-  }, {
-    path: '/StudentProfile',
-    component: StudentProfile
-  }, {
-    path: '/viewAdmins',
-    component: viewadmin
-  }, ]
+    },
+    {
+      path: '/SPPostAnnouncement',
+      component: SPPostAnnouncement
+    },
+    {
+      path: '/SPPostOffer',
+      component: SPPostOffer
+    },
+    {
+      path: '/SPAssess',
+      component: SPAssess
+    },
+    {
+      path: '/SPEditProfile',
+      component: SPEditProfile
+    },
+    {
+      path: '/applySP',
+      component: ApplySP
+    },
+    {
+      path: '/SPReservations',
+      component: SPReservations
+    },
+    {
+      path: '/SPReviews',
+      component: SPReviews
+    },
+    {
+      path: '/sPs',
+      component: ServiceProviders
+    },
+    {
+      path: '/viewAdmins',
+      component: viewadmin
+    },
+    {
+      path: '/viewOffers',
+      component: Offers
+    }, 
+    {
+      path: '/viewReservations',
+      component: ReservationStudent
+    }, 
+    {
+      path: '/reviewData',
+      component: ReviewInterest
+    }, {
+          path: '/sps/:id',
+          name:'service provider',
+        component: ServiceProviderProfile
+       }
+    , {
+         path: '/EditStudent/:EditStudid',
+        name:'EditStudent',
+         component: EditStudentProfile
+      }
+    , {
+         path: '/student/:Studid',
+         name:'StudentProfile',
+          component: StudentProfile
+     }]
 })
