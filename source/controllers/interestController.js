@@ -1,4 +1,4 @@
-let Interest = require("../models/Interests");
+let Interests = require("../models/Interests");
 const jwt = require('../auth/jwt');
 
 

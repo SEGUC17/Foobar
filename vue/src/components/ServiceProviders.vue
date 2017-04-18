@@ -1,12 +1,12 @@
 <template>
-  <div>
+<div>
 
-<ul>
-  <li v-for =" serviceprovider in serviceproviders">{{serviceprovider._id}}</li>
-</ul>
+  <ul>
+    <li v-for=" serviceprovider in serviceproviders">{{serviceprovider.email}}</li>
+  </ul>
 
 
-  </div>
+</div>
 </template>
 <script>
 export default {
@@ -21,11 +21,10 @@ created(){
 },
 methods:{
     getAllServiceProviders: function () {
-      this.$http.get('http://localhost:3000/api/students/sPs', {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
-
-        this.serviceproviders=response.data.data.profiles
+      this.$http.get('http://localhost:3000/api/admins/sPs').then(response => {
+        this.serviceproviders=response.body.data.users;
       })
     }}
-
+    
 }
 </script>

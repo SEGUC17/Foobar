@@ -10,12 +10,13 @@
   <h2>{{least}}</h2>
 </center>
 
+<ul>
+  <li v-for =" interest in temp">{{interest}}</li>
+</ul> 
+
 
   </div>
 
-<!-- <ul>
-  <li v-for =" announcement in announcements"> {{announcement.title}}</li>
-</ul> -->
 
 
   
@@ -26,7 +27,8 @@ export default {
   data () {
     return {
       most:{},
-      least:{}
+      least:{},
+      temp  : []
     }
   },
 created(){
@@ -37,6 +39,7 @@ methods:{
       this.$http.get('http://localhost:3000/api/admins/reviewData', {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         this.most=response.data.data.most
         this.least =response.data.data.least
+        this.temp = respone.data.data.temp
       })
     }}
 }

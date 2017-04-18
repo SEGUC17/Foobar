@@ -171,28 +171,12 @@ const spController = {
       }
     });
   },
- getAllSPProfiles: function(req, res) { //viewing a summary of all SP profiles
+getAllSPProfiles: function(req, res) { //viewing a summary of all SP profiles
     const token = req.headers['jwt-token'];
     jwt.verify(token, function(decoded) {
-       var userMap = [];
-        var users = [];
-        var k = 0;
-        var x = 0;
-      SP.find(function(err, profiles) {
 
-        User.find([], function(err, use) {
+      User.find({type:3},function(err, users) {
 
-
-            profiles.forEach(function(stud) {    
-              use.forEach(function(user) {
-
-                if (stud.user_id == user._id) {
-
-                  users[x] = user ;
-                  x++;
-                }
-              });
-            });
         if (err) {
           res.status(500).json({
             status: 'error',
@@ -205,17 +189,16 @@ const spController = {
             status: 'success',
             data: {
               message: 'summary of SP profiles retrieved successfully',
-              profiles,
-              users
+              users,
+
             },
           });
         }
+
       });
+
     });
-  
-  });
-  }
-  ,
+  },
 
   getSPProfile: function(req, res) { //viewing a specific SP profile
     var query = {

@@ -18,6 +18,8 @@ import Offers from '@/components/Offers.vue'
 import ReservationStudent from '@/components/ReservationStudent.vue'
 import ReviewInterest from '@/components/ReviewInterest.vue'
 import ServiceProviderProfile from '@/components/ServiceProviderProfile.vue'
+import Interests from '@/components/Interests.vue'
+import pendingSP from '@/components/pendingSP.vue'
 
 
 Vue.use(Router)
@@ -94,5 +96,12 @@ export default new Router({
          path: '/student/:Studid',
          name:'StudentProfile',
           component: StudentProfile
-     }]
+     },  {
+         path: '/viewInterests',
+         component: Interests
+     },
+         {
+         path: '/pendingSP',
+         component: pendingSP
+        }]
 })

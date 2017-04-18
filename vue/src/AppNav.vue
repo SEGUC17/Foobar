@@ -38,21 +38,15 @@
                 <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
                 <div class="nav-collapse nav-collapse_  collapse">
                       <ul class="nav sf-menu">
-                        <li></li>
-                    <li><a href="work.html">Post</a></li>
-                    <li ><router-link  to="/reviewData"> Review Data</router-link></li>
-                    <li ><router-link to="/announcements">Announcements</router-link></li>
-                    <li class="sub-menu"><a href="process.html" v-if="this.user.authenticated && this.user.type==1">View</a>
-                          <ul>
-                        <li><a href="#"><router-link to='/viewAdmins'>Admins</router-link></a></li>
+                        <li><router-link to=''>Post</router-link></li>
+                        <li><router-link  to="/reviewData"> Review Data</router-link></li>
+                        <li><router-link to="/announcements">Announcements</router-link></li>
+                        <li><router-link to='/viewAdmins'>Admins</router-link></li>
                         <li><a href="#">Students</a></li>
-                        <li><a href="#">Service Providers</a></li>
-                        <li><a href="#">Interests</a></li>
-
-                      </ul>
-                        </li>
-                    <li  v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
-                    <li class="" v-else ><a  v-on:click="logout">logout</a></li>
+                        <li><router-link  to="/pendingSP">Pending Requests</router-link></li>
+                        <li><router-link  to="/viewInterests">Interests</router-link></li>
+                        <li v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
+                        <li class="" v-else ><a href="/" v-on:click="logout">logout</a></li>
 
                   </ul>
                     </div>
@@ -71,7 +65,7 @@
                         <li><router-link to="/viewOffers">View Offers</router-link></li>
                         <li ><router-link to="/announcements">Announcements</router-link></li>
                         <li><router-link to="/viewReservations">View Reservation</router-link></li>
-                     <li ><router-link  :to ="{ name : 'StudentProfile' , params: { Studid : decodeid.body.id }}"> Student Profile</router-link></li>
+                        <li ><router-link  :to ="{ name : 'StudentProfile' , params: { Studid : decodeid.body.id }}"> Student Profile</router-link></li>
                         <li ><router-link  to="/sPs">  SPS</router-link></li>
                         <li v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
                         <li class="" v-else ><a  v-on:click="logout">logout</a></li>

@@ -17,6 +17,44 @@ let Student = require('../models/Student');
 const jwt = require('../auth/jwt');
 
 const adminController = {
+getAllAdmins: function(req, res) { //viewing all admins
+    const token = req.headers['jwt-token'];
+    jwt.verify(token, function(decoded) {
+      if (decoded.type === 1) {
+
+        User.find({
+          type: 1
+        }, function(err, admins) {
+
+          if (err) {
+
+            res.status(500).json({
+              status: 'error',
+              message: err,
+            });
+          } else {
+            res.status(200).json({
+              status: 'success',
+              data: {
+                admins,
+              },
+            });
+            // res.render('viewAnnouncements', {announcements:announcements});
+          }
+        });
+      } else {
+        res.json({
+          status: 'failure',
+          data: {
+            err: 'unauthorized access'
+          }
+        })
+
+      }
+    });
+
+
+  },
 
   approveOrDisapproveSP: function(req, res) { //approving or disapproving an applied SP
     const token = req.headers['jwt-token'];
@@ -72,15 +110,17 @@ const adminController = {
                 status: 'error',
                 message: err,
               });
+            } else {
+              res.status(200).json({
+                status: 'success',
+                data: { // Data can be null if, for example, delete request was sent
+                  message: `Removed him from PendingSP Collection and Added to user collection as:${newUser}and to the SP collection as:${newSP}`,
+                },
+              });
             }
           }); //saving SP instance
 
-          res.status(200).json({
-            status: 'success',
-            data: { // Data can be null if, for example, delete request was sent
-              message: `Removed him from PendingSP Collection and Added to user collection as:${newUser}and to the SP collection as:${newSP}`,
-            },
-          });
+
           // create reusable transporter object using the default SMTP transport
           let transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -100,7 +140,7 @@ const adminController = {
           };
 
           // send mail with defined transport object
-          transporter.sendMail(mailOptions, (error, info) => {
+          transporter.sendMail(mailOptions, (err, info) => {
             if (err) {
               res.status(500).json({
                 status: 'error',
@@ -193,7 +233,7 @@ const adminController = {
             res.status(200).json({
               status: 'success',
               data: {
-                announcement: annposted,
+                announcement: announcement,
               },
             });
             return undefined;
@@ -245,6 +285,7 @@ const adminController = {
               data: {
                 most,
                 least,
+                temp
               },
             });
 
@@ -334,7 +375,7 @@ const adminController = {
     jwt.verify(token, function(decoded) {
       if (decoded.type === 1) {
         User.findOne({
-          'local.emai': req.body.email,
+          'email': req.body.email,
         }, (err, admin) => {
           if (err) {
             res.json(err.message);
@@ -346,8 +387,8 @@ const adminController = {
           } else {
             const password = generatePassword();
             const newuser = new User({
-              'local.email': req.body.email,
-              'local.password': user.generateHash(password),
+              'email': req.body.email,
+              'password': password,
               type: 1,
             });
             newuser.save((newusererr) => {
@@ -361,6 +402,7 @@ const adminController = {
                   status: 'success',
                   data: {
                     message: `Cool job, new admin. Password is: ${password}`,
+                    user: newuser
                   },
                 });
               }
