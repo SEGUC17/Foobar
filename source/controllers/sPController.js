@@ -5,6 +5,7 @@ const Video = require("../models/Video");
 const Reservation = require('../models/Reservation');
 const Assessment = require('../models/Assessment');
 const jwt = require('../auth/jwt');
+const User = require('../models/User');
 
 
 
@@ -105,7 +106,7 @@ const spController = {
     const token = req.headers['jwt-token'];
     jwt.verify(token, function(decoded) {
 
-      SP.find(function(err, profiles) {
+      User.find({type:3},function(err, users) {
 
         if (err) {
           res.status(500).json({
@@ -119,10 +120,12 @@ const spController = {
             status: 'success',
             data: {
               message: 'summary of SP profiles retrieved successfully',
-              profiles,
+              users,
+
             },
           });
         }
+
       });
 
     });

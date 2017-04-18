@@ -2,7 +2,7 @@
 <div>
 
   <ul>
-    <li v-for=" serviceprovider in serviceproviders">{{serviceprovider._id}}</li>
+    <li v-for=" serviceprovider in serviceproviders">{{serviceprovider.email}}</li>
   </ul>
 
 
@@ -21,9 +21,9 @@ created(){
 },
 methods:{
     getAllServiceProviders: function () {
-      this.$http.get('http://localhost:3000/sPs').then(response => {
+      this.$http.get('http://localhost:3000/api/admins/sPs').then(response => {
 
-        this.serviceproviders=response.data.data.profiles
+        this.serviceproviders=response.body.data.users;
       })
     }}
 

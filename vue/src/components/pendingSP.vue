@@ -9,14 +9,18 @@
       <thead class="thead-inverse">
         <tr>
           <th scope="row">Email</th>
+          <th scope="row">Approve</th>
+          <th scope="row">disapprove</th>
+
 
         </tr>
       </thead>
       <tbody>
         <tr v-for="pending in pendings" >
           <td>{{pending.email}}</td>
+                    <td> <a  style="color:green" @click="reject()">✔</a></td>
           <td> <a  style="color =red" @click="approve()">✖</a></td>
-          <td> <a  style="color:green" @click="reject()">✔</a></td>
+
         </tr>
       </tbody>
     </table>
@@ -32,6 +36,7 @@ export default {
   data () {
     return {
       pendings:[],
+
 
     }
   },

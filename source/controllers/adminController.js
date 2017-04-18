@@ -14,6 +14,7 @@ let Offer = require('../models/Offer');
 let Student = require('../models/Student');
 // const application = require('../models/pendingSP');
 const jwt = require('../auth/jwt');
+let StudentInterest = require('../models/StudentInterest');
 
 const adminController = {
   getAllAdmins: function(req, res) { //viewing all admins
@@ -68,7 +69,7 @@ const adminController = {
           var phone_number = req.body.phone_number;
           var description = req.body.description;
           var password = generatePassword();
-          PendingSP.findByIdAndRemove(sP_id, function(err) {
+          PendingSP.findByIdAnapprovedRemove(sP_id, function(err) {
             if (err) {
               res.status(500).json({
                 status: 'error',
@@ -178,9 +179,7 @@ const adminController = {
     });
   },
   sortByFrequencyAndFilter: function(myArray) {
-    const token = req.headers['jwt-token'];
-    jwt.verify(token, function(decoded) {
-      if (decoded.type === 1) {
+
         var newArray = [];
         var freq = {};
 
@@ -202,15 +201,9 @@ const adminController = {
         }
 
         return newArray.sort(compareFreq);
+}
 
-
-      } else {
-        res.status(500).json({
-          err: 'unauthorized access'
-        });
-      }
-    });
-  },
+    ,
 
   adminPostAnnouncement: function(req, res) {
     const token = req.headers['jwt-token'];
@@ -236,7 +229,7 @@ const adminController = {
             res.status(200).json({
               status: 'success',
               data: {
-                announcement: annposted,
+                announcement: announcement,
               },
             });
             return undefined;
@@ -288,6 +281,7 @@ const adminController = {
               data: {
                 most,
                 least,
+                temp
               },
             });
 

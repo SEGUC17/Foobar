@@ -41,7 +41,7 @@ methods:{
       })
     },
     postAnnouncements: function () {
-          this.$http.post('http://localhost:3000/api/admins/adminpost',{headers : { 'jwt-token' : localStorage.getItem('id_token')}, Body :{'title' :this.name , 'content' : this.content}}).then(response => {
+          this.$http.post('http://localhost:3000/api/admins/adminpost',{'title':this.title , 'content' : this.content},{headers : { 'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
       this.msg="Announcement has been added"
           })
         }

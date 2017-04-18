@@ -55,7 +55,12 @@
                     <li><a href="#">Students</a></li>
                     <li>
                       <a href="#">
-                        <router-link to='/pendingSP'>Service Providers</router-link>
+                        <router-link to='/pendingSP'>Pending Requests</router-link>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <router-link to='/ServiceProviders'>Service Providers</router-link>
                       </a>
                     </li>
                     <li>

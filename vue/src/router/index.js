@@ -36,5 +36,9 @@ export default new Router({
     path: '/pendingSP',
     component: pendingSP
   }
+  ,{
+    path :'/ServiceProviders',
+    component: ServiceProviders
+  }
 ]
 })
