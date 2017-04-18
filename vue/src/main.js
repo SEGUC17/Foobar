@@ -4,6 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
+
 import './assets/css/bootstrap.css'
 import './assets/css/responsive.css'
 import './assets/css/style.css'
@@ -27,3 +28,5 @@ new Vue({
   template: '<App/>',
   components: { App }
 })
+
+

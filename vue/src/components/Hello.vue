@@ -178,8 +178,12 @@
   </div>
     </div>
 
-     <center><button class="" v-on:click="created">Get all announcements</button></center>
-    <div>{{msg}}</div>
+      <h1>Test Item 2 Sell</h1>
+      <img src="https://unsplash.it/300" />
+      <p style="max-width:300px">Magna minim tempor eiusmod reprehenderit cillum adipisicing elit incididunt. Minim ex incididunt anim consequat nisi aute do mollit. Ipsum proident esse consectetur anim ullamco dolor id labore magna incididunt enim occaecat ut aute sit magna.</p>
+      <p>${{price / 100}}</p>
+      <button @click.prevent="purchaseStuff()">PURCHASE</button>
+      <h3>Order Status {{order_status}}</h3>
 
   </div>
 
@@ -189,17 +193,48 @@
 <script>
 export default {
   name: 'hello',
-  data () {
-    return {
-      msg: ''
+  data(){
+    return{
+          stripe_token: {},
+          price: 999,
+          stripe_instance: {},
+          order_status: 'READY'
     }
-  },
+        },
   methods: {
-    created: function () {
-      this.$http.get('http://localhost:3000/admin/announcements/view/').then(response => {
-        this.msg = response.body.data.announcements
-      })
-    }
-  }
+    purchaseStuff: function(){
+            this.stripe_instance.open({
+              name: 'INFINITE INDUSTRIES',
+              description: 'stuff and stuff',
+              amount: this.price
+            })
+            console.log('attempting to get a token');
+          },
+    sendData2Server: function(){
+            console.log(this.stripe_token);
+            this.order_status= "PENDING";
+            this.$http.post('http://localhost:3000/charge', {token_id: this.stripe_token.id, price: this.price})
+              .then((response) => {
+                console.log(response.body);
+                this.order_status= "SUCCESSFULLY COMPLETED";
+              },(response) => {
+                // error callback
+                console.log(response.body);
+                this.order_status= "FAILED";
+              });
+          }
+  },
+  mounted: function(){
+          this.stripe_instance = StripeCheckout.configure({
+            key: 'pk_test_AnN5EyTAXijWCz9NbgpDpGX4',    //put your own publishable key here
+            image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+            locale: 'auto',
+            token: function(token) {
+              console.log('got a token. sending data to localhost');
+              this.stripe_token= token;
+              sendData2Server();
+            }
+          });
+        }
 }
 </script>
