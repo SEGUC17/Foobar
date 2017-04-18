@@ -2,17 +2,35 @@ const express = require('express');
 const router = express.Router();
 const stripe = require('stripe')('sk_test_TPfHR1k3VAZJmUVbUkFQojfB');
 const announcementController = require('../controllers/announcementController');
+const path = require('path');
+const multer = require('multer');
+const crypto = require('crypto');
 
+const storage = multer.diskStorage({
+  destination: 'public/uploads/',
+  filename(req, file, cb) {
+    crypto.pseudoRandomBytes(16, (err, raw) => {
+      if (err) return cb(err);
+      cb(null, raw.toString('hex') + path.extname(file.originalname));
+    });
+  },
+});
+
+const upload = multer({ storage });
 
 // redirecting homepage
 router.get('/', (req, res) => {
   res.render('index');
 });
 
-router.get('/announcements/view', announcementController.getAllAnnouncements); //viewing announcements
+router.post('/testupload', upload.single('profile_img'), (req, res) => {
+  console.log(req.file);
+});
+
+router.get('/announcements/view', announcementController.getAllAnnouncements); // viewing announcements
 
 router.post('/charge', (req, res) => {
-  console.log("paying");
+  console.log('paying');
   const token_id = req.body.token_id;
   const purchase_price = req.body.price;
 
