@@ -1,42 +1,54 @@
 <template>
 <center>
   <form role="form" class="">
-        <div class="form-group">
-            <h2>Edit Your Profile </h2>
+          <h2>Edit Your Profile </h2>
+        <!-- <div class="form-group">
             <label class="col-sm-2 control-label">Price Ctaegory</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="pricecategory" :placeholder=profile.price_category v-model="pricecategory" />
+                <input type="text" class="form-control" id="pricecategory" :value=profile.price_category v-model="pricecategory" />
             </div>
-        </div>
+        </div> -->
+
+        <span>Price Category: {{ pricecategory }}</span>
+        <br>
+        <input type="radio" id="one" value="Cheap" v-model="pricecategory">
+        <span for="pricecategory">$</span>&nbsp; &nbsp; 
+        <input type="radio" id="two" value="Moderate" v-model="pricecategory">
+        <span for="pricecategory">$$</span>&nbsp; &nbsp;
+        <input type="radio" id="three" value="Expensive" v-model="pricecategory">
+        <span for="pricecategory">$$$</span>
+        
 
         <div class="form-group">
+        <br>
             <label class="col-sm-2 control-label">Location</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="location" :placeholder=profile.location v-model="location" />
+                <input type="text" class="form-control" id="location" :value=profile.location v-model="location" />
             </div>
         </div>
         
         <div class="form-group">
             <label for="description" class="col-sm-2 control-label">Description</label>
             <div class="col-sm-10">
-                <textarea v-model="description" :placeholder=profile.description></textarea>
+                <textarea v-model="description" :value=profile.description></textarea>
             </div>
         </div>
 
          <div>
         <label for="fields" class="col-sm-2 control-label">Fields</label>
-        <li v-for =" field in interests"> 
+        <li v-for =" field in interests">
         <input type="checkbox" id=field.name :value=field.name v-model="fields">
-        <label for=field.name>{{field.name}}</label>
+        <span for=field.name>{{field.name}}</span>
         </li>
-        <br>
         <span>Fields: {{ fields }}</span>
+        <br>
         </div>
 
         <div class="form-group">
+        <br>
             <label class="col-sm-2 control-label">Phone Number</label>
             <div class="col-sm-10">
-                <input type="number" class="form-control" id="phone" :placeholder=profile.phone_number v-model="phone_number" />
+                <input type="number" class="form-control" id="phone" :value=profile.phone_number v-model="phone_number" />
             </div>
         </div>
 
@@ -74,6 +86,11 @@ methods:{
     getProfile: function () {
       this.$http.get('http://localhost:3000/api/sPs/profile/view',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         this.profile=response.data.data.providerProfile
+        this.location = response.data.data.providerProfile.location;
+        this.pricecategory = response.data.data.providerProfile.price_category;
+        this.description = response.data.data.providerProfile.description;
+        this.fields = response.data.data.providerProfile.fields;
+        this.phone_number = response.data.data.providerProfile.phone_number;
         this.user=response.data.data.user
       })
     },
