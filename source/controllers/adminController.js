@@ -69,7 +69,7 @@ const adminController = {
           var phone_number = req.body.phone_number;
           var description = req.body.description;
           var password = generatePassword();
-          PendingSP.findByIdAnapprovedRemove(sP_id, function(err) {
+          PendingSP.findByIdAndRemove(sP_id, function(err) {
             if (err) {
               res.status(500).json({
                 status: 'error',
@@ -110,15 +110,17 @@ const adminController = {
                 status: 'error',
                 message: err,
               });
+            } else {
+              res.status(200).json({
+                status: 'success',
+                data: { // Data can be null if, for example, delete request was sent
+                  message: `Removed him from PendingSP Collection and Added to user collection as:${newUser}and to the SP collection as:${newSP}`,
+                },
+              });
             }
           }); //saving SP instance
 
-          res.status(200).json({
-            status: 'success',
-            data: { // Data can be null if, for example, delete request was sent
-              message: `Removed him from PendingSP Collection and Added to user collection as:${newUser}and to the SP collection as:${newSP}`,
-            },
-          });
+
           // create reusable transporter object using the default SMTP transport
           let transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -138,7 +140,7 @@ const adminController = {
           };
 
           // send mail with defined transport object
-          transporter.sendMail(mailOptions, (error, info) => {
+          transporter.sendMail(mailOptions, (err, info) => {
             if (err) {
               res.status(500).json({
                 status: 'error',
@@ -180,30 +182,30 @@ const adminController = {
   },
   sortByFrequencyAndFilter: function(myArray) {
 
-        var newArray = [];
-        var freq = {};
+    var newArray = [];
+    var freq = {};
 
-        //Count Frequency of Occurances
-        var i = myArray.length - 1;
-        for (var i; i > -1; i--) {
-          var value = myArray[i];
-          freq[value] == null ? freq[value] = 1 : freq[value]++;
-        }
+    //Count Frequency of Occurances
+    var i = myArray.length - 1;
+    for (var i; i > -1; i--) {
+      var value = myArray[i];
+      freq[value] == null ? freq[value] = 1 : freq[value]++;
+    }
 
-        //Create Array of Filtered Values
-        for (var value in freq) {
-          newArray.push(value);
-        }
+    //Create Array of Filtered Values
+    for (var value in freq) {
+      newArray.push(value);
+    }
 
-        //Define Sort Function and Return Sorted Results
-        function compareFreq(a, b) {
-          return freq[b] - freq[a];
-        }
+    //Define Sort Function and Return Sorted Results
+    function compareFreq(a, b) {
+      return freq[b] - freq[a];
+    }
 
-        return newArray.sort(compareFreq);
-}
+    return newArray.sort(compareFreq);
+  }
 
-    ,
+  ,
 
   adminPostAnnouncement: function(req, res) {
     const token = req.headers['jwt-token'];
