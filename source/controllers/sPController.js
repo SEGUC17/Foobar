@@ -90,7 +90,7 @@ const spController = {
       if (decoded.type === 3) {
         const reviews = Review.find({
           sp_id: decoded.id
-        }, function(err, reviews) {
+        }, function(err, reviews_id_only) {
           if (err) {
 
             res.status(500).json({
@@ -98,14 +98,28 @@ const spController = {
               message: err.message,
             });
           } else {
-            res.status(200).json({
-              status: 'success',
-              data: {
-                reviews,
-              },
+            Review.find().populate('reviewer_id').populate('sp_id').exec(function (err, reviews) 
+            {
+            
+                if (err) {
+                  res.status(500).json({
+                    status: 'error',
+                    message: err.message,
+                  });
+                }
+                else
+                {                
+                   res.status(200).json({
+                   status: 'success',
+                   data: {
+                    reviews,
+                  },
+                  });
+                }
             });
           }
         });
+          
       } else {
         res.status(500).json({
           err: err.message
@@ -174,24 +188,32 @@ const spController = {
 getAllSPProfiles: function(req, res) { //viewing a summary of all SP profiles
     const token = req.headers['jwt-token'];
     jwt.verify(token, function(decoded) {
-
-      User.find({type:3},function(err, users) {
-
+      SP.find({},function(err, sps) {
         if (err) {
           res.status(500).json({
             status: 'error',
             message: err.message,
           });
 
-        } else {
-          //res.render('spProfiles', {profiles:profiles});
-          res.status(200).json({
-            status: 'success',
-            data: {
-              message: 'summary of SP profiles retrieved successfully',
-              users,
-
-            },
+        } else 
+        {
+          sps.populate('user_id').exec(function (err, users) {
+            if (err) {
+              res.status(500).json({
+                 status: 'error',
+                 message: err.message,
+              });
+            }
+            else 
+            {
+              res.status(200).json({
+                status: 'success',
+                data: {
+                message: 'summary of SP profiles retrieved successfully',
+                users,
+                },
+              });
+            }
           });
         }
 
@@ -208,8 +230,8 @@ getAllSPProfiles: function(req, res) { //viewing a summary of all SP profiles
     SP.findOne(query, function(err, providerProfile) {
       User.findOne({_id:providerProfile.user_id},function(err, user){
 
-console.log(providerProfile);
-console.log(user);
+      console.log(providerProfile);
+      console.log(user);
 
       if (err) {
         res.status(500).json({
@@ -270,37 +292,43 @@ console.log(user);
 
   //getting the embeded video object for the front end to embed it
   getVideo: function(req, res) {
-    // const id = req.params.id;
-    // //var id = req.spid; //id that will be passed by the form as a hidden variable of the current sp
-    // //getting the videos of the currently viewed service provider
-    // getVideoById = function(id, out) {
-    //   Video.findById(id, function(err, videos) {
-    //     if (err)
-    //       console.log(err);
-    //     else {
-    //       res.json(videos);
-    //     }
-    //   });
-    // };
-    //old method above new method below
     var query = {
       user_id: req.params.id //Recently Changed to Params
     };
 
-    Video.find(query, function(err, video) {
-      if (err)
+    Video.find(query, function(err, video_id_only) {
+      if (err){
         res.status(500).json({
           status: 'error',
           message: err.message,
         });
-      res.status(200).json({
-        status: 'success',
-        data: {
-          video,
-        },
-      });
+      }
+      else
+      {
+        video_id_only.populate('user_id').exec(function (err, story) {
+            if (err) 
+            {
+              res.status(500).json({
+                status: 'error',
+                message: err.message,
+              });
+            }
+            else
+            {
+                res.status(200).json({
+                  status: 'success',
+                  data: {
+                  video,
+                },
+              });
+            }
+
+          });
+      }
+      
     });
-  },editSP: function(req, res) { //SP edits his profile
+  },
+  editSP: function(req, res) { //SP edits his profile
     const token = req.headers['jwt-token'];
     jwt.verify(token, function(decoded) {
       if (decoded.type === 3) {
@@ -375,7 +403,7 @@ console.log(user);
               message: err.message,
             });
           } else {
-            User.find({id:decoded.id}, function(err, user){
+            User.find({_id:decoded.id}, function(err, user){
               res.status(200).json({
               status: 'success',
               data: {

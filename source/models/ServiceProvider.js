@@ -1,18 +1,15 @@
   const mongoose = require('mongoose');
+  const Schema = mongoose.Schema;
+  const User = require('./User');
 
   // define the schema for our user model
   const ServiceProviderSchema = mongoose.Schema({
     price_category: String,
-    user_id: {
-      type: String,
-      index: true
-    },
+    user_id: {type: Schema.Types.ObjectId, ref: User },
     location: String,
     description: String,
     fields: [String],
     phone_number: String,
-    is_blocked: Boolean,
-    is_deleted: Boolean,
     first_login: Boolean
 
   });

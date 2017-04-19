@@ -1,11 +1,13 @@
 // load the things we need
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const User = require('./User');
 
 // define the schema for our user model
 const offerSchema = mongoose.Schema({
 	title: String,
 	price: Number,
-	sp_id: String,
+	sp_id: {type: Schema.Types.ObjectId, ref: User },
 	capacity: Number,
 	field: String,
 	description: String,

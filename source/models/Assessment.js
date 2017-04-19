@@ -1,10 +1,12 @@
 // load the things we need
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const User = require('./User');
 
 // define the schema for our user model
 const assessmentSchema = mongoose.Schema({
-  user_id: String,
-  sp_id: String,
+  user_id: { type: Schema.Types.ObjectId, ref: User },
+  sp_id: { type: Schema.Types.ObjectId, ref: User},
   rating: Number
 });
 

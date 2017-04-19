@@ -1,13 +1,16 @@
 // load the things we need
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const User = require('./User');
+const Offer = require('./Offer');
 
 // define the schema for our user model
 const reservationSchema = mongoose.Schema({
-	user_id: String,
-	offer_id: String,
-	service_provider_id: String,
+	user_id: {type: Schema.Types.ObjectId, ref: User },
+	offer_id: {type: Schema.Types.ObjectId, ref: Offer },
+	service_provider_id: {type: Schema.Types.ObjectId, ref: User },
 	reservation_date: Date,
-	status: String
+	status: Number //0 = applied , 1=approved, 2=disapproved
 });
 
 // create the model for users and expose it to our app

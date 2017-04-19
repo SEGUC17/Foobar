@@ -119,7 +119,7 @@ let homeController = {
                     console.log(err)
                   }else{
                   console.log(student)
-
+                  
                   res.status(200).json({
                       status: 'success',
                       data: {

@@ -22,7 +22,7 @@ const StudentController = {
     jwt.verify(token, function(decoded) {
       if (decoded.type === 3) {
         Reservation.findOne({
-          id: req.params.id
+          _id: req.body.id
         }, function(err, reservation) {
           if (err)
             res.status(500).json({
@@ -30,22 +30,47 @@ const StudentController = {
               message: err.message,
             });
           else {
-            reservation.status = 1;
-            reservation.save(function(err, reservation) {
-              if (err) {
-                res.status(500).json({
-                  status: 'error',
-                  message: err.message,
+            if(req.body.approve)
+            {
+                reservation.status = 1;
+                reservation.save(function(err, reservation) {
+                if (err) {
+                    res.status(500).json({
+                      status: 'error',
+                      message: err.message,
+                    });
+                  } else 
+                  {
+                    res.status(200).json({
+                      status: 'success',
+                      data: {
+                        message: 'Approved',
+                      },
+                    });
+                  }
                 });
-              } else {
-                res.status(200).json({
-                  status: 'success',
-                  data: {
-                    message: 'Approved',
-                  },
+            }
+            else if (req.body.disapprove)
+            {
+                reservation.status = 2;
+                reservation.save(function(err, reservation) {
+                if (err) {
+                    res.status(500).json({
+                      status: 'error',
+                      message: err.message,
+                    });
+                  } else 
+                  {
+                    res.status(200).json({
+                      status: 'success',
+                      data: {
+                        message: 'Disapproved',
+                      },
+                    });
+                  }
                 });
-              }
-            });
+            }
+          
           }
 
         });
@@ -90,7 +115,7 @@ const StudentController = {
       }
     });
   },
-  search(req, res) {
+  search: function(req, res) {
     const search = new RegExp(`^${req.query.search}$`, 'i');
     let tagsfound = [];
     Tag.find({
@@ -177,7 +202,7 @@ const StudentController = {
     jwt.verify(token, function(decoded) {
       if (decoded.type === 2) {
         Offer.find({
-          'id': ObjectId(req.params.id)
+          _id: req.params.id
         }, function(err, offer) {
           if (err)
             res.status(500).json({
@@ -200,7 +225,7 @@ const StudentController = {
                   offer_id: offer.id,
                   service_provider_id: offer.sp_id,
                   reservation_date: Date.now(),
-                  status: 2
+                  status: 0
                 });
                 reservation.save(function(err, reservation) {
                   if (err) {
@@ -209,8 +234,7 @@ const StudentController = {
                       message: err.message,
                     });
                   } else {
-                    offer.capacity = offer.capacity -
-                      1;
+                    offer.capacity = offer.capacity -1;
                     offer.save(function(err, reservation) {
                       if (err) {
                         res.status(500).json({
@@ -279,7 +303,7 @@ const StudentController = {
     jwt.verify(token, function(decoded) {
       if (decoded.type === 2) {
         User.find({
-          id: decoded.id
+          _id: decoded.id
         }, function(err, user) {
           if (err)
             res.status(500).json({
@@ -296,12 +320,6 @@ const StudentController = {
                   message: err.message,
                 });
               else {
-                // user.name = req.body.name;
-                // student.university = req.body.university;
-                // student.address = req.body.address;
-                // student.birthdate = req.body.birthdate;
-                // student.description = req.body.description;
-
                 var name = req.body.name;
                 var university = req.body.university;
                 var address = req.body.address;
@@ -334,7 +352,7 @@ const StudentController = {
                 }
 
                 User.update({
-                  id: decoded.id
+                  _id: decoded.id
                 }, {
                   name: name
                 }, function(err, u1) {
@@ -350,7 +368,7 @@ const StudentController = {
                   }
                 });
                 Student.update({
-                  id: decoded.id
+                  _id: decoded.id
                 }, {
                   university: university,
                   address: address,
@@ -368,22 +386,6 @@ const StudentController = {
                     });
                   }
                 });
-
-
-
-                // user.save(function(err) {
-                //   if (err)
-                //     console.log('error');
-                //   else {
-                //     student.save(function(err) {
-                //       if (err)
-                //         console.log('error');
-                //       else {}
-                //       // Render
-
-                //     });
-                //   }
-                // });
 
               }
             });

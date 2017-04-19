@@ -46,13 +46,8 @@ let pendingSPController = {
       pending.name = req.body.name;
       pending.email = req.body.email;
       pending.phone_number = req.body.phone_number;
-      pending.Description = req.body.description;
+      pending.description = req.body.description;
       pending.is_declined = false;
-      // name : 'alaa',
-      // email :'hey',
-      // phone_number : 121,
-      // description : 'hey ',
-      // is_declined : true
       pending.save(function(err, pending) {
         if (err) {
           res.status(500).json({

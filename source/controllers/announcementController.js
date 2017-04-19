@@ -7,24 +7,26 @@ let announcementController = {
   getAllAnnouncements: function(req, res) { //viewing all announcements
     const token = req.headers['jwt-token'];
     jwt.verify(token, function(decoded) {
-      Announcement.find(function(err, announcements) {
+      
+    Announcement.find({}).populate('announcer_id').exec(function (err, announcements) {
+    if (err) 
+    {
 
-        if (err) {
-
-          res.status(500).json({
-            status: 'error',
-            message: err,
-          });
-        } else {
-          res.status(200).json({
-            status: 'success',
-            data: {
-              announcements,
-            },
-          });
-          // res.render('viewAnnouncements', {announcements:announcements});
-        }
+      res.status(500).json({
+        status: 'error',
+        message: err,
+        });
+    }
+    else
+    {            
+      res.status(200).json({
+        status: 'success',
+        data: {
+        announcements,
+        },
       });
+    }
+          });
     });
   }
 

@@ -12,17 +12,15 @@ const uploads = path.join(uploads_base, 'u');
 // define the schema for our user model
 const userSchema = mongoose.Schema({
 	name: String,
-	// local: {
 	email: {
 		type: String,
 		unique: true
 	},
 	password: String,
-	// },
-	type: Number,
-	is_deleted: Boolean
-		// 1 for admin, 2 for Student, 3 Service Provider
-});
+	type: Number,// 1 for admin, 2 for Student, 3 Service Provider
+	is_deleted: Boolean,
+	is_blocked: Boolean
+});		
 
 userSchema.plugin(filePlugin, {
 	name: 'profileimg',

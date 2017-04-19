@@ -1,5 +1,6 @@
 // load the things we need
 const mongoose = require('mongoose');
+ 
 
 // define the schema for our user model
 const pendingSPSchema = mongoose.Schema({
@@ -12,7 +13,7 @@ const pendingSPSchema = mongoose.Schema({
     unique: true
   },
   phone_number: String,
-  Description: String,
+  description: String,
   is_declined: Boolean
 });
 

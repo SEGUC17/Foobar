@@ -84,6 +84,7 @@ getAllAdmins: function(req, res) { //viewing all admins
           newUser.name = name;
           newUser.type = 3;
           newUser.is_deleted = false;
+          newUser.is_blocked = false;
           newUser.email = email;
           newUser.password = password;
 
@@ -98,10 +99,9 @@ getAllAdmins: function(req, res) { //viewing all admins
 
           //creating new SP account
           var newSP = new SP({
+            user_id: newUser._id,
             description: description,
             phone_number: phone_number,
-            is_blocked: false,
-            is_deleted: false
           });
 
           newSP.save(function(err, sPSuccess) {
@@ -135,7 +135,7 @@ getAllAdmins: function(req, res) { //viewing all admins
             from: ' "Foobar" <foobar.se@gmail.com>', // sender address
             to: email, // list of receivers
             subject: 'System Approval ✔', // Subject line
-            text: 'Congratulations! You have been approved to our system and now you can login using your email and password:' +
+            text: 'Congratulations! You have been approved for our system and now you can login using your email and password:' +
               password, // plain text body
           };
 
@@ -217,7 +217,7 @@ getAllAdmins: function(req, res) { //viewing all admins
           title: req.body.title,
           announcer_id: decoded.id,
           content: req.body.content,
-          type: 'Admin'
+          type: 'Admin Announcement'
         });
 
 
@@ -319,7 +319,7 @@ getAllAdmins: function(req, res) { //viewing all admins
           } else {
 
             Offer.find({
-              sp_id: sp.id
+              sp_id: sp.user_id
             }, function(err, offers) {
               if (err) {
                 res.status(500).json({
@@ -336,10 +336,66 @@ getAllAdmins: function(req, res) { //viewing all admins
               }
             });
 
+
             if (found) {
-              sp.is_blocked = true;
+                User.findById(sp.user_id, function(err, user) {
+                if (err) 
+                {
+                  res.status(500).json({
+                    status: 'error',
+                    message: err,
+                  });
+                }
+                else
+                {
+                   user.is_blocked = true;
+                   user.save(function(err, user) {
+                    if (err) {
+                      res.status(500).json({
+                        status: 'error',
+                        message: err,
+                      });
+
+
+                    } else {
+                      // Return
+                      res.status(200).json({
+                        mssg: "Blocked"
+                      });
+                    }
+                  });             
+                }
+              });
             } else {
-              sp.is_deleted = true;
+              User.findById(sp.user_id, function(err, user) {
+                if (err) 
+                {
+                  res.status(500).json({
+                    status: 'error',
+                    message: err,
+                  });
+                }
+                else
+                {
+                  user.is_deleted = true;  
+                  user.save(function(err, user) {
+                    if (err) {
+                      res.status(500).json({
+                        status: 'error',
+                        message: err,
+                      });
+
+
+                    } else {
+                      // Return
+                      res.status(200).json({
+                        mssg: "Deleted"
+                      });
+                    }
+                  });             
+                }
+              });
+              
             }
 
             sp.save(function(err, sp) {
@@ -382,7 +438,7 @@ getAllAdmins: function(req, res) { //viewing all admins
           } else if (admin) {
             res.status(500).json({
               status: 'error',
-              message: 'Change email',
+              message: 'This email is already registered. Change email',
             });
           } else {
             const password = generatePassword();
@@ -427,25 +483,40 @@ getAllAdmins: function(req, res) { //viewing all admins
                 message: err,
               });
             else {
-              if (student) {
-                student.is_deleted = true;
-                student.save(function(err, sp) {
-                  if (err) {
-                    res.status(500).json({
-                      status: 'error',
-                      message: err,
-                    });
+              if (student) 
+              {
+                  User.findById(student.user_id, function(err, user) {
+                    if (err)
+                    {
+                      res.status(500).json({
+                        status: 'error',
+                        message: err,
+                      });
+                    }
+                    else
+                    {
+                      student.is_deleted = true;
+                      student.save(function(err, sp) {
+                        if (err) {
+                          res.status(500).json({
+                            status: 'error',
+                            message: err,
+                          });
 
-                  } else {
-                    res.status(200).json({
-                      status: 'success',
-                      data: {
-                        message: 'Deleted',
-                      },
-                    });
-                  }
+                        } else {
+                          res.status(200).json({
+                            status: 'success',
+                            data: {
+                              message: 'Deleted',
+                            },
+                          });
+                        }
+                      });
+                    }
                 });
-              } else {
+              }
+              else 
+              {
                 res.status(404).json({
                   status: 'error',
                   message: 'Not found',
@@ -456,31 +527,12 @@ getAllAdmins: function(req, res) { //viewing all admins
         } else {
           res.status(403).json({
             status: 'error',
-            message: 'Forbidden access',
+            message: 'unauthorized access',
           });
         }
       });
 
     }
-    // approve : function(sp_id){
-    //   var tempMap = [];
-    //   var n =0;
-    //       application.find([], function(err, application) {
-    //
-    //
-    //           application.forEach(function(application) {
-    //
-    //             tempMap[n] = application;
-    //   n++;
-    //           });
-    // res.send(tempMap);
-    //
-    //         });
-    //
-    //
-    // }
-
-
 
 };
 
