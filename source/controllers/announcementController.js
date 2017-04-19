@@ -25,6 +25,5 @@ const announcementController = {
     });
   },
 
-
 };
 module.exports = announcementController;

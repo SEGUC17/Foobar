@@ -10,18 +10,18 @@
             <div class="nav-collapse nav-collapse_  collapse">
                   <ul class="nav sf-menu">
                 <li class=""><a href="index.html">Home</a></li>
-                <li ><router-link to="/announcements">Announcements</router-link></li>
+                <li ><router-link to="/announcements">News</router-link></li>
                 <li><a href="work.html">Work</a></li>
                 <li><a href="blog.html">Blog</a></li>
                 <li class="sub-menu"><a href="process.html" v-if="user.authenticated">Process</a>
                     <ul>
-                        <li ><router-link  to="/StudentProfile"> Announcement</router-link></li>
+                        <li ><router-link  to="/StudentProfile">Announcement</router-link></li>
                         <li ><router-link  to="/sPs">  Offer</router-link></li>
                         <li><a href="#">Process 03</a></li>
                     </ul>
                 </li>
                 <li v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
-                <li v-if = "!this.user.authenticated"><router-link to="/applySP">Apply as SP</router-link></li>            
+                <li v-if = "!this.user.authenticated"><router-link to="/applySP">SP</router-link></li>            
                 <li class="" v-else ><a  v-on:click="logout">visitor</a></li>
 
               </ul>
@@ -95,7 +95,6 @@
                             <li><router-link to="/SPEditProfile">Edit Profile</router-link></li>  
                             <li  v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
                             <li class="" v-else ><a  v-on:click="logout">logout</a></li>
-
                             </ul>
                         </div>
                     </div>
@@ -122,6 +121,7 @@
                             <div class="tab-pane active" id="Login">
                                 <center>
                                 <form role="form" class="">
+                                <div style="color:#F25C27; margin-bottom:10px;">{{loginmessage}}</div>
                                 <div class="form-group">
                                     <label for="email" class="col-sm-2 control-label">
                                         Email</label>
@@ -136,23 +136,18 @@
                                         <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" v-model="creds.password" />
                                     </div>
                                 </div>
-
-                                <div class="row">
-                                    <div class="col-sm-2">
-                                    </div>
-                                    <div class="col-sm-10">
-                                      <center> <router-link to="/"> <button class="btn btn-primary btn-sm " type="submit" v-on:click="login">
-                                            Submit</button></router-link></center>
-                                            <br>
-                                        <a href="#resetPW" data-toggle="tab">Forgot your password?</a>
-                                    </div>
-                                </div>
+                                <router-link to="/"> <button class="btn btn-primary btn-sm " type="submit" v-on:click="login">
+                                            Submit</button></router-link>
+                                           
+                                 <div><a href="#resetPW" data-toggle="tab">Forgot your password?</a></div>
                                 </form>
                              </center>
                             </div>
                             <div class="tab-pane" id="Registration">
                                 <center>
                                 <form role="form" class="">
+                                  <div style="color:#F25C27; margin-bottom:10px;">{{registermessage}}</div>
+
                                  <div class="form-group">
                                     <label for="name" class="col-sm-2 control-label">
                                         Name</label>
@@ -213,15 +208,14 @@
                         </div>
                     </div>
                 </div>
-
-</div>
+    </div>
 </div>
   </header>
 
 </template>
 
 <script>
-
+import router from './router'
 export default {
 
 
@@ -237,7 +231,9 @@ data () {
       },
       resetPWEmail: '',
       error: '',
-     decodeid: '',
+      decodeid: '',
+      loginmessage:'',
+      registermessage:'',
 
   // User object will let us check authentication status
   user: {
@@ -249,10 +245,9 @@ data () {
 
 if(localStorage.getItem('id_token')!=null){
   this.user.authenticated=true
-
   this.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
-      this.decodeid=decode
-  this.user.type = decode.body.type
+    this.decodeid=decode
+    this.user.type = decode.body.type
 })
 }
 
@@ -268,24 +263,29 @@ methods: {
 	"email":app.creds.username,
 	"password":  app.creds.password
 }).then(data => {
-
+      this.loginmessage = "Success";
       localStorage.setItem('id_token', data.body.token)
-
       app.user.authenticated = true
-      console.log(data.body.token+" "+app.user.authenticated)
-
       app.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
+        this.decodeid = decode;
         this.user.type = decode.body.type
-        console.log(this.user.type)
-
       })
+       $('#myModal').modal('hide');
     //
-    })
+}).catch(function(reason) {
+   this.loginmessage = reason.body.message;
+});
   },
   signup : function() {
-    this.$http.post('http://localhost:3000/api/users/signup', {"email":this.creds.email,"password":this.creds.password, "name":this.creds.name}).then(data => {
-      console.log('success');
-})
+    this.$http.post('http://localhost:3000/api/users/signup', {
+    "email":this.creds.email,
+    "password":this.creds.password, 
+    "name":this.creds.name
+}).then(data => {
+      this.registermessage = "Success, you can login now";
+    }).catch(function(reason) {
+        this.registermessage = reason.body.err;
+});
 
   },
  
@@ -301,7 +301,7 @@ methods: {
     localStorage.removeItem('id_token')
     this.user.authenticated = false
     this.user.type = 0;
-    console.log('loggedout' + this.user.type)
+    router.push('/')
   },
 
   checkAuth() {

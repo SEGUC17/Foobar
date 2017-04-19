@@ -4,6 +4,7 @@
   const homeController = require('../controllers/homeController');
   const Student = require('../models/Student');
   const studentController = require('../controllers/studentController');
+  const StudentInterest = require('../models/StudentInterest');
 
   const router = express.Router();
 
@@ -31,8 +32,8 @@
       password: req.body.password,
     }, (token) => {
       if (!token) {
-        res.status(404).json({
-          error: 'Credentials not found',
+        res.status(401).json({
+          message: 'Wrong Credentials',
         });
       } else {
         res.json({
@@ -43,6 +44,7 @@
   });
 
   router.post('/signup', (req, res) => {
+    console.log(req.body)
     const user = new User({
       email: req.body.email,
       password: req.body.password,
@@ -50,50 +52,50 @@
       type: 2,
       is_deleted: false,
       is_blocked: false,
-    }).save((err, user) => {
-      if (err) {
-        res.json({
-          err: 'email is already taken',
+    }).save((newusererr) => {
+      if (newusererr) {
+        res.status(400).json({
+          err: 'Email is already taken',
         });
       } else {
-        const newStudent = new Student();
-        newStudent.user_id = user.id;
-        newStudent.university = req.body.university;
-        newStudent.address = req.body.address;
-        newStudent.birthdate = req.body.birthdate;
-        newStudent.description = req.body.description;
-        newStudent.is_deleted = false;
+        const newStudent = new Student({
+          user_id: user.id,
+          university: req.body.university,
+          address: req.body.address,
+          birthdate: req.body.birthdate,
+          description: req.body.description,
+        });
 
         const interests = req.body.interests;
 
         if (interests) {
-          for (let i = 0; i < interests.length; i++) {
+          for (let i = 0; i < interests.length; i += 1) {
             const newInterset = new StudentInterest({
               student_id: user.id,
               interest_id: interests[i],
             });
-            newInterset.save((err) => {
-              if (err) { res.json('Student interest saving error '); }
+            newInterset.save((saveerr) => {
+              if (saveerr) { res.json('Student interest saving error '); }
             });
           }
         }
 
         // do your updates here
         if (req.file) {
-          newUser.profileimg.name = req.file.filename;
-          newUser.profileimg.path = req.file.path;
-          newUser.profileimg.size = req.file.size;
+          user.profileimg.name = req.file.filename;
+          user.profileimg.path = req.file.path;
+          user.profileimg.size = req.file.size;
         }
 
         // save the user
 
-        newStudent.save((err) => {
-          if (err) { res.json(err); }
+        newStudent.save((saveerr2) => {
+          if (saveerr2) { res.json(err); }
         });
 
 
         res.json({
-          user: 'signup successfully',
+          message: 'Signup success',
         });
       }
     });
