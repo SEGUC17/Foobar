@@ -52,14 +52,17 @@
       type: 2,
       is_deleted: false,
       is_blocked: false,
-    }).save((newusererr) => {
-      if (newusererr) {
-        res.status(400).json({
-          err: 'Email is already taken',
+    });
+    user.save((err) => {
+      if (err) {
+        return res.status(400).json({
+          err: 'Email is already taken'
         });
       } else {
+
+
         const newStudent = new Student({
-          user_id: user.id,
+          user_id: user._id,
           university: req.body.university,
           address: req.body.address,
           birthdate: req.body.birthdate,
@@ -67,15 +70,17 @@
         });
 
         const interests = req.body.interests;
-
+        console.log(user);
         if (interests) {
           for (let i = 0; i < interests.length; i += 1) {
             const newInterset = new StudentInterest({
-              student_id: user.id,
+              student_id: user._id,
               interest_id: interests[i],
             });
             newInterset.save((saveerr) => {
-              if (saveerr) { res.json('Student interest saving error '); }
+              if (saveerr) {
+                res.json('Student interest saving error ');
+              }
             });
           }
         }
@@ -90,13 +95,17 @@
         // save the user
 
         newStudent.save((saveerr2) => {
-          if (saveerr2) { res.json(err); }
+          if (saveerr2) {
+            res.json(err);
+          }
         });
 
 
         res.json({
           message: 'Signup success',
         });
+
+
       }
     });
   });
