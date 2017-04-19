@@ -10,7 +10,8 @@
           <h3 align="left">{{announcement.title}}</h3>
             
             <p>{{announcement.content}}</p>
-
+            <h3>Announcer Name: {{announcement.announcer_id.name}}</h3>
+            <h3>Announcer Email: {{announcement.announcer_id.email}}</h3>
           <h2>{{announcement.type}}</h2>
             
       </div>

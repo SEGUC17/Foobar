@@ -7,8 +7,8 @@ const Review = require('./Review');
 
 // define the schema for our user model
 const commentSchema = mongoose.Schema({
-	commenter_id: {type: Schema.Types.ObjectId, ref: User },
-	review_id: {type: Schema.Types.ObjectId, ref: Review },
+	commenter_id: {type: Schema.Types.ObjectId, ref: 'User' },
+	review_id: {type: Schema.Types.ObjectId, ref: 'Review' },
 	content: String
 });
 

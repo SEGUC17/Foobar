@@ -153,6 +153,13 @@
                             <div class="tab-pane" id="Registration">
                                 <center>
                                 <form role="form" class="">
+                                 <div class="form-group">
+                                    <label for="name" class="col-sm-2 control-label">
+                                        Name</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="name" placeholder="Name" v-model="creds.name" />
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label for="email" class="col-sm-2 control-label">
                                         Email</label>
@@ -226,7 +233,7 @@ data () {
       creds: {
         username: '',
         password: '',
-
+        name:'',
       },
       resetPWEmail: '',
       error: '',
@@ -276,7 +283,7 @@ methods: {
     })
   },
   signup : function() {
-    this.$http.post('http://localhost:3000/api/users/signup', {"email":this.creds.email,"password":this.creds.password}).then(data => {
+    this.$http.post('http://localhost:3000/api/users/signup', {"email":this.creds.email,"password":this.creds.password, "name":this.creds.name}).then(data => {
       console.log('success');
 })
 

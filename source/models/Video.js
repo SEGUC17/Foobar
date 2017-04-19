@@ -5,7 +5,7 @@ const User = require('./User');
 
 // define the schema for our user model
 const videoSchema = mongoose.Schema({
-	user_id: {type: Schema.Types.ObjectId, ref: User },
+	user_id: {type: Schema.Types.ObjectId, ref: 'User' },
 	title: String,
 	url: String
 });

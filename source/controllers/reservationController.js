@@ -11,17 +11,9 @@ let reservationController = {
         let query = {
           user_id: decoded.id
         };
-        Reservation.find(query, function(err, reservations_id_only) { //finding all reservations made by this student
-
-          if (err) {
-            res.status(500).json({
-              status: 'error',
-              message: err.message,
-            });
-          } else 
-          {            
-            reservations_id_only.populate('user_id').populate('offer_id').populate('service_provider_id').exec(function (err, reservations) 
-            {
+        
+        Reservation.find(query).populate('user_id').populate('offer_id').populate('service_provider_id').exec(function (err, reservations) 
+        {
             
                 if (err) {
                   res.status(500).json({
@@ -38,25 +30,14 @@ let reservationController = {
                     },
                   });
                 }
-            });
-          }
         });
       } else if (decoded.type == 3) {
         // } else if(false){
         let query = {
           service_provider_id: decoded.id
         };
-        Reservation.find(query, function(err, reservations_id_only) { //finding all reservations made to this SP
-
-          if (err) {
-            res.status(500).json({
-              status: 'error',
-              message: err.message,
-            });
-
-          } else 
-          {
-            Reservation.populate('user_id').populate('offer_id').populate('service_provider_id').exec(function (err, reservations) 
+       
+         Reservation.find(query).populate('user_id').populate('offer_id').populate('service_provider_id').exec(function (err, reservations) 
             {
             
                 if (err) {
@@ -76,11 +57,7 @@ let reservationController = {
                 }
             });
           }
-        });
-      }
-
-    });
-
+    });       
   }
 }
 module.exports = reservationController;

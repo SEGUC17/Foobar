@@ -6,7 +6,7 @@ const Offer = require('./Offer');
 // define the schema for our user model
 const tagSchema = mongoose.Schema({
 	name: String,
-	offer_id: {type: Schema.Types.ObjectId, ref: Offer }
+	offer_id: {type: Schema.Types.ObjectId, ref: 'Offer' }
 });
 
 // create the model for users and expose it to our app

@@ -49,8 +49,10 @@
     let user = new User({
       email: req.body.email,
       password: req.body.password,
+      name: req.body.name,
       type: 2,
       is_deleted: false,
+      is_blocked: false,
     }).save(function(err, user) {
       if (err) {
         res.json({

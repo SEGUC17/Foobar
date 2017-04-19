@@ -5,7 +5,7 @@ const User = require('./User');
 
 // define the schema for our user model
 const ccSchema = mongoose.Schema({
-	user_id: {type: Schema.Types.ObjectId, ref: User },
+	user_id: {type: Schema.Types.ObjectId, ref: 'User' },
 	number: String,
 	name: String,
 	expiry_date: Date,

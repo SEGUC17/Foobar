@@ -2,13 +2,11 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const User = require('./User');
-var Usermodel  = mongoose.model('User', User);
-
 
 // define the schema for our user model
 const announcementSchema = mongoose.Schema({
 	title: String,
-	announcer_id: { type: Schema.Types.ObjectId, ref: User},
+	announcer_id: { type: Schema.Types.ObjectId, ref: 'User'},
 	content: String,
 	type: String
 });

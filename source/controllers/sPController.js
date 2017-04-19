@@ -87,18 +87,9 @@ const spController = {
   viewReviews: function(req, res) {
     const token = req.headers['jwt-token'];
     jwt.verify(token, function(decoded) {
-      if (decoded.type === 3) {
-        const reviews = Review.find({
-          sp_id: decoded.id
-        }, function(err, reviews_id_only) {
-          if (err) {
-
-            res.status(500).json({
-              status: 'error',
-              message: err.message,
-            });
-          } else {
-            Review.find().populate('reviewer_id').populate('sp_id').exec(function (err, reviews) 
+      if (decoded.type === 3) 
+      {
+            Review.find({sp_id: decoded.id}).populate('reviewer_id').populate('sp_id').exec(function (err, reviews) 
             {
             
                 if (err) {
@@ -117,10 +108,8 @@ const spController = {
                   });
                 }
             });
-          }
-        });
-          
-      } else {
+      } else 
+      {
         res.status(500).json({
           err: err.message
         });
@@ -188,17 +177,10 @@ const spController = {
 getAllSPProfiles: function(req, res) { //viewing a summary of all SP profiles
     const token = req.headers['jwt-token'];
     jwt.verify(token, function(decoded) {
-      SP.find({},function(err, sps) {
-        if (err) {
-          res.status(500).json({
-            status: 'error',
-            message: err.message,
-          });
-
-        } else 
-        {
-          sps.populate('user_id').exec(function (err, users) {
-            if (err) {
+          SP.find({}).populate('user_id').exec(function (err, users) 
+          {
+            if (err) 
+            {
               res.status(500).json({
                  status: 'error',
                  message: err.message,
@@ -215,11 +197,8 @@ getAllSPProfiles: function(req, res) { //viewing a summary of all SP profiles
               });
             }
           });
-        }
 
       });
-
-    });
   },
 
   getSPProfile: function(req, res) { //viewing a specific SP profile
@@ -295,37 +274,24 @@ getAllSPProfiles: function(req, res) { //viewing a summary of all SP profiles
     var query = {
       user_id: req.params.id //Recently Changed to Params
     };
-
-    Video.find(query, function(err, video_id_only) {
-      if (err){
-        res.status(500).json({
-          status: 'error',
-          message: err.message,
-        });
-      }
-      else
-      {
-        video_id_only.populate('user_id').exec(function (err, story) {
-            if (err) 
-            {
-              res.status(500).json({
-                status: 'error',
-                message: err.message,
-              });
-            }
-            else
-            {
-                res.status(200).json({
-                  status: 'success',
-                  data: {
-                  video,
-                },
-              });
-            }
-
+    
+    Video.find(query).populate('user_id').exec(function (err, story) {
+        if (err) 
+        {
+          res.status(500).json({
+            status: 'error',
+            message: err.message,
           });
-      }
-      
+        }
+        else
+        {
+            res.status(200).json({
+              status: 'success',
+              data: {
+              video,
+            },
+          });
+        }
     });
   },
   editSP: function(req, res) { //SP edits his profile

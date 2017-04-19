@@ -5,7 +5,7 @@ const User = require('./User');
 
 // define the schema for our user model
 const studentSchema = mongoose.Schema({
-	user_id: {type: Schema.Types.ObjectId, ref: User },
+	user_id: {type: Schema.Types.ObjectId, ref: 'User' },
 	university: String,
 	address: String,
 	birthdate: Date,

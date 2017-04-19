@@ -5,7 +5,7 @@
   // define the schema for our user model
   const ServiceProviderSchema = mongoose.Schema({
     price_category: String,
-    user_id: {type: Schema.Types.ObjectId, ref: User },
+    user_id: {type: Schema.Types.ObjectId, ref: 'User' },
     location: String,
     description: String,
     fields: [String],
