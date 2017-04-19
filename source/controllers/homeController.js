@@ -138,22 +138,12 @@ const homeController = {
       if (err) {
         res.json(err);
       } else {
-        User.findByIdAndUpdate(user.id, {
-          $set: {
-            password,
-          },
-        }, {
-          safe: true,
-          upsert: true,
-          new: true,
-        }, (updateerr) => {
-          res.json(`Password resetted successfully to ${password
-            } , and an email was sent to the user with the new password.`,
-          );
-          //  console.log(newUser);
+        User.findByIdAndUpdate(user.id, { $set: { password } }, { safe: true, upsert: true, new: true }, (updateerr) => {
+          res.json(`Password resetted successfully to ${password} , and an email was sent to the user with the new password.`);
         });
       }
     });
+
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {

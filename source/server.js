@@ -7,22 +7,12 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const mongoose = require('mongoose');
-const indexRouter = require('./source/routes/index');
-const adminRouter = require('./source/routes/admin');
-const spRouter = require('./source/routes/sP');
-const studentRouter = require('./source/routes/student');
-const userRouter = require('./source/routes/user');
+const indexRouter = require('../source/routes/index');
+const adminRouter = require('../source/routes/admin');
+const spRouter = require('../source/routes/sP');
+const studentRouter = require('../source/routes/student');
+const userRouter = require('../source/routes/user');
 const cors = require('cors');
-
-
-// Testing
-const User = require('./source/models/User');
-const Review = require('./source/models/Review');
-const ServiceProvider = require('./source/models/ServiceProvider');
-const Reservation = require('./source/models/Reservation');
-const PendingSP = require('./source/models/PendingSP');
-
-
 
 const app = express();
 
@@ -34,7 +24,6 @@ app.use(bodyParser.urlencoded({
   extended: true,
 }));
 app.use(bodyParser.json());
-
 
 
 app.use('/api', indexRouter);
@@ -60,8 +49,6 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-require('./source/routes.js')(app, passport);
-require('./source/config/passport')(passport);
 
 const DB_URI = 'mongodb://localhost:27017/portfolio';
 mongoose.connect(DB_URI);
@@ -85,7 +72,7 @@ mongoose.connect(DB_URI);
 //     is_deleted: false,
 //     password: '1'
 //   }).save()
-/*var newUser = new User({
+/* var newUser = new User({
   email: "admin@hotmail.com",
   type: 1,
   is_deleted: false
@@ -99,7 +86,7 @@ newUser.save(function(err,user){
 });*/
 
 
-/*new ServiceProvider({
+/* new ServiceProvider({
   user_id: '58f1fdfd69c86ecc6395cfcb'
 }).save(function(err, user) {
   if (err) {
@@ -109,7 +96,7 @@ newUser.save(function(err,user){
   }
 });*/
 
-/*new ServiceProvider({
+/* new ServiceProvider({
   user_id: '58f1ff8ba1f47cccd6e7adfb'
 }).save(function(err, user) {
   if (err) {
@@ -154,6 +141,6 @@ new Reservation({
 // }).save();
 
 // Start the server
-app.listen(3000, function() {
+app.listen(3000, () => {
   console.log('Magic happens on port 3000');
 });
