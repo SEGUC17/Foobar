@@ -111,6 +111,7 @@
   });
   router.post('/resetPW', homeController.resetPassword); //viewing announcements
   router.post('/decode', homeController.getsignedvals); //decoding token from front end
+  router.post('/comments/create', studentController.addComment); //adding a comment to a review
 
 
 

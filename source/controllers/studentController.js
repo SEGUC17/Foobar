@@ -7,6 +7,7 @@ let StudentInterest = require('../models/StudentInterest');
 let Review = require('../models/Review');
 let Student = require('../models/Student');
 let Interests = require('../models/Interests');
+let Comment = require('../models/Comment');
 const jwt = require('../auth/jwt');
 var ObjectId = require('mongodb').ObjectID;
 
@@ -114,6 +115,31 @@ const StudentController = {
         });
       }
     });
+  },
+  addComment: function(req, res){
+      const token = req.headers['jwt-token'];
+      jwt.verify(token, function(decoded) {
+         const comment = new Comment({
+          commenter_id: decoded.id,
+          review_id: req.body.id,
+          content: req.body.content
+
+        }).save(function(err, comment) {
+          if (err) {
+            res.status(500).json({
+              status: 'error',
+              message: err.message,
+            });
+          } else {
+            res.status(200).json({
+              status: 'success',
+              data: {
+                comment,
+              },
+            });
+          }
+        });
+      });
   },
   search: function(req, res) {
     const search = new RegExp(`^${req.query.search}$`, 'i');

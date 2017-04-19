@@ -9,6 +9,7 @@ const Student = require('../models/Student');
 const User = require('../models/User');
 const Interest = require('../models/Interests');
 const jwt = require('../auth/jwt');
+const Comment = require('../models/Comment');
 
 
 
@@ -89,24 +90,26 @@ const spController = {
     jwt.verify(token, function(decoded) {
       if (decoded.type === 3) 
       {
-            Review.find({sp_id: decoded.id}).populate('reviewer_id').populate('sp_id').exec(function (err, reviews) 
+            Review.find({sp_id: decoded.id}).populate('reviewer_id').populate('sp_id').populate('comments').exec(function (err, reviews) 
             {
-            
-                if (err) {
-                  res.status(500).json({
+                Comment.populate(reviews.comments, {path: 'commenter_id'},function(err,data){
+                  if (err) {
+                    res.status(500).json({
                     status: 'error',
                     message: err.message,
-                  });
-                }
-                else
-                {                
-                   res.status(200).json({
-                   status: 'success',
-                   data: {
-                    reviews,
-                  },
-                  });
-                }
+                      });
+                    }
+                    else
+                    {                
+                      res.status(200).json({
+                      status: 'success',
+                      data: {
+                        reviews,
+                      },
+                      });
+                    }
+                })
+                
             });
       } else 
       {
