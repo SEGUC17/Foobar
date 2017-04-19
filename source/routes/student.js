@@ -30,7 +30,7 @@ router.get('/student/:id', studentController.viewStudent); // Student could view
 
 router.post('/student/', studentController.editStudent); // Student could edit his profile
 
-router.post('/offers/:id', studentController.applyOffer); // Student could apply for an offer
+router.post('/offers/', studentController.applyOffer); // Student could apply for an offer
 
 router.get('/viewoffer', homeController.viewOffers); // Student can view offers
 

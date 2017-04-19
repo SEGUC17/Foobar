@@ -5,9 +5,10 @@
  <div v-for =" offer in offers" class="row-2">
         <div class="container" align="center">
           <h3 align="left">{{offer.field}}</h3>
-            <h1>{{student._id}}</h1>
+            <h1>{{offer.sp_id}}</h1>
             <p>{{offer._id}}</p>
-            
+            <button @click="Apply(offer)">Apply</button>
+
       </div>
         </div>
 
@@ -34,6 +35,9 @@ methods:{
         this.student = response.data.data.student;
                 console.log(response.data.data.offers);
       })
+    },
+    Apply: function(offer){
+      this.$http.post('http://localhost:3000/api/students/offers',{"offer_id":offer._id},{headers : {'jwt-token' : localStorage.getItem('id_token')}})
     }
     }
 }
