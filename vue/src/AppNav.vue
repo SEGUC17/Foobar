@@ -141,8 +141,8 @@
                                     <div class="col-sm-2">
                                     </div>
                                     <div class="col-sm-10">
-                                      <center>  <button class="btn btn-primary btn-sm " type="submit" v-on:click="login">
-                                            Submit</button></center>
+                                      <center> <router-link to="/"> <button class="btn btn-primary btn-sm " type="submit" v-on:click="login">
+                                            Submit</button></router-link></center>
                                             <br>
                                         <a href="#resetPW" data-toggle="tab">Forgot your password?</a>
                                     </div>
@@ -178,8 +178,8 @@
                                     <div class="col-sm-2">
                                     </div>
                                     <div class="col-sm-10">
-                                        <button class="btn btn-primary btn-sm"  v-on:click="signup">
-                                            Save & Continue</button>
+                                      <router-link to="/"><button class="btn btn-primary btn-sm"  v-on:click="signup">
+                                            Save & Continue</button></router-link>
                                     </div>
                                 </div>
                                 </form>
