@@ -21,7 +21,7 @@
                     </ul>
                 </li>
                 <li v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
-                <li v-if = "!this.user.authenticated"><router-link to="/applySP">SP</router-link></li>            
+                <li v-if = "!this.user.authenticated"><router-link to="/applySP">SP</router-link></li>
                 <li class="" v-else ><a  v-on:click="logout">visitor</a></li>
 
               </ul>
@@ -38,10 +38,11 @@
                 <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
                 <div class="nav-collapse nav-collapse_  collapse">
                       <ul class="nav sf-menu">
-                        <li><router-link to=''>Post</router-link></li>
+                        <li><router-link to='Adminpostannouncement'>Post</router-link></li>
                         <li><router-link  to="/reviewData"> Review Data</router-link></li>
                         <li><router-link to="/announcements">Announcements</router-link></li>
                         <li><router-link to='/viewAdmins'>Admins</router-link></li>
+                        <li><router-link to='/sPs'>Service Providers</router-link></li>
                         <li><a href="#">Students</a></li>
                         <li><router-link  to="/pendingSP">Pending Requests</router-link></li>
                         <li><router-link  to="/viewInterests">Interests</router-link></li>
@@ -70,7 +71,7 @@
                         <li v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
                         <li class="" v-else ><a  v-on:click="logout">logout</a></li>
 
-                    </ul> 
+                    </ul>
                 </div>
               </div>
             </div>
@@ -89,10 +90,10 @@
                             <li ><router-link to="/announcements">Announcements</router-link></li>
                             <li ><router-link to="/SPPostAnnouncement">Post Announcement</router-link></li>
                             <li><router-link to="/SPPostOffer">Post Offer</router-link></li>
-                            <li><router-link to="/SPReservations">View Reservations</router-link></li> 
-                            <li><router-link to="/SPReviews">View Reviews</router-link></li>    
+                            <li><router-link to="/SPReservations">View Reservations</router-link></li>
+                            <li><router-link to="/SPReviews">View Reviews</router-link></li>
                             <li><router-link to="/SPAssess">Assess Students</router-link></li>
-                            <li><router-link to="/SPEditProfile">Edit Profile</router-link></li>  
+                            <li><router-link to="/SPEditProfile">Edit Profile</router-link></li>
                             <li  v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
                             <li class="" v-else ><a  v-on:click="logout">logout</a></li>
                             </ul>
@@ -138,7 +139,7 @@
                                 </div>
                                 <router-link to="/"> <button class="btn btn-primary btn-sm " type="submit" v-on:click="login">
                                             Submit</button></router-link>
-                                           
+
                                  <div><a href="#resetPW" data-toggle="tab">Forgot your password?</a></div>
                                 </form>
                              </center>
@@ -180,7 +181,7 @@
                                 </form>
                                 </center>
                             </div>
-                            
+
                             <div class="tab-pane" id="resetPW">
                                 <center>
                                 <h5>Enter your email below to reset the password:</h5>
@@ -195,16 +196,16 @@
                                     <div class="col-sm-2">
                                     </div>
                                     <div class="col-sm-10">
-                                      <center>  
+                                      <center>
                                       <h6><strong>N.B:</strong> A new password will be sent to this email </h6>
                                       <button class="btn btn-primary btn-sm " type="submit" v-on:click="resetPW">Reset Password</button>
-                                      </center>                                         
+                                      </center>
                                     </div>
                                 </div>
                                 </form>
                              </center>
-                            </div> 
-                        
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -279,7 +280,7 @@ methods: {
   signup : function() {
     this.$http.post('http://localhost:3000/api/users/signup', {
     "email":this.creds.email,
-    "password":this.creds.password, 
+    "password":this.creds.password,
     "name":this.creds.name
 }).then(data => {
       this.registermessage = "Success, you can login now";
@@ -288,7 +289,7 @@ methods: {
 });
 
   },
- 
+
   resetPW : function() {
     this.$http.post('http://localhost:3000/api/users/resetPW', {"email":this.resetPWEmail}).then(data => {
       console.log('success');

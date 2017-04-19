@@ -20,88 +20,75 @@ import ReviewInterest from '@/components/ReviewInterest.vue'
 import ServiceProviderProfile from '@/components/ServiceProviderProfile.vue'
 import Interests from '@/components/Interests.vue'
 import pendingSP from '@/components/pendingSP.vue'
+import Adminpostannouncement from '@/components/Adminpostannouncement.vue'
 
 
 Vue.use(Router)
 Vue.use(vueResource)
 
 export default new Router({
-  routes: [
-    {
+  routes: [{
     path: '/',
     component: Hello
-    }, 
-    {
+  }, {
     path: '/announcements',
     component: Announcements
-    },
-    {
-      path: '/SPPostAnnouncement',
-      component: SPPostAnnouncement
-    },
-    {
-      path: '/SPPostOffer',
-      component: SPPostOffer
-    },
-    {
-      path: '/SPAssess',
-      component: SPAssess
-    },
-    {
-      path: '/SPEditProfile',
-      component: SPEditProfile
-    },
-    {
-      path: '/applySP',
-      component: ApplySP
-    },
-    {
-      path: '/SPReservations',
-      component: SPReservations
-    },
-    {
-      path: '/SPReviews',
-      component: SPReviews
-    },
-    {
-      path: '/sPs',
-      component: ServiceProviders
-    },
-    {
-      path: '/viewAdmins',
-      component: viewadmin
-    },
-    {
-      path: '/viewOffers',
-      component: Offers
-    }, 
-    {
-      path: '/viewReservations',
-      component: ReservationStudent
-    }, 
-    {
-      path: '/reviewData',
-      component: ReviewInterest
-    }, {
-          path: '/sps/:id',
-          name:'service provider',
-        component: ServiceProviderProfile
-       }
-    , {
-         path: '/EditStudent/:EditStudid',
-        name:'EditStudent',
-         component: EditStudentProfile
-      }
-    , {
-         path: '/student/:Studid',
-         name:'StudentProfile',
-          component: StudentProfile
-     },  {
-         path: '/viewInterests',
-         component: Interests
-     },
-         {
-         path: '/pendingSP',
-         component: pendingSP
-        }]
+  }, {
+    path: '/Adminpostannouncement',
+    component: Adminpostannouncement
+  }, {
+    path: '/SPPostAnnouncement',
+    component: SPPostAnnouncement
+  }, {
+    path: '/SPPostOffer',
+    component: SPPostOffer
+  }, {
+    path: '/SPAssess',
+    component: SPAssess
+  }, {
+    path: '/SPEditProfile',
+    component: SPEditProfile
+  }, {
+    path: '/applySP',
+    component: ApplySP
+  }, {
+    path: '/SPReservations',
+    component: SPReservations
+  }, {
+    path: '/SPReviews',
+    component: SPReviews
+  }, {
+    path: '/sPs',
+    component: ServiceProviders
+  }, {
+    path: '/viewAdmins',
+    component: viewadmin
+  }, {
+    path: '/viewOffers',
+    component: Offers
+  }, {
+    path: '/viewReservations',
+    component: ReservationStudent
+  }, {
+    path: '/reviewData',
+    component: ReviewInterest
+  }, {
+    path: '/sps/:id',
+    name: 'service provider',
+    component: ServiceProviderProfile
+  }, {
+    path: '/EditStudent/:EditStudid',
+    name: 'EditStudent',
+    component: EditStudentProfile
+  }, {
+    path: '/student/:Studid',
+    name: 'StudentProfile',
+    component: StudentProfile
+  }, {
+    path: '/viewInterests',
+    component: Interests
+  }, {
+    path: '/pendingSP',
+    component: pendingSP
+  }]
 })
