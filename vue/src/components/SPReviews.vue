@@ -6,11 +6,7 @@
   {{review.reviewer_id.name}}<br/>
   {{review.rating}}<br/>
   {{review.content}}
-  <div v-for="comment in {{review.comments}}">
-    <h5>{{comment.commenter_id.name}}</h5>
-    {{comment.content}}
-    <hr>
-  </div>
+
    <div class="form-group">
             <label for="comment" class="col-sm-2 control-label">Add Comment</label>
             <div class="col-sm-10">

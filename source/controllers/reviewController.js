@@ -1,16 +1,16 @@
-let Review = require("../models/Review");
+const Review = require('../models/Review');
 const jwt = require('../auth/jwt');
 
 
-let reviewController = {
+const reviewController = {
 
 
-  deleteReview: function(req, res) { //deleting the requested review
+  deleteReview(req, res) { // deleting the requested review
     const token = req.headers['jwt-token'];
-    jwt.verify(token, function(decoded) {
-      if (decoded.type == 1) {
-        var review_id = req.body.id;
-        Review.findByIdAndRemove(review_id, function(err, review) {
+    jwt.verify(token, (decoded) => {
+      if (decoded.type === 1) {
+        const review_id = req.body.id;
+        Review.findByIdAndRemove(review_id, (err, review) => {
           if (err) {
             res.status(500).json({
               status: 'error',
@@ -27,11 +27,11 @@ let reviewController = {
         });
       } else {
         res.status(500).json({
-          mssg: "Unauthorized action to this type of user"
+          mssg: 'Unauthorized action to this type of user',
         });
       }
     });
-  }
+  },
 
 };
 

@@ -208,7 +208,7 @@ const StudentController = {
               message: err.message,
             });
           } else {
-            es.status(200).json({
+            res.status(200).json({
               status: 'success',
               data: {
                 skills,

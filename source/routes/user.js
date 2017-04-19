@@ -3,7 +3,7 @@
   const User = require('../models/User');
   const homeController = require('../controllers/homeController');
   const Student = require('../models/Student');
-  const interests = require('../models/Interests');
+  const studentController = require('../controllers/studentController');
 
   const router = express.Router();
 
@@ -25,11 +25,11 @@
   //   storage: storage
   // });
 
-  router.post('/login', function(req, res) {
+  router.post('/login', (req, res) => {
     const token = jwt.generate({
       email: req.body.email,
       password: req.body.password,
-    }, function(token) {
+    }, (token) => {
       if (!token) {
         res.status(404).json({
           error: 'Credentials not found',
@@ -42,25 +42,21 @@
     });
   });
 
-  router.post('/signup', function(req, res) {
-
-
-
-    let user = new User({
+  router.post('/signup', (req, res) => {
+    const user = new User({
       email: req.body.email,
       password: req.body.password,
       name: req.body.name,
       type: 2,
       is_deleted: false,
       is_blocked: false,
-    }).save(function(err, user) {
+    }).save((err, user) => {
       if (err) {
         res.json({
           err: 'email is already taken',
         });
       } else {
-
-        var newStudent = new Student();
+        const newStudent = new Student();
         newStudent.user_id = user.id;
         newStudent.university = req.body.university;
         newStudent.address = req.body.address;
@@ -71,18 +67,16 @@
         const interests = req.body.interests;
 
         if (interests) {
-          for (var i = 0; i < interests.length; i++) {
-            var newInterset = new StudentInterest({
+          for (let i = 0; i < interests.length; i++) {
+            const newInterset = new StudentInterest({
               student_id: user.id,
-              interest_id: interests[i]
+              interest_id: interests[i],
+            });
+            newInterset.save((err) => {
+              if (err) { res.json('Student interest saving error '); }
             });
           }
-
-          newInterset.save(function(err) {
-            if (err)
-              res.json("Student interest saving error ");
-          })
-        };
+        }
 
         // do your updates here
         if (req.file) {
@@ -93,26 +87,20 @@
 
         // save the user
 
-        newStudent.save(function(err) {
-          if (err)
-            res.json(err);
+        newStudent.save((err) => {
+          if (err) { res.json(err); }
         });
-
 
 
         res.json({
-          user: "signup successfully"
+          user: 'signup successfully',
         });
       }
     });
-
-
-
   });
-  router.post('/resetPW', homeController.resetPassword); //viewing announcements
-  router.post('/decode', homeController.getsignedvals); //decoding token from front end
-  router.post('/comments/create', studentController.addComment); //adding a comment to a review
-
+  router.post('/resetPW', homeController.resetPassword); // viewing announcements
+  router.post('/decode', homeController.getsignedvals); // decoding token from front end
+  router.post('/comments/create', studentController.addComment); // adding a comment to a review
 
 
   // module.exports = function() {

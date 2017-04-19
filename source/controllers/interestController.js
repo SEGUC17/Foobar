@@ -1,19 +1,19 @@
-let Interests = require("../models/Interests");
+const Interests = require('../models/Interests');
 const jwt = require('../auth/jwt');
 
 
-let interestController = {
+const interestController = {
 
-  //adding to interests options of the system
-  addInterest: function(req, res) {
+  // adding to interests options of the system
+  addInterest(req, res) {
     const token = req.headers['jwt-token'];
-    jwt.verify(token, function(decoded) {
+    jwt.verify(token, (decoded) => {
       if (decoded.type === 1) {
-        var name = req.body.name;
+        const name = req.body.name;
 
-        //creating a new Interests instance and saving it
-        var newInterest = new Interests({
-          name: name
+        // creating a new Interests instance and saving it
+        const newInterest = new Interests({
+          name,
         });
         newInterest.save();
         res.status(200).json({
@@ -22,13 +22,12 @@ let interestController = {
             name,
           },
         });
-
       } else {
         res.status(500).json({
-          err: 'unauthorized access'
+          err: 'unauthorized access',
         });
       }
     });
-  }
-}
+  },
+};
 module.exports = interestController;
