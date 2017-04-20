@@ -189,7 +189,7 @@
                                     <label for="password" class="col-sm-2 control-label">
                                         Confirm Password</label>
                                     <div class="col-sm-10">
-                                    <input v-validate="{ rules: { required: true} }" type="text" name="Confirm password" class="form-control" id="Confirm password" placeholder="Password" v-model="creds.password">
+                                    <input v-validate="{ rules: { required: true} }" type="text" name="Confirm password" class="form-control" id="Confirm password" placeholder="Password" v-model="creds.password2">
                      <span v-show="errors.has('Confirm password')">{{ errors.first('Confirm password') }}</span>
 
                                         <!-- <input type="password" class="form-control" id="password2" placeholder="Confirm Password" v-model="creds.password2" /> -->

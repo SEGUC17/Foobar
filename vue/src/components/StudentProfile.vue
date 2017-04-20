@@ -4,7 +4,7 @@
       <div class="row">
       <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
              <br>
-    <router-link  :to ="{ name : 'EditStudent' , params: { EditStudid : studid }}" v-if = 'this.user.authenticated && this.user._id === this.student.user_id'> Edit Profile</router-link>
+    <router-link  :to ="{ name : 'EditStudent' , params: { EditStudid : studid }}" v-if = 'this.user._id === this.student.user_id'> Edit Profile</router-link>
       </div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
    

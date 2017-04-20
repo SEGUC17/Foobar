@@ -231,7 +231,7 @@ const homeController = {
             // setup email data with unicode symbols
             const mailOptions = {
                 from: ' "Foobar" <foobar.se@gmail.com>', // sender address
-                to: email, // list of receivers
+                to: req.body.email, // list of receivers
                 subject: 'Password reset inquiry ✔', // Subject line
                 text: `Dear Sir/Madam, you have requested to reset your password for our system. You can now login using your email and password = ${
         password}`, // plain text body

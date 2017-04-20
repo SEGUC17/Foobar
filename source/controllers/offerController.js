@@ -37,7 +37,7 @@ const offerController = {
                         // updated
                         title: req.body.title,
                         price: req.body.price,
-                        sp_id: req.body.id,
+                        sp_id: decoded.id,
                         field: req.body.field,
                         capacity: req.body.capacity,
                         description: req.body.description,

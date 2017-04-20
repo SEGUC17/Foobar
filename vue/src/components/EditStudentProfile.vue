@@ -23,11 +23,11 @@
                     <tbody>
                      <tr>
                         <td>Name: </td>
-                        <td><input type="text"  v-model="this.name"></td>
+                        <td><input type="text"  v-model="name"></td>
                       </tr>
                       <tr>
                         <td>University: </td>
-                        <td><input type="text" :value="student.university" v-model="university"></td>
+                        <td><input type="text"  v-model="university"></td>
                       </tr>
                      
                       <tr>
@@ -38,11 +38,11 @@
                          <tr>
                              <tr>
                         <td>Description</td> 
-                        <td><textarea :value="student.description" v-model="description"></textarea>  </td>
+                        <td><textarea v-model="description"></textarea>  </td>
                       </tr>
                         <tr>
                         <td>Home Address</td>
-                        <td><input type="text" :value="student.address" v-model="address"></td>
+                        <td><input type="text" v-model="address"></td>
                       </tr>
                       <tr>
                         <td>Email</td>
@@ -59,7 +59,7 @@
                                     <div class="col-sm-2">
                                     </div>
                                     <div class="col-sm-10">
-                                      <center>  <button class="btn btn-primary btn-sm" v-on:click="login">
+                                      <center>  <button class="btn btn-primary btn-sm" v-on:click="EditStudent()">
                                             Submit</button></center>
                                             <br>
                                         
@@ -90,7 +90,7 @@ export default {
       student:{},
       user:{},
       name : "",
-      university : "",
+      university : "Ahm",
       address : "",
       birthdate : "",
       description : ""
@@ -110,7 +110,7 @@ methods:{
         this.student=response.data.data.student;
         this.user =response.data.data.user;
         this.name = this.user.name;
-        this.university = this.student.university;
+        this.university = "this.student.university";
         this.address = this.student.address;
         this.birthdate = this.student.birthdate;
         this.description = this.student.description;
@@ -118,6 +118,27 @@ methods:{
         
       })
     },
+    EditStudent: function() {
+           let route ='http://localhost:3000/api/students/student/';
+            console.log(this.name);
+      this.$http.post(route, {"name":this.name,"university":this.university, "address":this.address, "birthdate":this.birthdate, "description":this.description}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+        //          const name = req.body.name;
+        //           const university = req.body.university;
+        //           const address = req.body.address;
+        //           const birthdate = req.body.birthdate;
+        //           const description = req.body.description;
+       
+        // this.student=response.data.data.student;
+        // this.user =response.data.data.user;
+        // this.name = this.user.name;
+        // this.university = this.student.university;
+        // this.address = this.student.address;
+        // this.birthdate = this.student.birthdate;
+        // this.description = this.student.description;
+        console.log(this.user);
+        
+      })
+    }
    
   }
 }
