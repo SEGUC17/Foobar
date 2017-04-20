@@ -29,39 +29,39 @@ const StudentController = {
                 message: err.message,
               });
             } else if (req.body.approve) {
-              reservation.status = 1;
-              reservation.save((err, reservation) => {
-                if (err) {
-                  res.status(500).json({
-                    status: 'error',
-                    message: err.message,
-                  });
-                } else {
-                  res.status(200).json({
-                    status: 'success',
-                    data: {
-                      message: 'Approved',
-                    },
-                  });
-                }
-              });
-            } else if (req.body.disapprove) {
-              reservation.status = 2;
-              reservation.save((err, reservation) => {
-                if (err) {
-                  res.status(500).json({
-                    status: 'error',
-                    message: err.message,
-                  });
-                } else {
-                  res.status(200).json({
-                    status: 'success',
-                    data: {
-                      message: 'Disapproved',
-                    },
-                  });
-                }
-              });
+                Reservation.findByIdAndUpdate(req.body.id, {
+                            $set: {
+                                status: 1,
+                            },
+                        }, {
+                            safe: true,
+                            upsert: true,
+                            new: true,
+                        }, (err, reservation) => {
+                            res.status(200).json({
+                                status: 'success',
+                                data: { // Data can be null if, for example, delete request was sent
+                                    message: `Approved successfully ${reservation}`,
+                                },
+                            });
+                        });
+            } else if (!req.body.approve) {
+                   Reservation.findByIdAndUpdate(req.body.id, {
+                            $set: {
+                                status: 2,
+                            },
+                        }, {
+                            safe: true,
+                            upsert: true,
+                            new: true,
+                        }, (err, reservation) => {
+                            res.status(200).json({
+                                status: 'success',
+                                data: { // Data can be null if, for example, delete request was sent
+                                    message: `Disapproved successfully ${reservation}`,
+                                },
+                            });
+                        });
             }
           });
         } else {
@@ -136,7 +136,7 @@ const StudentController = {
         jwt.verify(token, (decoded) => {
           const comment = new Comment({
             commenter_id: decoded.id,
-            review_id: req.body.id,
+            review_id: req.body.review_id,
             content: req.body.content,
 
           }).save((err, comment) => {

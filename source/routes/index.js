@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const stripe = require('stripe')('sk_test_TPfHR1k3VAZJmUVbUkFQojfB');
 const announcementController = require('../controllers/announcementController');
+const homeController = require('../controllers/homeController');
 const path = require('path');
 const multer = require('multer');
 const crypto = require('crypto');
@@ -29,6 +30,7 @@ router.post('/testupload', upload.single('profile_img'), (req, res) => {
 });
 
 router.get('/announcements/view', announcementController.getAllAnnouncements); // viewing announcements
+router.post('/resetPW', homeController.resetPassword); // resetting password
 
 router.post('/charge', (req, res) => {
   console.log('paying');

@@ -4,6 +4,7 @@ const announcementController = require('../controllers/announcementController');
 const reservationController = require('../controllers/reservationController');
 const offerController = require('../controllers/offerController');
 const sPController = require('../controllers/sPController');
+const studentController = require('../controllers/studentController');
 const pendingSPController = require('../controllers/pendingSPController');
 const multer = require('multer');
 const crypto = require("crypto");
@@ -53,9 +54,11 @@ router.post('/offers/create', offerController.createOffer); //posting a new offe
 
 router.post('/sP/apply', pendingSPController.Apply); // service provider can apply
 
+router.get('/reviews/view', sPController.viewReviews);
+
 // router.post('/images/upload', upload.single('image'), sPController.uploadImage); //adding an image to his profile
 
 router.post('/videos/upload', sPController.addVideoByURL); //adding an embedded video
 router.post('/videos', sPController.getVideo); //adding an embedded video
-
+router.post('/reservations/approve', studentController.approveReservation);
 module.exports = router;

@@ -188,6 +188,7 @@ const homeController = {
         var errors = req.validationErrors();
 
         if (errors) {
+            console.log("error RPW");
             res.status(400).json({
                 err: errors
 
@@ -197,13 +198,13 @@ const homeController = {
             const password = generatePassword();
             //  console.log(password);
             User.findOne({
-                email,
+                email:email,
             }, (err, user) => {
                 // if there are any errors, return the error
                 if (err) {
                     res.json(err);
                 } else {
-                    User.findByIdAndUpdate(user.id, {
+                    User.findByIdAndUpdate(user._id, {
                         $set: {
                             password
                         }

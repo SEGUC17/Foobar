@@ -1,6 +1,7 @@
 const SP = require('../models/ServiceProvider');
 const Announcement = require('../models/Announcement');
 const Review = require('../models/Review');
+const Comment = require('../models/Comment');
 const Video = require('../models/Video');
 const Reservation = require('../models/Reservation');
 const Assessment = require('../models/Assessment');
@@ -9,7 +10,6 @@ const Student = require('../models/Student');
 const User = require('../models/User');
 const Interest = require('../models/Interests');
 const jwt = require('../auth/jwt');
-const Comment = require('../models/Comment');
 var getYouTubeID = require('get-youtube-id');
 
 
@@ -107,12 +107,8 @@ const spController = {
       jwt.verify(token, (decoded) => {
         if (decoded.type === 3) {
           Review.find({
-            sp_id: decoded.id
-          }).populate('reviewer_id').populate('sp_id').populate(
-            'comments').exec((err, reviews) => {
-            Comment.populate(reviews.comments, {
-              path: 'commenter_id'
-            }, (err, data) => {
+            sp_id: decoded._id
+          }).populate('reviewer_id').populate('sp_id').exec((err, reviews) => {
               if (err) {
                 res.status(500).json({
                   status: 'error',
@@ -127,12 +123,33 @@ const spController = {
                 });
               }
             });
-          });
         } else {
           res.status(500).json({
             err: err.message,
           });
         }
+      });
+    },
+    viewComments(req, res) {
+      const token = req.headers['jwt-token'];
+      jwt.verify(token, (decoded) => {
+          Comment.find({
+            review_id: req.body.review_id
+          }).populate('commenter_id').exec((err, comments) => {
+              if (err) {
+                res.status(500).json({
+                  status: 'error',
+                  message: err.message,
+                });
+              } else {
+                res.status(200).json({
+                  status: 'success',
+                  data: {
+                    comments,
+                  },
+                });
+              }
+            });
       });
     },
     viewInterests(req, res) { // all interests

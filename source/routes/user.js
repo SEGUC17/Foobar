@@ -5,6 +5,8 @@
   const Student = require('../models/Student');
   const studentController = require('../controllers/studentController');
   const StudentInterest = require('../models/StudentInterest');
+  const sPController = require('../controllers/sPController');
+
 
   const router = express.Router();
 
@@ -156,8 +158,9 @@
   });
   router.post('/resetPW', homeController.resetPassword); // viewing announcements
   router.post('/decode', homeController.getsignedvals); // decoding token from front end
+  router.post('/comments/view', sPController.viewComments); //viewing comments of a specific review
   router.post('/comments/create', studentController.addComment); // adding a comment to a review
-
+  
 
   // module.exports = function() {
 

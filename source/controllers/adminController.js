@@ -47,9 +47,8 @@ const adminController = {
 
     approveOrDisapproveSP(req, res) { // approving or disapproving an applied SP
 
-        req.checkBody('title', 'Title is required').notEmpty();
+        req.checkBody('name', 'Name is required').notEmpty();
         req.checkBody('email', 'Email is required').notEmpty();
-        req.checkBody('email', 'Enter Correct Email Format').isEmail();
         // req.checkBody('description', 'A Description is required').notEmpty();
         // req.checkBody('phone_number', 'A Phone Number is required').notEmpty()
         // req.checkBody('id', 'Id is required').notEmpty();
