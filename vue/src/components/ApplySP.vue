@@ -1,32 +1,49 @@
 <template>
     <center>
-  <form role="form" class="">
+  <form role="form" class="" @submit.prevent="">
     <h2>Enter your info </h2>
+    <br>
+     <div v-for =" message in successmessages">                                  
+                    <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
+                     </div>
+                   <div v-for =" message in failuremessages">                               
+               <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
+           </div>
+           <br><br>
+
         <div class="form-group">
             <label for="name" class="col-sm-2 control-label">Name:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="name" placeholder="Name" v-model="name" />
+    <input v-validate="{ rules: { required: true} }" type="text" name="name" class="form-control" id="name" placeholder="Name" v-model="name">
+                     <span v-show="errors.has('name')">{{ errors.first('name') }}</span>
+                
             </div>
         </div>
         
         <div class="form-group">
-            <label for="email" class="col-sm-2 control-label">Email:</label>
-            <div class="col-sm-10">
-                <input type="email" class="form-control" id="email" placeholder="Email" v-model="email" />
+                   <label for="email" class="col-sm-2 control-label">Email:</label>
+      <div class="col-sm-10">
+                   <input v-validate="{ rules: { required: true,email: true} }" type="email" name="email" class="form-control" id="email" placeholder="Email" v-model="email">
+                     <span v-show="errors.has('email')">{{ errors.first('email') }}</span>
+            
+                
             </div>
         </div>
         
         <div class="form-group">
             <label for="phone_number" class="col-sm-2 control-label">Phone Number:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="phone_number" placeholder="phone_number" v-model="phone_number" />
+              <input v-validate="{ rules: { required: true} }" type="text" name="phone_number" class="form-control" id="phone_number" placeholder="Phone Number" v-model="phone_number">
+                     <span v-show="errors.has('phone_number')">{{ errors.first('phone_number') }}</span>
             </div>
         </div>
         
         <div class="form-group">
             <label for="description" class="col-sm-2 control-label">Description:</label>
             <div class="col-sm-10">
-                <textarea type="text" class="form-control" rows="5" id="description" v-model="description"></textarea>
+            <textarea v-validate="{ rules: { required: true} }" type="text" name="description" class="form-control" id="description" placeholder="Description" v-model="description"></textarea>
+                     <span v-show="errors.has('description')">{{ errors.first('description') }}</span>
+                
             </div>
         </div>
         
@@ -34,7 +51,9 @@
             <div class="col-sm-2">
             </div>
             <div class="col-sm-10">
-              <router-link to="/"><button class="btn btn-primary btn-sm"  v-on:click="applySP"> Apply</button></router-link>
+              <!-- <router-link to="/"> -->
+              <button class="btn btn-primary btn-sm"  v-on:click="applySP"> Apply</button>
+              <!-- </router-link> -->
             </div>
         </div>
     </form>
@@ -49,7 +68,9 @@ export default {
     name:'',
     email:'',
     phone_number:'',
-    description:''
+    description:'',
+    successmessages:[{msg:''}],
+    failuremessages:[{msg:''}]
   }
 },
 methods:{
@@ -57,7 +78,12 @@ methods:{
         {
             this.$http.post('http://localhost:3000/api/sPs/sP/apply', {"name":this.name,"email":this.email,"phone_number":this.phone_number,"description":this.description}).then(data => {
             console.log('success');
-                    })
+                    }).catch(function(reason) {
+                        console.log(reason.body.err);
+                this.failuremessages = reason.body.err;
+                console.log(this.failuremessages)
+                this.successmessages=[{msg:''}];
+        });
         }
     }
 

@@ -10,10 +10,17 @@
   <div class="form-group">
       <label  class="col-sm-2 control-label">
           Add a new Interest</label>
+          <br>
+          <div v-for =" message in successmessages">                                  
+                    <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
+                     </div>
+                   <div v-for =" message in failuremessages">                               
+               <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
+           </div>
       <div class="col-sm-10">
-          <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Admin's Name" v-model ="interestname" />
-
-          <button @click ="addInterest()" >add</button>
+      <input v-validate="{ rules: { required: true} }" type="text" name="interestname" class="form-control" id="interestname" placeholder="Interest Name" v-model="interestname">
+                     <span v-show="errors.has('interestname ')">{{ errors.first('interestname') }}</span>
+            <button @click ="addInterest()" >add</button>
           <h5>{{msg}}</h5>
       </div>
   </div>
@@ -34,7 +41,9 @@ export default {
   msg : "",
   most : "",
   least :"",
-  interests: []
+  interests: [],
+    successmessages:[{msg:''}],
+    failuremessages:[{msg:''}]
     }
   },
 created(){
@@ -44,7 +53,13 @@ methods:{
     addInterest: function () {
           this.$http.post('http://localhost:3000/api/admins/addInterest',{name: this.interestname },{headers : { 'jwt-token' : localStorage.getItem('id_token')}} ).then(response => {
       this.msg="Interest has been added"
-          })
+          }).catch(function(reason) {
+                        console.log(reason.body.err);
+                this.failuremessages = reason.body.err;
+                console.log(this.failuremessages)
+                this.successmessages=[{msg:''}];
+
+        });
         },
         reviewDataAnalysis: function () {
           this.$http.get('http://localhost:3000/api/admins/reviewinterest',{headers : { 'jwt-token' : localStorage.getItem('id_token')}}).then(response => {

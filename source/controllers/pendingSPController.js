@@ -36,7 +36,10 @@ const pendingSPController = {
     Apply(req, res) {
         req.checkBody('name', 'Name is required').notEmpty();
         req.checkBody('email', 'Email is required').notEmpty();
-        req.checkBody('email', 'Please enter an Email').isEmail();
+        req.checkBody('email', 'Please enter a Vaild Email').isEmail();
+        req.checkBody('phone_number', 'A Phone Number is required').notEmpty();
+        req.checkBody('description', 'Description is required').notEmpty();
+
 
         var errors = req.validationErrors();
 
