@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const flash = require('connect-flash');
 const morgan = require('morgan');
+const expressValidator = require('express-validator');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const mongoose = require('mongoose');
@@ -12,6 +13,7 @@ const adminRouter = require('../source/routes/admin');
 const spRouter = require('../source/routes/sP');
 const studentRouter = require('../source/routes/student');
 const userRouter = require('../source/routes/user');
+const User = require('../source/models/User');
 const cors = require('cors');
 
 const app = express();
@@ -24,7 +26,22 @@ app.use(bodyParser.urlencoded({
   extended: true,
 }));
 app.use(bodyParser.json());
+app.use(expressValidator({
+  errorFormatter: function(param, msg, value) {
+      var namespace = param.split('.')
+      , root    = namespace.shift()
+      , formParam = root;
 
+    while(namespace.length) {
+      formParam += '[' + namespace.shift() + ']';
+    }
+    return {
+      param : formParam,
+      msg   : msg,
+      value : value
+    };
+  }
+}));
 
 app.use('/api', indexRouter);
 app.use('/api/admins', adminRouter);
@@ -32,6 +49,8 @@ app.use('/api/sPs', spRouter);
 app.use('/api/students', studentRouter);
 app.use('/api/users', userRouter);
 app.use(express.static('public'));
+
+
 
 // Configure app
 app.use(morgan('dev')); // log every request to the console
@@ -72,18 +91,18 @@ mongoose.connect(DB_URI);
 //     is_deleted: false,
 //     password: '1'
 //   }).save()
-/* var newUser = new User({
-  email: "admin@hotmail.com",
-  type: 1,
-  is_deleted: false
-});
-newUser.password = "Admin1234";
-newUser.save(function(err,user){
-  if(err)
-   console.log(err);
-   else
-   console.log(user);
-});*/
+//  var newUser = new User({
+//   email: "admin@hotmail.com",
+//   type: 1,
+//   is_deleted: false
+// });
+// newUser.password = "Admin1234";
+// newUser.save(function(err,user){
+//   if(err)
+//    console.log(err);
+//    else
+//    console.log(user);
+// });
 
 
 /* new ServiceProvider({

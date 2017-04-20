@@ -80,10 +80,10 @@ export default {
     }
   },
 created(){
-  this.getServiceProvider()
+  this.getStudent()
 },
 methods:{
-    getServiceProvider: function () {
+    getStudent: function () {
       console.log("ahmed");
       let route ='http://localhost:3000/api/students/student/'.concat(this.$route.params.Studid);
       this.studid = this.$route.params.Studid ;

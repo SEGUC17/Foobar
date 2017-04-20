@@ -44,6 +44,29 @@
   });
 
   router.post('/signup', (req, res) => {
+
+        console.log("ahmed");
+      var email= req.body.email;
+     var password= req.body.password;
+     var name= req.body.name;
+    
+req.checkBody('name', 'Name is required').notEmpty();
+        req.checkBody('email', 'Email is required').notEmpty();
+        req.checkBody('username', 'Username is required').notEmpty();
+        req.checkBody('password', 'Password is required').notEmpty();
+        req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
+
+        var errors = req.validationErrors();
+        if(errors){
+          res.status(400).json({
+            errors
+
+          });
+        }
+        else{
+
+
+    
     console.log(req.body)
     const user = new User({
       email: req.body.email,
@@ -107,7 +130,9 @@
 
 
       }
+    
     });
+    }
   });
   router.post('/resetPW', homeController.resetPassword); // viewing announcements
   router.post('/decode', homeController.getsignedvals); // decoding token from front end
