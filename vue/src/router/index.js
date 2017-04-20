@@ -21,7 +21,7 @@ import ServiceProviderProfile from '@/components/ServiceProviderProfile.vue'
 import Interests from '@/components/Interests.vue'
 import pendingSP from '@/components/pendingSP.vue'
 import Adminpostannouncement from '@/components/Adminpostannouncement.vue'
-
+import viewAllStudents from '@/components/viewAllStudents.vue'
 
 Vue.use(Router)
 Vue.use(vueResource)
@@ -90,5 +90,9 @@ export default new Router({
   }, {
     path: '/pendingSP',
     component: pendingSP
+  }, {
+    path: '/viewstudents',
+    component: viewAllStudents
+
   }]
 })
