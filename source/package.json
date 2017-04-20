@@ -1,0 +1,43 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Foobar",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt-nodejs": "latest",
+    "body-parser": "^1.16.1",
+    "connect-flash": "~0.1.1",
+    "cookie-parser": "~1.0.0",
+    "cors": "^2.8.3",
+    "ejs": "^2.5.5",
+    "express": "^4.14.1",
+    "express-paginate": "^0.2.2",
+    "express-session": "~1.0.0",
+    "jsonwebtoken": "^7.3.0",
+    "method-override": "~1.0.0",
+    "mongoose": "^4.8.2",
+    "mongoose-file": "latest",
+    "mongoose-pagination": "^1.0.0",
+    "morgan": "~1.0.0",
+    "multer": "latest",
+    "nodemailer": "^3.1.8",
+    "passport": "~0.1.17",
+    "passport-facebook": "~1.0.2",
+    "passport-local": "~0.1.6",
+    "password-generator": "^2.1.0",
+    "stripe": "^4.18.0",
+    "vue": "^2.2.6"
+  },
+  "devDependencies": {
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb-base": "11.0.0",
+    "eslint-plugin-import": "2.2.0",
+    "nodemon": "^1.11.0"
+  }
+}
