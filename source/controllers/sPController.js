@@ -20,6 +20,7 @@ const spController = {
             var errors = req.validationErrors();
 
             if (errors) {
+                console.log(errors);
                 res.status(400).json({
                     err: errors
 

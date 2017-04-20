@@ -162,30 +162,37 @@
                                     <label for="name" class="col-sm-2 control-label">
                                         Name</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="name" placeholder="Name" v-model="creds.name" />
+                                      <input v-validate="{ rules: { required: true} }" type="text" name="name" class="form-control" id="name" placeholder="Name" v-model="creds.name">
+                                      <span v-show="errors.has('name')">{{ errors.first('name') }}</span>
+                                        <!-- <input type="text" class="form-control" id="name" placeholder="Name" v-model="creds.name" /> -->
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="email" class="col-sm-2 control-label">
                                         Email</label>
                                     <div class="col-sm-10">
-                    <!--  <input v-validate="{ rules: { required: true, email: true } }" type="text" name="email" class="form-control" id="email" placeholder="Email" v-model="creds.email">
-                     <span v-show="errors.has('email')">{{ errors.first('email') }}</span> -->
-                                        <input type="email" class="form-control" id="email" placeholder="Email" v-model="creds.email" />
+                     <input v-validate="{ rules: { required: true, email: true } }" type="text" name="email" class="form-control" id="email" placeholder="Email" v-model="creds.email">
+                     <span v-show="errors.has('email')">{{ errors.first('email') }}</span>
+                                        <!-- <input type="email" class="form-control" id="email" placeholder="Email" v-model="creds.email" /> -->
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="password" class="col-sm-2 control-label">
                                         Password</label>
                                     <div class="col-sm-10">
-                                        <input type="password" class="form-control" id="password" placeholder="Password" v-model="creds.password" />
+                                    <input v-validate="{ rules: { required: true} }" type="text" name="password" class="form-control" id="password" placeholder="Password" v-model="creds.password">
+                     <span v-show="errors.has('password')">{{ errors.first('password') }}</span>
+                      <!--<input type="password" class="form-control" id="password" placeholder="Password" v-model="creds.password" /> -->
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="password" class="col-sm-2 control-label">
                                         Confirm Password</label>
                                     <div class="col-sm-10">
-                                        <input type="password" class="form-control" id="password2" placeholder="Confirm Password" v-model="creds.password2" />
+                                    <input v-validate="{ rules: { required: true} }" type="text" name="Confirm password" class="form-control" id="Confirm password" placeholder="Password" v-model="creds.password">
+                     <span v-show="errors.has('Confirm password')">{{ errors.first('Confirm password') }}</span>
+
+                                        <!-- <input type="password" class="form-control" id="password2" placeholder="Confirm Password" v-model="creds.password2" /> -->
                                     </div>
                                 </div>
                                 <div class="row">

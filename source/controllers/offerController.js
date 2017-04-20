@@ -7,18 +7,17 @@ const offerController = {
     createOffer(req, res) { // posting new offer
 
         req.checkBody('title', 'Title is required').notEmpty();
-        req.checkBody('price', 'A Price is required').notEmpty();
+        req.checkBody('price', 'Price is required').notEmpty();
+        req.checkBody('price','Enter A Number in Price').isInt();
         req.checkBody('capacity', 'Capacity is required').notEmpty();
-        req.checkBody('price').isInt();
-        req.checkBody('capacity').isInt();
-       
-        req.checkBody('description', 'A Description is required').notEmpty();
-        req.checkBody('due_date', 'A Date is required').notEmpty()
-        req.checkBody('start_date', 'A Date is required').notEmpty()
-        req.checkBody('end_date', 'A Date is required').notEmpty()
-        req.checkBody('due_date', 'Wrong Date Format').isDate();
-        req.checkBody('start_date', 'Wrong Date Format').isDate();
-        req.checkBody('end_date', 'Wrong Date Format').isDate();
+        req.checkBody('capacity','Enter A Number in Capacity').isInt();
+        req.checkBody('description', 'Description is required').notEmpty();
+        req.checkBody('due_date', 'DueDate is required').notEmpty()
+        req.checkBody('due_date', 'DueDate is Wrong Date Format').isDate();
+        req.checkBody('start_date', 'StartDate is required').notEmpty();
+        req.checkBody('start_date', 'StartDate is Wrong Date Format').isDate();
+        req.checkBody('end_date', 'EndDate is required').notEmpty();
+        req.checkBody('end_date', 'EndDate is Wrong Date Format').isDate();
 
 
 

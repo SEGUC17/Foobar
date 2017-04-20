@@ -62,7 +62,7 @@
 
   router.post('/signup', (req, res) => {
 
-        console.log("ahmed");
+        
       var email= req.body.email;
      var password= req.body.password;
      var name= req.body.name;

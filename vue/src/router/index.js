@@ -21,12 +21,12 @@ import ServiceProviderProfile from '@/components/ServiceProviderProfile.vue'
 import Interests from '@/components/Interests.vue'
 import pendingSP from '@/components/pendingSP.vue'
 import Adminpostannouncement from '@/components/Adminpostannouncement.vue'
-// import VeeValidate from 'vee-validate';
+import VeeValidate from 'vee-validate';
 
 
 Vue.use(Router)
 Vue.use(vueResource)
-// Vue.use(VeeValidate);
+Vue.use(VeeValidate);
 
 export default new Router({
   routes: [{
@@ -92,5 +92,6 @@ export default new Router({
   }, {
     path: '/pendingSP',
     component: pendingSP
-  }]
+  }],
+  mode:'history'
 })
