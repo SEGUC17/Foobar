@@ -5,10 +5,13 @@
           <div class="span12">
         <div class="navbar navbar_">
               <div class="container">
-            <h1 class="brand brand_"><a href="index.html"><img alt="" src="./assets/img/logo.png" style ="height:70px"> </a></h1>
+            <h1 class="brand brand_">
+                <span><a href="index.html"><img alt="" src="./assets/img/logo.png" style ="height:70px"></a></span>
+            </h1>
+            <span><input type="text" style="position:relative; top:25px; left:50px;" id ="search" name="search" placeholder="Search.."></span>
             <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
             <div class="nav-collapse nav-collapse_  collapse">
-                  <ul class="nav sf-menu">
+            <ul class="nav sf-menu">
                 <li class=""><a href="index.html">Home</a></li>
                 <li ><router-link to="/announcements">News</router-link></li>
                 <li><a href="work.html">Work</a></li>
@@ -23,7 +26,6 @@
                 <li v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
                 <li v-if = "!this.user.authenticated"><router-link to="/applySP">SP</router-link></li>
                 <li class="" v-else ><a  v-on:click="logout">visitor</a></li>
-
               </ul>
                 </div>
           </div>
@@ -326,3 +328,16 @@ methods: {
 
 }
 </script>
+
+<style>
+#search {
+    width: 130px;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+/* When the input field gets focus, change its width to 100% */
+#search:focus {
+    width: 25%;
+}
+</style>
