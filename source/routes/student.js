@@ -18,7 +18,10 @@ router.get('/', (req, res) => { // student home page
 
 router.get('/announcements/view', announcementController.getAllAnnouncements); // viewing announcements
 
-router.post('/serviceproviders/add/:id', studentController.addReview); // student can add review for ServiceProvider
+
+router.post('/serviceproviders/offers', sPController.viewSPoffers); // student can add review for ServiceProvider
+
+router.post('/serviceproviders/add/', studentController.addReview); // student can add review for ServiceProvider
 
 router.get('/reservations/view', reservationController.getReservations); // viewing his reservations
 

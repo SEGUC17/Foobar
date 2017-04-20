@@ -39,9 +39,9 @@ router.post('/profile/edit', sPController.editSP); //SP editing his profile
 
 router.get('/reviews/view', sPController.viewReviews); //viewing reviews
 
-router.get('/interests', sPController.viewInterests); //viewing all interests 
+router.get('/interests', sPController.viewInterests); //viewing all interests
 
-router.get('/sP/interests', sPController.viewMyInterests); //viewing SP's interests 
+router.get('/sP/interests', sPController.viewMyInterests); //viewing SP's interests
 
 router.get('/students/offer', sPController.viewStudentsFinishedOffer); //viewing students who finished my offers
 
@@ -56,5 +56,6 @@ router.post('/sP/apply', pendingSPController.Apply); // service provider can app
 // router.post('/images/upload', upload.single('image'), sPController.uploadImage); //adding an image to his profile
 
 router.post('/videos/upload', sPController.addVideoByURL); //adding an embedded video
+router.post('/videos', sPController.getVideo); //adding an embedded video
 
 module.exports = router;

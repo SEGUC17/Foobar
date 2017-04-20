@@ -15,6 +15,7 @@ const studentRouter = require('../source/routes/student');
 const userRouter = require('../source/routes/user');
 const User = require('../source/models/User');
 const cors = require('cors');
+//const Video = require('../source/models/Video');
 
 const app = express();
 
@@ -28,17 +29,17 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 app.use(expressValidator({
   errorFormatter: function(param, msg, value) {
-      var namespace = param.split('.')
-      , root    = namespace.shift()
-      , formParam = root;
+    var namespace = param.split('.'),
+      root = namespace.shift(),
+      formParam = root;
 
-    while(namespace.length) {
+    while (namespace.length) {
       formParam += '[' + namespace.shift() + ']';
     }
     return {
-      param : formParam,
-      msg   : msg,
-      value : value
+      param: formParam,
+      msg: msg,
+      value: value
     };
   }
 }));
@@ -150,13 +151,11 @@ new Reservation({
    service_provider_id: '58f1ff8ba1f47cccd6e7adfb',
  }).save();
 */
-
-// new PendingSP({
-//   name:"Not Courses",
-//   email:"notcourses@hotmail.com",
-//   phone_number:"01211223344",
-//   description:"Test pending sp",
-//   is_declined: false
+//
+// new Video({
+//   title: "video1",
+//   url: "NLZRYQMLDW4",
+//   user_id: "58f7a904b7ffe1773d620976"
 // }).save();
 
 // Start the server
