@@ -169,6 +169,8 @@
                                     <label for="email" class="col-sm-2 control-label">
                                         Email</label>
                                     <div class="col-sm-10">
+                    <!--  <input v-validate="{ rules: { required: true, email: true } }" type="text" name="email" class="form-control" id="email" placeholder="Email" v-model="creds.email">
+                     <span v-show="errors.has('email')">{{ errors.first('email') }}</span> -->
                                         <input type="email" class="form-control" id="email" placeholder="Email" v-model="creds.email" />
                                     </div>
                                 </div>

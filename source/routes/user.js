@@ -69,7 +69,8 @@
      var password2= req.body.password2;
     
         req.checkBody('name', 'Name is required').notEmpty();
-        req.checkBody('email', 'Email is required').notEmpty();
+        req.checkBody('email', 'Email is required').notEmpty()
+        req.checkBody('email', 'Must be a valid Email').isEmail();
         req.checkBody('password', 'Password is required').notEmpty();
         req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 
