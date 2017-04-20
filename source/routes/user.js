@@ -27,20 +27,37 @@
   // });
 
   router.post('/login', (req, res) => {
-    const token = jwt.generate({
-      email: req.body.email,
-      password: req.body.password,
-    }, (token) => {
-      if (!token) {
-        res.status(401).json({
-          message: 'Wrong Credentials',
+
+    req.checkBody('email', 'Email is required').notEmpty();
+    req.checkBody('password', 'Password is required').notEmpty();
+
+    var errors = req.validationErrors();
+    
+    if(errors)
+    {
+      res.status(400).json({
+        err: errors
+
+      });
+    }
+    else
+    {
+        const token = jwt.generate({
+          email: req.body.email,
+          password: req.body.password,
+        }, (token) => {
+          if (!token) {
+            res.status(401).json({
+              err: [{msg:'Wrong Credentials'}],
+            });
+          } else {
+            res.json({
+              token,
+            });
+          }
         });
-      } else {
-        res.json({
-          token,
-        });
-      }
-    });
+    }
+
   });
 
   router.post('/signup', (req, res) => {
