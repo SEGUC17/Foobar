@@ -12,6 +12,7 @@ const adminRouter = require('../source/routes/admin');
 const spRouter = require('../source/routes/sP');
 const studentRouter = require('../source/routes/student');
 const userRouter = require('../source/routes/user');
+const User = require('../source/models/User')
 const cors = require('cors');
 
 const app = express();
