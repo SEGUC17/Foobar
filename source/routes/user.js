@@ -49,17 +49,17 @@
       var email= req.body.email;
      var password= req.body.password;
      var name= req.body.name;
+     var password2= req.body.password2;
     
-req.checkBody('name', 'Name is required').notEmpty();
+        req.checkBody('name', 'Name is required').notEmpty();
         req.checkBody('email', 'Email is required').notEmpty();
-        req.checkBody('username', 'Username is required').notEmpty();
         req.checkBody('password', 'Password is required').notEmpty();
         req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 
         var errors = req.validationErrors();
         if(errors){
           res.status(400).json({
-            errors
+            err: errors
 
           });
         }
@@ -79,7 +79,7 @@ req.checkBody('name', 'Name is required').notEmpty();
     user.save((err) => {
       if (err) {
         return res.status(400).json({
-          err: 'Email is already taken'
+          err: [{msg:'Email is already taken'}]
         });
       } else {
 
@@ -102,7 +102,9 @@ req.checkBody('name', 'Name is required').notEmpty();
             });
             newInterset.save((saveerr) => {
               if (saveerr) {
-                res.json('Student interest saving error ');
+                return res.status(400).json({
+                  err: [{msg:'Student Interest saving error'}]
+                });              
               }
             });
           }

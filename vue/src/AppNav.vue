@@ -122,7 +122,12 @@
                             <div class="tab-pane active" id="Login">
                                 <center>
                                 <form role="form" class="">
-                                <div style="color:#F25C27; margin-bottom:10px;">{{loginmessage}}</div>
+                                <div v-for =" message in successmessages">                                  
+                                <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
+                                </div>
+                                <div v-for =" message in failuremessages">                                  
+                                <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
+                                </div>
                                 <div class="form-group">
                                     <label for="email" class="col-sm-2 control-label">
                                         Email</label>
@@ -147,8 +152,12 @@
                             <div class="tab-pane" id="Registration">
                                 <center>
                                 <form role="form" class="">
-                                  <div style="color:#F25C27; margin-bottom:10px;">{{registermessage}}</div>
-
+                                <div v-for =" message in successmessages">                                  
+                                <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
+                                </div>
+                                <div v-for =" message in failuremessages">                                  
+                                <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
+                                </div>
                                  <div class="form-group">
                                     <label for="name" class="col-sm-2 control-label">
                                         Name</label>
@@ -168,6 +177,13 @@
                                         Password</label>
                                     <div class="col-sm-10">
                                         <input type="password" class="form-control" id="password" placeholder="Password" v-model="creds.password" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="col-sm-2 control-label">
+                                        Confirm Password</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="password2" placeholder="Confirm Password" v-model="creds.password2" />
                                     </div>
                                 </div>
                                 <div class="row">
@@ -229,12 +245,13 @@ data () {
         username: '',
         password: '',
         name:'',
+        password2:'',
       },
       resetPWEmail: '',
       error: '',
       decodeid: '',
-      loginmessage:'',
-      registermessage:'',
+      successmessages:[{msg:''}],
+      failuremessages:[{msg:''}],
 
   // User object will let us check authentication status
   user: {
@@ -243,7 +260,6 @@ data () {
   },}},
 
  created() {
-
 if(localStorage.getItem('id_token')!=null){
   this.user.authenticated=true
   this.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
@@ -264,7 +280,8 @@ methods: {
 	"email":app.creds.username,
 	"password":  app.creds.password
 }).then(data => {
-      this.loginmessage = "Success";
+      this.successmessages[0].msg = "You logged in successfully";
+      this.failuremessages=[{msg:''}];
       localStorage.setItem('id_token', data.body.token)
       app.user.authenticated = true
       app.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
@@ -274,18 +291,25 @@ methods: {
        $('#myModal').modal('hide');
     //
 }).catch(function(reason) {
-   this.loginmessage = reason.body.message;
+   this.failuremessages = reason.body.err;
+    this.successmessages=[{msg:''}];
+
 });
   },
   signup : function() {
     this.$http.post('http://localhost:3000/api/users/signup', {
     "email":this.creds.email,
     "password":this.creds.password,
+    "password2":this.creds.password2,
     "name":this.creds.name
 }).then(data => {
-      this.registermessage = "Success, you can login now";
+      this.successmessages[0].msg = "Registered Successfully, you can login now";
+     this.failuremessages=[{msg:''}];
+
     }).catch(function(reason) {
-        this.registermessage = reason.body.err;
+        this.failuremessages = reason.body.err;
+        this.successmessages= [{msg:''}];
+
 });
 
   },
