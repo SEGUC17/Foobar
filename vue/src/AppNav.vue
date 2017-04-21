@@ -5,15 +5,15 @@
           <div class="span12">
         <div class="navbar navbar_">
               <div class="container">
-            <h1 class="brand brand_"><a href="index.html"><img alt="" src="./assets/img/logo.png" style ="height:70px"> </a></h1>
+            <h1 class="brand brand_"><img alt="" src="./assets/img/logo.png" style ="height:70px"> </h1>
             <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
             <div class="nav-collapse nav-collapse_  collapse">
                   <ul class="nav sf-menu">
                 <li class=""><a href="index.html">Home</a></li>
                 <li ><router-link to="/announcements">News</router-link></li>
-                <li><a href="work.html">Work</a></li>
-                <li><a href="blog.html">Blog</a></li>
-                <li class="sub-menu"><a href="process.html" v-if="user.authenticated">Process</a>
+                <li><a >Work</a></li>
+                <li><a >Blog</a></li>
+                <li class="sub-menu"><a  v-if="user.authenticated">Process</a>
                     <ul>
                         <li ><router-link  to="/StudentProfile">Announcement</router-link></li>
                         <li ><router-link  to="/sPs">  Offer</router-link></li>
@@ -34,7 +34,7 @@
               <div class="span12">
             <div class="navbar navbar_">
                   <div class="container">
-                <h1 class="brand brand_"><a href="index.html"><img alt="" src="./assets/img/logo.png" style ="height:70px"> </a></h1>
+                <h1 class="brand brand_"><a ><img alt="" src="./assets/img/logo.png" style ="height:70px"> </a></h1>
                 <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
                 <div class="nav-collapse nav-collapse_  collapse">
                       <ul class="nav sf-menu">
@@ -59,17 +59,18 @@
               <div class="span12">
             <div class="navbar navbar_">
                   <div class="container">
-                <h1 class="brand brand_"><a href="index.html"><img alt="" src="./assets/img/logo.png" style ="height:70px"> </a></h1>
+                <h1 class="brand brand_"><a ><img alt="" src="./assets/img/logo.png" style ="height:70px"> </a></h1>
                 <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
                 <div class="nav-collapse nav-collapse_  collapse">
                     <ul class="nav sf-menu">
-                        <li><router-link to="/viewOffers">View Offers</router-link></li>
-                        <li ><router-link to="/announcements">Announcements</router-link></li>
-                        <li><router-link to="/viewReservations">View Reservation</router-link></li>
-                        <li ><router-link  :to ="{ name : 'StudentProfile' , params: { Studid : decodeid.body.id }}"> Student Profile</router-link></li>
-                        <li ><router-link  to="/sPs">  SPS</router-link></li>
-                        <li v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
-                        <li class="" v-else ><a  v-on:click="logout">logout</a></li>
+                      <li ><router-link to="/"><font size="1">Home</font></router-link></li>
+                        <li><router-link to="/viewOffers"><font size="1">View Offers</font></router-link></li>
+                        <li ><router-link to="/announcements"><font size="1">Announcements</font></router-link></li>
+                        <li><router-link to="/viewReservations"><font size="1">Reservation</font></router-link></li>
+                        <li ><router-link  :to ="{ name : 'StudentProfile' , params: { Studid : decodeid.body.id }}"> <font size="1">My Profile</font></router-link></li>
+                        <li ><router-link  to="/sPs"><font size="1">SPS</font></router-link></li>
+                        <li v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal"><font size="1">Enter</font></a></li>
+                        <li class="" v-else ><a  v-on:click="logout"><font size="1">logout</font></a></li>
 
                     </ul>
                 </div>
@@ -82,11 +83,11 @@
             <div class="span12">
                 <div class="navbar navbar_">
                     <div class="container">
-                        <h1 class="brand brand_"><a href="index.html"><img alt="" src="./assets/img/logo.png" style ="height:70px"> </a></h1>
+                        <h1 class="brand brand_"><a ><img alt="" src="./assets/img/logo.png" style ="height:70px"> </a></h1>
                         <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
                         <div class="nav-collapse nav-collapse_  collapse">
                             <ul class="nav sf-menu">
-                            <li class=""><a href="index.html">Home</a></li>
+                            <li class=""><router-link to="/">Home</router-link></li>
                             <li ><router-link to="/announcements">Announcements</router-link></li>
                             <li ><router-link to="/SPPostAnnouncement">Post Announcement</router-link></li>
                             <li><router-link to="/SPPostOffer">Post Offer</router-link></li>
@@ -122,10 +123,10 @@
                             <div class="tab-pane active" id="Login">
                                 <center>
                                 <form role="form" class="">
-                                <div v-for =" message in successmessages">                                  
+                                <div v-for =" message in successmessages">
                                 <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
                                 </div>
-                                <div v-for =" message in failuremessages">                                  
+                                <div v-for =" message in failuremessages">
                                 <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
                                 </div>
                                 <div class="form-group">
@@ -152,10 +153,10 @@
                             <div class="tab-pane" id="Registration">
                                 <center>
                                 <form role="form" class="">
-                                <div v-for =" message in successmessages">                                  
+                                <div v-for =" message in successmessages">
                                 <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
                                 </div>
-                                <div v-for =" message in failuremessages">                                  
+                                <div v-for =" message in failuremessages">
                                 <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
                                 </div>
                                  <div class="form-group">

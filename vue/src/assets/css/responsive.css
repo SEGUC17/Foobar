@@ -101,10 +101,10 @@
   .navbar-static-top .container,
   .navbar-fixed-top .container,
   .navbar-fixed-bottom .container {
-    width: 1170px;
+    width: 1570px;
   }
   .span12 {
-    width: 1170px;
+    width: 1570px;
   }
   .span11 {
     width: 1070px;
@@ -977,7 +977,7 @@
     height: 0;
   }
   .navbar .btn-navbar {
-    display: block;
+    display: flex;
   }
   .navbar-static .navbar-inner {
     padding-left: 10px;
