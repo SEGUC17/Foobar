@@ -2,15 +2,18 @@
   <div>
   <br>
 
- <div v-for =" offer in offers" class="row-2">
+ <div align="center" v-for =" offer in offers" class="row-2">
         <div class="container" align="center">
-          <h3 align="left">{{offer.field}}</h3>
-            <h1>{{offer.sp_id}}</h1>
-            <p>{{offer._id}}</p>
-            <button @click="Apply(offer)">Apply</button>
+          <h4>{{offer.sp_id.name}}</h4>
+          <h4>{{offer.title}}</h4>
+          <h3>{{offer.field}}</h3>
+          Price: {{offer.price}}<br/>
+          Description: {{offer.decription}}<br/>
 
-      </div>
-        </div>
+          <button @click="Apply(offer)">Apply</button>
+
+          </div>
+  </div>
 
 
 

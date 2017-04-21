@@ -130,9 +130,8 @@ const homeController = {
                 });
                 if (z === 0) {
                     //  console.log(1);
+                 Offer.find({}).populate('sp_id').exec((err, offers) => {
 
-                    Offer.find([], (err, offers) => {
-                        //    console.log(offers);
                         if (err) {
                             return res.status(500).json({
                                 status: 'error',

@@ -219,21 +219,21 @@ const spController = {
                     offer_id: req.body.offer_id,
                     user_id: req.params.id
                   }, {
-                                $set: {
-                                    is_assessed: true,
-                                },
-                            }, {
-                                safe: true,
-                                upsert: true,
-                                new: true,
-                            }, (err, reservation) => {
-                                res.status(200).json({
-                                    status: 'success',
-                                    data: { // Data can be null if, for example, delete request was sent
-                                        message: `Approved successfully ${reservation}`,
-                                    },
-                                });
-                            });
+                          $set: {
+                              is_assessed: true,
+                          },
+                      }, {
+                          safe: true,
+                          upsert: true,
+                          new: true,
+                      }, (err, reservation) => {
+                          res.status(200).json({
+                              status: 'success',
+                              data: { // Data can be null if, for example, delete request was sent
+                                  message: `Approved successfully ${reservation}`,
+                              },
+                          });
+                  });
                 /*Reservation.update({
                     user_id: req.params.id,
                     offer_id: req.body.offer_id,

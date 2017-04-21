@@ -1,6 +1,5 @@
 <template>
   <div>
-
   <div v-for =" n in students.length"> 
   <form role="form" class="thumbnail">
         
