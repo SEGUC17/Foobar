@@ -468,12 +468,14 @@ a:active {
 }
 
 #myInput		{
-  width:30%;
+  position: fixed;
+  width:20%;
   -webkit-transition:width 0.3s ease-in-out;
 
 }
 #myInput:focus	{
-  width:100%;
+  position: fixed;
+  width:90%;
 
   -webkit-transition:width 0.5s ease-in-out;
 }
@@ -592,12 +594,10 @@ a:active {
 		      	<p><div class="container">
   <div class="row">
     <div class="col-md-12">
-            <input style="height:50px;font-size:14pt"class="form-control input-lg" id="myInput" placeholder="Write a review" type="text"v-model="review"><br />
-            <div class="w3-container w3-border w3-round-xlarge">
+            <input style="height:50px;font-size:10pt"class="form-control input-lg" id="myInput" placeholder="Write a review" type="text"v-model="review"><br /><br /><br />
 
             <button class="button button-1 button-1a" @click="Review">Add Review</button>
 
-            </div>
         </div>
   </div>
 </div></p>
