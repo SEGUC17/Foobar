@@ -1,6 +1,6 @@
 <template>
 <center>
-  <form role="form" class="">
+  <form role="form" class="" submit.prevent>
           <h2>Edit Your Profile </h2>
         <!-- <div class="form-group">
             <label class="col-sm-2 control-label">Price Ctaegory</label>
@@ -12,12 +12,12 @@
         <span>Price Category: {{ pricecategory }}</span>
         <br>
         <input type="radio" id="one" value="Cheap" v-model="pricecategory">
-        <span for="pricecategory">$</span>&nbsp; &nbsp; 
+        <span for="pricecategory">$</span>&nbsp; &nbsp;
         <input type="radio" id="two" value="Moderate" v-model="pricecategory">
         <span for="pricecategory">$$</span>&nbsp; &nbsp;
         <input type="radio" id="three" value="Expensive" v-model="pricecategory">
         <span for="pricecategory">$$$</span>
-        
+
 
         <div class="form-group">
         <br>
@@ -26,11 +26,11 @@
                 <input type="text" class="form-control" id="location" :value=profile.location v-model="location" />
             </div>
         </div>
-        
+
         <div class="form-group">
             <label for="description" class="col-sm-2 control-label">Description</label>
             <div class="col-sm-10">
-                <textarea v-model="description" :value=profile.description></textarea>
+                <input type="text" v-model="description" :value="profile.description" ></input>
             </div>
         </div>
 
@@ -59,8 +59,28 @@
                 <button class="btn btn-primary btn-sm"  v-on:click="edit">Submit Changes</button>
             </div>
         </div>
-        
+
     </form>
+
+    <h1>Your Images</h1>
+    <li v-for ="image in images">
+       <img :src="'http://localhost:3000/'+image.img.path.replace('public','')" style="width:200px">
+    </li>
+    <input ref="avatar" type="file" name="avatar" id="avatar" v-on:change="upload($event.target.name, $event.target.files)">
+    <h1>Your Videos</h1>
+    <iframe width="420" height="315" :src="attrs">
+    </iframe>
+    <li v-for =" video in videos">
+       <a v-on:click="changeVideo(video.url)"> {{video.title}} </a>
+    </li>
+    <form>
+        <input type="text" v-model="title" name="title" placeholder="title">
+        <input type="text" v-model="url" name="url" placeholder="url">
+        <button class="btn btn-primary btn-sm"  v-on:click="newvideo"> Post video</button>
+    </form>
+
+
+
     </center>
 </template>
 <script>
@@ -75,7 +95,12 @@ export default {
       description:'',
       fields:[],
       phone_number:'',
-      interests:[]
+      interests:[],
+      url:'',
+      title:'',
+      videos: [],
+      attrs:'',
+      images:[],
     }
   },
 created(){
@@ -91,7 +116,9 @@ methods:{
         this.description = response.data.data.providerProfile.description;
         this.fields = response.data.data.providerProfile.fields;
         this.phone_number = response.data.data.providerProfile.phone_number;
-        this.user=response.data.data.user
+        this.user=response.data.data.user["0"];
+        this.getVideos();
+        this.getImages();
       })
     },
     getInterests: function () {
@@ -100,13 +127,46 @@ methods:{
         this.interests=response.data.data.interests
       })
     },
-    edit: function () 
+    edit: function ()
         {
             this.$http.post('http://localhost:3000/api/sPs/profile/edit', {"price_category":this.pricecategory,"location":this.location, "description":this.description, "fields":this.fields, "description":this.description, "phone_number":this.phone_number},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
             console.log('success');
                     })
-        }
+        },
+    newvideo : function(){
+        this.$http.post('http://localhost:3000/api/sPs/videos/upload', {"title":this.title,"videoURL":this.url},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+          console.log(data)
+        })
+    },
+    upload: function(fieldName, fileList) {
+        // handle file changes
+        const formData = new FormData();
+        // append the files to FormData
+        Array.from(Array(fileList.length).keys()).map(x => {
+            formData.append(fieldName, fileList[x], fileList[x].name);
+          });
+        formData.append("user_id",this.user._id)
 
+        this.$http.post('http://localhost:3000/api/sPs/upload',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+            this.getImages();
+      })
+
+    },
+    getVideos: function(){
+        let route ='http://localhost:3000/api/sPs/videos/';
+        this.$http.post(route,{"id":this.user._id}).then(response => {
+            this.videos = response.body.data.video
+      })
+    },
+    getImages: function(){
+        let route ='http://localhost:3000/api/sPs/images/'.concat(this.user._id);
+        this.$http.get(route,{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+            this.images = response.body.data.images
+      })
+    },
+    changeVideo: function(url){
+        this.attrs = url
+    }
   }
 
 }

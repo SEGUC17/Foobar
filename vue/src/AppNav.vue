@@ -31,30 +31,46 @@
       </div>
         </div>
         <div class="row" v-if="this.user.type==1">
-              <div class="span12">
-            <div class="navbar navbar_">
-                  <div class="container">
-                <h1 class="brand brand_"><a ><img alt="" src="./assets/img/logo.png" style ="height:70px"> </a></h1>
-                <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
-                <div class="nav-collapse nav-collapse_  collapse">
-                      <ul class="nav sf-menu">
-                        <li><router-link to='Adminpostannouncement'>Post</router-link></li>
-                        <li><router-link  to="/reviewData"> Review Data</router-link></li>
-                        <li><router-link to="/announcements">Announcements</router-link></li>
-                        <li><router-link to='/viewAdmins'>Admins</router-link></li>
-                        <li><router-link to='/sPs'>Service Providers</router-link></li>
-                        <li><a href="#">Students</a></li>
-                        <li><router-link  to="/pendingSP">Pending Requests</router-link></li>
-                        <li><router-link  to="/viewInterests">Interests</router-link></li>
-                        <li v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
-                        <li class="" v-else ><a href="/" v-on:click="logout">logout</a></li>
+       <div class="span12">
+         <div class="navbar navbar_">
+           <div class="container">
+             <h1 class="brand brand_"><a href="index.html"><img alt="" src="./assets/img/logo.png" style ="height:70px"> </a></h1>
+             <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
+             <div class="nav-collapse nav-collapse_  collapse">
+               <ul class="nav sf-menu">
+                 <li>
+                   <router-link to='Adminpostannouncement'>Post</router-link>
+                 </li>
+                 <li>
+                   <router-link to="/reviewData"> Review Data</router-link>
+                 </li>
+                 <li>
+                   <router-link to="/announcements">Announcements</router-link>
+                 </li>
+                 <li>
+                   <router-link to='/viewAdmins'>Admins</router-link>
+                 </li>
+                 <li>
+                   <router-link to='/adminSP'>Service Providers</router-link>
+                 </li>
+                 <li>
+                   <router-link to='/viewAllStudents'>Students</router-link>
+                 </li>
+                 <li>
+                   <router-link to="/pendingSP">Pending Requests</router-link>
+                 </li>
+                 <li>
+                   <router-link to="/viewInterests">Interests</router-link>
+                 </li>
+                 <li v-if="!this.user.authenticated"><a data-toggle="modal" data-target="#myModal">Enter</a></li>
+                 <li class="" v-else><a href="/" v-on:click="logout">logout</a></li>
 
-                  </ul>
-                    </div>
-              </div>
-                </div>
-          </div>
-            </div>
+               </ul>
+             </div>
+           </div>
+         </div>
+       </div>
+     </div>
         <div class="row" v-if="this.user.type==2">
               <div class="span12">
             <div class="navbar navbar_">
@@ -227,7 +243,7 @@
                                     <label for="name" class="col-sm-2 control-label">
                                         Description</label>
                                     <div class="col-sm-10">
-                                      <textarea v-validate="{ rules: { required: true} }" type="text" name="description" class="form-control" id="description" placeholder="Description" v-model="description"> </textarea> 
+                                      <textarea v-validate="{ rules: { required: true} }" type="text" name="description" class="form-control" id="description" placeholder="Description" v-model="description"> </textarea>
                                       <span v-show="errors.has('description')">{{ errors.first('description') }}</span>
                                         <!-- <input type="text" class="form-control" id="name" placeholder="Name" v-model="creds.name" /> -->
                                     </div>
@@ -238,7 +254,7 @@
                                         <div v-for="interest in this.interests">
                                         <input type="checkbox" :id="interest" :value="interest" v-model="Interests">
                                         <label for="interest">{{interest.name}}</label>
-                                          
+
 
                                         </div>
 
@@ -277,7 +293,7 @@
                      <span v-show="errors.has('email')">{{ errors.first('email') }}</span>
                                         <!-- <input type="email" class="form-control" id="email" placeholder="Email" v-model="creds.email" /> -->
                                     </div>
-                                  
+
                                 </div>
 
                                 <div class="row">
@@ -319,7 +335,7 @@ data () {
         password: '',
         name:'',
         password2:''
-        
+
       },
       resetPWEmail: '',
       error: '',
@@ -341,9 +357,9 @@ data () {
 
  created() {
 
-  
+
 if(localStorage.getItem('id_token')!=null){
-  
+
   this.user.authenticated=true
   this.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
     this.decodeid=decode
@@ -385,7 +401,7 @@ methods: {
     "email":this.creds.email,
     "password":this.creds.password,
     "password2":this.creds.password2,
-    "name":this.creds.name, 
+    "name":this.creds.name,
     "university":this.university,
     "address":this.address,
     "birthdate":this.birthdate,

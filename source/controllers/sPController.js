@@ -9,6 +9,7 @@ const Offer = require('../models/Offer');
 const Student = require('../models/Student');
 const User = require('../models/User');
 const Interest = require('../models/Interests');
+const Image = require('../models/Image');
 const jwt = require('../auth/jwt');
 var getYouTubeID = require('get-youtube-id');
 
@@ -21,7 +22,7 @@ const spController = {
       var errors = req.validationErrors();
 
       if (errors) {
-        console.log(errors);
+        //  console.log(errors);
         res.status(400).json({
           err: errors
 
@@ -59,78 +60,112 @@ const spController = {
         });
       }
     },
+    getImages(req, res) {
+      const query = {
+        user_id: req.params.id, // Recently Changed to Params
+      };
+
+      Image.find(query).exec((err, images) => {
+        if (err) {
+          res.status(500).json({
+            status: 'error',
+            message: err.message,
+          });
+        } else {
+          //    console.log(images)
+          res.status(200).json({
+            status: 'success',
+            data: {
+              images,
+            },
+          });
+        }
+      });
+    },
     viewStudentsFinishedOffer(req, res) {
-    
-    const token = req.headers['jwt-token'];
-    jwt.verify(token, function(decoded) {
-      if (decoded.type === 3) {
-        var d = new Date();
-        var n = d.toISOString();
-        Offer.find({
-          sp_id: decoded.id,
-          end_date:{ $lt : n } 
+
+      const token = req.headers['jwt-token'];
+      jwt.verify(token, function(decoded) {
+        if (decoded.type === 3) {
+          var d = new Date();
+          var n = d.toISOString();
+          Offer.find({
+            sp_id: decoded.id,
+            end_date: {
+              $lt: n
+            }
           }, function(err, offers) {
-            if(err){
+            if (err) {
               res.status(500).json({
+                status: 'error',
+                message: err.message,
+              })
+            } else {
+              //      console.log(offers);
+              var offers_ids = [];
+              var i = offers.length - 1;
+              for (i; i > -1; i--) {
+                offers_ids[i] = offers[i]._id;
+              }
+              //  console.log(offers_ids);
+
+              Reservation.find({
+                offer_id: {
+                  $in: offers_ids
+                },
+                is_assessed: false
+              }).populate('user_id').populate('offer_id').exec((err,
+                students) => {
+                if (err) {
+                  res.status(500).json({
                     status: 'error',
                     message: err.message,
-                  })
-            }else{
-            console.log(offers);
-            var offers_ids=[];
-            var i = offers.length - 1;
-            for (i; i > -1; i--) {
-              offers_ids[i]=offers[i]._id;
+                  });
+                } else {
+                  res.status(200).json({
+                    status: 'success',
+                    data: {
+                      students,
+                    },
+                  });
+                }
+              });
+
             }
-            console.log(offers_ids);
-            
-            Reservation.find({offer_id: {$in: offers_ids},is_assessed:false}).populate('user_id').populate('offer_id').exec((err, students) => {
-          if (err) {
-            res.status(500).json({
-              status: 'error',
-              message: err.message,
-            });
-          } else {
-            res.status(200).json({
-              status: 'success',
-              data: {
-                students,
-              },
-            });
-          }
-        });
-            
-            }
-            
-        });
-      } else {
-        res.status(500).json({
-          err: err.message
-        });
-      }
-    });
-  },
+
+          });
+        } else {
+          res.status(500).json({
+            err: err.message
+          });
+        }
+      });
+    },
     viewReviews(req, res) {
       const token = req.headers['jwt-token'];
+
+
       jwt.verify(token, (decoded) => {
         if (decoded.type === 3) {
           Review.find({
-            sp_id: decoded._id
-          }).populate('reviewer_id').populate('sp_id').exec((err, reviews) => {
-              if (err) {
-                res.status(500).json({
-                  status: 'error',
-                  message: err.message,
-                });
-              } else {
-                res.status(200).json({
-                  status: 'success',
-                  data: {
-                    reviews,
-                  },
-                });
-              }
-            });
+            sp_id: decoded.id
+          }).populate('reviewer_id').populate('sp_id').exec((err,
+            reviews) => {
+            if (err) {
+              res.status(500).json({
+                status: 'error',
+                message: err.message,
+              });
+            } else {
+              console.log(reviews)
+              res.status(200).json({
+                status: 'success',
+                data: {
+                  reviews,
+                },
+              });
+            }
+          });
         } else {
           res.status(500).json({
             err: err.message,
@@ -141,23 +176,23 @@ const spController = {
     viewComments(req, res) {
       const token = req.headers['jwt-token'];
       jwt.verify(token, (decoded) => {
-          Comment.find({
-            review_id: req.body.review_id
-          }).populate('commenter_id').exec((err, comments) => {
-              if (err) {
-                res.status(500).json({
-                  status: 'error',
-                  message: err.message,
-                });
-              } else {
-                res.status(200).json({
-                  status: 'success',
-                  data: {
-                    comments,
-                  },
-                });
-              }
+        Comment.find({
+          review_id: req.body.review_id
+        }).populate('commenter_id').exec((err, comments) => {
+          if (err) {
+            res.status(500).json({
+              status: 'error',
+              message: err.message,
             });
+          } else {
+            res.status(200).json({
+              status: 'success',
+              data: {
+                comments,
+              },
+            });
+          }
+        });
       });
     },
     viewInterests(req, res) { // all interests
@@ -216,24 +251,24 @@ const spController = {
               } else {
                 //const is_assessed = true;
                 Reservation.findOneAndUpdate({
-                    offer_id: req.body.offer_id,
-                    user_id: req.params.id
-                  }, {
-                          $set: {
-                              is_assessed: true,
-                          },
-                      }, {
-                          safe: true,
-                          upsert: true,
-                          new: true,
-                      }, (err, reservation) => {
-                          res.status(200).json({
-                              status: 'success',
-                              data: { // Data can be null if, for example, delete request was sent
-                                  message: `Approved successfully ${reservation}`,
-                              },
-                          });
+                  offer_id: req.body.offer_id,
+                  user_id: req.params.id
+                }, {
+                  $set: {
+                    is_assessed: true,
+                  },
+                }, {
+                  safe: true,
+                  upsert: true,
+                  new: true,
+                }, (err, reservation) => {
+                  res.status(200).json({
+                    status: 'success',
+                    data: { // Data can be null if, for example, delete request was sent
+                      message: `Approved successfully ${reservation}`,
+                    },
                   });
+                });
                 /*Reservation.update({
                     user_id: req.params.id,
                     offer_id: req.body.offer_id,
@@ -293,8 +328,8 @@ const spController = {
         User.findOne({
           _id: providerProfile.user_id
         }, (err, user) => {
-          console.log(providerProfile);
-          console.log(user);
+          //      console.log(providerProfile);
+          //    console.log(user);
 
           if (err) {
             res.status(500).json({
@@ -316,55 +351,54 @@ const spController = {
 
     // method used to add a video to the database
     addVideoByURL(req, res) {
-      req.checkBody('title', 'Title is required').notEmpty();
-      req.checkBody('videoURL', 'A Video Url is required').notEmpty();
-      req.checkBody('videoURL', 'Please Enter a correct Url').isUrl();
+      // req.checkBody('title', 'Title is required').notEmpty();
+      // req.checkBody('videoURL', 'A Video Url is required').notEmpty();
+      //
+      // var errors = req.validationErrors();
+      //
+      // if (errors) {
+      //   res.status(400).json({
+      //     err: errors
+      //
+      //   });
+      //   console.log(errors);
+      // else {
+      const token = req.headers['jwt-token'];
+      jwt.verify(token, (decoded) => {
+        if (decoded.type === 3) {
+          const user_id = decoded.id;
+          const title = req.body.title;
+          var videoURLid = getYouTubeID(req.body.videoURL);
 
-      var errors = req.validationErrors();
+          const url = videoURLid; //changed it to work with front end
+          // creating the new video instance in the database
+          const newVideo = new Video({
+            user_id,
+            title,
+            url,
 
-      if (errors) {
-        res.status(400).json({
-          err: errors
+          });
+          newVideo.save((err, video) => {
+            if (err) {
+              res.status(500).json({
+                status: 'error',
+                message: err,
+              });
+            } else {
+              res.status(200).json({
+                status: 'success',
+                data: video.url,
+              });
+            }
+          });
+        } else {
+          res.status(500).json({
+            err: 'unauthorized access',
+          });
+        }
+      });
 
-        });
-      } else {
-        const token = req.headers['jwt-token'];
-        jwt.verify(token, (decoded) => {
-          if (decoded.type === 3) {
-            const user_id = decoded.id;
-            const title = req.body.title;
-            var videoURLid = getYouTubeID(req.body.videoURL);
-
-            const url = videoURLid; //changed it to work with front end
-            // creating the new video instance in the database
-            const newVideo = new Video({
-              user_id,
-              title,
-              url,
-
-            });
-            newVideo.save((err, video) => {
-              if (err) {
-                res.status(500).json({
-                  status: 'error',
-                  message: err,
-                });
-              } else {
-                res.status(200).json({
-                  status: 'success',
-                  data: video.url,
-                });
-              }
-            });
-          } else {
-            res.status(500).json({
-              err: 'unauthorized access',
-            });
-          }
-        });
-      }
     },
-
 
     // getting the embeded video object for the front end to embed it
     getVideo(req, res) {
@@ -495,7 +529,7 @@ const spController = {
             message: err.message,
           });
         } else {
-          console.log(Offers)
+          //  console.log(Offers)
           res.status(200).json({
             status: 'success',
             data: {

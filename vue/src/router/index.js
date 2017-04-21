@@ -11,6 +11,9 @@ import SPPostAnnouncement from '@/components/SPPostAnnouncement.vue'
 import SPPostOffer from '@/components/SPPostOffer.vue'
 import SPAssess from '@/components/SPAssess.vue'
 import ApplySP from '@/components/ApplySP.vue'
+import AdminSP from '@/components/AdminSP.vue'
+import viewAllStudents from '@/components/viewAllStudents.vue'
+
 import SPReservations from '@/components/SPReservations.vue'
 import SPReviews from '@/components/SPReviews.vue'
 import EditStudentProfile from '@/components/EditStudentProfile.vue'
@@ -54,6 +57,9 @@ export default new Router({
     path: '/applySP',
     component: ApplySP
   }, {
+    path: '/adminSP',
+    component: AdminSP
+  }, {
     path: '/SPReservations',
     component: SPReservations
   }, {
@@ -73,7 +79,10 @@ export default new Router({
     component: ReservationStudent
   }, {
     path: '/reviewData',
-    component: ReviewInterest
+    component: Interests
+  }, {
+    path: '/viewAllStudents',
+    component: viewAllStudents
   }, {
     path: '/sps/:id',
     name: 'service provider',
@@ -93,5 +102,5 @@ export default new Router({
     path: '/pendingSP',
     component: pendingSP
   }],
-  mode:'history'
+  mode: 'history'
 })

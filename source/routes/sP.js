@@ -6,21 +6,23 @@ const offerController = require('../controllers/offerController');
 const sPController = require('../controllers/sPController');
 const studentController = require('../controllers/studentController');
 const pendingSPController = require('../controllers/pendingSPController');
+const Image = require('../models/Image');
 const multer = require('multer');
-const crypto = require("crypto");
-const storage = multer.diskStorage({ //specifying storage path for images
-  destination: 'public/uploads/',
-  filename: function(req, file, cb) {
-    crypto.pseudoRandomBytes(16, function(err, raw) {
+const crypto = require('crypto');
+const path = require('path');
+const storage = multer.diskStorage({ // specifying storage path for images
+  destination: './public/uploads/',
+  filename(req, file, cb) {
+    crypto.pseudoRandomBytes(16, (err, raw) => {
       if (err) return cb(err);
 
       cb(null, raw.toString('hex') + path.extname(file.originalname));
     });
-  }
+  },
 });
 
-var upload = multer({
-  storage: storage
+const upload = multer({
+  storage,
 });
 
 //routes for an SP user
@@ -28,6 +30,29 @@ var upload = multer({
 router.get('/', function(req, res) { //SP home page
   // res.render('index');
   console.log('SP homepage is here');
+});
+
+
+router.post('/upload', upload.single('avatar'), (req, res) => {
+  console.log(req.file);
+  const image = new Image({
+    user_id: req.body.user_id,
+    title: '',
+    caption: '',
+  });
+
+  image.img.name = req.file.filename;
+  image.img.path = req.file.path;
+  image.img.size = req.file.size;
+
+  image.save((err) => {
+    if (err) {
+      console.log('error');
+    } else {
+      res.send("sucess");
+    }
+    console.log('success');
+  });
 });
 
 router.get('/announcements/view', announcementController.getAllAnnouncements); //viewing announcements
@@ -58,7 +83,11 @@ router.get('/reviews/view', sPController.viewReviews);
 
 // router.post('/images/upload', upload.single('image'), sPController.uploadImage); //adding an image to his profile
 
-router.post('/videos/upload', sPController.addVideoByURL); //adding an embedded video
-router.post('/videos', sPController.getVideo); //adding an embedded video
+router.post('/videos/upload', sPController.addVideoByURL);
+
+router.get('/images/:id', sPController.getImages);
+
+router.post('/videos', sPController.getVideo); // adding an embedded video//adding an embedded video
+
 router.post('/reservations/approve', studentController.approveReservation);
 module.exports = router;

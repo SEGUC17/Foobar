@@ -15,7 +15,7 @@ const studentRouter = require('../source/routes/student');
 const userRouter = require('../source/routes/user');
 const User = require('../source/models/User');
 const cors = require('cors');
-//const Video = require('../source/models/Video');
+const Video = require('../source/models/Video');
 
 const app = express();
 
@@ -92,17 +92,17 @@ mongoose.connect(DB_URI);
 //     is_deleted: false,
 //     password: '1'
 //   }).save()
-//  var newUser = new User({
+// var newUser = new User({
 //   email: "admin@hotmail.com",
 //   type: 1,
 //   is_deleted: false
 // });
 // newUser.password = "Admin1234";
-// newUser.save(function(err,user){
-//   if(err)
-//    console.log(err);
-//    else
-//    console.log(user);
+// newUser.save(function(err, user) {
+//   if (err)
+//     console.log(err);
+//   else
+//     console.log(user);
 // });
 
 
@@ -155,7 +155,7 @@ new Reservation({
 // new Video({
 //   title: "video1",
 //   url: "NLZRYQMLDW4",
-//   user_id: "58f7a904b7ffe1773d620976"
+//   user_id: "58fa29e1ccad2ea1f1becfb5"
 // }).save();
 
 // Start the server

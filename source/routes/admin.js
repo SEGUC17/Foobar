@@ -39,9 +39,19 @@ router.get('/reviewData', adminController.reviewDataAnalysis);
 
 router.get('/admins', adminController.getAllAdmins); // admin can get all admins
 
-router.post('/adminpost', adminController.adminPostAnnouncement);// admin can post announcements
 
 router.get('/reviewinterest', adminController.reviewDataAnalysis);
+
+router.post('/adminpost', adminController.adminPostAnnouncement); // admin can post announcements
+
+
+router.post('/deletes', adminController.deleteS);
+
+router.get('/viewstudents', adminController.getAllStudents);
+
+router.post('/block', adminController.blockSP);
+
+router.post('/blocks', adminController.blockS);
 
 
 module.exports = router;
