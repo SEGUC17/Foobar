@@ -60,48 +60,77 @@ const spController = {
       }
     },
     viewStudentsFinishedOffer(req, res) {
-      const token = req.headers['jwt-token'];
-      jwt.verify(token, (decoded) => {
-        if (decoded.type === 3) {
-          Offer.find({
-            sp_id: decoded.id,
-            end_date: {
-              $lt: Date.Now
-            },
-          }, (err, offers) => {
-            Reservation.find({
-              offer_id: {
-                $in: offers.offer_id
-              },
-            }, (err, reservations) => {
-              User.find({
-                id: {
-                  $in: reservations.user_id
-                },
-              }, (err, students) => {
-                if (err) {
-                  res.status(500).json({
+    
+    const token = req.headers['jwt-token'];
+    jwt.verify(token, function(decoded) {
+      if (decoded.type === 3) {
+        var d = new Date();
+        var n = d.toISOString();
+        Offer.find({
+          sp_id: decoded.id,
+          end_date:{ $lt : n } 
+          }, function(err, offers) {
+            if(err){
+              res.status(500).json({
                     status: 'error',
                     message: err.message,
+                  })
+            }else{
+            console.log(offers);
+            var offers_ids=[];
+            var i = offers.length - 1;
+            for (i; i > -1; i--) {
+              offers_ids[i]=offers[i]._id;
+            }
+            console.log(offers_ids);
+            Reservation.find({
+               offer_id: {$in: offers_ids},
+               //is_assessed:false
+              }, function(err, reservations) {
+                if(err){
+                    res.status(500).json({
+                    status: 'error',
+                    message: err
                   });
-                } else {
-                  res.status(200).json({
-                    status: 'success',
-                    data: {
-                      students,
-                    },
-                  });
+                }else{
+                  var reservations_ids=[];
+                var j = reservations.length - 1;
+                for (j; j > -1; j--) {
+                  reservations_ids[j]=reservations[j].user_id;
+                } 
+                console.log(reservations_ids)
+
+                User.find({
+                  _id: {$in: reservations_ids}
+                }, function(err, students){
+                  if (err) {
+                    res.status(500).json({
+                      status: 'error',
+                      message: err.message,
+                    });
+                  } else {
+                    console.log(students)
+                    res.status(200).json({
+                      status: 'success',
+                      data: {
+                        students
+                      }
+                    });
+                  }
+                });
                 }
-              });
-            });
-          });
-        } else {
-          res.status(500).json({
-            err: err.message,
-          });
-        }
-      });
-    },
+               
+             });
+            }
+            
+        });
+      } else {
+        res.status(500).json({
+          err: err.message
+        });
+      }
+    });
+  },
     viewReviews(req, res) {
       const token = req.headers['jwt-token'];
       jwt.verify(token, (decoded) => {
@@ -180,7 +209,7 @@ const spController = {
     },
     assessStudent(req, res) {
       req.checkBody('rating', 'Rating is required').notEmpty();
-      req.checkBody('rating').isNumber();
+      //req.checkBody('rating').isNumber();
 
 
       var errors = req.validationErrors();

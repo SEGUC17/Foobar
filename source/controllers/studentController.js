@@ -264,7 +264,7 @@ const StudentController = {
               } else if (offer.capacity > 0) {
                 const reservation = new Reservation({
                   user_id: decoded.id,
-                  offer_id: offer.id,
+                  offer_id: offer._id,
                   service_provider_id: offer.sp_id,
                   reservation_date: Date.now(),
                   status: 0,

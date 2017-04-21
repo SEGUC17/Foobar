@@ -20,7 +20,7 @@
             <div class="col-sm-2">
             </div>
             <div class="col-sm-10">
-                <button class="btn btn-primary btn-sm" v-on:click="assess(student.id)">Assess</button>
+                <button class="btn btn-primary btn-sm" v-on:click="assess(student._id)">Assess</button>
             </div>
         </div>
     </form>
@@ -49,9 +49,9 @@ methods:{
       })
     },
     assess: function(user_id){
-      this.$http.post('http://localhost:3000/api/sPs/students/assess/'.concat(user_id), {"rating":this.rating},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+      this.$http.post('http://localhost:3000/api/sPs/students/assess/'.concat(user_id) , {"rating":this.rating},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
             console.log('success');
-                    })
+                    });
     },
   }
 
