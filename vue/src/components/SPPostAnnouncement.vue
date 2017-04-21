@@ -29,7 +29,7 @@
             <div class="col-sm-2">
             </div>
             <div class="col-sm-10">
-                <button class="btn btn-primary btn-sm"  v-on:click="postAnnouncement"> Post Announcement</button>
+              <router-link to="/">  <button class="btn btn-primary btn-sm"  v-on:click="postAnnouncement"> Post Announcement</button></router-link>
             </div>
         </div>
     </form>

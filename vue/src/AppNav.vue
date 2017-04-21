@@ -268,8 +268,8 @@
                                     <div class="col-sm-2">
                                     </div>
                                     <div class="col-sm-10">
-                                      <router-link to="/"><button class="btn btn-primary btn-sm"  v-on:click="signup">
-                                            Save & Continue</button></router-link>
+                                      <router-link to="/"><a href="#Login" data-toggle="tab"><button class="btn btn-primary btn-sm"  v-on:click="signup">
+                                            Save & Continue</button></a></router-link>
                                     </div>
                                 </div>
                                 </form>
@@ -412,6 +412,16 @@ methods: {
   console.log(this.Interests)
       this.successmessages[0].msg = "Registered Successfully, you can login now";
      this.failuremessages=[{msg:''}];
+     this.creds.email='';
+     this.creds.name='';
+     this.creds.password='';
+     this.creds.password2='';
+     this.university='';
+     this.description='';
+     this.interests=[];
+     this.birthdate='';
+     this.address='';
+     this.Interests=[];
 
     }).catch(function(reason) {
         this.failuremessages = reason.body.err;
@@ -433,6 +443,16 @@ methods: {
     localStorage.removeItem('id_token')
     this.user.authenticated = false
     this.user.type = 0;
+    this.creds.username='';
+     this.creds.name='';
+     this.creds.password='';
+     this.creds.password2='';
+     this.university='';
+     this.description='';
+     this.interests=[];
+     this.birthdate='';
+     this.address='';
+     this.Interests=[];
     router.push('/')
   },
 
