@@ -20,9 +20,14 @@
           <td>{{reservation.user_id.email}}</td>
           <td>{{reservation.offer_id.title}}</td>
           <td>{{reservation.reservation_date}}</td>
-          <td>{{reservation.status}}</td>
-          <td><a  style="color:green" >✔</a></td>
-          <td><a style="color =red">✖</a></td>
+          <td v-if="reservation.status==0">Applied</td>
+          <td v-else-if="reservation.status==1">Approved (Paid)</td>
+          <td v-else-if="reservation.status==2">Disapparoved</td>
+
+          <td v-if="reservation.status==0"><a  style="color:green" v-on:click="approve(reservation._id)">✔</a></td>
+          <td v-else></td>         
+          <td v-if="reservation.status==0"><a style="color =red" v-on:click="disapprove(reservation._id)">✖</a></td>
+          <td v-else></td>         
         </tr>
       </tbody>
     </table>
@@ -46,7 +51,21 @@ methods:{
 
         this.reservations=response.data.data.reservations
       })
-    }}
+    },
+    approve:function(reservation_id){
+        this.$http.post('http://localhost:3000/api/sPs/reservations/approve',{"id":reservation_id, "approve":true}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+
+        this.getReservations();
+        })
+    },
+    disapprove: function(reservation_id){
+        this.$http.post('http://localhost:3000/api/sPs/reservations/approve',{"id": reservation_id, "approve":false}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+
+        this.getReservations();
+
+        })
+    }
+  }
 
 }
 </script>
