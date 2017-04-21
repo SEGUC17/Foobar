@@ -270,6 +270,7 @@ const StudentController = {
                                     service_provider_id: offer.sp_id,
                                     reservation_date: Date.now(),
                                     status: 0,
+                                    is_assessed: false
                                 });
                                 reservation.save((err, reservation) => {
                                     if (err) {

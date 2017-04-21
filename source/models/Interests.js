@@ -4,10 +4,7 @@ const mongoose = require('mongoose');
 // define the schema for our user model
 const interestSchema = mongoose.Schema({
   name: String
-  // name: {
-  //   type: String,
-  //   unique: true,
-  // }
+  
 });
 
 // create the model for users and expose it to our app

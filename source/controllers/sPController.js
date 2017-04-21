@@ -60,48 +60,56 @@ const spController = {
       }
     },
     viewStudentsFinishedOffer(req, res) {
-      const token = req.headers['jwt-token'];
-      jwt.verify(token, (decoded) => {
-        if (decoded.type === 3) {
-          Offer.find({
-            sp_id: decoded.id,
-            end_date: {
-              $lt: Date.Now
-            },
-          }, (err, offers) => {
-            Reservation.find({
-              offer_id: {
-                $in: offers.offer_id
-              },
-            }, (err, reservations) => {
-              User.find({
-                id: {
-                  $in: reservations.user_id
-                },
-              }, (err, students) => {
-                if (err) {
-                  res.status(500).json({
+    
+    const token = req.headers['jwt-token'];
+    jwt.verify(token, function(decoded) {
+      if (decoded.type === 3) {
+        var d = new Date();
+        var n = d.toISOString();
+        Offer.find({
+          sp_id: decoded.id,
+          end_date:{ $lt : n } 
+          }, function(err, offers) {
+            if(err){
+              res.status(500).json({
                     status: 'error',
                     message: err.message,
-                  });
-                } else {
-                  res.status(200).json({
-                    status: 'success',
-                    data: {
-                      students,
-                    },
-                  });
-                }
-              });
+                  })
+            }else{
+            console.log(offers);
+            var offers_ids=[];
+            var i = offers.length - 1;
+            for (i; i > -1; i--) {
+              offers_ids[i]=offers[i]._id;
+            }
+            console.log(offers_ids);
+            
+            Reservation.find({offer_id: {$in: offers_ids},is_assessed:false}).populate('user_id').populate('offer_id').exec((err, students) => {
+          if (err) {
+            res.status(500).json({
+              status: 'error',
+              message: err.message,
             });
-          });
-        } else {
-          res.status(500).json({
-            err: err.message,
-          });
-        }
-      });
-    },
+          } else {
+            res.status(200).json({
+              status: 'success',
+              data: {
+                students,
+              },
+            });
+          }
+        });
+            
+            }
+            
+        });
+      } else {
+        res.status(500).json({
+          err: err.message
+        });
+      }
+    });
+  },
     viewReviews(req, res) {
       const token = req.headers['jwt-token'];
       jwt.verify(token, (decoded) => {
@@ -180,7 +188,6 @@ const spController = {
     },
     assessStudent(req, res) {
       req.checkBody('rating', 'Rating is required').notEmpty();
-      req.checkBody('rating').isNumber();
 
 
       var errors = req.validationErrors();
@@ -198,6 +205,8 @@ const spController = {
               sp_id: decoded.id,
               user_id: req.params.id,
               rating: req.body.rating,
+              field: req.body.field,
+              offer_id: req.body.offer_id
             }).save((err, assessment) => {
               if (err) {
                 res.status(500).json({
@@ -205,17 +214,49 @@ const spController = {
                   message: err.message,
                 });
               } else {
-                res.status(200).json({
-                  obj: assessment,
-                });
+                //const is_assessed = true;
+                Reservation.findOneAndUpdate({
+                    offer_id: req.body.offer_id,
+                    user_id: req.params.id
+                  }, {
+                                $set: {
+                                    is_assessed: true,
+                                },
+                            }, {
+                                safe: true,
+                                upsert: true,
+                                new: true,
+                            }, (err, reservation) => {
+                                res.status(200).json({
+                                    status: 'success',
+                                    data: { // Data can be null if, for example, delete request was sent
+                                        message: `Approved successfully ${reservation}`,
+                                    },
+                                });
+                            });
+                /*Reservation.update({
+                    user_id: req.params.id,
+                    offer_id: req.body.offer_id,
+                    sp_id: decoded.id
+                  }, {
+                    is_assessed
+                  }, (err, sp1) => {
+                    if (err) {
+                      res.status(500).json({
+                        status: 'error',
+                        message: err.message,
+                      });
+                    } else {
+                      res.status(200).json({
+                        obj: assessment,
+                        });
+                    }
+                  }); */
               }
             });
           } else {
-            res.status(200).json({
-              status: 'success',
-              data: {
-                assessment,
-              },
+            res.status(500).json({
+              err: 'unauthorized access',
             });
           }
         });
