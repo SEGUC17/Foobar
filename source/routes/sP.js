@@ -7,6 +7,7 @@ const sPController = require('../controllers/sPController');
 const studentController = require('../controllers/studentController');
 const pendingSPController = require('../controllers/pendingSPController');
 const Image = require('../models/Image');
+const User = require('../models/User');
 const multer = require('multer');
 const crypto = require('crypto');
 const path = require('path');
@@ -55,6 +56,26 @@ router.post('/upload', upload.single('avatar'), (req, res) => {
   });
 });
 
+router.post('/changedp', upload.single('avatar2'), (req, res) => {
+  User.findById(req.body.user_id, function(error, user) {
+    if (error)
+      console.log(error)
+    else {
+      user.profileimg.name = req.file.filename;
+      user.profileimg.path = req.file.path;
+      user.profileimg.size = req.file.size;
+      user.save((err) => {
+        if (err) {
+          console.log('error');
+        } else {
+          res.send("sucess");
+        }
+        console.log('success');
+      });
+    }
+  })
+});
+
 router.get('/announcements/view', announcementController.getAllAnnouncements); //viewing announcements
 
 router.get('/profile/view', sPController.viewProfile); //SP viewing his profile
@@ -90,4 +111,5 @@ router.get('/images/:id', sPController.getImages);
 router.post('/videos', sPController.getVideo); // adding an embedded video//adding an embedded video
 
 router.post('/reservations/approve', studentController.approveReservation);
+
 module.exports = router;

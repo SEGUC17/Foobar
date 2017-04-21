@@ -2,12 +2,9 @@
 <center>
   <form role="form" class="" submit.prevent>
           <h2>Edit Your Profile </h2>
-        <!-- <div class="form-group">
-            <label class="col-sm-2 control-label">Price Ctaegory</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="pricecategory" :value=profile.price_category v-model="pricecategory" />
-            </div>
-        </div> -->
+          <img v-if="this.user.profileimg" :src="'http://localhost:3000/'+user.profileimg.path.replace('public','')" style="width:400px">
+          <input ref="avatar2" type="file" name="avatar2" id="avatar2" v-on:change="changedp($event.target.name, $event.target.files)">
+
 
         <span>Price Category: {{ pricecategory }}</span>
         <br>
@@ -68,8 +65,8 @@
     </li>
     <input ref="avatar" type="file" name="avatar" id="avatar" v-on:change="upload($event.target.name, $event.target.files)">
     <h1>Your Videos</h1>
-    <iframe width="420" height="315" :src="attrs">
-    </iframe>
+    <youtube :video-id="this.attrs"></youtube>
+
     <li v-for =" video in videos">
        <a v-on:click="changeVideo(video.url)"> {{video.title}} </a>
     </li>
@@ -84,6 +81,11 @@
     </center>
 </template>
 <script>
+
+import Vue from 'vue'
+import VueYouTubeEmbed from 'vue-youtube-embed'
+
+ Vue.use(VueYouTubeEmbed);
 export default {
   name: 'SPReviews',
   data () {
@@ -101,6 +103,8 @@ export default {
       videos: [],
       attrs:'',
       images:[],
+      videoId :'',
+
     }
   },
 created(){
@@ -117,6 +121,7 @@ methods:{
         this.fields = response.data.data.providerProfile.fields;
         this.phone_number = response.data.data.providerProfile.phone_number;
         this.user=response.data.data.user["0"];
+        console.log(this.user)
         this.getVideos();
         this.getImages();
       })
@@ -149,6 +154,20 @@ methods:{
 
         this.$http.post('http://localhost:3000/api/sPs/upload',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
             this.getImages();
+      })
+
+    },
+    changedp: function(fieldName, fileList) {
+        // handle file changes
+        const formData = new FormData();
+        // append the files to FormData
+        Array.from(Array(fileList.length).keys()).map(x => {
+            formData.append(fieldName, fileList[x], fileList[x].name);
+          });
+        formData.append("user_id",this.user._id)
+
+        this.$http.post('http://localhost:3000/api/sPs/changedp',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+            console.log('changed dp');
       })
 
     },
