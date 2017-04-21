@@ -2,7 +2,8 @@
 <center>
   <form role="form" class="" submit.prevent>
           <h2>Edit Your Profile </h2>
-          <img v-if="this.user.profileimg" :src="'http://localhost:3000/'+user.profileimg.path.replace('public','')" style="width:400px">
+
+          <img class="img-circle img-responsive" v-if="this.user && this.user.profileimg.path" :src="'http://localhost:3000/'+user.profileimg.path.replace('public','')" style="height:200px; width:200px">
           <input ref="avatar2" type="file" name="avatar2" id="avatar2" v-on:change="changedp($event.target.name, $event.target.files)">
 
 

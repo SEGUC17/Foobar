@@ -18,7 +18,8 @@
         <tr v-for="pending in pendings" >
           <td>{{pending.email}}</td>
                     <td> <a  style="color:green" @click="approve(pending)" >✔</a></td>
-          <td> <a style="color =red" @click="reject(pending)">✖</a></td>
+          <td v-if="pending.is_declined==false"> <a style="color =red" @click="reject(pending)">✖</a></td>
+          <td v-else>Dispparoved</td>
 
         </tr>
       </tbody>
@@ -52,7 +53,8 @@ methods:{
     },
     reject: function(pending){
       this.$http.post('http://localhost:3000/api/admins/pendingSPRequests',{"id":pending._id,"disapprove":true,"name":pending.name,"email":pending.email,"phone_number":pending.phone_number,"description":pending.description},{headers : { 'jwt-token' : localStorage.getItem('id_token')}},{headers : { 'jwt-token' : localStorage.getItem('id_token')}} ).then(response => {
-        
+          this.getAllPendingSP()
+
       })
     }
   }

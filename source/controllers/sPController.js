@@ -429,7 +429,7 @@ const spController = {
       jwt.verify(token, (decoded) => {
         if (decoded.type === 3) {
           User.find({
-            id: decoded.id,
+            _id: decoded.id,
           }, (err, user) => {
             if (err) {
               res.status(500).json({
