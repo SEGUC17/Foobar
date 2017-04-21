@@ -306,7 +306,7 @@ a:active {
     font-family: inherit;
     font-size: inherit;
     color: inherit;
-    background: #000000;
+    background: #F25C27;
     cursor: pointer;
     padding: 25px 80px;
     display: inline-block;
@@ -322,7 +322,7 @@ a:active {
 }
 .button:after {
     content: '';
-    position: absolute;
+    position: relative;;
     z-index: -1;
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
@@ -468,16 +468,31 @@ a:active {
 }
 
 #myInput		{
-  position: fixed;
+  position: relative;
+  left:10px;
+  top: 50px;
+
   width:20%;
   -webkit-transition:width 0.3s ease-in-out;
 
 }
 #myInput:focus	{
-  position: fixed;
+  position: relative;
+  left:10px;
+
+  top: 50px;
   width:90%;
 
   -webkit-transition:width 0.5s ease-in-out;
+}
+
+
+#makan1 {
+    padding-left: 7px;
+}
+#makan4 {
+  padding-left: 30px;
+
 }
 </style>
 
@@ -499,7 +514,7 @@ a:active {
 			<input id="tab4" type="radio" name="tabs" v-on:click="Video">
 			<label for="tab4"><span>Videos</span></label>
 
-			<input id="tab5" type="radio" name="tabs">
+			<input id="tab5" type="radio" name="tabs" v-on:click="getReviews">
 			<label for="tab5"><span>Reviews</span></label>
 
 			<section id="content1" class="tab-content">
@@ -592,11 +607,85 @@ a:active {
 			<section id="content5" class="tab-content">
 				<h3>Reviews</h3>
 		      	<p><div class="container">
+
+
+              <div v-for =" r in reviews" >
+
+
+              <div class="container">
+
+      <div class="row">
+        <div class="col-md-3 col-xs-6">
+
+          <div class="box">
+        <div class="icon">
+          <div class="image"></div>
+          <div class="info">
+            <h3 class="title">By: {{r.reviewer_id.name}}</h3>
+              <h2 class="title"><p>   <div  id="makan3" >
+           <star-rating :rating="r.rating" v-bind:show-rating="false" v-bind:read-only="true"   v-bind:inline="true">
+</star-rating>
+</div>
+            </p>
+            <p class="info">{{r.content}}
+          </p></h2>
+            <button class="button button-1 button-1b" @click="viewComments(r._id)"href="#primary" data-toggle="modal">Comments</button>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      </div>		</div> </div>
+      <!-- Modal -->
+      <div class="modal fade" id="primary" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header modal-header-primary">
+                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                  </div>
+                  <div class="modal-body">
+
+                    <div v-for =" p in pastComments" >
+
+                      <h3 class="title">
+                      <p class="info">  <strong>{{p.commenter_id.name}} </strong> {{p.content}}
+                      </p></h3>
+                    <div class="container"></div></div>
+                   </div>
+                  <div class="modal-footer">
+                  </div>
+              </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
   <div class="row">
     <div class="col-md-12">
             <input style="height:50px;font-size:10pt"class="form-control input-lg" id="myInput" placeholder="Write a review" type="text"v-model="review"><br /><br /><br />
+            <div id="makan1" style="width:50%">
+              <star-rating @rating-selected="rating = $event" :rating="rating" v-bind:show-rating="false" ></star-rating>
+            </div>
+<div id="makan2" style="width:80%">
 
-            <button class="button button-1 button-1a" @click="Review">Add Review</button>
+  <button class="button button-1 button-1a" @click="Review">Add Review</button>
+
+</div>
+
+
+
 
         </div>
   </div>
@@ -619,6 +708,11 @@ a:active {
 
  import Vue from 'vue'
  import VueYouTubeEmbed from 'vue-youtube-embed'
+ import StarRating from 'vue-star-rating'
+ Vue.component('star-rating', StarRating);
+
+
+
  Vue.use(VueYouTubeEmbed);
  export default {
   name: 'StudentProfile',
@@ -632,7 +726,12 @@ a:active {
       offers:{},
       videos:{},
       videoId :'',
-      review:''
+      review:'',
+      rating:0,
+      reviews:[],
+      comment:[],
+      pastComments:[],
+      reviewid:''
      }
    },
  created(){
@@ -644,7 +743,7 @@ a:active {
       let route ='http://localhost:3000/api/students/sP/'.concat(this.$route.params.id);
 
        this.$http.get(route, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
-         console.log(this.$route.params.id);
+      //   console.log(this.$route.params.id);
 
          this.service=response.data.data.providerProfile;
          this.user =response.data.data.user;
@@ -673,12 +772,31 @@ a:active {
         this.videos=response.body.data.video;
        });
 
-     },Review: function(){
-       this.$http.post('http://localhost:3000/api/students/serviceproviders/add',{"sp_id":this.user._id, "content":this.review},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
-         console.log(response)
+     },
+     Review: function(){
+       this.$http.post('http://localhost:3000/api/students/serviceproviders/add',{"sp_id":this.user._id, "content":this.review,"rating":this.rating},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+         this.getReviews()
        })
 
-     }
+     },  getReviews: function () {
+         this.$http.post('http://localhost:3000/api/students/reviews/view',{"sp_id":this.user._id}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+console.log(response.data.data.reviews)
+           this.reviews=response.data.data.reviews
+         })
+       },
+       viewComments: function (review_id) {
+         this.$http.post('http://localhost:3000/api/users/comments/view',{"review_id":review_id}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+           this.reviewid=review_id;
+           console.log(this.reviewid);
+         this.pastComments =response.data.data.comments
+         })
+       },
+       addComment: function(review_id){
+         this.$http.post('http://localhost:3000/api/users/comments/create', {"content":this.comment[index],"review_id":review_id}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+               console.log('success');
+              this.viewComments(review_id);
+                       });
+       }
 
    }
 

@@ -1,7 +1,7 @@
 <template>
   <div>
 
-    <div v-for ="n in reviews.length" class="row-2"> 
+    <div v-for ="n in reviews.length" class="row-2">
       <div class="container thumbnail" align="left">
         <h3>{{reviews[n-1].reviewer_id.name}}</h3><br/>
         <strong>Rating: {{reviews[n-1].rating}}</strong><br/><br/>
@@ -30,7 +30,7 @@
 <script>
 export default {
   name: 'SPReviews',
-  data ()  { 
+  data ()  {
     return {
       reviews:[],
       comment:[],
@@ -48,7 +48,7 @@ methods:{
     },
     viewComments: function (review_id) {
       this.$http.post('http://localhost:3000/api/users/comments/view',{"review_id":review_id}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
-        this.pastComments =response.data.data.comments
+      return  this.pastComments =response.data.data.comments
       })
     },
     addComment: function(review_id, index){
