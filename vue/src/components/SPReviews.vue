@@ -56,7 +56,7 @@ methods:{
       this.$http.post('http://localhost:3000/api/users/comments/create', {"content":this.comment[index],"review_id":review_id}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
             console.log('success');
             this.comment[index]='';
-           // this.viewComments(review_id);
+           //this.viewComments(review_id);
                     });
     }
     }
