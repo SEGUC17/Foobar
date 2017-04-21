@@ -44,5 +44,26 @@ const interestController = {
             });
         }
     },
+     findAllInterests(req, res) { // viewing all Interests
+      
+                Interests.find((err, interests) => {
+                    if (err) { // if error occurred
+                        res.status(500).json({
+                            status: 'error',
+                            message: err.message,
+                        });
+                    } else {
+                       console.log(interests);
+                        res.status(200).json({
+                            status: 'success',
+                            data: {
+                                interests,
+                            },
+                        });
+                    }
+                });
+            } 
+        
+    
 };
 module.exports = interestController;

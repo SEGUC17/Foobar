@@ -30,7 +30,7 @@
 <script>
 export default {
   name: 'SPReviews',
-  data () {
+  data ()  { 
     return {
       reviews:[],
       comment:[],

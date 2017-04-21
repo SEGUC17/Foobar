@@ -6,6 +6,7 @@ const reservationController = require('../controllers/reservationController');
 const sPController = require('../controllers/sPController');
 const studentController = require('../controllers/studentController');
 const homeController = require('../controllers/homeController');
+const interestController = require('../controllers/interestController');
 
 
 // routes for a Student user
@@ -24,6 +25,8 @@ router.post('/serviceproviders/offers', sPController.viewSPoffers); // student c
 router.post('/serviceproviders/add/', studentController.addReview); // student can add review for ServiceProvider
 
 router.get('/reservations/view', reservationController.getReservations); // viewing his reservations
+
+router.get('/all/interests', interestController.findAllInterests); // viewing his reservations
 
 router.get('/sP/:id', sPController.getSPProfile); // viewing a specific SP profile
 

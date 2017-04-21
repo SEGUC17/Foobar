@@ -151,7 +151,7 @@
                              </center>
                             </div>
                             <div class="tab-pane" id="Registration">
-                                <center>
+                              <center>
                                 <form role="form" class="">
                                 <div v-for =" message in successmessages">
                                 <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
@@ -181,7 +181,7 @@
                                     <label for="password" class="col-sm-2 control-label">
                                         Password</label>
                                     <div class="col-sm-10">
-                                    <input v-validate="{ rules: { required: true} }" type="text" name="password" class="form-control" id="password" placeholder="Password" v-model="creds.password">
+                                    <input v-validate="{ rules: { required: true} }" type="password" name="password" class="form-control" id="password" placeholder="Password" v-model="creds.password">
                      <span v-show="errors.has('password')">{{ errors.first('password') }}</span>
                       <!--<input type="password" class="form-control" id="password" placeholder="Password" v-model="creds.password" /> -->
                                     </div>
@@ -190,11 +190,63 @@
                                     <label for="password" class="col-sm-2 control-label">
                                         Confirm Password</label>
                                     <div class="col-sm-10">
-                                    <input v-validate="{ rules: { required: true} }" type="text" name="Confirm password" class="form-control" id="Confirm password" placeholder="Password" v-model="creds.password2">
+                                    <input v-validate="{ rules: { required: true} }" type="password" name="Confirm password" class="form-control" id="Confirm password" placeholder="Password" v-model="creds.password2">
                      <span v-show="errors.has('Confirm password')">{{ errors.first('Confirm password') }}</span>
 
                                         <!-- <input type="password" class="form-control" id="password2" placeholder="Confirm Password" v-model="creds.password2" /> -->
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-2 control-label">
+                                        University</label>
+                                    <div class="col-sm-10">
+                                      <input v-validate="{ rules: { required: true} }" type="text" name="university" class="form-control" id="university" placeholder="University" v-model="university">
+                                      <span v-show="errors.has('university')">{{ errors.first('university') }}</span>
+                                        <!-- <input type="text" class="form-control" id="name" placeholder="Name" v-model="creds.name" /> -->
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-2 control-label">
+                                      Address</label>
+                                    <div class="col-sm-10">
+                                      <input v-validate="{ rules: { required: true} }" type="text" name="address" class="form-control" id="address" placeholder="Address" v-model="address">
+                                      <span v-show="errors.has('address')">{{ errors.first('address') }}</span>
+                                        <!-- <input type="text" class="form-control" id="name" placeholder="Name" v-model="creds.name" /> -->
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-2 control-label">
+                                        Birthdate</label>
+                                    <div class="col-sm-10">
+                                      <input v-validate="{ rules: { required: true} }" type="date" name="birthdate" class="form-control" id="birthdate" placeholder="Birthdate" v-model="birthdate">
+                                      <span v-show="errors.has('birthdate')">{{ errors.first('birthdate') }}</span>
+                                        <!-- <input type="text" class="form-control" id="name" placeholder="Name" v-model="creds.name" /> -->
+                                    </div>
+                                </div>
+                                  <div class="form-group">
+                                    <label for="name" class="col-sm-2 control-label">
+                                        Description</label>
+                                    <div class="col-sm-10">
+                                      <textarea v-validate="{ rules: { required: true} }" type="text" name="description" class="form-control" id="description" placeholder="Description" v-model="description"> </textarea> 
+                                      <span v-show="errors.has('description')">{{ errors.first('description') }}</span>
+                                        <!-- <input type="text" class="form-control" id="name" placeholder="Name" v-model="creds.name" /> -->
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-2 control-label">
+                                        Interests</label>
+                                        <div v-for="interest in this.interests">
+                                        <input type="checkbox" :id="interest" :value="interest" v-model="Interests">
+                                        <label for="interest">{{interest.name}}</label>
+                                          
+
+                                        </div>
+
+                                   <!--  <div class="col-sm-10">
+                                      <input v-validate="{ rules: { required: true} }" type="text" name="name" class="form-control" id="name" placeholder="Name" v-model="creds.name">
+                                      <span v-show="errors.has('name')">{{ errors.first('name') }}</span> -->
+                                        <!-- <input type="text" class="form-control" id="name" placeholder="Name" v-model="creds.name" /> -->
+                                    <!-- </div> -->
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-2">
@@ -211,20 +263,31 @@
                             <div class="tab-pane" id="resetPW">
                                 <center>
                                 <h5>Enter your email below to reset the password:</h5>
-                                <form role="form" class="">
+                                <form role="form" class="" v-on:submit='resetPW'>
                                 <div class="form-group">
-                                    <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="emailReset" placeholder="Email" v-model="resetPWEmail" />
+                                <div v-for =" message in successmessages">
+                                <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
+                                </div>
+                                <div v-for =" message in failuremessages">
+                                <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
+                                </div>
+                                <br>
+                                             <div class="col-sm-10">
+                     <input v-validate="{ rules: { required: true, email: true } }" type="text" name="email" class="form-control" id="email" placeholder="Email" v-model="resetPWEmail" required="*">
+                     <span v-show="errors.has('email')">{{ errors.first('email') }}</span>
+                                        <!-- <input type="email" class="form-control" id="email" placeholder="Email" v-model="creds.email" /> -->
                                     </div>
+                                  
                                 </div>
 
                                 <div class="row">
+
                                     <div class="col-sm-2">
                                     </div>
                                     <div class="col-sm-10">
                                       <center>
                                       <h6><strong>N.B:</strong> A new password will be sent to this email </h6>
-                                      <button class="btn btn-primary btn-sm " type="submit" v-on:click="resetPW">Reset Password</button>
+                                      <button class="btn btn-primary btn-sm " type="submit">Reset Password</button>
                                       </center>
                                     </div>
                                 </div>
@@ -255,22 +318,32 @@ data () {
         username: '',
         password: '',
         name:'',
-        password2:'',
+        password2:''
+        
       },
       resetPWEmail: '',
       error: '',
       decodeid: '',
       successmessages:[{msg:''}],
       failuremessages:[{msg:''}],
+      university:'',
+        description:'',
+        interests:[],
+        birthdate:'',
+        address:'',
+        Interests:[],
 
   // User object will let us check authentication status
   user: {
     authenticated: false,
     type: 0
-  },}},
+  }}},
 
  created() {
+
+  
 if(localStorage.getItem('id_token')!=null){
+  
   this.user.authenticated=true
   this.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
     this.decodeid=decode
@@ -278,6 +351,7 @@ if(localStorage.getItem('id_token')!=null){
 })
 }
 
+this.findAllInterests()
 
  },
 
@@ -311,8 +385,15 @@ methods: {
     "email":this.creds.email,
     "password":this.creds.password,
     "password2":this.creds.password2,
-    "name":this.creds.name
+    "name":this.creds.name, 
+    "university":this.university,
+    "address":this.address,
+    "birthdate":this.birthdate,
+    "description":this.description,
+    "interests":this.Interests
+
 }).then(data => {
+  console.log(this.Interests)
       this.successmessages[0].msg = "Registered Successfully, you can login now";
      this.failuremessages=[{msg:''}];
 
@@ -355,6 +436,13 @@ methods: {
       'Authorization': 'Bearer ' + localStorage.getItem('id_token')
     }
   },
+
+  findAllInterests: function() {
+    this.$http.get('http://localhost:3000/api/students/all/interests/').then(response => {
+      console.log(response.body.data.interests);
+        this.interests=response.body.data.interests
+      })
+  }
 
 }
 
