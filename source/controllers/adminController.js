@@ -421,53 +421,53 @@ const adminController = {
       });
     },
     reviewDataAnalysis(req, res) {
-      const token = req.headers['jwt-token'];
-      jwt.verify(token, (decoded) => {
-        if (decoded.type === 1) {
-          const userMap = [];
-          const tempInterest = [];
-          let k = 0;
-          let x = 0;
+  var userMap = [];
+  var temp =[];
+  var k =0;
+  var most =0;
+  var least =0;
+  const token = req.headers['jwt-token'];
+  jwt.verify(token, (decoded) => {
+    if (decoded.type === 1) {
+      StudentInterest.find({}).populate('interest_id').exec((err, interests) => {
+        interests.forEach((StudentInterest) => {
+          userMap[k] = StudentInterest.interest_id.name;
+          k += 1;
+        });
+temp = adminController.sortByFrequencyAndFilter(userMap)
+most = temp[0];
+least = temp[temp.length-1];
 
-          StudentInterest.find([], (err, interests) => {
-            interests.forEach((StudentInterest) => {
-              userMap[k] = StudentInterest.interest_id;
-              k += 1;
-            });
-            interest.find([], (err, inter) => {
-              userMap.forEach((stud) => {
-                inter.forEach((interest) => {
-                  if (stud === interest._id) {
-                    tempInterest[x] = interest.name;
-                    x += 1;
-                  }
-                });
-              });
-              const temp = adminController.sortByFrequencyAndFilter(
-                tempInterest);
-              console.log(temp);
-              const most = temp[0];
-              const least = temp[temp.length - 1];
-              console.log(most)
-              console.log(least)
-              res.status(200).json({
-                status: 'success',
-                data: {
-                  most,
-                  least,
-                  temp,
-                },
-              });
-            });
-          });
-        } else {
+        if (err) {
           res.status(500).json({
             status: 'error',
-            err: 'unauthorized access',
+            message: err,
           });
+        } else {
+
+          res.status(200).json({
+            status: 'success',
+            data: {
+              most,
+              least,
+              temp
+            },
+          });
+          // res.render('viewAnnouncements', {announcements:announcements});
         }
+
       });
-    },
+
+    } else {
+      res.json({
+        status: 'failure',
+        data: {
+          err: 'unauthorized access',
+        },
+      });
+    }
+  });
+},
 
     deleteSP(req, res) {
       const token = req.headers['jwt-token'];
