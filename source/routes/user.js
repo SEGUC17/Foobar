@@ -69,11 +69,13 @@
      var password= req.body.password;
      var name= req.body.name;
      var password2= req.body.password2;
+     var university= req.body.university;
     
         req.checkBody('name', 'Name is required').notEmpty();
         req.checkBody('email', 'Email is required').notEmpty()
         req.checkBody('email', 'Must be a valid Email').isEmail();
         req.checkBody('password', 'Password is required').notEmpty();
+        req.checkBody('university', 'university is required').notEmpty();
         req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 
         var errors = req.validationErrors();
@@ -110,6 +112,7 @@
           address: req.body.address,
           birthdate: req.body.birthdate,
           description: req.body.description,
+            
         });
 
         const interests = req.body.interests;

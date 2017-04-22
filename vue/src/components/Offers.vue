@@ -43,9 +43,11 @@ methods:{
     Apply: function(offer , index){
       
 var x = confirm("Are you sure you want to apply for this offer ?")
-if(x){
-      
-      this.$http.post('http://localhost:3000/api/students/offers',{"offer_id":offer._id},{headers : {'jwt-token' : localStorage.getItem('id_token')}})
+
+if(x){      
+      this.$http.post('http://localhost:3000/api/students/offers',{"offer_id":offer._id},{headers : {'jwt-token' : localStorage.getItem('id_token')}}),then(response=> {
+        alert("You succesfully applied")
+      })
       }
     
     

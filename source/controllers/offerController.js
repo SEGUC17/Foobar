@@ -11,7 +11,7 @@ const offerController = {
         req.checkBody('price','Enter A Number in Price').isInt();
         req.checkBody('capacity', 'Capacity is required').notEmpty();
         req.checkBody('capacity','Enter A Number in Capacity').isInt();
-        req.checkBody('description', 'Description is required').notEmpty();
+        
         req.checkBody('due_date', 'DueDate is required').notEmpty()
         req.checkBody('due_date', 'DueDate is Wrong Date Format').isDate();
         req.checkBody('start_date', 'StartDate is required').notEmpty();

@@ -38,7 +38,7 @@
                      
                       <tr>
                         <td>Date of Birth</td>
-                        <td>{{student.birthdate}}</td>
+                        <td>{{student.birthdate.substring(0, 10)}}</td>
                       </tr>
                    
                          <tr>
@@ -53,10 +53,7 @@
                       <tr>
                         <td>Email</td>
                         <td>{{user.email}}</td>
-                      </tr>
-                        <td>Phone Number</td>
-                        <td><input type="text" v-model="phone_number"></td>
-                      </tr>
+                    
                      <tr align="right">
                        
                      <div class="row">
@@ -98,7 +95,7 @@ export default {
       address : "",
       birthdate : "",
       description : "",
-      phone_number:"",
+     
     }
   },
 created(){
@@ -119,7 +116,7 @@ methods:{
         this.address = this.student.address;
         //this.birthdate = response.student.birthdate;
         this.description = this.student.description;
-        //this.phone_number = response.student.phone_number;
+        
         console.log(this.user);
         
       })

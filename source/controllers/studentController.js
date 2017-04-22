@@ -380,7 +380,7 @@ const StudentController = {
     editStudent(req, res) {
 
       req.checkBody('name', 'Name is required').notEmpty();
-      // req.checkBody('university', 'university is required').notEmpty();
+      req.checkBody('university', 'University is required').notEmpty();
 
       // req.checkBody('description', 'A Description is required').notEmpty();
       // req.checkBody('address', 'A Date is required').notEmpty()
@@ -424,6 +424,7 @@ const StudentController = {
                     const address = req.body.address;
                     const birthdate = req.body.birthdate;
                     const description = req.body.description;
+                    const phone_number = req.body.phone_number;
 
                     StudentInterest.remove({
                       student_id: student.user_id,
@@ -473,6 +474,7 @@ const StudentController = {
                           address,
                           birthdate,
                           description,
+                          phone_number
                         }, (err, student1) => {
                           if (err) {
                             res.status(500).json({

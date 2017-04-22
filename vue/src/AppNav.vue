@@ -239,6 +239,7 @@
                                         <!-- <input type="text" class="form-control" id="name" placeholder="Name" v-model="creds.name" /> -->
                                     </div>
                                 </div>
+                                 
                                   <div class="form-group">
                                     <label for="name" class="col-sm-2 control-label">
                                         Description</label>
@@ -350,6 +351,7 @@ data () {
         interests:[],
         birthdate:'',
         address:'',
+
         Interests:[],
 
   // User object will let us check authentication status
@@ -430,13 +432,13 @@ methods: {
     this.$http.post('http://localhost:3000/api/users/resetPW', {"email":this.resetPWEmail}).then(data => {
       alert("New Password sent to ".concat(this.resetPWEmail));
       console.log('success');
-      this.$router.go({path:'/'});
+      
   }).catch(function(reason) {
         this.failuremessages = reason.body.err;
         this.successmessages= [{msg:''}];
 
 });
-
+this.$router.go({path:'/',force:true});
   },
 
   // To log out, we just need to remove the token

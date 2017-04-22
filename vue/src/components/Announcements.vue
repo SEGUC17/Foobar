@@ -18,8 +18,8 @@
             
       </div>
         </div>
-    
-  
+      
+          
           <li v-for="n in numberOfPages"><a @click="changePage(n)">{{n}}</a></li>
 
   </div>

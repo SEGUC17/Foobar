@@ -71,7 +71,7 @@ label {
 
                       <tr>
                         <td>Date of Birth</td>
-                        <td>{{student._id}}</td>
+                        <td>{{student.birthdate.substring(0, 10)}}</td>
                       </tr>
 
                          <tr>
@@ -87,9 +87,7 @@ label {
                         <td>Email</td>
                         <td>{{user.email}}</td>
                       </tr>
-                        <td>Phone Number</td>
-                        <td>123-4567-890(Landline)<br><br>555-4567-890(Mobile)
-                        </td>
+                     
 
                       </tr>
 

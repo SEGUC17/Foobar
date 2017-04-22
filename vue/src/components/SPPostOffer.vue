@@ -127,6 +127,7 @@ methods:{
                 console.log(this.failuremessages)
                 this.successmessages=[{msg:''}];
         });
+                    this.$router.push({path:'/'})
         },
         getInterests: function () {
       this.$http.get('http://localhost:3000/api/sPs/interests',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
