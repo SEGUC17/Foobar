@@ -1,86 +1,129 @@
+<style scoped>
+body {
+    font-family: Helvetica Neue, Arial, sans-serif;
+}
+
+polygon {
+    fill: #42b983;
+    opacity: .75;
+}
+
+circle {
+    fill: transparent;
+    stroke: #999;
+}
+
+text {
+    font-family: Helvetica Neue, Arial, sans-serif;
+    font-size: 10px;
+    fill: #666;
+}
+
+label {
+    display: inline-block;
+    margin-left: 10px;
+    width: 20px;
+}
+
+#raw {
+    position: absolute;
+    top: 0;
+    left: 300px;
+}
+
+
+
+</style>
+
 <template>
-<center>
-  <form role="form" class="" submit.prevent>
-          <h2>Edit Your Profile </h2>
-          <div>
+
+  <div>
+<div class="container">
+      <div class="row">
+     <br/>
+     <br/>
+    <div align="center">
           <img class="img-circle img-responsive" v-if="this.user && this.user.profileimg.path" :src="'http://localhost:3000/'+user.profileimg.path.replace('public','')" style="height:200px; width:200px">
-          <input ref="avatar2" type="file" name="avatar2" id="avatar2" v-on:change="changedp($event.target.name, $event.target.files)">
+    </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+
+
+          <div class="panel panel-info">
+            <div class="panel-heading">
+            </div>
+            <div class="panel-body">
+              <div class="row">
+
+<br />
+                <h3 class="panel-title">Basic Info </h3>
+
+                <div class=" col-md-9 col-lg-9 ">
+                  <table class="table table-user-information">
+                    <tbody>
+                      <tr>
+                        <td>Name </td>
+                        <td>{{user.name}}</td>
+                      </tr>
+                      <tr>
+                        <td>Email </td>
+                        <td>{{user.email}}</td>
+                      </tr>
+
+                      <tr>
+                        <td>Price Category</td>
+                        <td> {{ pricecategory }}</td>
+                      </tr>
+
+                    <tr>
+                        <tr>
+                            <td>Location</td>
+                            <td>{{profile.location}}</td>
+                        </tr>
+                        <tr>
+                            <td>Description</td>
+                            <td>{{profile.description}}</td>
+                        </tr>
+                        <tr>
+                            <td>Phone number</td>
+                            <td>{{profile.phone_number}}</td>
+                        </tr>
+                        <tr>
+                            <td>Fields</td>
+                            <td>{{ fields }}</td>
+                        </tr>
+                      </tr>
+
+                    </tbody>
+                  </table>
+
+                <h4>Your Images</h4>
+                <span class="col-lg-3"v-for ="image in images">
+                <img :src="'http://localhost:3000/'+image.img.path.replace('public','')" style="height:200px; width:200px">&nbsp;&nbsp;&nbsp;&nbsp;
+                </span>
+                
+                <h4 >Your Videos</h4>
+                <youtube :video-id="this.attrs"></youtube>
+
+                <div v-for =" video in videos">
+                <a v-on:click="changeVideo(video.url)"> {{video.title}} </a>
+                </div>
+ 
+
+                </div>
+              </div>
+            </div>
+                 <!--  -->
+
           </div>
-
-        <span>Price Category: {{ pricecategory }}</span>
-        <br>
-        <input type="radio" id="one" value="Cheap" v-model="pricecategory">
-        <span for="pricecategory">$</span>&nbsp; &nbsp;
-        <input type="radio" id="two" value="Moderate" v-model="pricecategory">
-        <span for="pricecategory">$$</span>&nbsp; &nbsp;
-        <input type="radio" id="three" value="Expensive" v-model="pricecategory">
-        <span for="pricecategory">$$$</span>
-
-
-        <div class="form-group">
-        <br>
-            <label class="col-sm-2 control-label">Location</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="location" :value=profile.location v-model="location" />
-            </div>
         </div>
-
-        <div class="form-group">
-            <label for="description" class="col-sm-2 control-label">Description</label>
-            <div class="col-sm-10">
-                <input type="text" v-model="description" :value=profile.description ></input>
-            </div>
-        </div>
-
-         <div>
-        <label for="fields" class="col-sm-2 control-label">Fields</label>
-        <li v-for =" field in interests">
-        <input type="checkbox" id=field.name :value=field.name v-model="fields">
-        <span for=field.name>{{field.name}}</span>
-        </li>
-        <span>Fields: {{ fields }}</span>
-        <br>
-        </div>
-
-        <div class="form-group">
-        <br>
-            <label class="col-sm-2 control-label">Phone Number</label>
-            <div class="col-sm-10">
-                <input type="number" class="form-control" id="phone" :value=profile.phone_number v-model="phone_number" />
-            </div>
-        </div>
+      </div>
+    </div>
 
 
-
-    <h1>Your Images</h1>
-    <li v-for ="image in images">
-       <img :src="'http://localhost:3000/'+image.img.path.replace('public','')" style="width:200px">
-    </li>
-    <input ref="avatar" type="file" name="avatar" id="avatar" v-on:change="upload($event.target.name, $event.target.files)">
-    <h1>Your Videos</h1>
-    <youtube :video-id="this.attrs"></youtube>
-
-    <li v-for =" video in videos">
-       <a v-on:click="changeVideo(video.url)"> {{video.title}} </a>
-    </li>
-    <form>
-        <input type="text" v-model="title" name="title" placeholder="title">
-        <input type="text" v-model="url" name="url" placeholder="url">
-        <button class="btn btn-primary btn-sm"  v-on:click="newvideo"> Post video</button>
-    </form>
-
-    <div class="row">
-            
-            <div class="col-sm-10">
-                <button class="btn btn-primary btn-sm"  v-on:click="edit">Submit Changes</button>
-            </div>
-     </div>
-
-    </form>
-
-
-    </center>
+  </div>
 </template>
+
 <script>
 
 import Vue from 'vue'

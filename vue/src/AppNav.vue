@@ -11,8 +11,6 @@
                   <ul class="nav sf-menu">
                 <li class=""><a href="index.html">Home</a></li>
                 <li ><router-link to="/announcements">News</router-link></li>
-                <li><a >Work</a></li>
-                <li><a >Blog</a></li>
                 <li class="sub-menu"><a  v-if="user.authenticated">Process</a>
                     <ul>
                         <li ><router-link  to="/StudentProfile">Announcement</router-link></li>
@@ -110,6 +108,7 @@
                             <li><router-link to="/SPReservations">View Reservations</router-link></li>
                             <li><router-link to="/SPReviews">View Reviews</router-link></li>
                             <li><router-link to="/SPAssess">Assess Students</router-link></li>
+                            <li><router-link to="/SPViewMyProfile">My Profile</router-link></li>
                             <li><router-link to="/SPEditProfile">Edit Profile</router-link></li>
                             <li  v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
                             <li class="" v-else ><a  v-on:click="logout">logout</a></li>
