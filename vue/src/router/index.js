@@ -13,8 +13,6 @@ import SPAssess from '@/components/SPAssess.vue'
 import ApplySP from '@/components/ApplySP.vue'
 import AdminSP from '@/components/AdminSP.vue'
 import viewAllStudents from '@/components/viewAllStudents.vue'
-import SPViewMyProfile from '@/components/SPViewMyProfile.vue'
-
 
 import SPReservations from '@/components/SPReservations.vue'
 import SPReviews from '@/components/SPReviews.vue'
@@ -100,9 +98,6 @@ export default new Router({
   }, {
     path: '/viewInterests',
     component: Interests
-  },{
-    path: '/SPViewMyProfile',
-    component: SPViewMyProfile
   }, {
     path: '/pendingSP',
     component: pendingSP

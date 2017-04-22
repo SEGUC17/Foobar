@@ -19,8 +19,10 @@
       </tr>
     </tbody>
   </table>
-  <input type="text" placeholder="Add Admin? Enter his email" v-model="adminemail"></input>
-  <button class="btn-primary" @click="addAdmin()">Add</button>
+ <form role="form" class="" v-on:submit='addAdmin'>
+  <input type="email" placeholder="Add Admin? Enter his email" v-model="adminemail" required="*"></input>
+  <button class="btn-primary" >Add</button>
+  </form>
 </div>
 </template>
 
@@ -48,15 +50,20 @@ methods:{
     addAdmin: function () {
           this.$http.post('http://localhost:3000/api/admins/admin',{email:this.adminemail},{headers : { 'jwt-token' : localStorage.getItem('id_token')}} ).then(response => {
             this.msg="Admin has been added"
+            alert(this.msg)
             console.log(response.body.data.user)
            this.admins.push(response.body.data.user)
            this.adminemail=''
           })
         },
         removeadmin: function(index){
-          this.$delete(this.admins,index)
+          var x = confirm("Are you sure you want to delete this Admin ?")
+         if(x){
+            this.$delete(this.admins,index)
+            alert("Admin Deleted")
             console.log(this.admins)
         }
+      }
   }
 }
 </script>

@@ -17,12 +17,14 @@
                    <div v-for =" message in failuremessages">                               
                <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
            </div>
+           <form role="form" class="" v-on:submit='addInterest'>
       <div class="col-sm-10">
-      <input v-validate="{ rules: { required: true} }" type="text" name="interestname" class="form-control" id="interestname" placeholder="Interest Name" v-model="interestname">
+      <input v-validate="{ rules: { required: true} }" type="text" name="interestname" class="form-control" id="interestname" placeholder="Interest Name" v-model="interestname" required="*">
                      <span v-show="errors.has('interestname ')">{{ errors.first('interestname') }}</span>
             <button @click ="addInterest()" >add</button>
           <h5>{{msg}}</h5>
       </div>
+      </form>
   </div>
 
 </div>
@@ -51,8 +53,10 @@ this.reviewDataAnalysis();
 },
 methods:{
     addInterest: function () {
+
           this.$http.post('http://localhost:3000/api/admins/addInterest',{name: this.interestname },{headers : { 'jwt-token' : localStorage.getItem('id_token')}} ).then(response => {
       this.msg="Interest has been added"
+      alert(this.msg)
           }).catch(function(reason) {
                         console.log(reason.body.err);
                 this.failuremessages = reason.body.err;

@@ -58,13 +58,21 @@ methods:{
       })
     },
     removesp: function(serviceprovider){
+      var x = confirm("Are you sure you want to delete this Service Provider ?")
+      if(x){
       this.$http.delete('http://localhost:3000/api/admins/admin/sp/'.concat(serviceprovider._id),{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+        alert("Service Provider deleted")
       })
+    }
       this.getAllServiceProviders()
     },
     blocksp:function(serviceprovider){
+      var x = confirm("Are you sure you want to delete this Service Provider ?")
+      if(x){
       this.$http.post('http://localhost:3000/api/admins/block/',{email:serviceprovider.user_id.email} ,{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+        alert("Service Provider deleted")
     })
+    }
   }
 }
 }

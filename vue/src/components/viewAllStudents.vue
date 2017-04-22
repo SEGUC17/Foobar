@@ -51,17 +51,30 @@ methods:{
         })
       })
     },   deleteS: function (key) {
+      var x = confirm("Are you sure you want to delete this student ?")
+      if(x){
           this.$http.post('http://localhost:3000/api/admins/deletes',{email : key},{headers : { 'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+            alert("Student deleted")
             this.removestudent(key)
           })
+        }
         },
           removestudent: function(arrayItem){
+            var x = confirm("Are you sure you want to remove this student ?")
+      if(x){
+        alert("Student removed")
             let index = this.students.indexOf(arrayItem)
             this.students.splice(index, 1);
+          }
       },
       blockS(email){
+             var x = confirm("Are you sure you want to block this student ?")
+      if(x){
+        
         this.$http.post('http://localhost:3000/api/admins/blocks/',{email: email} ,{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+          alert("Student blocked")
 })
+      }
       }
   }
 }

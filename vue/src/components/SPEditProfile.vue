@@ -1,11 +1,10 @@
 <template>
 <center>
-  <form role="form" class="" submit.prevent>
+  <form role="form" class="" @submit.prevent>
           <h2>Edit Your Profile </h2>
-          <div>
-          <img class="img-circle img-responsive" v-if="this.user && this.user.profileimg.path" :src="'http://localhost:3000/'+user.profileimg.path.replace('public','')" style="height:200px; width:200px">
+          <img v-if="this.user.profileimg" :src="'http://localhost:3000/'+user.profileimg.path.replace('public','')" style="width:400px">
           <input ref="avatar2" type="file" name="avatar2" id="avatar2" v-on:change="changedp($event.target.name, $event.target.files)">
-          </div>
+
 
         <span>Price Category: {{ pricecategory }}</span>
         <br>
@@ -28,7 +27,7 @@
         <div class="form-group">
             <label for="description" class="col-sm-2 control-label">Description</label>
             <div class="col-sm-10">
-                <input type="text" v-model="description" :value=profile.description ></input>
+                <input type="text" v-model="description" :value="profile.description" ></input>
             </div>
         </div>
 
@@ -50,7 +49,15 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-sm-2">
+            </div>
+            <div class="col-sm-10">
+                <button class="btn btn-primary btn-sm"  v-on:click="edit">Submit Changes</button>
+            </div>
+        </div>
 
+    </form>
 
     <h1>Your Images</h1>
     <li v-for ="image in images">
@@ -69,14 +76,6 @@
         <button class="btn btn-primary btn-sm"  v-on:click="newvideo"> Post video</button>
     </form>
 
-    <div class="row">
-            
-            <div class="col-sm-10">
-                <button class="btn btn-primary btn-sm"  v-on:click="edit">Submit Changes</button>
-            </div>
-     </div>
-
-    </form>
 
 
     </center>

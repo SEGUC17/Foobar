@@ -750,20 +750,24 @@ a:active {
                       </div></h3>
 
                 </div>
+                <form role="form" class="" v-on:submit="addComment">
                 <div class="modal-body">
                   <div class="row">
+                  
 
-                <input style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput1" placeholder="Write a comment" type="text"v-model="comment">
-
-                    </input>
-                </div>                </div>
+                <input style="height:30px;font-size:10pt"class="form-control input-lg" v-validate="{ rules: { required: true} }" id="myInput1" placeholder="Write a comment" type="text"v-model="comment" required="*">
+ <!-- <input style="height:50px;font-size:10pt" v-validate="{ rules: { required: true} }" type="text" name="review" class="form-control input-lg" id="review" placeholder="Write a review" v-model="review" > -->
+                    
+                </div>    
+                            </div>
 
                 <div class="modal-footer">
 
 
-                    <button class="btn btn-primary add_field_button" style="margin-bottom:20px;" v-on:click="addComment" >Post comment</button>
+                    <button class="btn btn-primary add_field_button" style="margin-bottom:20px;">Post comment</button>
 
                                  </div>
+                                 </form>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
@@ -775,21 +779,20 @@ a:active {
 		<!-- /Boxes de Acoes -->
 	</div>
   <div class="row">
+  <form role="form" class="" v-on:submit='Review'>
     <div class="col-md-12">
-            <input style="height:50px;font-size:10pt"class="form-control input-lg" id="myInput" placeholder="Write a review" type="text"v-model="review"><br /><br /><br />
+     <input style="height:50px;font-size:10pt" v-validate="{ rules: { required: true} }" type="text" name="review" class="form-control input-lg" id="review" placeholder="Write a review" v-model="review" required="*">
+                     
+            <!-- <input style="height:50px;font-size:10pt"class="form-control input-lg" id="myInput" placeholder="Write a review" type="text"v-model="review" required="*"><br /><br /><br /> -->
             <div id="makan1" style="width:50%">
               <star-rating @rating-selected="rating = $event" :rating="rating" v-bind:show-rating="false" ></star-rating>
             </div>
 <div id="makan2" style="width:80%">
 
-  <button class="button button-1 button-1a" @click="Review">Add Review</button>
-
-</div>
-
-
-
-
-        </div>
+  <button class="button button-1 button-1a">Add Review</button>
+  </div>
+     </div>
+        </form>
   </div>
 </div></p>
 			</section>
@@ -877,6 +880,7 @@ a:active {
      },
      Review: function(){
        this.$http.post('http://localhost:3000/api/students/serviceproviders/add',{"sp_id":this.user._id, "content":this.review,"rating":this.rating},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+        alert("Review Added");
          this.getReviews()
        })
 
@@ -895,6 +899,7 @@ console.log(response.data.data.reviews)
        },
        addComment: function(){
          this.$http.post('http://localhost:3000/api/users/comments/create', {"content":this.comment,"review_id":this.reviewid}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+          alert("Comment Added");
                console.log('success');
               this.viewComments(this.reviewid);
               this.comment =''

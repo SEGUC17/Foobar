@@ -334,20 +334,25 @@
                     </div></h3>
 
               </div>
+              <form role="form" class="" v-on:submit='addComment'>
+                
+              
               <div class="modal-body">
                 <div class="row">
 
               <input style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput1" placeholder="Write a comment" type="text"v-model="comment">
 
-                  </input>
-              </div>                </div>
+                  
+              </div>         
+                     </div>
 
               <div class="modal-footer">
 
 
-                  <button class="btn btn-primary add_field_button" style="margin-bottom:20px;" v-on:click="addComment">Post comment</button>
+                  <button class="btn btn-primary add_field_button" style="margin-bottom:20px;">Post comment</button>
 
                                </div>
+                               </form>
           </div><!-- /.modal-content -->
       </div><!-- /.modal-dialog -->
   </div><!-- /.modal -->
@@ -392,6 +397,7 @@ methods:{
     },
     addComment: function(){
       this.$http.post('http://localhost:3000/api/users/comments/create', {"content":this.comment,"review_id":this.reviewid}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+        alert("Comment Added");
             console.log('success');
            this.viewComments(this.reviewid);
            this.comment =''

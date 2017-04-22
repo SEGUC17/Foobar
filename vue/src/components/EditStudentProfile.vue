@@ -23,22 +23,28 @@
                     <tbody>
                      <tr>
                         <td>Name: </td>
-                        <td><input type="text"  v-model="name"></td>
+                        <td>
+                      <input v-validate="{ rules: { required: true} }" type="text" name="name" class="form-control" id="name"  v-model="name">
+                     <span v-show="errors.has('name')">{{ errors.first('name') }}</span>
+                        <!-- <input type="text"  v-model="name"> -->
+                        </td>
                       </tr>
                       <tr>
                         <td>University: </td>
-                        <td><input type="text"  v-model="university"></td>
+                        <td>
+                       <input type="text"  v-model="university">
+                        </td>
                       </tr>
                      
                       <tr>
                         <td>Date of Birth</td>
-                        <td>{{student._id}}</td>
+                        <td>{{student.birthdate}}</td>
                       </tr>
                    
                          <tr>
                              <tr>
                         <td>Description</td> 
-                        <td><textarea v-model="description"></textarea>  </td>
+                        <td><textarea v-model="description"></textarea> </td>
                       </tr>
                         <tr>
                         <td>Home Address</td>
@@ -49,9 +55,7 @@
                         <td>{{user.email}}</td>
                       </tr>
                         <td>Phone Number</td>
-                        <td>123-4567-890(Landline)<br><br>555-4567-890(Mobile)
-                        </td>
-                           
+                        <td><input type="text" v-model="phone_number"></td>
                       </tr>
                      <tr align="right">
                        
@@ -93,15 +97,16 @@ export default {
       university : "Ahm",
       address : "",
       birthdate : "",
-      description : ""
+      description : "",
+      phone_number:"",
     }
   },
 created(){
-  this.getServiceProvider()
+  this.getStudent()
 },
 methods:{
-    getServiceProvider: function () {
-      console.log("ahmed");
+    getStudent: function () {
+     
       let route ='http://localhost:3000/api/students/student/'.concat(this.$route.params.EditStudid);
       
    
@@ -110,34 +115,28 @@ methods:{
         this.student=response.data.data.student;
         this.user =response.data.data.user;
         this.name = this.user.name;
-        this.university = "this.student.university";
+        this.university = this.student.university;
         this.address = this.student.address;
-        this.birthdate = this.student.birthdate;
+        //this.birthdate = response.student.birthdate;
         this.description = this.student.description;
+        //this.phone_number = response.student.phone_number;
         console.log(this.user);
         
       })
     },
     EditStudent: function() {
-           let route ='http://localhost:3000/api/students/student/';
+      var x = confirm("Are you sure you want to edit your profile ?");
+      if(x){
+        let route ='http://localhost:3000/api/students/student/';
             console.log(this.name);
-      this.$http.post(route, {"name":this.name,"university":this.university, "address":this.address, "birthdate":this.birthdate, "description":this.description}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
-        //          const name = req.body.name;
-        //           const university = req.body.university;
-        //           const address = req.body.address;
-        //           const birthdate = req.body.birthdate;
-        //           const description = req.body.description;
-       
-        // this.student=response.data.data.student;
-        // this.user =response.data.data.user;
-        // this.name = this.user.name;
-        // this.university = this.student.university;
-        // this.address = this.student.address;
-        // this.birthdate = this.student.birthdate;
-        // this.description = this.student.description;
+      this.$http.post(route, {"name":this.name,"university":this.university, "address":this.address, "birthdate":this.birthdate, "description":this.description,"phone_number":this.phone_number}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+
+        this.$router.push({ name : 'StudentProfile' , params: { Studid : this.$route.params.EditStudid }});
+        alert("Your profile was editted")
         console.log(this.user);
-        
       })
+        
+      }
     }
    
   }

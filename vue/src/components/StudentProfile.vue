@@ -130,7 +130,7 @@ created(){
 },
 methods:{
     getStudent: function () {
-      console.log("ahmed");
+      
       let route ='http://localhost:3000/api/students/student/'.concat(this.$route.params.Studid);
       this.studid = this.$route.params.Studid ;
       this.$http.get(route, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {

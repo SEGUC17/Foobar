@@ -11,7 +11,7 @@
 
             <label for="rating" class="col-sm-2 control-label">Rating</label>
             <div class="col-sm-10">
-                <input type="number" class="form-control" id="rating" placeholder="Rating" v-model="rating[n-1]" />
+                <input type="number" class="form-control" id="rating" placeholder="Rating" v-model="rating[n-1]" required="*">
                 <button class="btn btn-primary btn-sm" v-on:click="assess(students[n-1].user_id._id, n-1, students[n-1].offer_id._id, students[n-1].offer_id.field)">Assess</button>
             </div>
         </div>
@@ -43,6 +43,7 @@ methods:{
     assess: function(user_id, index, offer_id, field){
       console.log(user_id+" "+ rating +" "+ offer_id + " "+ field)
       this.$http.post('http://localhost:3000/api/sPs/students/assess/'.concat(user_id), {"rating":this.rating[index], "offer_id":offer_id, "field":field},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+        alert("Student Rated");
             console.log('success');
             this.getStudents();
                     })
