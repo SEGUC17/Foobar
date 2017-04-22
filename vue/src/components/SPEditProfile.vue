@@ -73,6 +73,7 @@
            
             <div class="col-sm-10">
                 <button class="btn btn-primary btn-sm"  v-on:click="edit">Submit Changes</button>
+                <a data-toggle="modal" data-target="#myModal">Enter</a>
             </div>
         </div>
 

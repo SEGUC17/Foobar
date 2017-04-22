@@ -340,7 +340,7 @@
               <div class="modal-body">
                 <div class="row">
 
-              <input style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput1" placeholder="Write a comment" type="text"v-model="comment">
+              <input style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput1" placeholder="Write a comment" type="text"v-model="comment" required="*">
 
                   
               </div>         

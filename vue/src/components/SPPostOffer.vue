@@ -1,6 +1,6 @@
 <template>
 <center>
-  <form role="form" class="" @submit.prevent="">
+  <form role="form" class="" v-on:submit="">
         <div class="form-group">
             <h2>Enter Offer Details: </h2>
           <!--    <div v-for =" message in successmessages">                                  
@@ -120,6 +120,7 @@ methods:{
 
             this.$http.post('http://localhost:3000/api/sPs/offers/create', {"title":this.title,"price":this.price, "capacity":this.capacity, "field":this.field, "description":this.description, "due_date":this.due_date, "start_date":this.start_date, "end_date":this.end_date},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
               alert("Offer Posted")
+              this.$router.go({path:'/',force:true})
             console.log('success');
                     }).catch(function(reason) {
                         console.log(reason.body.err);
@@ -127,7 +128,7 @@ methods:{
                 console.log(this.failuremessages)
                 this.successmessages=[{msg:''}];
         });
-                    this.$router.push({path:'/'})
+                    
         },
         getInterests: function () {
       this.$http.get('http://localhost:3000/api/sPs/interests',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {

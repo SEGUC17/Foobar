@@ -18,8 +18,8 @@
         <tr v-for="pending in pendings" >
           <td>{{pending.email}}</td>
                     <td> <a  style="color:green" @click="approve(pending)" >✔</a></td>
-          <td> <a style="color =red" @click="reject(pending)">✖</a></td>
-
+          <td v-if="pending.is_declined==false"> <a style="color =red" @click="reject(pending)">✖</a></td>
+        <td v-else>Dispparoved</td>
         </tr>
       </tbody>
     </table>

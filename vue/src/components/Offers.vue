@@ -4,13 +4,13 @@
 
  <div align="center" v-for =" n in offers.length" class="row-2">
         <div class="container" align="center">
-          <h4>{{offer.sp_id.name}}</h4>
-          <h4>{{offer.title}}</h4>
-          <h3>{{offer.field}}</h3>
-          Price: {{offer.price}}<br/>
-          Description: {{offer.decription}}<br/>
+          <h4>{{offers[n-1].sp_id.name}}</h4>
+          <h4>{{offers[n-1].title}}</h4>
+          <h3>{{offers[n-1].field}}</h3>
+          Price: {{offers[n-1].price}}<br/>
+          Description: {{offers[n-1].decription}}<br/>
 
-          <button @click="Apply(offer[n-1],n-1)">Apply</button>
+          <button @click="Apply(offers[n-1],n-1)">Apply</button>
 
           </div>
   </div>
@@ -44,8 +44,9 @@ methods:{
       
 var x = confirm("Are you sure you want to apply for this offer ?")
 
-if(x){      
-      this.$http.post('http://localhost:3000/api/students/offers',{"offer_id":offer._id},{headers : {'jwt-token' : localStorage.getItem('id_token')}}),then(response=> {
+if(x){    
+
+      this.$http.post('http://localhost:3000/api/students/offers',{"offer_id":offer._id},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response=> {
         alert("You succesfully applied")
       })
       }
