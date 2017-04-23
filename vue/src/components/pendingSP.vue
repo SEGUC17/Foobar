@@ -59,7 +59,8 @@ methods:{
       if(x){
       this.$http.post('http://localhost:3000/api/admins/pendingSPRequests',{"id":pending._id,"disapprove":true,"name":pending.name,"email":pending.email,"phone_number":pending.phone_number,"description":pending.description},{headers : { 'jwt-token' : localStorage.getItem('id_token')}},{headers : { 'jwt-token' : localStorage.getItem('id_token')}} ).then(response => {
         alert("Service Provider rejected")
-        
+        this.getAllPendingSP()
+
       })
     }
     }
