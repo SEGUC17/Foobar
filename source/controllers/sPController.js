@@ -529,7 +529,6 @@ const spController = {
             message: err.message,
           });
         } else {
-          //  console.log(Offers)
           res.status(200).json({
             status: 'success',
             data: {
@@ -540,7 +539,63 @@ const spController = {
       });
 
     },
+    editPassword(req,res){
 
+       const token = req.headers['jwt-token'];
+      jwt.verify(token, (decoded) => {
+        if (decoded.type === 3) {
+          User.findById(function(err, user){
+            if(err)
+            return err;
+            else
+            {
+              var userPassword = user.password;
+              req.checkBody('oldPassword', 'Your old Password is required').notEmpty();
+              req.checkBody('newPassword', 'A new Password is required').notEmpty();
+              req.checkBody('oldPassword', 'Passwords do not match').equals(userPassword);
+              req.checkBody('confirmNewPassword', 'Passwords do not match').equals(req.body.newPassword);
+            }
+              
+          });
+          var errors = req.validationErrors();
+          
+              if(errors)
+              {
+                console.log('errors here');
+                res.status(400).json({
+                  err: errors
+
+                });
+              }
+              else
+              {
+                console.log('should modify');
+                User.findByIdAndUpdate(decoded.id, {
+                      $set: {
+                          password: req.body.newPassword,
+                      },
+                  }, {
+                      safe: true,
+                      upsert: true,
+                      new: true,
+                  }, (err, sP) => {
+                    console.log('modified!');
+                      res.status(200).json({
+                          status: 'success',
+                          data: {
+                              message: `Edited Password correctly!`,
+                          },
+                      });
+                  });
+              }
+          
+        }else {
+          res.status(500).json({
+            err: err.message,
+          });
+        }
+      });
+    },
 
 
     viewMyInterests(req, res) { // SPs interests
@@ -579,7 +634,7 @@ const spController = {
           });
         } else {
           res.status(500).json({
-            err: err.message,
+            err: 'unauthorized access',
           });
         }
       });

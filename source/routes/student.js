@@ -48,4 +48,6 @@ router.get('/progress', studentController.seeProgress); // student can see his p
 router.post('/reviews/view', studentController.viewReviews);
 
 router.post('/comments/create', studentController.addComment); // adding a comment to a review
+
+router.post('/student/editpassword', studentController.editPassword); //editing password of a specific student
 module.exports = router;

@@ -71,7 +71,7 @@ label {
 
                       <tr>
                         <td>Date of Birth</td>
-                        <td>{{student.birthdate.substring(0, 10)}}</td>
+                        <td>{{student.birthdate}}</td>
                       </tr>
 
                          <tr>

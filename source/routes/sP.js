@@ -112,4 +112,7 @@ router.post('/videos', sPController.getVideo); // adding an embedded video//addi
 
 router.post('/reservations/approve', studentController.approveReservation);
 
+router.post('/sP/editpassword', sPController.editPassword); //editing password of a specific service provider
+
+
 module.exports = router;
