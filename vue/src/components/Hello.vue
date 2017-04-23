@@ -1,204 +1,315 @@
 <template>
-<div class="hello">
-<div class="bg-content">
-  <div class="container">
-    <div class="row">
-          <div class="span12">
-        <!-- slider -->
-        <div class="flexslider">
-              <ul class="slides">
-            <li> <img src="~assets/img/slide-1.jpg" alt="" > </li>
-            <li> <img src="~assets/img/slide-2.jpg" alt="" > </li>
-            <li> <img src="~assets/img/slide-3.jpg" alt="" > </li>
-            <li> <img src="~assets/img/slide-4.jpg" alt="" > </li>
-            <li> <img src="~assets/img/slide-5.jpg" alt="" > </li>
-          </ul>
-            </div>
-        <span id="responsiveFlag"></span>
-        <div class="block-slogan">
-              <h2>FOOBAR</h2>
-              <div>
-            <p>Foobar is a society where  students can find their interests and choose to upgrade and develop it as many service providers arrive here and post their offers.</p>
-            <!-- <p style="text-align:center; padding-top:20px;"><a href="#" class="btn btn-1">Download Bootstrap</a></p> -->
-          </div>
-            </div>
-      </div>
-        </div>
-  </div>
+<div>
 
-      <!-- content -->
+  	<section id="fh5co-home" data-section="home" :style="{ backgroundImage: 'url(' + full_image_2 + ')' }" data-stellar-background-ratio="0.5">
+		<div class="gradient"></div>
+		<div class="container">
+			<div class="text-wrap">
+				<div class="text-inner">
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2">
+							<h1 class="to-animate">Do something you love.</h1>
+							<h2 class="to-animate">Search for whatever you're passionate about <a href="#" target="_blank" title="">here</a></h2>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="slant"></div>
+	</section>
 
-<div id="content" class="content-extra"><div class="ic"></div>
-    <div class="row-1">
-        <div class="container">
-    		<div class="row">
-        <article class="span12">
-        <h4>Our Service Providers</h4>
-         </article>
-        <div class="clear"></div>
-         <ul class="portfolio clearfix">
-           <li class="box"><a href="~assets/img/image-blank.png" class="magnifier" ><img alt="" src="~assets/img/work/1.jpg"></a></li>
-           <li class="box"><a href="~assets/img/image-blank.png" class="magnifier" ><img alt="" src="~assets/img/work/2.jpg"></a></li>
-           <li class="box"><a href="~assets/img/image-blank.png" class="magnifier" ><img alt="" src="~assets/img/work/3.jpg"></a></li>
-           <li class="box"><a href="~assets/img/image-blank.png" class="magnifier" ><img alt="" src="~assets/img/work/4.jpg"></a></li>
-           <li class="box"><a href="~assets/img/image-blank.png" class="magnifier" ><img alt="" src="~assets/img/work/5.jpg"></a></li>
-           <li class="box"><a href="~assets/img/image-blank.png" class="magnifier" ><img alt="" src="~assets/img/work/6.jpg"></a></li>
-           <li class="box"><a href="~assets/img/image-blank.png" class="magnifier" ><img alt="" src="~assets/img/work/7.jpg"></a></li>
-           <li class="box"><a href="~assets/img/image-blank.png" class="magnifier" ><img alt="" src="~assets/img/work/8.jpg"></a></li>
-         </ul>
-      </div>
-     	</div>
-    </div>
-    <div class="row-2">
-        <div class="container">
-        	<h3>Foobar is here for your help</h3>
+	<section id="fh5co-intro">
+		<div class="container">
+			<div class="row row-bottom-padded-lg">
+				<div class="fh5co-block to-animate" :style="{ backgroundImage: 'url(' + img_7 + ')' }">
+					<div class="overlay-darker"></div>
+					<div class="overlay"></div>
+					<div class="fh5co-text">
+						<i class="fh5co-intro-icon icon-bulb"></i>
+						<h2>Plan</h2>
+						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+						<p><a href="#" class="btn btn-primary">Get In Touch</a></p>
+					</div>
+				</div>
+				<div class="fh5co-block to-animate" :style="{ backgroundImage: 'url(' + img_8 + ')' }">
+					<div class="overlay-darker"></div>
+					<div class="overlay"></div>
+					<div class="fh5co-text">
+						<i class="fh5co-intro-icon icon-wrench"></i>
+						<h2>Develop</h2>
+						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+						<p><a href="#" class="btn btn-primary">Click Me</a></p>
+					</div>
+				</div>
+				<div class="fh5co-block to-animate" :style="{ backgroundImage: 'url(' + img_10 + ')' }">
+					<div class="overlay-darker"></div>
+					<div class="overlay"></div>
+					<div class="fh5co-text">
+						<i class="fh5co-intro-icon icon-rocket"></i>
+						<h2>Launch</h2>
+						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+						<p><a href="#" class="btn btn-primary">Why Us?</a></p>
+					</div>
+				</div>
+			</div>
+			<div class="row watch-video text-center to-animate">
+				<span>Watch the video</span>
 
-            <p>Searching for new skills to learn? <i>we are here to get you offers that matches your interests</i></p>
-            <!-- <a href="#" class="btn btn-1">Download</a> -->
-      </div>
-        </div>
-    <div class="row-1">
-        <div class="container">
-        <div class="row">
-        <article class="span12">
-        <h4>Choose an interest?</h4>
-         </article>
-              <ul class="thumbnails thumbnails-1">
-            <li class="span3">
-                  <div class="thumbnail thumbnail-1">
-                <h3>Music</h3>
-                <img  src="~assets/img/blog-featured-01.jpg" alt="">
-                <section>
-                		<a href="#"><h3>At vero eos et accusamus et iusto </h3></a>
-                	    <div class="meta">
-                            <time datetime="2012-11-09" class="date-1"><i class="icon-calendar"></i> 9.11.2012</time>
-                            <div class="name-author"><i class="icon-user"></i> <a href="#">Admin</a></div>
-                            <a href="#" class="comments"><i class="icon-comment"></i> 7 comments</a>
-                        </div>
-                        <div class="clear"></div>
-                      <p>Vivamus sollicitudin libero auctor arcu pulvinar commodo.</p>
-                      <a href="#" class="btn btn-1">Read More</a> </section>
-              </div>
-                </li>
-            <li class="span3">
-                  <div class="thumbnail thumbnail-1">
-                <h3>Graphics</h3>
-                <img  src="~assets/img/blog-featured-02.jpg" alt="">
-                <section>
-                	  <a href="#"><h3>Deleniti atque corrupti quos</h3></a>
-                        <div class="meta">
-                            <time datetime="2012-11-09" class="date-1"><i class="icon-calendar"></i> 9.11.2012</time>
-                            <div class="name-author"><i class="icon-user"></i> <a href="#">Admin</a></div>
-                            <a href="#" class="comments"><i class="icon-comment"></i> 4 comments</a>
-                        </div>
-                        <div class="clear"></div>
-                      <p>Vestibulum volutpat urna sed sapien vehicula varius.</p>
-                      <a href="#" class="btn btn-1">Read More</a> </section>
-              </div>
-                </li>
-            <li class="span3">
-                  <div class="thumbnail thumbnail-1">
-                <h3>Social Media</h3>
-                <img  src="~assets/img/blog-featured-03.jpg" alt="">
-                <section>
-                	  <a href="#"><h3>Similique sunt in culpa qui officia</h3></a>
-                        <div class="meta">
-                            <time datetime="2012-11-09" class="date-1"><i class="icon-calendar"></i> 9.11.2012</time>
-                            <div class="name-author"><i class="icon-user"></i> <a href="#">Admin</a></div>
-                            <a href="#" class="comments"><i class="icon-comment"></i> 9 comments</a>
-                        </div>
-                        <div class="clear"></div>
-                      <p>Pellentesque mi justo, laoreet non bibendum non, auctor imperdiet eros.</p>
-                      <a href="#" class="btn btn-1">Read More</a> </section>
-              </div>
-                </li>
-            <li class="span3">
-                  <div class="thumbnail thumbnail-1">
-                <h3 class="title-1 extra">Photography</h3>
-                <img  src="~assets/img/blog-featured-04.jpg" alt="">
-                <section> <a href="#"><h3>Similique sunt in culpa qui officia</h3></a>
-                		<div class="meta">
-                            <time datetime="2012-11-09" class="date-1"><i class="icon-calendar"></i> 9.11.2012</time>
-                            <div class="name-author"><i class="icon-user"></i> <a href="#">Admin</a></div>
-                            <a href="#" class="comments"><i class="icon-comment"></i> 1 comment</a>
-                        </div>
-                        <div class="clear"></div>
-                      <p>Vestibulum volutpat urna sed sapien vehicula varius.</p>
-                      <a href="#" class="btn btn-1">Read More</a> </section>
-              </div>
-                </li>
-          </ul>
-            </div>
-      </div>
-        </div>
+				<a href="https://vimeo.com/channels/staffpicks/93951774" class="popup-vimeo btn-video"><i class="icon-play2"></i></a>
+			</div>
+		</div>
+	</section>
 
-    <div class="container">
-          <div class="row">
-        <article class="span6">
-              <h3>Shortly about us</h3>
-              <div class="wrapper">
-            <figure class="img-indent"><img src="~assets/img/work/15.jpg" alt="" /></figure>
-            <div class="inner-1 overflow extra">
-                  <div class="txt-1">Mauris scelerisque odio quis leo viverra ac porttitor sem blandit. Sed tincidunt mattis varius. Nunc sodales ipsum nisl, eget lacinia nibh.</div>
-                  Cras lacus tortor, tempus vitae porta nec, hendrerit id dolor. Nam volutpat gravida porta. Suspendisse turpis nibh, volutpat.
-                </div>
-          </div>
-            </article>
-        <article class="span6">
-              <h3>Some quick links</h3>
-                <div class="wrapper">
-                    <ul class="list list-pad">
-                          <li><a href="#">Campaigns</a></li>
-                          <li><a href="#">Portraits</a></li>
-                          <li><a href="#">Fashion</a></li>
-                          <li><a href="#">Fine Art</a></li>
-                        </ul>
-                    <ul class="list list-pad">
-                          <li><a href="#">Campaigns</a></li>
-                          <li><a href="#">Portraits</a></li>
-                          <li><a href="#">Fashion</a></li>
-                          <li><a href="#">Fine Art</a></li>
-                        </ul>
-                    <ul class="list list-pad">
-                          <li><a href="#">Campaigns</a></li>
-                          <li><a href="#">Portraits</a></li>
-                          <li><a href="#">Fashion</a></li>
-                          <li><a href="#">Fine Art</a></li>
-                        </ul>
-                    <ul class="list">
-                          <li><a href="#">Advertising</a></li>
-                          <li><a href="#">Lifestyle</a></li>
-                          <li><a href="#">Love story</a></li>
-                          <li><a href="#">Landscapes</a></li>
-                    </ul>
-                </div>
-            </article>
-      </div>
-        </div>
-  </div>
-    </div>
+	<section id="fh5co-work" data-section="work">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 section-heading text-center">
+					<h2 class="to-animate">Work</h2>
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2 subtext to-animate">
+							<h3>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row row-bottom-padded-sm">
+				<div class="col-md-4 col-sm-6 col-xxs-12">
+					<a href="images/work_1.jpg" class="fh5co-project-item image-popup to-animate">
+						<img src="images/work_1.jpg" alt="Image" class="img-responsive">
+						<div class="fh5co-text">
+						<h2>Project 1</h2>
+						<span>Branding</span>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-4 col-sm-6 col-xxs-12">
+					<a href="images/work_2.jpg" class="fh5co-project-item image-popup to-animate">
+						<img src="images/work_2.jpg" alt="Image" class="img-responsive">
+						<div class="fh5co-text">
+						<h2>Project 2</h2>
+						<span>Web</span>
+						</div>
+					</a>
+				</div>
 
-      <h1>Test Item 2 Sell</h1>
-      <img src="https://unsplash.it/300" />
-      <p style="max-width:300px">Magna minim tempor eiusmod reprehenderit cillum adipisicing elit incididunt. Minim ex incididunt anim consequat nisi aute do mollit. Ipsum proident esse consectetur anim ullamco dolor id labore magna incididunt enim occaecat ut aute sit magna.</p>
-      <p>${{price / 100}}</p>
-      <button @click.prevent="purchaseStuff()">PURCHASE</button>
-      <h3>Order Status {{order_status}}</h3>
+				<div class="clearfix visible-sm-block"></div>
 
-                  <form class="form" method="POST" action="http://localhost:3000/api/testupload" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <input type="file" name="profile_img" accept="image/*" id="img_upload2" required>
-                    </div>
-                    <center><button type="submit" class="btn btn-default">Submit</button></center>
-                </form>
+				<div class="col-md-4 col-sm-6 col-xxs-12">
+					<a href="images/work_3.jpg" class="fh5co-project-item image-popup to-animate">
+						<img src="images/work_3.jpg" alt="Image" class="img-responsive">
+						<div class="fh5co-text">
+						<h2>Project 3</h2>
+						<span>Web</span>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-4 col-sm-6 col-xxs-12">
+					<a href="images/work_4.jpg" class="fh5co-project-item image-popup to-animate">
+						<img src="images/work_4.jpg" alt="Image" class="img-responsive">
+						<div class="fh5co-text">
+						<h2>Project 4</h2>
+						<span>UI/UX</span>
+						</div>
+					</a>
+				</div>
+				
+				<div class="clearfix visible-sm-block"></div>
 
-  </div>
+				<div class="col-md-4 col-sm-6 col-xxs-12">
+					<a href="images/work_5.jpg" class="fh5co-project-item image-popup to-animate">
+						<img src="images/work_5.jpg" alt="Image" class="img-responsive">
+						<div class="fh5co-text">
+						<h2>Project 1</h2>
+						<span>Photography</span>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-4 col-sm-6 col-xxs-12">
+					<a href="images/work_6.jpg" class="fh5co-project-item image-popup to-animate">
+						<img src="images/work_6.jpg" alt="Image" class="img-responsive">
+						<div class="fh5co-text">
+						<h2>Project 2</h2>
+						<span>Illustration</span>
+						</div>
+					</a>
+				</div>
+				
+				<div class="clearfix visible-sm-block"></div>
 
+				<div class="col-md-4 col-sm-6 col-xxs-12">
+					<a href="images/work_7.jpg" class="fh5co-project-item image-popup to-animate">
+						<img src="images/work_7.jpg" alt="Image" class="img-responsive">
+						<div class="fh5co-text">
+						<h2>Project 3</h2>
+						<span>Web</span>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-4 col-sm-6 col-xxs-12">
+					<a href="images/work_8.jpg" class="fh5co-project-item image-popup to-animate">
+						<img src="images/work_8.jpg" alt="Image" class="img-responsive">
+						<div class="fh5co-text">
+						<h2>Project 4</h2>
+						<span>Sketch</span>
+						</div>
+					</a>
+				</div>
+
+				<div class="clearfix visible-sm-block"></div>
+
+				<div class="col-md-4 col-sm-6 col-xxs-12">
+					<a href="images/work_1.jpg" class="fh5co-project-item image-popup to-animate">
+						<img src="images/work_1.jpg" alt="Image" class="img-responsive">
+						<div class="fh5co-text">
+						<h2>Project 2</h2>
+						<span>Illustration</span>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+  	<section id="fh5co-services" data-section="services">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 section-heading text-left">
+					<h2 class=" left-border to-animate">Services</h2>
+					<div class="row">
+						<div class="col-md-8 subtext to-animate">
+							<h3>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6 col-sm-6 fh5co-service to-animate">
+					<i class="icon to-animate-2 icon-anchor"></i>
+					<h3>Brand &amp; Strategy</h3>
+					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean</p>
+				</div>
+				<div class="col-md-6 col-sm-6 fh5co-service to-animate">
+					<i class="icon to-animate-2 icon-layers2"></i>
+					<h3>Web &amp; Interface</h3>
+					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean</p>
+				</div>
+
+				<div class="clearfix visible-sm-block"></div>
+
+				<div class="col-md-6 col-sm-6 fh5co-service to-animate">
+					<i class="icon to-animate-2 icon-video2"></i>
+					<h3>Photo &amp; Video</h3>
+					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean</p>
+				</div>
+				<div class="col-md-6 col-sm-6 fh5co-service to-animate">
+					<i class="icon to-animate-2 icon-monitor"></i>
+					<h3>CMS &amp; eCommerce</h3>
+					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean</p>
+				</div>
+				
+			</div>
+		</div>
+	</section>
+
+  	<section id="fh5co-counters" style="background-image: url(images/full_image_1.jpg);" data-stellar-background-ratio="0.5">
+		<div class="fh5co-overlay"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 section-heading text-center to-animate">
+					<h2>Fun Facts</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-3 col-sm-6 col-xs-12">
+					<div class="fh5co-counter to-animate">
+						<i class="fh5co-counter-icon icon-briefcase to-animate-2"></i>
+						<span class="fh5co-counter-number js-counter" data-from="0" data-to="89" data-speed="5000" data-refresh-interval="50">89</span>
+						<span class="fh5co-counter-label">Finished projects</span>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6 col-xs-12">
+					<div class="fh5co-counter to-animate">
+						<i class="fh5co-counter-icon icon-code to-animate-2"></i>
+						<span class="fh5co-counter-number js-counter" data-from="0" data-to="2343409" data-speed="5000" data-refresh-interval="50">2343409</span>
+						<span class="fh5co-counter-label">Line of codes</span>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6 col-xs-12">
+					<div class="fh5co-counter to-animate">
+						<i class="fh5co-counter-icon icon-cup to-animate-2"></i>
+						<span class="fh5co-counter-number js-counter" data-from="0" data-to="1302" data-speed="5000" data-refresh-interval="50">1302</span>
+						<span class="fh5co-counter-label">Cup of coffees</span>
+					</div>
+				</div>
+				<div class="col-md-3 col-sm-6 col-xs-12">
+					<div class="fh5co-counter to-animate">
+						<i class="fh5co-counter-icon icon-people to-animate-2"></i>
+						<span class="fh5co-counter-number js-counter" data-from="0" data-to="52" data-speed="5000" data-refresh-interval="50">52</span>
+						<span class="fh5co-counter-label">Happy clients</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="fh5co-contact" data-section="contact">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12 section-heading text-center">
+					<h2 class="to-animate">Get In Touch</h2>
+					<div class="row">
+						<div class="col-md-8 col-md-offset-2 subtext to-animate">
+							<h3>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row row-bottom-padded-md">
+				<div class="col-md-6 to-animate">
+					<h3>Contact Info</h3>
+					<ul class="fh5co-contact-info">
+						<li class="fh5co-contact-address ">
+							<i class="icon-home"></i>
+							5555 Love Paradise 56 New Clity 5655, <br>Excel Tower United Kingdom
+						</li>
+						<li><i class="icon-phone"></i> (123) 465-6789</li>
+						<li><i class="icon-envelope"></i>info@freehtml5.co</li>
+						<li><i class="icon-globe"></i> <a href="http://freehtml5.co/" target="_blank">freehtml5.co</a></li>
+					</ul>
+				</div>
+
+				<div class="col-md-6 to-animate">
+					<h3>Contact Form</h3>
+					<div class="form-group ">
+						<label for="name" class="sr-only">Name</label>
+						<input id="name" class="form-control" placeholder="Name" type="text">
+					</div>
+					<div class="form-group ">
+						<label for="email" class="sr-only">Email</label>
+						<input id="email" class="form-control" placeholder="Email" type="email">
+					</div>
+					<div class="form-group ">
+						<label for="phone" class="sr-only">Phone</label>
+						<input id="phone" class="form-control" placeholder="Phone" type="text">
+					</div>
+					<div class="form-group ">
+						<label for="message" class="sr-only">Message</label>
+						<textarea name="" id="message" cols="30" rows="5" class="form-control" placeholder="Message"></textarea>
+					</div>
+					<div class="form-group ">
+						<input class="btn btn-primary btn-lg" value="Send Message" type="submit">
+					</div>
+					</div>
+				</div>
+			</div>
+	</section>
+</div>
 </template>
 <script src="https://cdn.jsdelivr.net/vue.resource/1.3.1/vue-resource.min.js"></script>
 
 <script>
 import Vue from 'vue'
+
 
 export default {
   name: 'hello',
@@ -207,7 +318,11 @@ export default {
           stripe_token: {},
           price: 999,
           stripe_instance: {},
-          order_status: 'READY'
+          order_status: 'READY',
+		  full_image_2: require('../assets/img/full_image_2.jpg'),
+		  img_7: require('../assets/img/img_7.jpg'),
+		  img_8: require('../assets/img/img_8.jpg'),
+		  img_10: require('../assets/img/img_10.jpg'),
       }
     },
   methods: {
