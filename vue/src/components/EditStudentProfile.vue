@@ -84,6 +84,13 @@
 
 
     <div class="modal fade" id="StudentEditPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div v-for =" message in successmessages">                                  
+                    <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
+    </div>
+    <div v-for =" message in failuremessages">                               
+               <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
+    </div>
+           <br><br>
       <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header modal-header-primary">

@@ -86,6 +86,14 @@
 
 
   <div class="modal fade" id="SPEditPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div v-for =" message in successmessages">                                  
+                    <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
+    </div>
+    <div v-for =" message in failuremessages">                               
+               <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
+    </div>
+           <br><br>
+      
       <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header modal-header-primary">
@@ -93,7 +101,7 @@
             </div>
 
             <div class="modal-body">
-                <div class="row">                          
+                <div align="center" class="row">                          
                 Enter Old Password:<input required style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput1" placeholder="Old Password" type="password"v-model="oldPassword"></input><br/>
                 Enter New Password:<input required style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput2" placeholder="New comment" type="password"v-model="newPassword"></input><br/>
                 Confirm New Password:<input required style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput3" placeholder="Confirm New comment" type="password"v-model="confirmNewPassword"></input>
