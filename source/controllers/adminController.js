@@ -429,9 +429,10 @@ const adminController = {
         const token = req.headers['jwt-token']; + jwt.verify(token, (decoded) => {
 
             if (decoded.type === 1) {
-                StudentInterest.find({}).populate('interest_id').exec((err, interests) => {
-                    interests.forEach((StudentInterest) => {
-                        userMap[k] = StudentInterest.interest_id.name;
+                StudentInterest.find([]).populate('interest_id').exec((err, interests) => {
+                    interests.forEach((rest) => {
+                      console.log(rest);
+                        userMap[k] = rest.interest_id.name;
                         k += 1;
                     });
                     temp = adminController.sortByFrequencyAndFilter(userMap)

@@ -1,15 +1,13 @@
 <template>
-<center>
-<br/>
 
+<center>
   <form role="form" class="" @submit.prevent>
           <h2>Edit Your Profile </h2>
-          <img v-if="this.user.profileimg" :src="'http://localhost:3000/'+user.profileimg.path.replace('public','')" style="width:200px">
+          <img v-if="this.user.profileimg" :src="'http://localhost:3000/'+user.profileimg.path.replace('public','')" style="width:400px">
           <input ref="avatar2" type="file" name="avatar2" id="avatar2" v-on:change="changedp($event.target.name, $event.target.files)">
 
-        <br/>
-        <br/>
-        <div>Price Category: {{ pricecategory }}</div>
+
+        <span>Price Category: {{ pricecategory }}</span>
         <br>
         <input type="radio" id="one" value="Cheap" v-model="pricecategory">
         <span for="pricecategory">$</span>&nbsp; &nbsp;
@@ -23,21 +21,21 @@
         <br>
             <label class="col-sm-2 control-label">Location</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="location" :value="profile.location" v-model="location" />
+                <input type="text" class="form-control" id="location" :value=profile.location v-model="location" />
             </div>
         </div>
 
         <div class="form-group">
             <label for="description" class="col-sm-2 control-label">Description</label>
             <div class="col-sm-10">
-                <input type="text" v-model="description" :value="profile.description" ></input>
+                <input type="text" v-model="description" :value=profile.description ></input>
             </div>
         </div>
 
          <div>
         <label for="fields" class="col-sm-2 control-label">Fields</label>
         <li v-for =" field in interests">
-        <input type="checkbox" id="field.name" :value="field.name" v-model="fields">
+        <input type="checkbox" id=field.name :value=field.name v-model="fields">
         <span for=field.name>{{field.name}}</span>
         </li>
         <span>Fields: {{ fields }}</span>
@@ -48,19 +46,16 @@
         <br>
             <label class="col-sm-2 control-label">Phone Number</label>
             <div class="col-sm-10">
-                <input type="number" class="form-control" id="phone" :value="profile.phone_number" v-model="phone_number" />
+                <input type="number" class="form-control" id="phone" :value=profile.phone_number v-model="phone_number" />
             </div>
         </div>
-
-      <button class="col-md-5 btn btn-primary btn-sm " href="#SPEditPassword" data-toggle="modal">Edit Password</button>
-
 
 
 
     <h1>Your Images</h1>
-    <span v-for ="image in images">
-       <img :src="'http://localhost:3000/'+image.img.path.replace('public','')" style="width:200px">&nbsp;&nbsp;&nbsp;&nbsp;
-    </span>
+    <li v-for ="image in images">
+       <img :src="'http://localhost:3000/'+image.img.path.replace('public','')" style="width:200px">
+    </li>
     <input ref="avatar" type="file" name="avatar" id="avatar" v-on:change="upload($event.target.name, $event.target.files)">
     <h1>Your Videos</h1>
     <youtube :video-id="this.attrs"></youtube>
@@ -79,45 +74,53 @@
            
             <div class="col-sm-10">
                 <button class="btn btn-primary btn-sm"  v-on:click="edit">Submit Changes</button>
+                <button class="btn btn-primary btn-sm " href="#SPEditPassword" data-toggle="modal">Edit Password</button>
             </div>
         </div>
 
     </form>
-
-
-  <div class="modal fade" id="SPEditPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div v-for =" message in successmessages">                                  
+ 
+              <form role="form" class="" v-on:submit.prevent="editPassword()">
+             <div class="modal fade" id="SPEditPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div v-for =" message in successmessages">                                  
                     <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
     </div>
     <div v-for =" message in failuremessages">                               
                <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
     </div>
            <br><br>
-      
       <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header modal-header-primary">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
-
             <div class="modal-body">
-                <div align="center" class="row">                          
-                Enter Old Password:<input required style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput1" placeholder="Old Password" type="password"v-model="oldPassword"></input><br/>
-                Enter New Password:<input required style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput2" placeholder="New comment" type="password"v-model="newPassword"></input><br/>
-                Confirm New Password:<input required style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput3" placeholder="Confirm New comment" type="password"v-model="confirmNewPassword"></input>
-                </div>                
-            </div>
+            <center>
 
-            <div class="modal-footer">
-                <button class="btn btn-primary add_field_button" style="margin-bottom:20px;" v-on:click="editPassword()">Update Password</button>
-            </div>
+                <div class="row">                          
+                Enter Old Password:<input require="required"type="password" style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput1" placeholder="Old Password" v-model="oldPassword" required="*"></input><br/>
+                Enter New Password:<input type="password" style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput2" placeholder="New Password" v-model="newPassword" required="*"></input><br/>
+                Confirm New Password:<input type="password" style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput3" placeholder="Confirm New Password" v-model="confirmNewPassword" required="*"></input>
+                </div>     
+                </center>      
+                   <div class="modal-footer">
+                <button class="btn btn-primary add_field_button" style="margin-bottom:20px;" >Update Password</button>
+                </div>  </div>  
+                 </div>
           </div>
         </div>
-    </div>
- 
-    
+         </div>
+    </div>  
 
+    </div> 
+                </form>
+           
     </center>
+      
+            
+
+         
+
 </template>
 <script>
 
@@ -143,11 +146,9 @@ export default {
       attrs:'',
       images:[],
       videoId :'',
-      oldPassword:'',
-      newPassword:'',
-      confirmNewPassword:'',
-      successmessages:[{msg:''}],
-      failuremessages:[{msg:''}]
+          confirmNewPassword:"",
+      oldPassword:"",
+      newPassword:""
 
     }
   },
@@ -188,22 +189,6 @@ methods:{
                     })
           }
         },
-    editPassword: function()
-    {
-        var x = confirm("Are you sure you want to edit your password")
-          if(x)
-          {
-            this.$http.post('http://localhost:3000/api/sPs/sP/editpassword', {"oldPassword":this.oldPassword,"newPassword":this.newPassword, "confirmNewPassword":this.confirmNewPassword},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
-            alert("Updated Password")
-            this.$router.push({path:'/SPViewMyProfile'})
-                    }).catch(function(reason) {
-                        console.log(reason.body.err);
-                this.failuremessages = reason.body.err;
-                console.log(this.failuremessages)
-                this.successmessages=[{msg:''}];
-                    });
-          }
-    }, 
     newvideo : function(){
         this.$http.post('http://localhost:3000/api/sPs/videos/upload', {"title":this.title,"videoURL":this.url},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
           console.log(data)
@@ -251,6 +236,27 @@ methods:{
     },
     changeVideo: function(url){
         this.attrs = url
+    },
+    editPassword: function()
+    {
+        var x = confirm("Are you sure you want to edit your password")
+          if(x)
+          {
+            console.log(this.user);
+            this.$http.post('http://localhost:3000/api/sPs/sP/editpassword', {"oldPassword":this.oldPassword,"newPassword":this.newPassword, "confirmNewPassword":this.confirmNewPassword,"id":this.user._id},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+            alert("Updated Password")
+                confirmNewPassword=""
+      oldPassword=""
+      newPassword=""
+      $('#SPEditPassword').modal('hide');
+            this.$router.push({path:'/SPViewMyProfile',force:true});
+                    }).catch(function(reason) {
+                        console.log(reason.body.err);
+                this.failuremessages = reason.body.err;
+                console.log(this.failuremessages)
+                this.successmessages=[{msg:''}];
+                    });
+          }
     }
   }
 

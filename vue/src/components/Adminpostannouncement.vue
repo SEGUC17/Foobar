@@ -1,6 +1,6 @@
 <template>
 <center>
-  <form role="form" class="" @submit.prevent="">
+  <form role="form" class="" v-on:submit="postAnnouncement">
         <div class="form-group">
             <h2>Enter Announcement Details: </h2>
              <div v-for =" message in successmessages">                                  
@@ -30,7 +30,7 @@
             <div class="col-sm-2">
             </div>
             <div class="col-sm-10">
-               <router-link to="/"> <button class="btn btn-primary btn-sm"  v-on:click="postAnnouncement"> Post Announcement</button></router-link>
+                <button class="btn btn-primary btn-sm" > Post Announcement</button>
             </div>
         </div>
     </form>

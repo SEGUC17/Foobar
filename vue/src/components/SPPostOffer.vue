@@ -1,6 +1,6 @@
 <template>
 <center>
-  <form role="form" class="" v-on:submit="">
+  <form role="form" class="" v-on:submit.prevent="postOffer()">
         <div class="form-group">
             <h2>Enter Offer Details: </h2>
           <!--    <div v-for =" message in successmessages">                                  
@@ -86,7 +86,7 @@
             <div class="col-sm-2">
             </div>
             <div class="col-sm-10">
-                <button class="btn btn-primary btn-sm"  v-on:click="postOffer()">Post Offer</button>
+                <button class="btn btn-primary btn-sm" >Post Offer</button>
             </div>
         </div>
     </form>
@@ -120,7 +120,7 @@ methods:{
 
             this.$http.post('http://localhost:3000/api/sPs/offers/create', {"title":this.title,"price":this.price, "capacity":this.capacity, "field":this.field, "description":this.description, "due_date":this.due_date, "start_date":this.start_date, "end_date":this.end_date},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
               alert("Offer Posted")
-              this.$router.go({path:'/',force:true})
+              this.$router.push({path:'/',force:true})
             console.log('success');
                     }).catch(function(reason) {
                         console.log(reason.body.err);

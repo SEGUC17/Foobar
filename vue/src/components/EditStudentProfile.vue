@@ -82,7 +82,7 @@
       </div>
     </div>
 
-
+<form role="form" class="" v-on:submit.prevent="editPassword()">
     <div class="modal fade" id="StudentEditPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div v-for =" message in successmessages">                                  
                     <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
@@ -98,19 +98,22 @@
             </div>
 
             <div class="modal-body">
+            <center>
                 <div class="row">                          
-                Enter Old Password:<input require="required"type="password" style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput1" placeholder="Old Password" v-model="oldPassword"></input><br/>
-                Enter New Password:<input type="password" style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput2" placeholder="New comment" v-model="newPassword"></input><br/>
-                Confirm New Password:<input type="password" style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput3" placeholder="Confirm New comment" v-model="confirmNewPassword"></input>
-                </div>                
+                Enter Old Password:<input require="required"type="password" style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput1" placeholder="Old Password" v-model="oldPassword" required="*"></input><br/>
+                Enter New Password:<input type="password" style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput2" placeholder="New Password" v-model="newPassword" required="*"></input><br/>
+                Confirm New Password:<input type="password" style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput3" placeholder="Confirm New Password" v-model="confirmNewPassword" required="*"></input>
+                </div>     
+                </center>           
             </div>
 
             <div class="modal-footer">
-                <button class="btn btn-primary add_field_button" style="margin-bottom:20px;" v-on:click="editPassword()">Update Password</button>
+                <button class="btn btn-primary add_field_button" style="margin-bottom:20px;">Update Password</button>
             </div>
           </div>
         </div>
     </div>
+    </form>
 
 
   </div>
@@ -127,6 +130,9 @@ export default {
       address : "",
       birthdate : "",
       description : "",
+      confirmNewPassword:"",
+      oldPassword:"",
+      newPassword:"",
       successmessages:[{msg:''}],
       failuremessages:[{msg:''}]
      
@@ -174,8 +180,11 @@ methods:{
         var x = confirm("Are you sure you want to edit your password")
           if(x)
           {
-            this.$http.post('http://localhost:3000/api/students/student/editpassword', {"oldPassword":this.oldPassword,"newPassword":this.newPassword, "confirmNewPassword":this.confirmNewPassword},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+            this.$http.post('http://localhost:3000/api/students/student/editpassword', {"oldPassword":this.oldPassword,"newPassword":this.newPassword, "confirmNewPassword":this.confirmNewPassword,"id":this.$route.params.EditStudid},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
             alert("Updated Password")
+                confirmNewPassword=""
+      oldPassword=""
+      newPassword=""
             this.$router.push({name : 'StudentProfile' , params: { Studid : this.$route.params.EditStudid }})
                     }).catch(function(reason) {
                         console.log(reason.body.err);

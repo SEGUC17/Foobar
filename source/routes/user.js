@@ -118,10 +118,11 @@
         const interests = req.body.interests;
         console.log(user);
         if (interests) {
+          console.log(interests)
           for (let i = 0; i < interests.length; i += 1) {
             const newInterset = new StudentInterest({
               student_id: user._id,
-              interest_id: interests[i],
+              interest_id: interests[i]._id,
             });
             newInterset.save((saveerr) => {
               if (saveerr) {

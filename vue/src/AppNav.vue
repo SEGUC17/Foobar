@@ -149,14 +149,14 @@
                                     <label for="email" class="col-sm-2 control-label">
                                         Email</label>
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="email1" placeholder="Email" v-model="creds.username" />
+                                        <input type="email" class="form-control" id="email1" placeholder="Email" v-model="creds.username" required="*" />
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputPassword1" class="col-sm-2 control-label">
                                         Password</label>
                                     <div class="col-sm-10">
-                                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" v-model="creds.password" />
+                                        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" v-model="creds.password" required="*">
                                     </div>
                                 </div>
                                 <router-link to="/"> <button class="btn btn-primary btn-sm " type="submit" v-on:click="login">
@@ -179,7 +179,7 @@
                                     <label for="name" class="col-sm-2 control-label">
                                         Name</label>
                                     <div class="col-sm-10">
-                                      <input v-validate="{ rules: { required: true} }" type="text" name="name" class="form-control" id="name" placeholder="Name" v-model="creds.name">
+                                      <input v-validate="{ rules: { required: true} }" type="text" name="name" class="form-control" id="name" placeholder="Name" v-model="creds.name" required="*">
                                       <span v-show="errors.has('name')">{{ errors.first('name') }}</span>
                                         <!-- <input type="text" class="form-control" id="name" placeholder="Name" v-model="creds.name" /> -->
                                     </div>
@@ -188,7 +188,7 @@
                                     <label for="email" class="col-sm-2 control-label">
                                         Email</label>
                                     <div class="col-sm-10">
-                     <input v-validate="{ rules: { required: true, email: true } }" type="text" name="email" class="form-control" id="email" placeholder="Email" v-model="creds.email">
+                     <input v-validate="{ rules: { required: true, email: true } }" type="text" name="email" class="form-control" id="email" placeholder="Email" v-model="creds.email" required="*">
                      <span v-show="errors.has('email')">{{ errors.first('email') }}</span>
                                         <!-- <input type="email" class="form-control" id="email" placeholder="Email" v-model="creds.email" /> -->
                                     </div>
@@ -197,7 +197,7 @@
                                     <label for="password" class="col-sm-2 control-label">
                                         Password</label>
                                     <div class="col-sm-10">
-                                    <input v-validate="{ rules: { required: true} }" type="password" name="password" class="form-control" id="password" placeholder="Password" v-model="creds.password">
+                                    <input v-validate="{ rules: { required: true} }" type="password" name="password" class="form-control" id="password" placeholder="Password" v-model="creds.password" required="*">
                      <span v-show="errors.has('password')">{{ errors.first('password') }}</span>
                       <!--<input type="password" class="form-control" id="password" placeholder="Password" v-model="creds.password" /> -->
                                     </div>
@@ -206,7 +206,7 @@
                                     <label for="password" class="col-sm-2 control-label">
                                         Confirm Password</label>
                                     <div class="col-sm-10">
-                                    <input v-validate="{ rules: { required: true} }" type="password" name="Confirm password" class="form-control" id="Confirm password" placeholder="Password" v-model="creds.password2">
+                                    <input v-validate="{ rules: { required: true} }" type="password" name="Confirm password" class="form-control" id="Confirm password" placeholder="Password" v-model="creds.password2" required="*">
                      <span v-show="errors.has('Confirm password')">{{ errors.first('Confirm password') }}</span>
 
                                         <!-- <input type="password" class="form-control" id="password2" placeholder="Confirm Password" v-model="creds.password2" /> -->
@@ -216,7 +216,7 @@
                                     <label for="name" class="col-sm-2 control-label">
                                         University</label>
                                     <div class="col-sm-10">
-                                      <input v-validate="{ rules: { required: true} }" type="text" name="university" class="form-control" id="university" placeholder="University" v-model="university">
+                                      <input v-validate="{ rules: { required: true} }" type="text" name="university" class="form-control" id="university" placeholder="University" v-model="university" required="*">
                                       <span v-show="errors.has('university')">{{ errors.first('university') }}</span>
                                         <!-- <input type="text" class="form-control" id="name" placeholder="Name" v-model="creds.name" /> -->
                                     </div>
@@ -283,7 +283,7 @@
                                 <center>
 
                                 <h5>Enter your email below to reset the password:</h5>
-                                <form role="form" class="" v-on:submit='resetPW'>
+                                <form role="form" class="" v-on:submit.prevent='resetPW'>
                                 <div class="form-group">
                                 <div v-for =" message in successmessages">
                                 <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
