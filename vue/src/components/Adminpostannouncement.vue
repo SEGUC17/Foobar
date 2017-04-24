@@ -3,10 +3,10 @@
   <form role="form" class="" v-on:submit="postAnnouncement">
         <div class="form-group">
             <h2>Enter Announcement Details: </h2>
-             <div v-for =" message in successmessages">                                  
+             <div v-for =" message in successmessages">
                     <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
                      </div>
-                   <div v-for =" message in failuremessages">                               
+                   <div v-for =" message in failuremessages">
                <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
            </div>
            <br><br>
@@ -14,7 +14,7 @@
             <div class="col-sm-10">
                <input v-validate="{ rules: { required: true} }" type="text" name="title" class="form-control" id="title" placeholder="Title" v-model="title" required="*">
                      <span v-show="errors.has('title')">{{ errors.first('title') }}</span>
-               
+
             </div>
         </div>
 
@@ -51,7 +51,7 @@ export default {
 methods:{
         postAnnouncement: function ()
         {
-            this.$http.post('http://localhost:3000/api/admins/announcements/post', {"title":this.title,"content":this.content}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+            this.$http.post('http://52.210.115.35:3000/api/admins/announcements/post', {"title":this.title,"content":this.content}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
               alert("Announcement Posted")
               this.$router.push({path:'/'})
             console.log('success');

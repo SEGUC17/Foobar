@@ -71,7 +71,7 @@
       <button @click.prevent="purchaseStuff()">PURCHASE</button>
       <h3>Order Status {{order_status}}</h3>
 
-                  <form class="form" method="POST" action="http://localhost:3000/api/testupload" enctype="multipart/form-data">
+                  <form class="form" method="POST" action="http://52.210.115.35:3000/api/testupload" enctype="multipart/form-data">
                     <div class="form-group">
                         <input type="file" name="profile_img" accept="image/*" id="img_upload2" required>
                     </div>
@@ -108,7 +108,7 @@ export default {
                 this.stripe_token= token;
                 console.log(this.stripe_token);
                 this.order_status= "PENDING";
-                Vue.http.post('http://localhost:3000/api/charge', {token_id: this.stripe_token.id, price: price})
+                Vue.http.post('http://52.210.115.35:3000/api/charge', {token_id: this.stripe_token.id, price: price})
                   .then((response) => {
                     console.log(response.body);
                     this.order_status= "SUCCESSFULLY COMPLETED";

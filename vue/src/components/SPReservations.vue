@@ -25,9 +25,9 @@
           <td v-else-if="reservation.status==2">Disapparoved</td>
 
           <td v-if="reservation.status==0"><a  style="color:green" v-on:click="approve(reservation._id)">✔</a></td>
-          <td v-else></td>         
+          <td v-else></td>
           <td v-if="reservation.status==0"><a style="color =red" v-on:click="disapprove(reservation._id)">✖</a></td>
-          <td v-else></td>         
+          <td v-else></td>
         </tr>
       </tbody>
     </table>
@@ -47,14 +47,14 @@ created(){
 },
 methods:{
     getReservations: function () {
-      this.$http.get('http://localhost:3000/api/sPs/reservations/view', {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.get('http://52.210.115.35:3000/api/sPs/reservations/view', {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         this.reservations=response.data.data.reservations
       })
     },
     approve:function(reservation_id){
       var x = confirm("Are you sure you want to approve this reservation ?")
       if(x){
-        this.$http.post('http://localhost:3000/api/sPs/reservations/approve',{"id":reservation_id, "approve":true}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+        this.$http.post('http://52.210.115.35:3000/api/sPs/reservations/approve',{"id":reservation_id, "approve":true}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
           alert("Reservation Approved")
         this.getReservations();
         })
@@ -63,7 +63,7 @@ methods:{
     disapprove: function(reservation_id){
       var x = confirm("Are you sure you want to disapprove this reservation ?")
       if(x){
-        this.$http.post('http://localhost:3000/api/sPs/reservations/approve',{"id": reservation_id, "approve":false}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+        this.$http.post('http://52.210.115.35:3000/api/sPs/reservations/approve',{"id": reservation_id, "approve":false}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
           alert("Reservation Approved")
 
         this.getReservations();

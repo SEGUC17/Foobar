@@ -43,7 +43,7 @@ this.search();
 },
 methods:{
   search: function(){
-    this.$http.post('http://localhost:3000/api/students/home',{"text":this.$route.query.plan}).then(data => {
+    this.$http.post('http://52.210.115.35:3000/api/students/home',{"text":this.$route.query.plan}).then(data => {
 
     this.offers=data.body.data.offers
 console.log(this.offers)
@@ -60,7 +60,7 @@ var x = confirm("Are you sure you want to apply for this offer ?")
 
 if(x){
 
-      this.$http.post('http://localhost:3000/api/students/offers',{"offer_id":offer._id},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response=> {
+      this.$http.post('http://52.210.115.35:3000/api/students/offers',{"offer_id":offer._id},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response=> {
         alert("You succesfully applied")
       })
       }

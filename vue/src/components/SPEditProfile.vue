@@ -3,7 +3,7 @@
 <center>
   <form role="form" class="" @submit.prevent>
           <h2>Edit Your Profile </h2>
-          <img v-if="this.user.profileimg" :src="'http://localhost:3000/'+user.profileimg.path.replace('public','')" style="width:400px">
+          <img v-if="this.user.profileimg" :src="'http://52.210.115.35:3000/'+user.profileimg.path.replace('public','')" style="width:400px">
           <input ref="avatar2" type="file" name="avatar2" id="avatar2" v-on:change="changedp($event.target.name, $event.target.files)">
 
 
@@ -54,7 +54,7 @@
 
     <h1>Your Images</h1>
     <li v-for ="image in images">
-       <img :src="'http://localhost:3000/'+image.img.path.replace('public','')" style="width:200px">
+       <img :src="'http://52.210.115.35:3000/'+image.img.path.replace('public','')" style="width:200px">
     </li>
     <input ref="avatar" type="file" name="avatar" id="avatar" v-on:change="upload($event.target.name, $event.target.files)">
     <h1>Your Videos</h1>
@@ -70,8 +70,8 @@
     </form>
 
         <div class="row">
-            
-           
+
+
             <div class="col-sm-10">
                 <button class="btn btn-primary btn-sm"  v-on:click="edit">Submit Changes</button>
                 <button class="btn btn-primary btn-sm " href="#SPEditPassword" data-toggle="modal">Edit Password</button>
@@ -79,13 +79,13 @@
         </div>
 
     </form>
- 
+
               <form role="form" class="" v-on:submit.prevent="editPassword()">
              <div class="modal fade" id="SPEditPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div v-for =" message in successmessages">                                  
+        <div v-for =" message in successmessages">
                     <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
     </div>
-    <div v-for =" message in failuremessages">                               
+    <div v-for =" message in failuremessages">
                <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
     </div>
            <br><br>
@@ -97,29 +97,29 @@
             <div class="modal-body">
             <center>
 
-                <div class="row">                          
+                <div class="row">
                 Enter Old Password:<input require="required"type="password" style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput1" placeholder="Old Password" v-model="oldPassword" required="*"></input><br/>
                 Enter New Password:<input type="password" style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput2" placeholder="New Password" v-model="newPassword" required="*"></input><br/>
                 Confirm New Password:<input type="password" style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput3" placeholder="Confirm New Password" v-model="confirmNewPassword" required="*"></input>
-                </div>     
-                </center>      
+                </div>
+                </center>
                    <div class="modal-footer">
                 <button class="btn btn-primary add_field_button" style="margin-bottom:20px;" >Update Password</button>
-                </div>  </div>  
+                </div>  </div>
                  </div>
           </div>
         </div>
          </div>
-    </div>  
+    </div>
 
-    </div> 
+    </div>
                 </form>
-           
-    </center>
-      
-            
 
-         
+    </center>
+
+
+
+
 
 </template>
 <script>
@@ -158,7 +158,7 @@ created(){
 },
 methods:{
     getProfile: function () {
-      this.$http.get('http://localhost:3000/api/sPs/profile/view',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.get('http://52.210.115.35:3000/api/sPs/profile/view',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         this.profile=response.data.data.providerProfile
         this.location = response.data.data.providerProfile.location;
         this.pricecategory = response.data.data.providerProfile.price_category;
@@ -172,7 +172,7 @@ methods:{
       })
     },
     getInterests: function () {
-      this.$http.get('http://localhost:3000/api/sPs/interests',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.get('http://52.210.115.35:3000/api/sPs/interests',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
 
         this.interests=response.data.data.interests
       })
@@ -182,7 +182,7 @@ methods:{
         {
           var x = confirm("Are you sure you want to edit these attributes")
           if(x){
-            this.$http.post('http://localhost:3000/api/sPs/profile/edit', {"price_category":this.pricecategory,"location":this.location, "description":this.description, "fields":this.fields, "description":this.description, "phone_number":this.phone_number},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+            this.$http.post('http://52.210.115.35:3000/api/sPs/profile/edit', {"price_category":this.pricecategory,"location":this.location, "description":this.description, "fields":this.fields, "description":this.description, "phone_number":this.phone_number},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
             console.log('success');
             alert("Profile Edited")
             this.$router.push({path:'/SPViewMyProfile'})
@@ -190,7 +190,7 @@ methods:{
           }
         },
     newvideo : function(){
-        this.$http.post('http://localhost:3000/api/sPs/videos/upload', {"title":this.title,"videoURL":this.url},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+        this.$http.post('http://52.210.115.35:3000/api/sPs/videos/upload', {"title":this.title,"videoURL":this.url},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
           console.log(data)
         })
     },
@@ -203,7 +203,7 @@ methods:{
           });
         formData.append("user_id",this.user._id)
 
-        this.$http.post('http://localhost:3000/api/sPs/upload',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+        this.$http.post('http://52.210.115.35:3000/api/sPs/upload',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
             this.getImages();
       })
 
@@ -217,19 +217,19 @@ methods:{
           });
         formData.append("user_id",this.user._id)
 
-        this.$http.post('http://localhost:3000/api/sPs/changedp',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+        this.$http.post('http://52.210.115.35:3000/api/sPs/changedp',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
             console.log('changed dp');
       })
 
     },
     getVideos: function(){
-        let route ='http://localhost:3000/api/sPs/videos/';
+        let route ='http://52.210.115.35:3000/api/sPs/videos/';
         this.$http.post(route,{"id":this.user._id}).then(response => {
             this.videos = response.body.data.video
       })
     },
     getImages: function(){
-        let route ='http://localhost:3000/api/sPs/images/'.concat(this.user._id);
+        let route ='http://52.210.115.35:3000/api/sPs/images/'.concat(this.user._id);
         this.$http.get(route,{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
             this.images = response.body.data.images
       })
@@ -243,7 +243,7 @@ methods:{
           if(x)
           {
             console.log(this.user);
-            this.$http.post('http://localhost:3000/api/sPs/sP/editpassword', {"oldPassword":this.oldPassword,"newPassword":this.newPassword, "confirmNewPassword":this.confirmNewPassword,"id":this.user._id},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+            this.$http.post('http://52.210.115.35:3000/api/sPs/sP/editpassword', {"oldPassword":this.oldPassword,"newPassword":this.newPassword, "confirmNewPassword":this.confirmNewPassword,"id":this.user._id},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
             alert("Updated Password")
                 confirmNewPassword=""
       oldPassword=""

@@ -34,7 +34,7 @@ created(){
 },
 methods:{
   viewOffers: function(){
-      this.$http.get('http://localhost:3000/api/students/viewoffer',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.get('http://52.210.115.35:3000/api/students/viewoffer',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         this.offers= response.data.data.offers;
         this.student = response.data.data.student;
               //  console.log(response.data.data.offers);
@@ -46,7 +46,7 @@ var x = confirm("Are you sure you want to apply for this offer ?")
 
 if(x){
 
-      this.$http.post('http://localhost:3000/api/students/offers',{"offer_id":offer._id},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response=> {
+      this.$http.post('http://52.210.115.35:3000/api/students/offers',{"offer_id":offer._id},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response=> {
 
         alert("You succesfully applied")
       }).catch(function(reason) {alert(reason.body.message)});

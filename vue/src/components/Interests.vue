@@ -11,10 +11,10 @@
       <label  class="col-sm-2 control-label">
           Add a new Interest</label>
           <br>
-          <div v-for =" message in successmessages">                                  
+          <div v-for =" message in successmessages">
                     <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
                      </div>
-                   <div v-for =" message in failuremessages">                               
+                   <div v-for =" message in failuremessages">
                <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
            </div>
            <form role="form" class="" v-on:submit='addInterest'>
@@ -54,7 +54,7 @@ this.reviewDataAnalysis();
 methods:{
     addInterest: function () {
 
-          this.$http.post('http://localhost:3000/api/admins/addInterest',{name: this.interestname },{headers : { 'jwt-token' : localStorage.getItem('id_token')}} ).then(response => {
+          this.$http.post('http://52.210.115.35:3000/api/admins/addInterest',{name: this.interestname },{headers : { 'jwt-token' : localStorage.getItem('id_token')}} ).then(response => {
       this.msg="Interest has been added"
       alert(this.msg)
           }).catch(function(reason) {
@@ -66,7 +66,7 @@ methods:{
         });
         },
         reviewDataAnalysis: function () {
-          this.$http.get('http://localhost:3000/api/admins/reviewinterest',{headers : { 'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+          this.$http.get('http://52.210.115.35:3000/api/admins/reviewinterest',{headers : { 'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
 console.log(response)
             this.most= response.body.data.most,
             this.least = response.body.data.least,

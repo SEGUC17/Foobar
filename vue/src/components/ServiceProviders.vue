@@ -36,7 +36,7 @@ created(){
 },
 methods:{
     getAllServiceProviders: function () {
-      this.$http.get('http://localhost:3000/api/admins/sPs').then(response => {
+      this.$http.get('http://52.210.115.35:3000/api/admins/sPs').then(response => {
         console.log(response.data)
         this.serviceproviders=response.data.data.users;
       })
