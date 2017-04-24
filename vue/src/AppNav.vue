@@ -1,4 +1,4 @@
-<style scoped>
+http://52.210.115.35:3000/<style scoped>
 
 
 
@@ -466,7 +466,7 @@ data () {
 if(localStorage.getItem('id_token')!=null){
 
   this.user.authenticated=true
-  this.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
+  this.$http.post('http://52.210.115.35:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
     this.decodeid=decode
     this.user.type = decode.body.type
 })
@@ -502,7 +502,7 @@ methods: {
   // Send a request to the login URL and save the returned JWT
   login : function() {
     var app = this;
-    app.$http.post('http://localhost:3000/api/users/login', {
+    app.$http.post('http://52.210.115.35:3000/api/users/login', {
 	"email":app.creds.username,
 	"password":  app.creds.password
 }).then(data => {
@@ -511,7 +511,7 @@ methods: {
       alert("You logged in successfully");
       localStorage.setItem('id_token', data.body.token)
       app.user.authenticated = true
-      app.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
+      app.$http.post('http://52.210.115.35:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
         this.decodeid = decode;
         this.user.type = decode.body.type
       })
@@ -524,7 +524,7 @@ methods: {
 });
   },
   signup : function() {
-    this.$http.post('http://localhost:3000/api/users/signup', {
+    this.$http.post('http://52.210.115.35:3000/api/users/signup', {
     "email":this.creds.email,
     "password":this.creds.password,
     "password2":this.creds.password2,
@@ -560,7 +560,7 @@ methods: {
 
   resetPW : function() {
 
-    this.$http.post('http://localhost:3000/api/users/resetPW', {"email":this.resetPWEmail}).then(data => {
+    this.$http.post('http://52.210.115.35:3000/api/users/resetPW', {"email":this.resetPWEmail}).then(data => {
       alert("New Password sent to ".concat(this.resetPWEmail));
       console.log('success');
 
@@ -612,7 +612,7 @@ this.$router.go({path:'/',force:true});
   },
 
   findAllInterests: function() {
-    this.$http.get('http://localhost:3000/api/students/all/interests/').then(response => {
+    this.$http.get('http://52.210.115.35:3000/api/students/all/interests/').then(response => {
       console.log(response.body.data.interests);
         this.interests=response.body.data.interests
       })
