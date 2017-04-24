@@ -15,6 +15,7 @@ import AdminSP from '@/components/AdminSP.vue'
 import viewAllStudents from '@/components/viewAllStudents.vue'
 import SPViewMyProfile from '@/components/SPViewMyProfile.vue'
 import SPReservations from '@/components/SPReservations.vue'
+import Search from '@/components/Search.vue'
 import SPReviews from '@/components/SPReviews.vue'
 import EditStudentProfile from '@/components/EditStudentProfile.vue'
 import Offers from '@/components/Offers.vue'
@@ -32,78 +33,85 @@ Vue.use(vueResource)
 Vue.use(VeeValidate);
 
 export default new Router({
-    routes: [{
-        path: '/',
-        component: Hello
+  routes: [{
+      path: '/',
+      component: Hello
     }, {
-        path: '/announcements',
-        component: Announcements
+      path: '/announcements',
+      component: Announcements
     }, {
-        path: '/Adminpostannouncement',
-        component: Adminpostannouncement
+      path: '/Adminpostannouncement',
+      component: Adminpostannouncement
     }, {
-        path: '/SPPostAnnouncement',
-        component: SPPostAnnouncement
+      path: '/SPPostAnnouncement',
+      component: SPPostAnnouncement
     }, {
-        path: '/SPPostOffer',
-        component: SPPostOffer
+      path: '/SPPostOffer',
+      component: SPPostOffer
     }, {
-        path: '/SPAssess',
-        component: SPAssess
+      path: '/SPAssess',
+      component: SPAssess
     }, {
-        path: '/SPEditProfile',
-        component: SPEditProfile
+      path: '/SPEditProfile',
+      component: SPEditProfile
     }, {
-        path: '/applySP',
-        component: ApplySP
+      path: '/applySP',
+      component: ApplySP
     }, {
-        path: '/adminSP',
-        component: AdminSP
+      path: '/adminSP',
+      component: AdminSP
     }, {
-        path: '/SPReservations',
-        component: SPReservations
+      path: '/SPReservations',
+      component: SPReservations
     }, {
-        path: '/SPReviews',
-        component: SPReviews
+      path: '/SPReviews',
+      component: SPReviews
     }, {
-        path: '/sPs',
-        component: ServiceProviders
+      path: '/sPs',
+      component: ServiceProviders
     }, {
-        path: '/viewAdmins',
-        component: viewadmin
+      path: '/search',
+      component: Search
+    },
+
+
+    {
+      path: '/viewAdmins',
+      component: viewadmin
     }, {
-        path: '/viewOffers',
-        component: Offers
+      path: '/viewOffers',
+      component: Offers
     }, {
-        path: '/viewReservations',
-        component: ReservationStudent
+      path: '/viewReservations',
+      component: ReservationStudent
     }, {
-        path: '/reviewData',
-        component: Interests
+      path: '/reviewData',
+      component: Interests
     }, {
-        path: '/viewAllStudents',
-        component: viewAllStudents
+      path: '/viewAllStudents',
+      component: viewAllStudents
     }, {
-        path: '/sps/:id',
-        name: 'service provider',
-        component: ServiceProviderProfile
+      path: '/sps/:id',
+      name: 'service provider',
+      component: ServiceProviderProfile
     }, {
-        path: '/EditStudent/:EditStudid',
-        name: 'EditStudent',
-        component: EditStudentProfile
+      path: '/EditStudent/:EditStudid',
+      name: 'EditStudent',
+      component: EditStudentProfile
     }, {
-        path: '/student/:Studid',
-        name: 'StudentProfile',
-        component: StudentProfile
+      path: '/student/:Studid',
+      name: 'StudentProfile',
+      component: StudentProfile
     }, {
-        path: '/viewInterests',
-        component: Interests
+      path: '/viewInterests',
+      component: Interests
     }, {
-        path: '/SPViewMyProfile',
-        component: SPViewMyProfile
+      path: '/SPViewMyProfile',
+      component: SPViewMyProfile
     }, {
-        path: '/pendingSP',
-        component: pendingSP
-    }],
-    mode: 'history'
+      path: '/pendingSP',
+      component: pendingSP
+    }
+  ],
+  mode: 'history'
 })

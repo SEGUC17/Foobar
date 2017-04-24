@@ -18,10 +18,10 @@
           <td>{{reservation.service_provider_id.name}}</td>
           <td>{{reservation.service_provider_id.email}}</td>
           <td>{{reservation.offer_id.title}}</td>
-          <td>{{reservation.reservation_date}}</td>
+          <td>{{reservation.reservation_date.substring(0, 10)}}</td>
           <td v-if="reservation.status==0">Applied</td>
           <td v-else-if="reservation.status==1">Approved (Paid)</td>
-          <td v-else-if="reservation.status==2">Disapparoved</td>        
+          <td v-else-if="reservation.status==2">Disapparoved</td>
         </tr>
       </tbody>
     </table>
@@ -42,7 +42,7 @@ created(){
 methods:{
     getReservations: function () {
       this.$http.get('http://localhost:3000/api/students/reservations/view', {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
-        console.log(response.data.data.reservations[0]);
+        console.log(response);
         this.reservations=response.data.data.reservations
       })
     }}

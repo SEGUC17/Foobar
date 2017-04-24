@@ -597,7 +597,7 @@ a:active {
 			<input id="tab2" type="radio" name="tabs" v-on:click="Offers">
 			<label for="tab2"><span>Offers</span></label>
 
-			<input id="tab3" type="radio" name="tabs">
+			<input id="tab3" type="radio" name="tabs"  v-on:click="getImages">
 			<label for="tab3"></i><span>Images</span></label>
 
 			<input id="tab4" type="radio" name="tabs" v-on:click="Video">
@@ -667,9 +667,11 @@ a:active {
 			</section>
 
 			<section id="content3" class="tab-content">
-				<h3>Images todo</h3>
+				<h3>Images </h3>
 		      	<p>
-
+							<span class="col-lg-3"v-for ="image in images">
+							<img :src="'http://localhost:3000/'+image.img.path.replace('public','')" style="height:200px; width:200px">&nbsp;&nbsp;&nbsp;&nbsp;
+							</span>
 </p>
 			</section>
 
@@ -753,12 +755,12 @@ a:active {
                 <form role="form" class="" v-on:submit="addComment">
                 <div class="modal-body">
                   <div class="row">
-                  
+
 
                 <input style="height:30px;font-size:10pt"class="form-control input-lg" v-validate="{ rules: { required: true} }" id="myInput1" placeholder="Write a comment" type="text"v-model="comment" required="*">
  <!-- <input style="height:50px;font-size:10pt" v-validate="{ rules: { required: true} }" type="text" name="review" class="form-control input-lg" id="review" placeholder="Write a review" v-model="review" > -->
-                    
-                </div>    
+
+                </div>
                             </div>
 
                 <div class="modal-footer">
@@ -782,7 +784,7 @@ a:active {
   <form role="form" class="" v-on:submit='Review'>
     <div class="col-md-12">
      <input style="height:50px;font-size:10pt" v-validate="{ rules: { required: true} }" type="text" name="review" class="form-control input-lg" id="review" placeholder="Write a review" v-model="review" required="*">
-                     
+
             <!-- <input style="height:50px;font-size:10pt"class="form-control input-lg" id="myInput" placeholder="Write a review" type="text"v-model="review" required="*"><br /><br /><br /> -->
             <div id="makan1" style="width:50%">
               <star-rating @rating-selected="rating = $event" :rating="rating" v-bind:show-rating="false" ></star-rating>
@@ -835,6 +837,8 @@ a:active {
       rating:0,
       reviews:[],
       comment:'',
+			images:[],
+
       pastComments:[],
       reviewid:''
      }
@@ -896,7 +900,12 @@ console.log(response.data.data.reviews)
            console.log(this.reviewid);
          this.pastComments =response.data.data.comments
          })
-       },
+       },  getImages: function(){
+		         let route ='http://localhost:3000/api/sPs/images/'.concat(this.user._id);
+		         this.$http.get(route).then(response => {
+		             this.images = response.body.data.images
+		       })
+		     },
        addComment: function(){
          this.$http.post('http://localhost:3000/api/users/comments/create', {"content":this.comment,"review_id":this.reviewid}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
           alert("Comment Added");

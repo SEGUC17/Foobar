@@ -1,24 +1,95 @@
+<style scoped>
+
+
+
+
+body {
+    padding: 40px 0px;
+}
+
+#search {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+
+    -webkit-transition: all 0.5s ease-in-out;
+	-moz-transition: all 0.5s ease-in-out;
+	-o-transition: all 0.5s ease-in-out;
+	-ms-transition: all 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out;
+
+    -webkit-transform: translate(0px, -100%) scale(0, 0);
+	-moz-transform: translate(0px, -100%) scale(0, 0);
+	-o-transform: translate(0px, -100%) scale(0, 0);
+	-ms-transform: translate(0px, -100%) scale(0, 0);
+	transform: translate(0px, -100%) scale(0, 0);
+
+    opacity: 0;
+}
+
+#search.open {
+    -webkit-transform: translate(0px, 0px) scale(1, 1);
+    -moz-transform: translate(0px, 0px) scale(1, 1);
+	-o-transform: translate(0px, 0px) scale(1, 1);
+	-ms-transform: translate(0px, 0px) scale(1, 1);
+	transform: translate(0px, 0px) scale(1, 1);
+    opacity: 1;
+}
+
+#search input[type="search"] {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    color: rgb(255, 255, 255);
+    background: rgba(0, 0, 0, 0);
+    font-size: 30px;
+    font-weight: 200;
+    text-align: center;
+    border: 0px;
+    margin: 0px auto;
+    margin-top: -51px;
+    padding-left: 30px;
+    padding-right: 30px;
+    outline: none;
+}
+#search .btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: 61px;
+    margin-left: -45px;
+}
+#search .close {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    color: #fff;
+	background-color: #428bca;
+	border-color: #357ebd;
+	opacity: 1;
+	padding: 10px 17px;
+	font-size: 27px;
+}
+
+</style>
+
 <template>
 <header >
   <div class="container clearfix">
-    <div class="row" v-if="this.user.type==0">
+    <div class="row" v-if="!this.user.authenticated">
           <div class="span12">
         <div class="navbar navbar_">
               <div class="container">
             <h1 class="brand brand_"><img alt="" src="./assets/img/logo.png" style ="height:70px"> </h1>
-            <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
+
             <div class="nav-collapse nav-collapse_  collapse">
                   <ul class="nav sf-menu">
+                <li><a ><div class="fa fa-search"></div> </a></li>
                 <li><router-link to="/">Home</router-link></a></li>
-                <li ><router-link to="/announcements">News</router-link></li>
-               
-                <li class="sub-menu"><a  v-if="user.authenticated">Process</a>
-                    <ul>
-                        <li ><router-link  to="/StudentProfile">Announcement</router-link></li>
-                        <li ><router-link  to="/sPs">  Offer</router-link></li>
-                        
-                    </ul>
-                </li>
+
                 <li v-if = "!this.user.authenticated" ><a data-toggle="modal" data-target="#myModal">Enter</a></li>
                 <li v-if = "!this.user.authenticated"><router-link to="/applySP">SP</router-link></li>
                 <li class="" v-else ><a  v-on:click="logout">visitor</a></li>
@@ -28,13 +99,23 @@
           </div>
             </div>
       </div>
+
+
+
+      <div id="search">
+          <button type="button" class="close">×</button>
+          <form>
+              <input type="search" v-model="text" placeholder="type keyword(s) here" />
+            <router-link :to="{ path: 'search', query: { plan: text }}">  <button type="submit" class="btn btn-primary">Search</button></router-link>
+          </form>
+      </div>
+
         </div>
         <div class="row" v-if="this.user.type==1">
        <div class="span12">
          <div class="navbar navbar_">
            <div class="container">
-             <h1 class="brand brand_"><a href="index.html"><img alt="" src="./assets/img/logo.png" style ="height:70px"> </a></h1>
-             <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
+             <h1 class="brand brand_"><a ><img alt="" src="./assets/img/logo.png" style ="height:70px"> </a></h1>
              <div class="nav-collapse nav-collapse_  collapse">
                <ul class="nav sf-menu">
                  <li>
@@ -73,11 +154,15 @@
         <div class="row" v-if="this.user.type==2">
               <div class="span12">
             <div class="navbar navbar_">
+
                   <div class="container">
                 <h1 class="brand brand_"><a ><img alt="" src="./assets/img/logo.png" style ="height:70px"> </a></h1>
-                <a class="btn btn-navbar btn-navbar_" data-toggle="collapse" data-target=".nav-collapse_">Menu <span class="icon-bar"></span> </a>
+
+
                 <div class="nav-collapse nav-collapse_  collapse">
+
                     <ul class="nav sf-menu">
+                        <li><a href="#search"><div class="fa fa-search"></div> </a></li>
                       <li ><router-link to="/"><font size="1">Home</font></router-link></li>
                         <li><router-link to="/viewOffers"><font size="1">View Offers</font></router-link></li>
                         <li ><router-link to="/announcements"><font size="1">Announcements</font></router-link></li>
@@ -88,10 +173,22 @@
                         <li class="" v-else ><a  v-on:click="logout"><font size="1">logout</font></a></li>
 
                     </ul>
+
                 </div>
               </div>
             </div>
           </div>
+
+          <div id="search">
+              <button type="button" class="close">×</button>
+              <form>
+                  <input type="search" v-model="text" placeholder="type keyword(s) here" />
+                <router-link :to="{ path: 'search', query: { plan: text }}">  <button type="submit" class="btn btn-primary">Search</button></router-link>
+              </form>
+          </div>
+
+
+
         </div>
 
         <div class="row" v-if="this.user.type==3">
@@ -239,7 +336,7 @@
                                         <!-- <input type="text" class="form-control" id="name" placeholder="Name" v-model="creds.name" /> -->
                                     </div>
                                 </div>
-                                 
+
                                   <div class="form-group">
                                     <label for="name" class="col-sm-2 control-label">
                                         Description</label>
@@ -320,6 +417,9 @@
                 </div>
     </div>
 </div>
+
+
+
   </header>
 
 </template>
@@ -351,7 +451,7 @@ data () {
         interests:[],
         birthdate:'',
         address:'',
-
+        text:'',
         Interests:[],
 
   // User object will let us check authentication status
@@ -375,7 +475,28 @@ if(localStorage.getItem('id_token')!=null){
 this.findAllInterests()
 
  },
+beforeCreate(){
+  $(function () {
+      $('a[href="#search"]').on('click', function(event) {
+          event.preventDefault();
+          $('#search').addClass('open');
+          $('#search > form > input[type="search"]').focus();
+      });
 
+      $('#search, #search button.close').on('click keyup', function(event) {
+          if (event.target == this || event.target.className == 'close' || event.keyCode == 27) {
+              $(this).removeClass('open');
+          }
+      });
+
+
+      //Do not include! This prevents the form from submitting for DEMO purposes only!
+      $('form').submit(function(event) {
+          event.preventDefault();
+          return false;
+      })
+  });
+},
 
 methods: {
   // Send a request to the login URL and save the returned JWT
@@ -442,7 +563,7 @@ methods: {
     this.$http.post('http://localhost:3000/api/users/resetPW', {"email":this.resetPWEmail}).then(data => {
       alert("New Password sent to ".concat(this.resetPWEmail));
       console.log('success');
-      
+
   }).catch(function(reason) {
         this.failuremessages = reason.body.err;
         this.successmessages= [{msg:''}];
@@ -456,7 +577,7 @@ this.$router.go({path:'/',force:true});
     localStorage.removeItem('id_token')
     this.user.authenticated = false
     this.user.type = 0;
-    alert("You successfully Logged Out"); 
+    alert("You successfully Logged Out");
         this.creds.username='';
     this.creds.name='';
       this.creds.password='';

@@ -37,21 +37,23 @@ methods:{
       this.$http.get('http://localhost:3000/api/students/viewoffer',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         this.offers= response.data.data.offers;
         this.student = response.data.data.student;
-                console.log(response.data.data.offers);
+              //  console.log(response.data.data.offers);
       })
     },
     Apply: function(offer , index){
-      
+if(localStorage.getItem('id_token')!=null){
 var x = confirm("Are you sure you want to apply for this offer ?")
 
-if(x){    
+if(x){
 
       this.$http.post('http://localhost:3000/api/students/offers',{"offer_id":offer._id},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response=> {
+
         alert("You succesfully applied")
-      })
-      }
-    
-    
+      }).catch(function(reason) {alert(reason.body.message)});
+      }}
+      else{alert("You have to be signed in to apply")}
+
+
     }
 }
 }

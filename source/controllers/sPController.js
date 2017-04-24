@@ -82,6 +82,9 @@ const spController = {
         }
       });
     },
+
+
+    //used to know which students the service provider can now assess
     viewStudentsFinishedOffer(req, res) {
 
       const token = req.headers['jwt-token'];
@@ -141,7 +144,7 @@ const spController = {
         }
       });
     },
-    viewReviews(req, res) {
+    viewReviews(req, res) { //viewing reviews
       const token = req.headers['jwt-token'];
 
 
@@ -221,7 +224,7 @@ const spController = {
         }
       });
     },
-    assessStudent(req, res) {
+    assessStudent(req, res) { //used to give a rating to the student so that the student can track their progress
       req.checkBody('rating', 'Rating is required').notEmpty();
 
 
@@ -351,18 +354,7 @@ const spController = {
 
     // method used to add a video to the database
     addVideoByURL(req, res) {
-      // req.checkBody('title', 'Title is required').notEmpty();
-      // req.checkBody('videoURL', 'A Video Url is required').notEmpty();
-      //
-      // var errors = req.validationErrors();
-      //
-      // if (errors) {
-      //   res.status(400).json({
-      //     err: errors
-      //
-      //   });
-      //   console.log(errors);
-      // else {
+
       const token = req.headers['jwt-token'];
       jwt.verify(token, (decoded) => {
         if (decoded.type === 3) {
@@ -422,7 +414,7 @@ const spController = {
         }
       });
     },
-    editSP(req, res) {
+    editSP(req, res) { //edit service providerProfile
 
 
       const token = req.headers['jwt-token'];
@@ -539,66 +531,68 @@ const spController = {
       });
 
     },
-    editPassword(req,res){
-console.log('here');
-       const token = req.headers['jwt-token'];
+    editPassword(req, res) {
+      console.log('here');
+      const token = req.headers['jwt-token'];
       jwt.verify(token, (decoded) => {
         console.log(decoded)
         if (decoded.type === 3) {
-           User.find({ _id: req.body.id },function(err, user){
+          User.find({
+            _id: req.body.id
+          }, function(err, user) {
             console.log(req.body.id);
             console.log(user)
-            if(err)
-            return err;
-            else
-            {
+            if (err)
+              return err;
+            else {
               console.log(user[0].password);
               console.log(req.body.oldPassword)
               console.log(req.body.newPassword)
               console.log(req.body.confirmNewPassword)
-              
-              req.checkBody('oldPassword', 'Your old Password is required').notEmpty();
-              req.checkBody('newPassword', 'A new Password is required').notEmpty();
-              req.checkBody('oldPassword', 'Passwords do not match').equals(user[0].password);
-              req.checkBody('confirmNewPassword', 'Passwords do not match').equals(req.body.newPassword);
+
+              req.checkBody('oldPassword',
+                'Your old Password is required').notEmpty();
+              req.checkBody('newPassword',
+                'A new Password is required').notEmpty();
+              req.checkBody('oldPassword', 'Passwords do not match').equals(
+                user[0].password);
+              req.checkBody('confirmNewPassword',
+                'Passwords do not match').equals(req.body.newPassword);
               var errors = req.validationErrors();
-          
-              if(errors)
-              {
+
+              if (errors) {
                 console.log('errors here');
                 res.status(400).json({
                   err: errors
 
                 });
-              }
-              else
-              {
+              } else {
                 console.log('should modify');
                 User.findByIdAndUpdate(decoded.id, {
-                      $set: {
-                          password: req.body.newPassword,
-                      },
-                  }, {
-                      safe: true,
-                      upsert: true,
-                      new: true,
-                  }, (err, sP) => {
-                    console.log('modified!');
-                      res.status(200).json({
-                          status: 'success',
-                          data: {
-                              message: `Edited Password correctly!`,
-                          },
-                      });
+                  $set: {
+                    password: req.body.newPassword,
+                  },
+                }, {
+                  safe: true,
+                  upsert: true,
+                  new: true,
+                }, (err, sP) => {
+                  console.log('modified!');
+                  res.status(200).json({
+                    status: 'success',
+                    data: {
+                      message: `Edited Password correctly!`,
+                    },
                   });
+                });
               }
             }
 
-              
+
           });
-          
-          
-        }else {
+
+
+        } else {
           res.status(500).json({
             err: err.message,
           });
