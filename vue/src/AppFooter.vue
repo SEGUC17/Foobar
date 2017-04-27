@@ -1,5 +1,5 @@
 <template>
-<footer id="footer" role="contentinfo">
+<!--<footer id="footer" role="contentinfo">
 		<a href="#" class="gotop js-gotop"><i class="icon-arrow-up2"></i></a>
 		<div class="container">
 			<div class="">
@@ -18,5 +18,5 @@
 				</div>
 			</div>
 		</div>
-</footer>
+</footer>-->
 </template>

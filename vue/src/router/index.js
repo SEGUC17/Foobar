@@ -23,8 +23,10 @@ import ReviewInterest from '@/components/ReviewInterest.vue'
 import ServiceProviderProfile from '@/components/ServiceProviderProfile.vue'
 import Interests from '@/components/Interests.vue'
 import pendingSP from '@/components/pendingSP.vue'
+import test from '@/components/test.vue'
 import Adminpostannouncement from '@/components/Adminpostannouncement.vue'
-import VeeValidate from 'vee-validate';
+import VeeValidate from 'vee-validate'
+import AppNav from '../AppNav.vue'
 
 
 Vue.use(Router)
@@ -37,28 +39,77 @@ export default new Router({
         component: Hello
     }, {
         path: '/announcements',
-        component: Announcements
+        component: Announcements,
+        beforeEnter: (to, from, next) => {
+            if(localStorage.getItem('usertype')!=1){
+                next('/');
+            } else {
+                next()
+            }
+        }
     }, {
         path: '/Adminpostannouncement',
-        component: Adminpostannouncement
+        component: Adminpostannouncement,
+        beforeEnter: (to, from, next) => {
+            if(localStorage.getItem('usertype')!=1){
+                next('/');
+            } else {
+                next()
+            }
+        } 
     }, {
         path: '/SPPostAnnouncement',
-        component: SPPostAnnouncement
+        component: SPPostAnnouncement,
+        beforeEnter: (to, from, next) => {
+            if(localStorage.getItem('usertype')!=2){
+                next('/');
+            } else {
+                next()
+            }
+        } 
     }, {
         path: '/SPPostOffer',
-        component: SPPostOffer
+        component: SPPostOffer,
+        beforeEnter: (to, from, next) => {
+            if(localStorage.getItem('usertype')!=2){
+                next('/');
+            } else {
+                next()
+            }
+        } 
     }, {
         path: '/SPAssess',
-        component: SPAssess
+        component: SPAssess,
+        beforeEnter: (to, from, next) => {
+            if(localStorage.getItem('usertype')!=2){
+                next('/');
+            } else {
+                next()
+            }
+        } 
     }, {
         path: '/SPEditProfile',
-        component: SPEditProfile
+        component: SPEditProfile,
+        beforeEnter: (to, from, next) => {
+            if(localStorage.getItem('usertype')!=2){
+                next('/');
+            } else {
+                next()
+            }
+        } 
     }, {
         path: '/applySP',
         component: ApplySP
     }, {
         path: '/adminSP',
-        component: AdminSP
+        component: AdminSP,
+        beforeEnter: (to, from, next) => {
+            if(localStorage.getItem('usertype')!=1){
+                next('/');
+            } else {
+                next()
+            }
+        }
     }, {
         path: '/SPReservations',
         component: SPReservations
@@ -70,7 +121,14 @@ export default new Router({
         component: ServiceProviders
     }, {
         path: '/viewAdmins',
-        component: viewadmin
+        component: viewadmin,
+        beforeEnter: (to, from, next) => {
+            if(localStorage.getItem('usertype')!=1){
+                next('/');
+            } else {
+                next()
+            }
+        }
     }, {
         path: '/viewOffers',
         component: Offers
@@ -79,10 +137,24 @@ export default new Router({
         component: ReservationStudent
     }, {
         path: '/reviewData',
-        component: Interests
+        component: Interests,
+        beforeEnter: (to, from, next) => {
+            if(localStorage.getItem('usertype')!=1){
+                next('/');
+            } else {
+                next()
+            }
+        }
     }, {
         path: '/viewAllStudents',
-        component: viewAllStudents
+        component: viewAllStudents,
+        beforeEnter: (to, from, next) => {
+            if(localStorage.getItem('usertype')!=1){
+                next('/');
+            } else {
+                next()
+            }
+        }
     }, {
         path: '/sps/:id',
         name: 'service provider',
@@ -97,13 +169,27 @@ export default new Router({
         component: StudentProfile
     }, {
         path: '/viewInterests',
-        component: Interests
+        component: Interests,
+        beforeEnter: (to, from, next) => {
+            if(localStorage.getItem('usertype')!=1){
+                next('/');
+            } else {
+                next()
+            }
+        }
     }, {
         path: '/SPViewMyProfile',
         component: SPViewMyProfile
     }, {
         path: '/pendingSP',
-        component: pendingSP
+        component: pendingSP,
+        beforeEnter: (to, from, next) => {
+            if(localStorage.getItem('usertype')!=1){
+                next('/');
+            } else {
+                next()
+            }
+        }
     }],
     mode: 'history'
 })

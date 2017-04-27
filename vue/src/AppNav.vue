@@ -1,55 +1,423 @@
 <template>
-	<header role="banner" id="fh5co-header">
-			<div class="container">
-				<!-- <div class="row"> -->
-			    <nav class="navbar navbar-default">
-		        <div class="navbar-header">
-		        	<!-- Mobile Toggle Menu Button -->
-					   <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
-		         <a class="navbar-brand" href="/">Foobar Baby</a> 
-		        </div>
-		        <div id="navbar" class="navbar-collapse collapse">
-		          <ul class="nav navbar-nav navbar-right">
-		            <li class="active"><a href="#" data-nav-section="home"><span>Home</span></a></li>
-		            <li><a href="#" data-nav-section="work"><span>Work</span></a></li>
-		            <li><a href="#" data-nav-section="services"><span>Services</span></a></li>
-		            <li><a href="#" data-nav-section="contact"><span>Contact</span></a></li>
-              </ul>
-		        </div>
-			    </nav>
+<div class ="header">
+  <div v-if="!showgent">
+    <header role="banner" id="fh5co-header">
+        <div class="container">
+          <!-- <div class="row"> -->
+            <nav class="navbar navbar-default">
+              <div class="navbar-header">
+                <!-- Mobile Toggle Menu Button -->
+              <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
+              <a class="navbar-brand" href="/">Foobar Baby</a> 
+              </div>
+              <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                  <li class="active"><a href="#" data-nav-section="home"><span>Home</span></a></li>
+                  <li><a href="#" data-nav-section="about"><span>Students</span></a></li>
+                  <li><a href="#" data-nav-section="funfacts"><span>Facts</span></a></li>
+                  <li><a href="#" data-nav-section="contact"><span>Service Providers</span></a></li>
+                  <li><a class="external" data-toggle="modal" data-target="#myModal" style="cursor:pointer;"><span>Enter</span></a></li>
+                </ul>
+              </div>
+            </nav>
+
         </div>
-	</header>
+    </header>
+    <router-view></router-view>
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+          <div class="modal-content">
+              <div class="modal-body">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <div class="row" style ="border:none;">
+        <div class="col-md-12">
+          <div class="panel-login">
+            <div class="panel-heading">
+              <div class="row">
+                <div class="col-xs-6">
+                  <a href="#" class="active" id="login-form-link">Login</a>
+                </div>
+                <div class="col-xs-6">
+                  <a href="#" id="register-form-link">Register</a>
+                </div>
+              </div>
+              <hr>
+            </div>
+            <div class="panel-body">
+              <div class="row">
+                <div class="col-lg-12">
+                  <form id="login-form"  role="form" style="display: block;">
+                    <div class="form-group">
+                      <input type="text" name="email" id="email" tabindex="1" v-model="creds.username" class="form-control efc" placeholder="Email" value="" required="true">
+                    </div>
+                    <div class="form-group">
+                      <input type="password" name="password" id="password" tabindex="2" v-model="creds.password" class="form-control efc" placeholder="Password" required="true">
+                    </div>
+                    
+                    <div class="form-group text-center">
+                      <label style="color:#52d3aa;">{{message}}</label>
+                    </div>
+
+                    <div class="form-group text-center">
+                      <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
+                      <label for="remember"> Remember Me</label>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                          <input type="submit" v-on:click="login" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login efc" value="Log In">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="text-center">
+                            <a href="http://phpoll.com/recover" tabindex="5" class="forgot-password">Forgot Password?</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                  
+                  <form id="register-form" style="display: none;">
+                    <!--<div class="form-group">
+                      <input type="text" name="username" id="username" tabindex="1" class="form-control efc" placeholder="Username" value="">
+                    </div>
+                    <div class="form-group">
+                      <input type="email" name="email" id="email" tabindex="1" class="form-control efc" placeholder="Email Address" value="">
+                    </div>
+                    <div class="form-group">
+                      <input type="password" name="password" id="password" tabindex="2" class="form-control efc" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                      <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control efc" placeholder="Confirm Password">
+                    </div>
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                          <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control efc btn btn-register" value="Register Now">
+                        </div>
+                      </div>
+                    </div>-->
+
+                    <div v-for =" message in successmessages">
+                        <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
+                     </div>
+                         <div v-for =" message in failuremessages">
+                        <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
+                    </div>
+
+                    <div class="form-group">
+                        <input v-validate="{ rules: { required: true} }" type="text" name="name" class="form-control efc" id="name" placeholder="Name" v-model="creds.name" required="*">
+                        <span v-show="errors.has('name')">{{ errors.first('name') }}</span>
+                          <!-- <input type="text" class="form-control" id="name" placeholder="Name" v-model="creds.name" /> -->
+                    </div>
+
+                    <div class="form-group">
+                     <input v-validate="{ rules: { required: true, email: true } }" type="text" name="email" class="form-control efc" id="email" placeholder="Email" v-model="creds.email" required="*">
+                     <span v-show="errors.has('email')">{{ errors.first('email') }}</span>
+                   </div>
+
+                     <div class="form-group">
+                      <input v-validate="{ rules: { required: true, min:8} }" type="password" name="password" class="form-control efc" id="password" placeholder="Password" v-model="creds.password" required="*">
+                      <span v-show="errors.has('password')">{{ errors.first('password') }}</span>
+                     </div>
+
+                     <div class="form-group">
+                     <input v-validate="{ rules: { required: true} }" type="password" name="Confirm password" class="form-control efc" id="Confirm password" placeholder="Password" v-model="creds.password2" required="*">
+                     <span v-show="errors.has('Confirm password')">{{ errors.first('Confirm password') }}</span>
+                     </div>
+
+                      <div class="form-group">
+                          <input v-validate="{ rules: { required: true} }" type="text" name="university " class="form-control efc" id="university" placeholder="University" v-model="university" required="*">
+                          <span v-show="errors.has('university')">{{ errors.first('university') }}</span>
+                      </div>
+
+                      <div class="form-group">
+                            <input v-validate="{ rules: { required: true} }" type="text" name="address" class="form-control efc" id="address" placeholder="Address" v-model="address">
+                            <span v-show="errors.has('address')">{{ errors.first('address') }}</span>
+                      </div>
+
+                      <div class="form-group">
+                            <input v-validate="{ rules: { required: true} }" type="date" name="birthdate" class="form-control efc" id="birthdate" placeholder="Birthdate" v-model="birthdate">
+                            <span v-show="errors.has('birthdate')">{{ errors.first('birthdate') }}</span>
+                      </div>
+
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label">
+                                Interests</label>
+                                <div v-for="interest in this.interests">
+                                <input type="checkbox" :id="interest" :value="interest" v-model="Interests">
+                                <label for="interest">{{interest.name}}</label>
+                                </div>
+                        </div>
+
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                          <input type="submit" v-on:click="signup "name="register-submit" id="register-submit" tabindex="4" class="form-control efc btn btn-register" value="Register Now">
+                        </div>
+                      </div>
+                    </div>
 
 
+
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+              </div>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <div class ="gent" v-if="showgent" >
+    <div class="nav-md">
+      <div class="container body">
+        <div class="main_container">
+          <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+              <div class="navbar nav_title" style="border: 0;">
+                <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>FOOBAR</span></a>
+              </div>
+
+              <div class="clearfix"></div>
+
+              <!-- menu profile quick info -->
+              <div class="profile clearfix">
+                <div class="profile_pic">
+                      <img v-if="profilepic.path" :src="'http://localhost:3000/'+profilepic.path.replace('public','')" alt="" class="img-circle profile_img">
+                      <img v-if="!profilepic.path" src="~assets/img/missing.png" alt="" class="img-circle profile_img">
+                </div>
+                <div class="profile_info">
+                  <span>Welcome,</span>
+                  <h2>{{ name | capitalize }}</h2>
+                </div>
+                <div class="clearfix"></div>
+              </div>
+              <!-- /menu profile quick info -->
+
+              <br />
+
+              <!-- sidebar menu -->
+              <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+
+                <!--CUSTOM TO USER-->
+                <div class="menu_section">
+                  <h3>Admin</h3>
+                  <ul class="nav side-menu">
+                    <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                      <ul class="nav child_menu">
+                          <li>
+                            <router-link to="Adminpostannouncement">Post</router-link>
+                          </li>
+                          <li>
+                            <router-link to="/reviewData"> Review Data</router-link>
+                          </li>
+                          <li>
+                            <router-link to="/announcements">Announcements</router-link>
+                          </li>
+                          <li>
+                            <router-link to='/viewAdmins'>Admins</router-link>
+                          </li>
+                          <li>
+                            <router-link to='/adminSP'>Service Providers</router-link>
+                          </li>
+                          <li>
+                            <router-link to='/viewAllStudents'>Students</router-link>
+                          </li>
+                          <li>
+                            <router-link to="/pendingSP">Pending Requests</router-link>
+                          </li>
+                          <li>
+                            <router-link to="/viewInterests">Interests</router-link>
+                          </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="menu_section" >
+                  <h3>Service Provider</h3>
+                  <ul class="nav side-menu">
+                    <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                      <ul class="nav child_menu">
+                            <li><router-link to="/">Home</router-link></li>
+                            <li><router-link to="/announcements">Announcements</router-link></li>
+                            <li><router-link to="/SPPostAnnouncement">Post Announcement</router-link></li>
+                            <li><router-link to="/SPPostOffer">Post Offer</router-link></li>
+                            <li><router-link to="/SPReservations">View Reservations</router-link></li>
+                            <li><router-link to="/SPReviews">View Reviews</router-link></li>
+                            <li><router-link to="/SPAssess">Assess Students</router-link></li>
+                            <li><router-link to="/SPViewMyProfile">My Profile</router-link></li>
+                            <li><router-link to="/SPEditProfile">Edit Profile</router-link></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="menu_section">
+                  <h3>Student</h3>
+                  <ul class="nav side-menu">
+                    <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                      <ul class="nav child_menu">
+                          <li><router-link to="/"><font size="1">Home</font></router-link></li>
+                          <li><router-link to="/viewOffers"><font size="1">View Offers</font></router-link></li>
+                          <li><router-link to="/announcements"><font size="1">Announcements</font></router-link></li>
+                          <li><router-link to="/viewReservations"><font size="1">Reservation</font></router-link></li>
+                          <!--Studid : decodeid.body.id-->
+                          <li><router-link  :to ="{ name : 'StudentProfile' , params: {  }}"> <font size="1">My Profile</font></router-link></li>
+                          <li><router-link  to="/sPs"><font size="1">SPS</font></router-link></li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+
+                <!--END CUSTOM-->
+
+              </div>
+              <!-- /sidebar menu -->
+
+              <!-- /menu footer buttons -->
+              <div class="sidebar-footer hidden-small">
+                <a data-toggle="tooltip" data-placement="top" title="Settings">
+                  <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                </a>
+                <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                  <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                </a>
+                <a data-toggle="tooltip" data-placement="top" title="Lock">
+                  <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                </a>
+                <a data-toggle="tooltip" v-on:click="logout" data-placement="top" title="Logout">
+                  <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                </a>
+              </div>
+              <!-- /menu footer buttons -->
+            </div>
+          </div>
+
+          <!-- top navigation -->
+          <div class="top_nav">
+            <div class="nav_menu">
+              <nav>
+                <div class="nav toggle">
+                  <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                </div>
+
+                <ul class="nav navbar-nav navbar-right" style="">
+                  <li class="dropdown">
+                    <a href="" role="button" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                      <img v-if="profilepic.path" :src="'http://localhost:3000/'+profilepic.path.replace('public','')" alt="">
+                      <img v-if="!profilepic.path" src="~assets/img/missing.png" alt="">
+                      {{ name | capitalize }}
+                      <span class=" fa fa-angle-down"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-usermenu pull-right" style="">
+                      <li><a href="javascript:;"> Profile</a></li>
+                      <li><a v-on:click="logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                    </ul>
+                  </li>
+
+                  <li role="presentation" class="dropdown">
+                    <a href="" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                      <i class="fa fa-envelope-o"></i>
+                      <span class="badge bg-green">{{announcements.length}}</span>
+                    </a>
+                    <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                       <li v-for="n in announcements">
+                         <a>
+                        <span class="image">
+                            <img v-if="profilepic.path" :src="'http://localhost:3000/'+profilepic.path.replace('public','')" alt="">
+                            <img v-if="!profilepic.path" src="~assets/img/missing.png" alt="">
+                        </span>
+                          <span>
+                            <span>{{n.title}}</span>
+                            <span class="time">3 mins ago</span>
+                          </span>
+                          <span class="message">
+                            {{n.content}}
+                          </span>
+                        </a>
+                      </li>
+
+                      <li>
+                        <div class="text-center">
+                          <a href="/announcements">
+                            <strong>See All Alerts</strong>
+                            <i class="fa fa-angle-right"></i>
+                          </a>
+                        </div>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+          <!-- /top navigation -->
+
+          <!-- page content -->
+          <div class="right_col" role="main">
+            <transition>
+              <keep-alive>
+                <router-view></router-view>
+              </keep-alive>
+            </transition>
+          </div> 
+          <!-- /page content -->
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
 </template>
 
 <script>
 import router from './router'
+import AppNav from './AppNav.vue'
 export default {
 data () {
-
     return {
       // We need to initialize the component with any
       // properties that will be used in it
       creds: {
         username: '',
         password: '',
-        name:'',
         password2:''
-
       },
       resetPWEmail: '',
       error: '',
       decodeid: '',
+      message:'',
+      name:'',
+      university:'',
+      description:'',
+      interests:[],
+      birthdate:'',
+      address:'',
+      Interests:[],
+      showgent: false,
+      profilepic:'',
+      announcements:[],
+      announcementsInPage:[],
+      numberOfPages: 0, 
+      perPage: 3,
       successmessages:[{msg:''}],
       failuremessages:[{msg:''}],
-      university:'',
-        description:'',
-        interests:[],
-        birthdate:'',
-        address:'',
-
-        Interests:[],
+      showadmin:false,
+      showsp:false,
+      showstudent:false,
+      
 
   // User object will let us check authentication status
   user: {
@@ -57,19 +425,21 @@ data () {
     type: 0
   }}},
 
- created() {
-
+created() {
 
 if(localStorage.getItem('id_token')!=null){
-
+  this.showgent= true
   this.user.authenticated=true
   this.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
     this.decodeid=decode
     this.user.type = decode.body.type
+    this.name = decode.body.name;
+    this.profilepic = decode.body.image
 })
 }
 
 this.findAllInterests()
+this.getAllAnnouncements();
 
  },
 
@@ -82,23 +452,35 @@ methods: {
 	"email":app.creds.username,
 	"password":  app.creds.password
 }).then(data => {
-      this.successmessages[0].msg = "You logged in successfully";
-      this.failuremessages=[{msg:''}];
-      alert("You logged in successfully");
       localStorage.setItem('id_token', data.body.token)
       app.user.authenticated = true
       app.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
         this.decodeid = decode;
-        this.user.type = decode.body.type
+        this.user.type = decode.body.type;
+        localStorage.setItem('usertype', decode.body.type)
+        this.name = decode.body.name;
       })
        $('#myModal').modal('hide');
-    //
+       this.$router.go({
+          path: '/testingg',
+          force: true
+        })
+       this.showgent = true
 }).catch(function(reason) {
-   this.failuremessages = reason.body.err;
-    this.successmessages=[{msg:''}];
-
+   this.message = reason.body;
 });
   },
+  getAllAnnouncements: function () {
+      this.$http.get('http://localhost:3000/api/announcements/view').then(response => {
+        this.announcements=response.data.data.announcements
+        console.log(this.announcements);
+        this.numberOfPages=Math.ceil(this.announcements.length/this.perPage);
+        for(var i = 0 ; i<this.perPage && i<this.announcements.length ; i++){
+          this.announcementsInPage.push(this.announcements[i]);
+        }
+        console.log(this.announcementsInPage)
+      })
+    },
   signup : function() {
     this.$http.post('http://localhost:3000/api/users/signup', {
     "email":this.creds.email,
@@ -113,8 +495,8 @@ methods: {
 
 }).then(data => {
       this.successmessages[0].msg = "Registered Successfully, you can login now";
-     this.failuremessages=[{msg:''}];
-        this.creds.email='';
+      this.failuremessages=[{msg:''}];
+      this.creds.email='';
       this.creds.name='';
       this.creds.password='';
       this.creds.password2='';
@@ -134,7 +516,6 @@ methods: {
   },
 
   resetPW : function() {
-
     this.$http.post('http://localhost:3000/api/users/resetPW', {"email":this.resetPWEmail}).then(data => {
       alert("New Password sent to ".concat(this.resetPWEmail));
       console.log('success');
@@ -152,20 +533,22 @@ this.$router.go({path:'/',force:true});
     localStorage.removeItem('id_token')
     this.user.authenticated = false
     this.user.type = 0;
-    alert("You successfully Logged Out"); 
-        this.creds.username='';
+    this.creds.username='';
     this.creds.name='';
-      this.creds.password='';
-      this.creds.password2='';
-      this.university='';
-      this.description='';
-      this.interests=[];
-      this.birthdate='';
-      this.address='';
-      this.Interests=[];
-    this.$router.push({path:'/'})
-    this.successmessages=[{msg:''}],
-      this.failuremessages=[{msg:''}]
+    this.creds.password='';
+    this.creds.password2='';
+    this.university='';
+    this.description='';
+    this.interests=[];
+    this.birthdate='';
+    this.address='';
+    this.Interests=[];
+    localStorage.setItem('usertype', 0)
+    this.$router.go({
+      path: '/',
+      force: true
+    })
+    this.showgent= false;
 
   },
 
@@ -190,9 +573,11 @@ this.$router.go({path:'/',force:true});
     this.$http.get('http://localhost:3000/api/students/all/interests/').then(response => {
         this.interests=response.body.data.interests
       })
-  }
+  },
+
 
 }
 
 }
 </script>
+

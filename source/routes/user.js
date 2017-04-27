@@ -29,81 +29,69 @@
   // });
 
   router.post('/login', (req, res) => {
-
     req.checkBody('email', 'Email is required').notEmpty();
     req.checkBody('password', 'Password is required').notEmpty();
 
-    var errors = req.validationErrors();
-    
-    if(errors)
-    {
-      res.status(400).json({
-        err: errors
+    const errors = req.validationErrors();
 
+    if (errors) {
+      res.status(400).json({
+        err: errors,
+      });
+    } else {
+      const token = jwt.generate({
+        email: req.body.email,
+        password: req.body.password,
+      }, (token) => {
+        if (!token) {
+          res.status(401).json({
+            err: 'Wrong Credentials',
+          });
+        } else {
+          res.json({
+            token,
+          });
+        }
       });
     }
-    else
-    {
-        const token = jwt.generate({
-          email: req.body.email,
-          password: req.body.password,
-        }, (token) => {
-          if (!token) {
-            res.status(401).json({
-              err: [{msg:'Wrong Credentials'}],
-            });
-          } else {
-            res.json({
-              token,
-            });
-          }
-        });
-    }
-
   });
 
   router.post('/signup', (req, res) => {
+    const email = req.body.email;
+    const password = req.body.password;
+    const name = req.body.name;
+    const password2 = req.body.password2;
+    const university = req.body.university;
 
-        
-      var email= req.body.email;
-     var password= req.body.password;
-     var name= req.body.name;
-     var password2= req.body.password2;
-     var university= req.body.university;
-    
-        req.checkBody('name', 'Name is required').notEmpty();
-        req.checkBody('email', 'Email is required').notEmpty()
-        req.checkBody('email', 'Must be a valid Email').isEmail();
-        req.checkBody('password', 'Password is required').notEmpty();
-        req.checkBody('university', 'university is required').notEmpty();
-        req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
+    req.checkBody('name', 'Name is required').notEmpty();
+    req.checkBody('email', 'Email is required').notEmpty();
+    req.checkBody('email', 'Must be a valid Email').isEmail();
+    req.checkBody('password', 'Password is required').notEmpty();
+    req.checkBody('university', 'university is required').notEmpty();
+    req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 
-        var errors = req.validationErrors();
-        if(errors){
-          res.status(400).json({
-            err: errors
+    const errors = req.validationErrors();
+    if (errors) {
+      res.status(400).json({
+        err: errors,
 
+      });
+    } else {
+      console.log(req.body);
+      const user = new User({
+        email: req.body.email,
+        password: req.body.password,
+        name: req.body.name,
+        type: 2,
+        is_deleted: false,
+        is_blocked: false,
+      });
+      user.save((err) => {
+        if (err) {
+          return res.status(400).json({
+            err: [{ msg: 'Email is already taken' }],
           });
         }
-        else{
-
-
-    
-    console.log(req.body)
-    const user = new User({
-      email: req.body.email,
-      password: req.body.password,
-      name: req.body.name,
-      type: 2,
-      is_deleted: false,
-      is_blocked: false,
-    });
-    user.save((err) => {
-      if (err) {
-        return res.status(400).json({
-          err: [{msg:'Email is already taken'}]
-        });
-      } else {
 
 
         const newStudent = new Student({
@@ -112,25 +100,25 @@
           address: req.body.address,
           birthdate: req.body.birthdate,
           description: req.body.description,
-            
+
         });
 
         const interests = req.body.interests;
         console.log(user);
         if (interests) {
-          console.log(interests)
+          console.log(interests);
           for (let i = 0; i < interests.length; i += 1) {
             const newInterset = new StudentInterest({
-              student_id: user._id,
-              interest_id: interests[i]._id,
-            });
+                  student_id: user._id,
+                  interest_id: interests[i]._id,
+                });
             newInterset.save((saveerr) => {
-              if (saveerr) {
+                  if (saveerr) {
                 return res.status(400).json({
-                  err: [{msg:'Student Interest saving error'}]
-                });              
+                  err: [{ msg: 'Student Interest saving error' }],
+                });
               }
-            });
+                });
           }
         }
 
@@ -153,18 +141,14 @@
         res.json({
           message: 'Signup success',
         });
-
-
-      }
-    
-    });
+      });
     }
   });
   router.post('/resetPW', homeController.resetPassword); // viewing announcements
   router.post('/decode', homeController.getsignedvals); // decoding token from front end
-  router.post('/comments/view', sPController.viewComments); //viewing comments of a specific review
+  router.post('/comments/view', sPController.viewComments); // viewing comments of a specific review
   router.post('/comments/create', studentController.addComment); // adding a comment to a review
-  
+
 
   // module.exports = function() {
 

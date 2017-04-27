@@ -14,6 +14,7 @@ const announcementController = {
             message: err,
           });
         } else {
+          announcements = announcements.reverse();
           res.status(200).json({
             status: 'success',
             data: {

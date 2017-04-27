@@ -431,8 +431,7 @@ const adminController = {
             if (decoded.type === 1) {
                 StudentInterest.find([]).populate('interest_id').exec((err, interests) => {
                     interests.forEach((rest) => {
-                      console.log(rest);
-                        userMap[k] = rest.interest_id.name;
+                        userMap[k] = rest.name;
                         k += 1;
                     });
                     temp = adminController.sortByFrequencyAndFilter(userMap)

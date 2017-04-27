@@ -16,6 +16,7 @@ module.exports = {
         id: user.id,
         name: user.name,
         type: user.type,
+        image: user.profileimg,
       }, secret));
     });
   },

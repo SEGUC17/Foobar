@@ -1,9 +1,9 @@
 <template>
   <div id="app">
     <app-nav></app-nav>
-    <div class="app-content">
+    <!--<div class="app-content">
       <router-view></router-view>
-    </div>
+    </div>-->
     <app-footer></app-footer>
   </div>
 </template>
@@ -17,8 +17,9 @@ export default {
   components: { AppNav, AppFooter },
   data () {
     return {
+      
     }
-  }
+  },
 }
 </script>
 

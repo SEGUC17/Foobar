@@ -10,17 +10,19 @@
           <h3 align="left">{{announcement.title}}</h3>
             
             <p>{{announcement.content}}</p>
-            <h3>Announcer Name: {{announcement.announcer_id.name}}</h3>
-            <h3>Announcer Email: {{announcement.announcer_id.email}}</h3>
+            <h3>Announcer Name: {{announcement.name}}</h3>
+            <h3>Announcer Email: {{announcement.email}}</h3>
           <h2>{{announcement.type}}</h2>
 
           
             
       </div>
         </div>
-      
-          
+        <center>
+        <ul class="pagination">
           <li v-for="n in numberOfPages"><a @click="changePage(n)">{{n}}</a></li>
+        </ul>
+        </center>
 
   </div>
 </template>
@@ -31,7 +33,7 @@ export default {
     return {
       announcements:[],
       announcementsInPage:[],
-      numberOfPages: 0 , 
+      numberOfPages: 0, 
       perPage: 3 
 
     }
@@ -47,10 +49,8 @@ methods:{
         this.numberOfPages=Math.ceil(this.announcements.length/this.perPage);
         for(var i = 0 ; i<this.perPage && i<this.announcements.length ; i++){
           this.announcementsInPage.push(this.announcements[i]);
-
         }
         console.log(this.announcementsInPage)
-
       })
     },
     changePage: function(number){
