@@ -1,4 +1,4 @@
-<style scoped>
+s<style scoped>
 
 
 
@@ -703,10 +703,10 @@ a:active {
 
               <div class="container">
 
-      <div class="row">
+      <div  class="row">
         <div class="col-md-3 col-xs-6">
-
-          <div class="box">
+<center>
+          <div class="container">
         <div class="icon">
           <div class="image"></div>
           <div class="info">
@@ -727,6 +727,7 @@ a:active {
             </div>
           </div>
         </div>
+        </center>
 
       </div>
 
@@ -735,7 +736,7 @@ a:active {
     <div class="row">
         <!-- Boxes de Acoes -->
         <div class="col-xs-12 col-sm-6 col-lg-4">
-			<div class="box">
+			<div>
 				<div class="icon">
 
     <!-- Modal -->
@@ -755,7 +756,7 @@ a:active {
                   <div class="row">
                   
 
-                <input style="height:30px;font-size:10pt"class="form-control input-lg" v-validate="{ rules: { required: true} }" id="myInput1" placeholder="Write a comment" type="text"v-model="comment" required="*">
+                <input style="height:30px;font-size:10pt" class="form-control input-lg" v-validate="{ rules: { required: true} }" id="myInput1" placeholder="Write a comment" type="text" v-model="comment" required="*">
  <!-- <input style="height:50px;font-size:10pt" v-validate="{ rules: { required: true} }" type="text" name="review" class="form-control input-lg" id="review" placeholder="Write a review" v-model="review" > -->
                     
                 </div>    
@@ -779,9 +780,11 @@ a:active {
 		<!-- /Boxes de Acoes -->
 	</div>
   <div class="row">
-  <form role="form" class="" v-on:submit='Review'>
-    <div class="col-md-12">
-     <input style="height:50px;font-size:10pt" v-validate="{ rules: { required: true} }" type="text" name="review" class="form-control input-lg" id="review" placeholder="Write a review" v-model="review" required="*">
+  <form role="form"  @submit.prevent= "Review">
+    <div>
+<fieldset>
+     <input style="height:50px;font-size:10pt" v-validate="{ rules: { required: true} }" type="text" name="review"  id="review" placeholder="Write a review" v-model="review" required="*">
+     </fieldset>
                      
             <!-- <input style="height:50px;font-size:10pt"class="form-control input-lg" id="myInput" placeholder="Write a review" type="text"v-model="review" required="*"><br /><br /><br /> -->
             <div id="makan1" style="width:50%">

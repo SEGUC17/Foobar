@@ -292,7 +292,7 @@
     <div class="row">
       <div class="col-md-3 col-xs-6">
 
-        <div class="box">
+        <div >
       <div class="icon">
         <div class="image"></div>
         <div class="info">
@@ -320,7 +320,7 @@
     <div class="container">
   <div class="row">
       <div class="col-xs-12 col-sm-6 col-lg-4">
-    <div class="box">
+    <div>
       <div class="icon">
 
   <div class="modal fade" id="primary" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

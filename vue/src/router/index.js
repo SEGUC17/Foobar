@@ -55,7 +55,7 @@ export default new Router({
     path: '/SPPostAnnouncement',
     component: SPPostAnnouncement,
     beforeEnter: (to, from, next) => {
-      if (localStorage.getItem('usertype') != 2) {
+      if (localStorage.getItem('usertype') != 3) {
         next('/');
       } else {
         next()
@@ -65,7 +65,8 @@ export default new Router({
     path: '/SPPostOffer',
     component: SPPostOffer,
     beforeEnter: (to, from, next) => {
-      if (localStorage.getItem('usertype') != 2) {
+      console.log(localStorage.getItem('usertype'));
+      if (localStorage.getItem('usertype') != 3) {
         next('/');
       } else {
         next()
@@ -75,7 +76,7 @@ export default new Router({
     path: '/SPAssess',
     component: SPAssess,
     beforeEnter: (to, from, next) => {
-      if (localStorage.getItem('usertype') != 2) {
+      if (localStorage.getItem('usertype') != 3) {
         next('/');
       } else {
         next()
@@ -85,7 +86,7 @@ export default new Router({
     path: '/SPEditProfile',
     component: SPEditProfile,
     beforeEnter: (to, from, next) => {
-      if (localStorage.getItem('usertype') != 2) {
+      if (localStorage.getItem('usertype') != 3) {
         next('/');
       } else {
         next()

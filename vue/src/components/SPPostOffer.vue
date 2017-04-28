@@ -12,7 +12,7 @@
 
             <label for="title" class="col-sm-2 control-label">Title:</label>
             <div class="col-sm-10">
-             <input v-validate="{ rules: { required: true} }" type="text" name="title" class="form-control" id="title" placeholder="Title" v-model="title" required="*">
+             <input v-validate="{ rules: { required: true} }" type="text" name="title" class="form-control" id="title" placeholder="Title" v-model="title" required="*" >
                      <span v-show="errors.has('title')">{{ errors.first('title') }}</span>
                
             </div>
@@ -38,23 +38,25 @@
 
         <div>
         <label for="field" class="col-sm-2 control-label">Field</label>
+        <div class="col-sm-10">
         <select v-model="field">
           <option v-for="option in interests" v-bind:value="option.value">
             {{ option.name }}
           </option>
         </select >
+        </div>
         <span>{{ field }}</span>
         </div>
 
         <div class="form-group">
-            <label for="description" class="col-sm-2 control-label">Description</label>
-            <div class="col-sm-10">
+            <label align="left" for="description" class="col-sm-2 control-label">Description</label>
+            <div align="right" class="col-sm-10">
             <textarea name="description" class="form-control" id="description" placeholder="Description" v-model="description"></textarea>
                     
                 
             </div>
         </div>
-
+<br><br>
         <div class="form-group">
             <label for="due_date" class="col-sm-2 control-label">Due Date</label>
             <div class="col-sm-10">
