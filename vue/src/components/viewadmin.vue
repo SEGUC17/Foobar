@@ -19,13 +19,20 @@
       </tr>
     </tbody>
   </table>
- <form role="form" class="" v-on:submit='addAdmin'>
-  <input type="email" placeholder="Add Admin? Enter his email" v-model="adminemail" required="*"></input>
-  <button class="btn-primary" >Add</button>
+ <form role="form" class="" @submit.prevent='addAdmin'>
+   <div class="form-group">
+         <input type="text" name="admin" v-model=adminemail class="form-control efc" id="admin" placeholder="Add Admin"  required="*" style="width:30%">
+   </div>
+  <div class="row">
+      <div class="col-sm-2">
+      </div>
+      <div class="col-sm-12">
+          <button class="btn btn-primary btn-sm" > Add Admin</button>
+      </div>
+  </div>
   </form>
 </div>
 </template>
-
 <script>
 export default {
   name: 'viewadmins',
@@ -67,5 +74,3 @@ methods:{
   }
 }
 </script>
-<style>
-</style>

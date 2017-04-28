@@ -1,28 +1,122 @@
+<style scoped>
+/* ----------------------------
+ * Callouts
+ * ----------------------------
+ */
+
+.callout-light {
+    padding: 40px;
+	color: #000;
+	background-color: #172d44;
+  border-left: 10px solid #1abb9c;
+
+}
+
+.callout-light h1,
+h2,
+h3,
+h4 {
+  color:#ecf0f1;
+	font-weight: 300;
+	line-height: 1.4;
+}
+
+.callout-dark {
+	padding: 30px;
+	color: #fff;
+	background-color: #c6c6c6;
+  border-left: 10px solid #1abb9c;
+
+}
+.callout-dark h1{
+  color: #5a738e;
+  font-weight: 300;
+  line-height: 1.4;
+}
+.callout-dark
+h2,
+h3,
+h4 {
+	font-weight: 300;
+	line-height: 1.4;
+}
+
+.callout-dark p {
+	color: #B1B1B1;
+	font-size: 17px;
+}
+
+.callout-mage {
+	padding: 30px;
+	background-color: #743C58;
+	color: #fff;
+}
+
+.callout-bubble {
+	padding: 30px;
+	color: #fff;
+	background-color: #A94545;
+}
+
+.callout-bubble h1,
+h2,
+h3,
+h4 {
+	font-weight: 300;
+	line-height: 1.4;
+}
+
+.callout-block {
+	background-color: #F5F3F4;
+	border-left: 5px solid #a94545;
+	border-right: 5px solid #a94545;
+	padding: 15px;
+}
+
+.callout-block h1,
+.callout-block h2,
+.callout-block h3,
+.callout-block h4 {
+	font-weight: 300;
+	line-height: 1.4;
+}
+</style>
+
+
 <template>
   <div>
 
-    <br><br>
-    <center>
-      <h2>Announcements</h2></center>
-      <br><br><br>
-     <div v-for =" announcement in announcementsInPage" class="row-2">
-        <div class="container" align="center">
-          <h3 align="left">{{announcement.title}}</h3>
-            
-            <p>{{announcement.content}}</p>
-            <h3>Announcer Name: {{announcement.name}}</h3>
-            <h3>Announcer Email: {{announcement.email}}</h3>
-          <h2>{{announcement.type}}</h2>
 
-          
-            
-      </div>
-        </div>
-        <center>
+  <div class="container" align="center">
+    <div v-for =" announcement in announcementsInPage" class="row-2">
+
+<br /><br /><br />
+              <div class="row">
+            				<div class="callout-dark text-center fade-in-b" v-show="announcement.announcer_id.type===1">
+            					<h4>{{announcement.title}}<b> Admin </b> - {{announcement.announcer_id.email}} </h4>
+            					<h1>{{announcement.content}}.</h1>
+            				</div>
+            			</div>
+
+                  <div class="row"  v-show="announcement.announcer_id.type===3">
+                				<div class="callout-light text-center fade-in-b">
+                          <h4>{{announcement.title}}<b> {{announcement.announcer_id.name}} </b> - {{announcement.announcer_id.email}} </h4>
+                					<h1>{{announcement.content}}.</h1>
+                				</div>
+                			</div>
+
+
+</div>
+
+</div>
+
+  <center>
         <ul class="pagination">
           <li v-for="n in numberOfPages"><a @click="changePage(n)">{{n}}</a></li>
         </ul>
         </center>
+
+
 
   </div>
 </template>
@@ -33,8 +127,8 @@ export default {
     return {
       announcements:[],
       announcementsInPage:[],
-      numberOfPages: 0, 
-      perPage: 3 
+      numberOfPages: 0,
+      perPage: 3
 
     }
   },
@@ -45,7 +139,8 @@ methods:{
     getAllAnnouncements: function () {
       this.$http.get('http://localhost:3000/api/announcements/view').then(response => {
         this.announcements=response.data.data.announcements
-        console.log(this.announcements);
+        console.log(this.announcements[0].announcer_id);
+
         this.numberOfPages=Math.ceil(this.announcements.length/this.perPage);
         for(var i = 0 ; i<this.perPage && i<this.announcements.length ; i++){
           this.announcementsInPage.push(this.announcements[i]);
@@ -57,7 +152,7 @@ methods:{
       var lastPost = number * this.perPage
       var firstPost = (number*this.perPage)-this.perPage
       this.announcementsInPage = []
-      
+
       for(var i = firstPost ; i<lastPost && i<this.announcements.length ; i++){
        this.announcementsInPage.push(this.announcements[i]);
       }
@@ -65,3 +160,40 @@ methods:{
   }
 }
 </script>
+
+<style scoped>
+
+.box {
+  background:#fff;
+  transition:all 0.2s ease;
+  border:2px dashed #dadada;
+  margin-top: 10px;
+  box-sizing: border-box;
+  border-radius: 5px;
+  background-clip: padding-box;
+  padding:0 20px 20px 20px;
+  min-height:340px;
+}
+
+.box:hover {
+  border:2px solid #525C7A;
+}
+
+.box span.box-title {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 300;
+    text-transform: uppercase;
+}
+
+.box .box-content {
+  padding: 16px;
+  border-radius: 0 0 2px 2px;
+  background-clip: padding-box;
+  box-sizing: border-box;
+}
+.box .box-content p {
+  color:#515c66;
+  text-transform:none;
+}
+</style>

@@ -1,15 +1,15 @@
 html , body{
-	
+
  height:100%;
- 
+
 }
- 
+
 .gent .full-width {
-	
+
  width:100%;
- 
+
  }
- 
+
 .gent .full-height{
  height:100%;
  }
@@ -896,9 +896,11 @@ body .gent {
     line-height: 30px
 }
 .gent .main_menu_side {
+
     padding: 0
 }
 .gent .bs-docs-sidebar .nav>li>a {
+
     display: block;
     padding: 4px 6px
 }
@@ -4231,7 +4233,7 @@ ul.notifications {
 table thead .checkbox { margin-top:-7px;margin-top:-21px; }
 table thead .checkbox.radio { margin-top:-7px;margin-top:-21px; }
 */
-			
+
 .daterangepicker.xdisplay { width:228px; }
 
 .dataTables_wrapper > .row{

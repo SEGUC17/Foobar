@@ -34,162 +34,156 @@ Vue.use(vueResource)
 Vue.use(VeeValidate);
 
 export default new Router({
-    routes: [{
-        path: '/',
-        component: Hello
-    }, {
-        path: '/announcements',
-        component: Announcements,
-        beforeEnter: (to, from, next) => {
-            if(localStorage.getItem('usertype')!=1){
-                next('/');
-            } else {
-                next()
-            }
-        }
-    }, {
-        path: '/Adminpostannouncement',
-        component: Adminpostannouncement,
-        beforeEnter: (to, from, next) => {
-            if(localStorage.getItem('usertype')!=1){
-                next('/');
-            } else {
-                next()
-            }
-        } 
-    }, {
-        path: '/SPPostAnnouncement',
-        component: SPPostAnnouncement,
-        beforeEnter: (to, from, next) => {
-            if(localStorage.getItem('usertype')!=2){
-                next('/');
-            } else {
-                next()
-            }
-        } 
-    }, {
-        path: '/SPPostOffer',
-        component: SPPostOffer,
-        beforeEnter: (to, from, next) => {
-            if(localStorage.getItem('usertype')!=2){
-                next('/');
-            } else {
-                next()
-            }
-        } 
-    }, {
-        path: '/SPAssess',
-        component: SPAssess,
-        beforeEnter: (to, from, next) => {
-            if(localStorage.getItem('usertype')!=2){
-                next('/');
-            } else {
-                next()
-            }
-        } 
-    }, {
-        path: '/SPEditProfile',
-        component: SPEditProfile,
-        beforeEnter: (to, from, next) => {
-            if(localStorage.getItem('usertype')!=2){
-                next('/');
-            } else {
-                next()
-            }
-        } 
-    }, {
-        path: '/applySP',
-        component: ApplySP
-    }, {
-        path: '/adminSP',
-        component: AdminSP,
-        beforeEnter: (to, from, next) => {
-            if(localStorage.getItem('usertype')!=1){
-                next('/');
-            } else {
-                next()
-            }
-        }
-    }, {
-        path: '/SPReservations',
-        component: SPReservations
-    }, {
-        path: '/SPReviews',
-        component: SPReviews
-    }, {
-        path: '/sPs',
-        component: ServiceProviders
-    }, {
-        path: '/viewAdmins',
-        component: viewadmin,
-        beforeEnter: (to, from, next) => {
-            if(localStorage.getItem('usertype')!=1){
-                next('/');
-            } else {
-                next()
-            }
-        }
-    }, {
-        path: '/viewOffers',
-        component: Offers
-    }, {
-        path: '/viewReservations',
-        component: ReservationStudent
-    }, {
-        path: '/reviewData',
-        component: Interests,
-        beforeEnter: (to, from, next) => {
-            if(localStorage.getItem('usertype')!=1){
-                next('/');
-            } else {
-                next()
-            }
-        }
-    }, {
-        path: '/viewAllStudents',
-        component: viewAllStudents,
-        beforeEnter: (to, from, next) => {
-            if(localStorage.getItem('usertype')!=1){
-                next('/');
-            } else {
-                next()
-            }
-        }
-    }, {
-        path: '/sps/:id',
-        name: 'service provider',
-        component: ServiceProviderProfile
-    }, {
-        path: '/EditStudent/:EditStudid',
-        name: 'EditStudent',
-        component: EditStudentProfile
-    }, {
-        path: '/student/:Studid',
-        name: 'StudentProfile',
-        component: StudentProfile
-    }, {
-        path: '/viewInterests',
-        component: Interests,
-        beforeEnter: (to, from, next) => {
-            if(localStorage.getItem('usertype')!=1){
-                next('/');
-            } else {
-                next()
-            }
-        }
-    }, {
-        path: '/SPViewMyProfile',
-        component: SPViewMyProfile
-    }, {
-        path: '/pendingSP',
-        component: pendingSP,
-        beforeEnter: (to, from, next) => {
-            if(localStorage.getItem('usertype')!=1){
-                next('/');
-            } else {
-                next()
-            }
-        }
-    }],
-    mode: 'history'
+  routes: [{
+    path: '/',
+    component: Hello
+  }, {
+    path: '/announcements',
+    component: Announcements,
+
+  }, {
+    path: '/Adminpostannouncement',
+    component: Adminpostannouncement,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('usertype') != 1) {
+        next('/');
+      } else {
+        next()
+      }
+    }
+  }, {
+    path: '/SPPostAnnouncement',
+    component: SPPostAnnouncement,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('usertype') != 2) {
+        next('/');
+      } else {
+        next()
+      }
+    }
+  }, {
+    path: '/SPPostOffer',
+    component: SPPostOffer,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('usertype') != 2) {
+        next('/');
+      } else {
+        next()
+      }
+    }
+  }, {
+    path: '/SPAssess',
+    component: SPAssess,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('usertype') != 2) {
+        next('/');
+      } else {
+        next()
+      }
+    }
+  }, {
+    path: '/SPEditProfile',
+    component: SPEditProfile,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('usertype') != 2) {
+        next('/');
+      } else {
+        next()
+      }
+    }
+  }, {
+    path: '/applySP',
+    component: ApplySP
+  }, {
+    path: '/adminSP',
+    component: AdminSP,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('usertype') != 1) {
+        next('/');
+      } else {
+        next()
+      }
+    }
+  }, {
+    path: '/SPReservations',
+    component: SPReservations
+  }, {
+    path: '/SPReviews',
+    component: SPReviews
+  }, {
+    path: '/sPs',
+    component: ServiceProviders
+  }, {
+    path: '/viewAdmins',
+    component: viewadmin,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('usertype') != 1) {
+        next('/');
+      } else {
+        next()
+      }
+    }
+  }, {
+    path: '/viewOffers',
+    component: Offers
+  }, {
+    path: '/viewReservations',
+    component: ReservationStudent
+  }, {
+    path: '/reviewData',
+    component: Interests,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('usertype') != 1) {
+        next('/');
+      } else {
+        next()
+      }
+    }
+  }, {
+    path: '/viewAllStudents',
+    component: viewAllStudents,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('usertype') != 1) {
+        next('/');
+      } else {
+        next()
+      }
+    }
+  }, {
+    path: '/sps/:id',
+    name: 'service provider',
+    component: ServiceProviderProfile
+  }, {
+    path: '/EditStudent/:EditStudid',
+    name: 'EditStudent',
+    component: EditStudentProfile
+  }, {
+    path: '/student/:Studid',
+    name: 'StudentProfile',
+    component: StudentProfile
+  }, {
+    path: '/viewInterests',
+    component: Interests,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('usertype') != 1) {
+        next('/');
+      } else {
+        next()
+      }
+    }
+  }, {
+    path: '/SPViewMyProfile',
+    component: SPViewMyProfile
+  }, {
+    path: '/pendingSP',
+    component: pendingSP,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('usertype') != 1) {
+        next('/');
+      } else {
+        next()
+      }
+    }
+  }],
+  mode: 'history'
 })

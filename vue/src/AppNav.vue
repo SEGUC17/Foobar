@@ -8,7 +8,7 @@
               <div class="navbar-header">
                 <!-- Mobile Toggle Menu Button -->
               <a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"><i></i></a>
-              <a class="navbar-brand" href="/">Foobar Baby</a> 
+              <a class="navbar-brand" href="/">Foobar Baby</a>
               </div>
               <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -47,26 +47,23 @@
             <div class="panel-body">
               <div class="row">
                 <div class="col-lg-12">
-                  <form id="login-form"  role="form" style="display: block;">
+                  <form @submit.prevent="login" id="login-form"  role="form" style="display: block;">
                     <div class="form-group">
                       <input type="text" name="email" id="email" tabindex="1" v-model="creds.username" class="form-control efc" placeholder="Email" value="" required="true">
                     </div>
                     <div class="form-group">
                       <input type="password" name="password" id="password" tabindex="2" v-model="creds.password" class="form-control efc" placeholder="Password" required="true">
                     </div>
-                    
+
                     <div class="form-group text-center">
                       <label style="color:#52d3aa;">{{message}}</label>
                     </div>
 
-                    <div class="form-group text-center">
-                      <input type="checkbox" tabindex="3" class="" name="remember" id="remember">
-                      <label for="remember"> Remember Me</label>
-                    </div>
+
                     <div class="form-group">
                       <div class="row">
                         <div class="col-sm-6 col-sm-offset-3">
-                          <input type="submit" v-on:click="login" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login efc" value="Log In">
+                          <input type="submit"  name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login efc" value="Log In">
                         </div>
                       </div>
                     </div>
@@ -80,7 +77,7 @@
                       </div>
                     </div>
                   </form>
-                  
+
                   <form id="register-form" style="display: none;">
                     <!--<div class="form-group">
                       <input type="text" name="username" id="username" tabindex="1" class="form-control efc" placeholder="Username" value="">
@@ -148,6 +145,7 @@
                         <div class="form-group">
                             <label for="name" class="col-sm-2 control-label">
                                 Interests</label>
+                                <br /><br />
                                 <div v-for="interest in this.interests">
                                 <input type="checkbox" :id="interest" :value="interest" v-model="Interests">
                                 <label for="interest">{{interest.name}}</label>
@@ -184,7 +182,7 @@
           <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
               <div class="navbar nav_title" style="border: 0;">
-                <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>FOOBAR</span></a>
+                <a href="" class="site_title"><i class="fa fa-paw"></i> <span>FOOBAR</span></a>
               </div>
 
               <div class="clearfix"></div>
@@ -209,7 +207,7 @@
               <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
 
                 <!--CUSTOM TO USER-->
-                <div class="menu_section">
+                <div class="menu_section" v-show="this.user.type===1">
                   <h3>Admin</h3>
                   <ul class="nav side-menu">
                     <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
@@ -243,7 +241,7 @@
                   </ul>
                 </div>
 
-                <div class="menu_section" >
+                <div class="menu_section" v-show="this.user.type===3" >
                   <h3>Service Provider</h3>
                   <ul class="nav side-menu">
                     <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
@@ -262,9 +260,9 @@
                   </ul>
                 </div>
 
-                <div class="menu_section">
+                <div class="menu_section" v-show="this.user.type===2">
                   <h3>Student</h3>
-                  <ul class="nav side-menu">
+                  <ul class="nav side-menu" >
                     <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                       <ul class="nav child_menu">
                           <li><router-link to="/"><font size="1">Home</font></router-link></li>
@@ -272,7 +270,7 @@
                           <li><router-link to="/announcements"><font size="1">Announcements</font></router-link></li>
                           <li><router-link to="/viewReservations"><font size="1">Reservation</font></router-link></li>
                           <!--Studid : decodeid.body.id-->
-                          <li><router-link  :to ="{ name : 'StudentProfile' , params: {  }}"> <font size="1">My Profile</font></router-link></li>
+                          <li><router-link  :to ="{ name : 'StudentProfile' , params: {Studid : this.decodeid}}"> <font size="1">My Profile</font></router-link></li>
                           <li><router-link  to="/sPs"><font size="1">SPS</font></router-link></li>
                       </ul>
                     </li>
@@ -295,7 +293,7 @@
                 <a data-toggle="tooltip" data-placement="top" title="Lock">
                   <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
                 </a>
-                <a data-toggle="tooltip" v-on:click="logout" data-placement="top" title="Logout">
+                <a data-toggle="tooltip" href="/" v-on:click="logout" data-placement="top" title="Logout">
                   <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                 </a>
               </div>
@@ -321,7 +319,7 @@
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right" style="">
                       <li><a href="javascript:;"> Profile</a></li>
-                      <li><a v-on:click="logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                      <li><a  href="/" v-on:click="logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                     </ul>
                   </li>
 
@@ -339,7 +337,7 @@
                         </span>
                           <span>
                             <span>{{n.title}}</span>
-                            <span class="time">3 mins ago</span>
+                            <span class="time">{{n.createdAt}}</span>
                           </span>
                           <span class="message">
                             {{n.content}}
@@ -370,7 +368,7 @@
                 <router-view></router-view>
               </keep-alive>
             </transition>
-          </div> 
+          </div>
           <!-- /page content -->
 
 
@@ -410,14 +408,14 @@ data () {
       profilepic:'',
       announcements:[],
       announcementsInPage:[],
-      numberOfPages: 0, 
+      numberOfPages: 0,
       perPage: 3,
       successmessages:[{msg:''}],
       failuremessages:[{msg:''}],
       showadmin:false,
       showsp:false,
       showstudent:false,
-      
+
 
   // User object will let us check authentication status
   user: {
@@ -431,8 +429,11 @@ if(localStorage.getItem('id_token')!=null){
   this.showgent= true
   this.user.authenticated=true
   this.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
-    this.decodeid=decode
+    this.decodeid=decode.body.id
+    //console.log(this.decodeid)
     this.user.type = decode.body.type
+    console.log(localStorage.getItem('usertype'))
+    console.log(this.user.type);
     this.name = decode.body.name;
     this.profilepic = decode.body.image
 })
@@ -455,7 +456,8 @@ methods: {
       localStorage.setItem('id_token', data.body.token)
       app.user.authenticated = true
       app.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
-        this.decodeid = decode;
+        this.decodeid = decode.body.id;
+        console.log(decode.body.type)
         this.user.type = decode.body.type;
         localStorage.setItem('usertype', decode.body.type)
         this.name = decode.body.name;
@@ -519,7 +521,7 @@ methods: {
     this.$http.post('http://localhost:3000/api/users/resetPW', {"email":this.resetPWEmail}).then(data => {
       alert("New Password sent to ".concat(this.resetPWEmail));
       console.log('success');
-      
+
   }).catch(function(reason) {
         this.failuremessages = reason.body.err;
         this.successmessages= [{msg:''}];
@@ -544,11 +546,8 @@ this.$router.go({path:'/',force:true});
     this.address='';
     this.Interests=[];
     localStorage.setItem('usertype', 0)
-    this.$router.go({
-      path: '/',
-      force: true
-    })
-    this.showgent= false;
+
+
 
   },
 
@@ -580,4 +579,3 @@ this.$router.go({path:'/',force:true});
 
 }
 </script>
-

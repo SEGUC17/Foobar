@@ -111,7 +111,7 @@
 						</div>
 					</a>
 				</div>
-				
+
 				<div class="clearfix visible-sm-block"></div>
 
 				<div class="col-md-4 col-sm-6 col-xxs-12">
@@ -132,7 +132,7 @@
 						</div>
 					</a>
 				</div>
-				
+
 				<div class="clearfix visible-sm-block"></div>
 
 				<div class="col-md-4 col-sm-6 col-xxs-12">
@@ -205,7 +205,7 @@
 					<h3>CMS &amp; eCommerce</h3>
 					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean</p>
 				</div>
-				
+
 			</div>
 		</div>
 	</section>-->
@@ -280,7 +280,7 @@
 				<div class="col-md-6 to-animate">
 
 		<h3>Contact Form</h3>
-		
+
 		<div id ="successcontact"style="display:none;">
 			<div class="text-center">
 				<i class="fa fa-check" aria-hidden="true" style="color: #52d3aa; font-size: 36px;"></i>
@@ -294,33 +294,33 @@
         <div class="form-group">
     <input v-validate="{ rules: { required: true} }" type="text" name="name" class="form-control efc" id="name" placeholder="Name" v-model="name" required="*">
                      <span v-show="errors.has('name')">{{ errors.first('name') }}</span>
-                
+
         </div>
-        
+
         <div class="form-group">
                    <input v-validate="{ rules: { required: true,email: true} }" type="email" name="email" class="form-control efc" id="email" placeholder="Email" v-model="email" required="*">
                      <span v-show="errors.has('email')">{{ errors.first('email') }}</span>
         </div>
-        
+
         <div class="form-group">
               <input v-validate="{ rules: { required: true} }" type="text" name="phone_number" class="form-control efc" id="phone_number" placeholder="Phone Number" v-model="phone_number" required="*">
                      <span v-show="errors.has('phone_number')">{{ errors.first('phone_number') }}</span>
         </div>
-        
+
         <div class="form-group">
             <textarea v-validate="{ rules: { required: true} }" type="text" name="description" class="form-control efc" id="description" placeholder="Description" v-model="description" required="*"></textarea>
                      <span v-show="errors.has('description')">{{ errors.first('description') }}</span>
-                
+
         </div>
-        
+
         <div class="row text-center">
               <button class="btn btn-primary btn-lg"  v-on:click="applySP"> Apply</button>
         </div>
 
-		     <div v-for =" message in successmessages">                                  
+		     <div v-for =" message in successmessages">
                     <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
                      </div>
-                   <div v-for =" message in failuremessages">                               
+                   <div v-for =" message in failuremessages">
                <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
            </div>
            <br><br>
@@ -420,7 +420,7 @@ export default {
               amount: this.price
             })
             console.log('attempting to get a token');
-            
+
           },
 	openSrch: function(){
     document.getElementById("searchOverlay").style.height = "100vh";
@@ -428,7 +428,7 @@ export default {
   	},
 	 closeSrch: function() {
     document.getElementById("searchOverlay").style.height = "0%";
-		},applySP: function () 
+		},applySP: function ()
         {
             this.$http.post('http://localhost:3000/api/sPs/sP/apply', {"name":this.name,"email":this.email,"phone_number":this.phone_number,"description":this.description}).then(data => {
 			$('#contactform').fadeOut()
