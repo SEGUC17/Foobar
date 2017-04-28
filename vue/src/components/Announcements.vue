@@ -89,8 +89,7 @@ h4 {
 
   <div class="container" align="center">
     <div v-for =" announcement in announcementsInPage" class="row-2">
-
-<br /><br /><br />
+    <br/><br/><br/>
               <div class="row">
             				<div class="callout-dark text-center fade-in-b" v-show="announcement.announcer_id.type===1">
             					<h4>{{announcement.title}}<b> Admin </b> - {{announcement.announcer_id.email}} </h4>
@@ -99,13 +98,11 @@ h4 {
             			</div>
 
                   <div class="row"  v-show="announcement.announcer_id.type===3">
-                				<div class="callout-light text-center fade-in-b">
-                          <h4>{{announcement.title}}<b> {{announcement.announcer_id.name}} </b> - {{announcement.announcer_id.email}} </h4>
-                					<h1>{{announcement.content}}.</h1>
-                				</div>
-                			</div>
-
-
+                    <div class="callout-light text-center fade-in-b">
+                      <h4>{{announcement.title}}<b> {{announcement.announcer_id.name}} </b> - {{announcement.announcer_id.email}} </h4>
+                      <h1>{{announcement.content}}.</h1>
+                    </div>
+                  </div>
 </div>
 
 </div>
@@ -139,22 +136,19 @@ methods:{
     getAllAnnouncements: function () {
       this.$http.get('http://localhost:3000/api/announcements/view').then(response => {
         this.announcements=response.data.data.announcements
-        console.log(this.announcements[0].announcer_id);
 
         this.numberOfPages=Math.ceil(this.announcements.length/this.perPage);
         for(var i = 0 ; i<this.perPage && i<this.announcements.length ; i++){
           this.announcementsInPage.push(this.announcements[i]);
         }
-        console.log(this.announcementsInPage)
       })
     },
     changePage: function(number){
-      var lastPost = number * this.perPage
       var firstPost = (number*this.perPage)-this.perPage
+      var lastPost = number * this.perPage
       this.announcementsInPage = []
-
       for(var i = firstPost ; i<lastPost && i<this.announcements.length ; i++){
-       this.announcementsInPage.push(this.announcements[i]);
+        this.announcementsInPage.push(this.announcements[i]);
       }
     }
   }

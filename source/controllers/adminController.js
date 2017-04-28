@@ -297,14 +297,6 @@ const adminController = {
                                 message: err,
                             });
                         } else {
-                            res.status(200).json({
-                                status: 'success',
-                                data: { // Data can be null if, for example, delete request was sent
-                                    message: `Removed him from PendingSP Collection and Added to user collection as:${newUser}and to the SP collection as:${newSP}`,
-                                },
-                            });
-                        }
-                    }); // saving SP instance
 
 
                     // create reusable transporter object using the default SMTP transport
@@ -327,15 +319,16 @@ const adminController = {
 
                     // send mail with defined transport object
                     transporter.sendMail(mailOptions, (err, info) => {
-                        if (err) {
-                            res.status(500).json({
-                                status: 'error',
-                                message: err,
+                    });
+                            res.status(200).json({
+                                status: 'success',
+                                data: { // Data can be null if, for example, delete request was sent
+                                    message: `Removed him from PendingSP Collection and Added to user collection as:${newUser}and to the SP collection as:${newSP}`,
+                                },
                             });
                         }
-                        console.log('Message %s sent: %s', info.messageId,
-                            info.response);
-                    });
+                    }); // saving SP instance
+
                 } else if (req.body.disapprove) {
                     // finding the target sp and setting is_declined attr. to true
                     PendingSP.findByIdAndUpdate(spId, {

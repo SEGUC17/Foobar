@@ -38,6 +38,10 @@ export default new Router({
     path: '/',
     component: Hello
   }, {
+    path: '/test',
+    component: test,
+
+  }, {
     path: '/announcements',
     component: Announcements,
 
@@ -180,7 +184,7 @@ export default new Router({
     component: pendingSP,
     beforeEnter: (to, from, next) => {
       if (localStorage.getItem('usertype') != 1) {
-        next('/');
+        next('/')
       } else {
         next()
       }

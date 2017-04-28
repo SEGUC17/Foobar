@@ -157,59 +157,26 @@ const StudentController = {
             });
         }
     },
-    search(req, res) {
-        const search = new RegExp(`^${req.query.search}$`, 'i');
-        let tagsfound = [];
-        Tag.find({
-            name: search,
-        }, (err, tagsarray) => {
-            if (err) {
-                res.status(500).json({
-                    status: 'error',
-                    message: err.message,
-                });
-            } else {
-                tagsfound = tagsarray;
-            }
-        });
-        const tagsarraysids = [];
-        tagsfound.forEach((element) => {
-            tagsarraysids.push(element.offer_id);
-        }, this);
-        Offer.find({
-            $and: [{
-                $or: [{
-                    title: search,
-                }, {
-                    field: search,
-                }, {
-                    description: search,
-                }, {
-                    offer_id: {
-                        $in: tagsarraysids,
-                    },
-                }],
-            }, {
-                due_date: {
-                    $lt: Date.now(),
-                },
-            }],
-            function(err, offers) {
-                if (err) {
-                    res.status(500).json({
-                        status: 'error',
-                        message: err.message,
-                    });
-                } else {
-                    res.status(200).json({
-                        status: 'success',
-                        data: {
-                            offers,
-                        },
-                    });
-                }
+    search(req, res) { //searching for an offer by name
+      Offer.find({
+        $text: {
+          $search: req.body.search,
+        }
+      }).exec(function(err, offers) {
+        if (err) {
+          res.status(500).json({
+            status: 'error',
+            message: err.message,
+          });
+        } else {
+          res.status(200).json({
+            status: 'success',
+            data: {
+              offers,
             },
-        });
+          });
+        }
+      });
     },
     seeProgress(req, res) {
         const token = req.headers['jwt-token'];

@@ -143,13 +143,13 @@
                       </div>
 
                         <div class="form-group">
-                            <label for="name" class="col-sm-2 control-label">
-                                Interests</label>
-                                <br /><br />
-                                <div v-for="interest in this.interests">
-                                <input type="checkbox" :id="interest" :value="interest" v-model="Interests">
-                                <label for="interest">{{interest.name}}</label>
-                                </div>
+                          <div>
+                            <label class="control-label">Interests</label><span style="font-weight: normal; font-size:12px; margin-left: 5px;"> (tell us a bit about what you like)</span>
+                          </div>
+                            <span v-for="interest in this.interests" style="font-size:14px; margin-right:10px;">
+                                  <input type="checkbox" :id="interest" :value="interest" v-model="Interests">
+                                  <label for="interest" style="font-weight: normal;">{{interest.name}}</label>
+                            </span>
                         </div>
 
                     <div class="form-group">
@@ -269,7 +269,6 @@
                           <li><router-link to="/viewOffers"><font size="1">View Offers</font></router-link></li>
                           <li><router-link to="/announcements"><font size="1">Announcements</font></router-link></li>
                           <li><router-link to="/viewReservations"><font size="1">Reservation</font></router-link></li>
-                          <!--Studid : decodeid.body.id-->
                           <li><router-link  :to ="{ name : 'StudentProfile' , params: {Studid : this.decodeid}}"> <font size="1">My Profile</font></router-link></li>
                           <li><router-link  to="/sPs"><font size="1">SPS</font></router-link></li>
                       </ul>
@@ -283,19 +282,12 @@
               <!-- /sidebar menu -->
 
               <!-- /menu footer buttons -->
-              <div class="sidebar-footer hidden-small">
-                <a data-toggle="tooltip" data-placement="top" title="Settings">
-                  <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
-                </a>
-                <a data-toggle="tooltip" data-placement="top" title="FullScreen">
-                  <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
-                </a>
-                <a data-toggle="tooltip" data-placement="top" title="Lock">
-                  <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
-                </a>
-                <a data-toggle="tooltip" href="/" v-on:click="logout" data-placement="top" title="Logout">
+              <div class="sidebar-footer">
+                <center>
+                <a data-toggle="tooltip" href="/" v-on:click="logout" style="width:100%;" title="Logout">
                   <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                 </a>
+                </center>
               </div>
               <!-- /menu footer buttons -->
             </div>

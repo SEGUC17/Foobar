@@ -1,37 +1,29 @@
 <template>
 <center>
   <form role="form" class="" v-on:submit="postAnnouncement">
+
+        <h2>Enter Announcement Details:</h2>
+        <div v-for =" message in successmessages">                                  
+            <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
+         </div>
+         <div v-for =" message in failuremessages">                               
+            <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
+         </div>
+
         <div class="form-group">
-            <h2>Enter Announcement Details: </h2>
-             <div v-for =" message in successmessages">                                  
-                    <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
-                     </div>
-                   <div v-for =" message in failuremessages">                               
-               <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
-           </div>
-           <br><br>
-            <label for="title" class="col-sm-2 control-label">Title:</label>
-            <div class="col-sm-10">
-               <input v-validate="{ rules: { required: true} }" type="text" name="title" class="form-control" id="title" placeholder="Title" v-model="title" required="*">
-                     <span v-show="errors.has('title')">{{ errors.first('title') }}</span>
-               
-            </div>
+               <input v-validate="{ rules: { required: true} }" type="text" name="title" class="form-control efc" id="title" placeholder="Title" v-model="title" required="*">
+                     <span v-show="errors.has('title')">{{ errors.first('title') }}</span>   
         </div>
 
         <div class="form-group">
-            <label for="content" class="col-sm-2 control-label">Content</label>
-            <div class="col-sm-10">
-                <textarea v-validate="{ rules: { required: true} }" name="content" class="form-control" id="content" placeholder="Content" v-model="content" required="*"></textarea>
+                <textarea v-validate="{ rules: { required: true} }" name="content" class="form-control efc" id="content" placeholder="Content" v-model="content" required="*"></textarea>
                      <span v-show="errors.has('content')">{{ errors.first('content') }}</span>
-            </div>
         </div>
 
         <div class="row">
-            <div class="col-sm-2">
-            </div>
-            <div class="col-sm-10">
-                <button class="btn btn-primary btn-sm" > Post Announcement</button>
-            </div>
+            <center>
+                <button class="btn btn-primary"> Post Announcement</button>
+            </center>
         </div>
     </form>
     </center>

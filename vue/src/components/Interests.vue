@@ -5,27 +5,30 @@
 <h4>Interests from the most recommended to the least one  </h4>
 <div>
   <ul>
-    <li v-for=" interest in interests"> {{interest}}</li>
+    <li v-for=" interest in interests"> {{interest.name}}</li>
   </ul>
-  <div class="form-group">
-      <label  class="col-sm-2 control-label">
-          Add a new Interest</label>
-          <br>
+  <form role="form" class="" v-on:submit='addInterest'>
           <div v-for =" message in successmessages">                                  
-                    <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
-                     </div>
-                   <div v-for =" message in failuremessages">                               
-               <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
-           </div>
-           <form role="form" class="" v-on:submit='addInterest'>
-      <div class="col-sm-10">
-      <input v-validate="{ rules: { required: true} }" type="text" name="interestname" class="form-control" id="interestname" placeholder="Interest Name" v-model="interestname" required="*">
-                     <span v-show="errors.has('interestname ')">{{ errors.first('interestname') }}</span>
-            <button @click ="addInterest()" >add</button>
-          <h5>{{msg}}</h5>
+                <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
+                  </div>
+                <div v-for =" message in failuremessages">                               
+        <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
       </div>
-      </form>
-  </div>
+      <div class="form-group">
+          <input v-validate="{ rules: { required: true} }" type="text" name="interestname" class="form-control efc" id="interestname" placeholder="Interest Name" v-model="interestname" required="*">
+          <span v-show="errors.has('interestname ')">{{ errors.first('interestname') }}</span>
+      </div>
+
+      <div class="form-group">
+        <div class="row">
+          <div class="col-sm-6 col-sm-offset-3">
+            <input type="submit"  tabindex="4" class="form-control efc" value="Add">
+          </div>
+        </div>
+      </div>
+
+       <h5>{{msg}}</h5>
+  </form>
 
 </div>
 <ul>
@@ -50,27 +53,32 @@ export default {
   },
 created(){
 this.reviewDataAnalysis();
+this.getInterests();
 },
 methods:{
     addInterest: function () {
 
-          this.$http.post('http://localhost:3000/api/admins/addInterest',{name: this.interestname },{headers : { 'jwt-token' : localStorage.getItem('id_token')}} ).then(response => {
+      this.$http.post('http://localhost:3000/api/admins/addInterest',{name: this.interestname },{headers : { 'jwt-token' : localStorage.getItem('id_token')}} ).then(response => {
       this.msg="Interest has been added"
       alert(this.msg)
           }).catch(function(reason) {
-                        console.log(reason.body.err);
                 this.failuremessages = reason.body.err;
-                console.log(this.failuremessages)
                 this.successmessages=[{msg:''}];
-
         });
+      },
+      getInterests: function () {
+
+      this.$http.get('http://localhost:3000/api/students/all/interests',{headers : { 'jwt-token' : localStorage.getItem('id_token')}} ).then(response => {
+
+        this.interests = response.body.data.interests
+            }).catch(function(reason) {
+                console.log(reason)
+          });
         },
         reviewDataAnalysis: function () {
           this.$http.get('http://localhost:3000/api/admins/reviewinterest',{headers : { 'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
-console.log(response)
             this.most= response.body.data.most,
-            this.least = response.body.data.least,
-            this.interests = response.body.data.temp
+            this.least = response.body.data.least
           })
         }
   }

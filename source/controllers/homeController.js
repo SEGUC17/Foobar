@@ -233,7 +233,7 @@ const homeController = {
                 to: req.body.email, // list of receivers
                 subject: 'Password reset inquiry ✔', // Subject line
                 text: `Dear Sir/Madam, you have requested to reset your password for our system. You can now login using your email and password = ${
-        password}`, // plain text body
+                password}`, // plain text body
             };
 
             // send mail with defined transport object

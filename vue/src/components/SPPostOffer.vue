@@ -1,14 +1,8 @@
 <template>
 <center>
   <form role="form" class="" v-on:submit.prevent="postOffer()">
+     <h2>Enter Offer Details: </h2>
         <div class="form-group">
-            <h2>Enter Offer Details: </h2>
-          <!--    <div v-for =" message in successmessages">                                  
-                    <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
-                     </div>
-                   <div v-for =" message in failuremessages">                               
-               <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
-           </div> -->
 
             <label for="title" class="col-sm-2 control-label">Title:</label>
             <div class="col-sm-10">
@@ -32,37 +26,33 @@
             <div class="col-sm-10">
              <input v-validate="{ rules: { required: true} }" type="number" name="capacity" class="form-control" id="capacity" placeholder="Capacity" v-model="capacity" required="*">
                      <span v-show="errors.has('capacity')">{{ errors.first('capacity') }}</span>
-                
             </div>
         </div>
 
-        <div>
+        <div class="form-group">
         <label for="field" class="col-sm-2 control-label">Field</label>
         <div class="col-sm-10">
-        <select v-model="field">
-          <option v-for="option in interests" v-bind:value="option.value">
-            {{ option.name }}
-          </option>
-        </select >
+            <select v-model="field">
+            <option v-for="option in interests" v-bind:value="option.value">
+                {{ option.name }}
+            </option>
+            </select >
         </div>
         <span>{{ field }}</span>
         </div>
 
         <div class="form-group">
-            <label align="left" for="description" class="col-sm-2 control-label">Description</label>
-            <div align="right" class="col-sm-10">
-            <textarea name="description" class="form-control" id="description" placeholder="Description" v-model="description"></textarea>
-                    
-                
+            <label  for="description" class="col-sm-2 control-label">Description</label>
+            <div class="col-sm-10">
+            <input type="text" name="description" class="form-control" id="description" placeholder="Description" v-model="description"></input>
             </div>
         </div>
-<br><br>
+
         <div class="form-group">
             <label for="due_date" class="col-sm-2 control-label">Due Date</label>
             <div class="col-sm-10">
             <input v-validate="{ rules: { required: true} }" type="date" name="due_date" class="form-control" id="due_date" v-model="due_date" required="*">
                      <span v-show="errors.has('due_date')">{{ errors.first('due_date') }}</span>
-                
             </div>
         </div>
 

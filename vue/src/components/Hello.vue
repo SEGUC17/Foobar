@@ -334,6 +334,7 @@
 
 
     <!-- Search Overlay -->
+
 <div class="search">
     <div id="searchOverlay" class="overlay" style="background-color: rgba(0,0,0, 0.7);z-index:100">
 		<img src='~assets/img/close4.png' style="position:absolute; right:20px; top:20px; height:25px; margin-top:-12.5px; cursor:pointer" v-on:click="closeSrch">
@@ -342,10 +343,14 @@
             <div class ="row">
                 <div class="col-xs-3"></div>
                 <div class="col-xs-6" style="position:relative">
-                    <hr>
-                          <input id="search" type="text" class="searchField" placeholder="TYPE HERE TO SEARCH.." style="min-height:30px;" value="">
-                          <img src='~assets/img/search.png' style="position:absolute; top:50%; right:30px; height:25px; margin-top:-12.5px; cursor:pointer" class = "searchButton">
+                    <hr v-show="!results">
+                          <input id="search" type="text" class="searchField" placeholder="TYPE HERE TO SEARCH.." style="min-height:30px;" v-model="search">
+                          <img src='~assets/img/search.png' v-on:click="srch" style="position:absolute; top:50%; right:30px; height:25px; margin-top:-12.5px; cursor:pointer" class = "searchButton">
                     <hr style="margin-top:50px;">
+
+					<div v-show="results">
+
+					</div>
                 </div>
                 <div class="col-xs-3"></div>
             </div>
@@ -365,6 +370,8 @@ export default {
   name: 'hello',
   data(){
     return{
+		  results:'',
+		  search:'',
           stripe_token: {},
           price: 999,
           stripe_instance: {},
@@ -382,7 +389,7 @@ export default {
 		  work_6: require('../assets/img/work_6.jpg'),
 		  work_7: require('../assets/img/work_7.jpg'),
 		  work_8: require('../assets/img/work_8.jpg'),
-
+		  
 			name:'',
 			email:'',
 			phone_number:'',
@@ -424,7 +431,6 @@ export default {
           },
 	openSrch: function(){
     document.getElementById("searchOverlay").style.height = "100vh";
-    document.getElementById("srchicon").style.display = 'none';
   	},
 	 closeSrch: function() {
     document.getElementById("searchOverlay").style.height = "0%";
@@ -444,7 +450,14 @@ export default {
                 this.successmessages=[{msg:''}];
         });
 
-        }
+	}, srch: function(){
+			this.$http.post('http://localhost:3000/api/students/home', {search: this.search}).then(data => {
+				console.log(data)
+				this.results = data.results
+				}).catch(function(reason) {
+				console.log(reason)
+			});
+		}
   }
 }
 </script>
