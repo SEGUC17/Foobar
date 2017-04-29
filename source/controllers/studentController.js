@@ -158,11 +158,8 @@ const StudentController = {
         }
     },
     search(req, res) { //searching for an offer by name
-      Offer.find({
-        $text: {
-          $search: req.body.search,
-        }
-      }).exec(function(err, offers) {
+     var query= {$or: [{title : { $regex: req.body.search, $options: "i"}},{description : { $regex: req.body.search, $options: "i"}}]};
+      Offer.find(query,function(err, offers) {
         if (err) {
           res.status(500).json({
             status: 'error',

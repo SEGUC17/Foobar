@@ -64,7 +64,23 @@
 
 <template>
   <div>
-  <br>
+
+        <div class="page-title">
+              <div class="title_left">
+                <h3>Your offers</h3>
+              </div>
+
+              <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                  <div class="input-group">
+                    <input type="text" class="form-control" v-model="srch"  placeholder="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" v-on:click="search">Go!</button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
 
   <section id="content2" class="tab-content">
         <p>            <div class="container" id="features">
@@ -81,7 +97,7 @@
 						</p>
             <p class="info">${{offer.price}}<br /> Start Date: {{offer.start_date.substring(0, 10)}}<br /> End Date: {{offer.end_date.substring(0, 10)}}
           </p></h5</p>
-            		</div></a>
+   </div></a>
 
 </div></div>
   </div>
@@ -110,13 +126,20 @@ export default {
       numberOfPages: 0,
       perPage: 6,
       counter:[],
-      student:{}
+      student:{},
+      srch:''
     }
   },
 created(){
   this.viewOffers()
 },
 methods:{
+    search: function(){
+      this.$http.post('http://localhost:3000/api/students/home',{"search":this.srch},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response=> {
+        this.offers = response.body.data.offers
+        this.reload()
+      })
+  },
       purchaseStuff: function(inoffer){
        if(localStorage.getItem('id_token')!=null){
 
@@ -161,6 +184,18 @@ methods:{
       }
     })
   },
+    allOffers: function () {
+    this.$http.get('http://localhost:3000/api/students/alloffers',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      // // this.announcements=response.data.data.announcements
+      // this.offers= response.data.data.offers;
+      // this.student = response.data.data.student;
+
+      // this.numberOfPages=Math.ceil(this.offers.length/this.perPage);
+      // for(var i = 0 ; i<this.perPage && i<this.offers.length ; i++){
+      //   this.offersInPage.push(this.offers[i]);
+      // }
+    })
+  },
   changePage: function(number){
     var firstPost = (number*this.perPage)-this.perPage
     var lastPost = number * this.perPage
@@ -168,6 +203,20 @@ methods:{
     for(var i = firstPost ; i<lastPost && i<this.offers.length ; i++){
       this.offersInPage.push(this.offers[i]);
     }
+  },
+  reload: function(){
+    this.offersInPage = []
+    this.numberOfPages = 0
+    if (this.offers.length >0){
+      this.numberOfPages=Math.ceil(this.offers.length/this.perPage);
+      for(var i = 0 ; i<this.perPage && i<this.offers.length ; i++){
+        console.log('ana hena')
+        this.offersInPage.push(this.offers[i]);
+      }
+    } else{
+      alert('no results')
+    }
+
   },
   // viewOffers: function(){
   //     this.$http.get('http://localhost:3000/api/students/viewoffer',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
@@ -188,7 +237,7 @@ methods:{
     
     }
 
-    }
+  }
 }
 }
 </script>

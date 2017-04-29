@@ -333,31 +333,6 @@
 	</section>
 
 
-    <!-- Search Overlay -->
-
-<div class="search">
-    <div id="searchOverlay" class="overlay" style="background-color: rgba(0,0,0, 0.7);z-index:100">
-		<img src='~assets/img/close4.png' style="position:absolute; right:20px; top:20px; height:25px; margin-top:-12.5px; cursor:pointer" v-on:click="closeSrch">
-        <!-- Overlay content -->
-        <div class="overlay-content" style="top: 25%; margin-top: 30px;">
-            <div class ="row">
-                <div class="col-xs-3"></div>
-                <div class="col-xs-6" style="position:relative">
-                    <hr v-show="!results">
-                          <input id="search" type="text" class="searchField" placeholder="TYPE HERE TO SEARCH.." style="min-height:30px;" v-model="search">
-                        <router-link to="/quiz"><img src='~assets/img/search.png' v-on:click="srch" style="position:absolute; top:50%; right:30px; height:25px; margin-top:-12.5px; cursor:pointer" class = "searchButton"></router-link>
-                    <hr style="margin-top:50px;">
-
-					<div v-show="results">
-
-					</div>
-                </div>
-                <div class="col-xs-3"></div>
-            </div>
-        </div>
-    </div>
-</div>
-
 </div>
 </template>
 <script src="https://cdn.jsdelivr.net/vue.resource/1.3.1/vue-resource.min.js"></script>
@@ -367,8 +342,6 @@ export default {
   name: 'hello',
   data(){
     return{
-		  results:'',
-		  search:'',
           order_status: 'READY',
 		  full_image_2: require('../assets/img/full_image_2.jpg'),
 		  img_7: require('../assets/img/img_7.jpg'),
@@ -393,12 +366,7 @@ export default {
       }
     },
   methods: {
-	openSrch: function(){
-    document.getElementById("searchOverlay").style.height = "100vh";
-  	},
-	 closeSrch: function() {
-    document.getElementById("searchOverlay").style.height = "0%";
-		},applySP: function ()
+	applySP: function ()
         {
             this.$http.post('http://localhost:3000/api/sPs/sP/apply', {"name":this.name,"email":this.email,"phone_number":this.phone_number,"description":this.description}).then(data => {
 			$('#contactform').fadeOut()
