@@ -73,7 +73,7 @@
               <div class="title_right">
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
                   <div class="input-group">
-                    <input type="text" class="form-control" v-model="srch"  placeholder="Search for...">
+                    <input type="text" class="form-control" v-model="srch"  placeholder="Search for offers">
                     <span class="input-group-btn">
                       <button class="btn btn-default" v-on:click="search">Go!</button>
                     </span>
@@ -90,12 +90,14 @@
 
 
             		<a href="#" @click.prevent="purchaseStuff(offer)"><div class="col-md-4 feature">
-                	    <i class="glyphicon glyphicon-check"></i>
+                	   <center><img class="img-circle img-responsive" v-if="offer.sp_id && offer.sp_id.profileimg.path" :src="'http://localhost:3000/'+offer.sp_id.profileimg.path.replace('public','')" style="height:150px; width:150px">
+                    <i class="glyphicon glyphicon-check" style="height:150px; width:150px" v-else></i></center>
                         <h3>{{offer.title}}</h3>
+                        <h3>{{offer.sp_id.name}}</h3>
                         <div class="title_border"></div>
                         <p><h5 class="title"><p>{{offer.description}}
 						</p>
-            <p class="info">${{offer.price}}<br /> Start Date: {{offer.start_date.substring(0, 10)}}<br /> End Date: {{offer.end_date.substring(0, 10)}}
+            <p class="info">${{offer.price}}<br /> <br/>Due Date: {{offer.due_date.substring(0, 10)}}<br />Start Date: {{offer.start_date.substring(0, 10)}}<br /> End Date: {{offer.end_date.substring(0, 10)}}
           </p></h5</p>
    </div></a>
 
@@ -165,7 +167,7 @@ methods:{
           });
             this.stripe_instance.open({
               name: inoffer.title,
-              description: inoffer.description,
+              description: 'stuff and stuff',
               amount: price
             })
 

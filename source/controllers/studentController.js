@@ -9,7 +9,7 @@ const Student = require('../models/Student');
 const Interests = require('../models/Interests');
 const Comment = require('../models/Comment');
 const jwt = require('../auth/jwt');
-
+const SP = require('../models/ServiceProvider');
 
 // const ServiceProvider = require('../models/ServiceProvider');
 
@@ -157,9 +157,9 @@ const StudentController = {
             });
         }
     },
-    search(req, res) { //searching for an offer by name
+    search(req, res) { //searching for an offer by title or description
      var query= {$or: [{title : { $regex: req.body.search, $options: "i"}},{description : { $regex: req.body.search, $options: "i"}}]};
-      Offer.find(query,function(err, offers) {
+      Offer.find(query).populate('sp_id').exec((err, offers) => {
         if (err) {
           res.status(500).json({
             status: 'error',
@@ -172,6 +172,46 @@ const StudentController = {
               offers,
             },
           });
+        }
+      });
+    },
+    searchSPs(req, res) { //searching for an SP by name
+
+
+
+     var query= {name : { $regex: req.body.search, $options: "i"}};
+      User.find(query,(err, users) => {
+        if (err) {
+          res.status(500).json({
+            status: 'error',
+            message: err.message,
+          });
+        } else {
+          var x = [];
+             for (let i = 0; i < users.length; i++) {
+                x[i] = users[i]._id;
+             }
+             SP.find({
+                user_id: {
+                  $in: x
+                }
+              }).populate('user_id').exec((err,
+                sps) => {
+                if (err) {
+                  res.status(500).json({
+                    status: 'error',
+                    message: err.message,
+                  });
+                } else {
+                  res.status(200).json({
+                    status: 'success',
+                    data: {
+                      sps,
+                    },
+                  });
+                }
+              });
+
         }
       });
     },

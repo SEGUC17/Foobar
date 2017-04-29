@@ -94,8 +94,7 @@ const homeController = {
                                 }
                             });
                         });
-                        Offer.find([], (err, off) => {
-
+                        Offer.find({}).populate('sp_id').exec((err, off) => {
                             tempInterest.forEach((name) => {
                                 off.forEach((offerfield) => {
                                     if (name == offerfield.field) {
