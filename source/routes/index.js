@@ -8,6 +8,7 @@ const path = require('path');
 const multer = require('multer');
 const crypto = require('crypto');
 const Reservation = require('../models/Reservation');
+const Offer = require('../models/Offer');
 
 const storage = multer.diskStorage({
   destination: 'public/uploads/',
@@ -67,8 +68,11 @@ router.post('/changeStatus', (req, res) => {
   Reservation.findOneAndUpdate(
     { "_id" : req.body.id },
     { $set: { "status" : 3}}, function(err, found){
-      console.log(found);
-      res.json({ status: 'failure', reason: err });
+       Offer.findOneAndUpdate(
+        { "_id" : found.id },
+        { $inc: { "capacity" : 1}}, function(offererr, offer){
+          res.json({ status: 'success'});
+       })
     })
 });
 
