@@ -48,17 +48,17 @@
             err: 'Wrong Credentials',
           });
         } else {
-        jwt.verify(token, function(decoded) {
-        if (decoded.is_deleted === true) {
-          res.status(500).json({
-              err: 'User not found',
-            });
-        }else{
-          res.json({
-            token
+          jwt.verify(token, function(decoded) {
+            if (decoded.is_deleted === true) {
+              res.status(500).json({
+                err: 'User not found',
+              });
+            } else {
+              res.json({
+                token
+              });
+            }
           });
-        }
-        });
 
         }
       });
@@ -67,15 +67,12 @@
 
   router.post('/signup', (req, res) => {
     const email = req.body.email;
-    const password = req.body.password;
     const name = req.body.name;
-    const password2 = req.body.password2;
     const university = req.body.university;
 
     req.checkBody('name', 'Name is required').notEmpty();
     req.checkBody('email', 'Email is required').notEmpty();
     req.checkBody('email', 'Must be a valid Email').isEmail();
-    req.checkBody('password', 'Password is required').notEmpty();
     req.checkBody('university', 'university is required').notEmpty();
     req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 
@@ -98,7 +95,9 @@
       user.save((err) => {
         if (err) {
           return res.status(400).json({
-            err: [{ msg: 'Email is already taken' }],
+            err: [{
+              msg: 'Email is already taken'
+            }],
           });
         }
 
@@ -118,16 +117,18 @@
           console.log(interests);
           for (let i = 0; i < interests.length; i += 1) {
             const newInterset = new StudentInterest({
-                  student_id: user._id,
-                  interest_id: interests[i]._id,
-                });
+              student_id: user._id,
+              interest_id: interests[i]._id,
+            });
             newInterset.save((saveerr) => {
-                  if (saveerr) {
+              if (saveerr) {
                 return res.status(400).json({
-                  err: [{ msg: 'Student Interest saving error' }],
+                  err: [{
+                    msg: 'Student Interest saving error'
+                  }],
                 });
               }
-                });
+            });
           }
         }
 
