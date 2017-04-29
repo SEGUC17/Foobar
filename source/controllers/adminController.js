@@ -12,6 +12,22 @@ const Student = require('../models/Student');
 const jwt = require('../auth/jwt');
 
 const adminController = {
+
+Occurances(arr){
+    var a= [], b= [], prev
+    arr.sort();
+    for(var i =0 ;i<arr.length;i++){
+        if(arr[i]!== prev){
+            a.push(arr[i]);
+            b.push(1);
+        }else{
+            b[b.length-1]++;
+        }
+    prev = arr[i];
+    }
+return [a,b];
+},
+
     blockS(req, res) {
         const token = req.headers['jwt-token'];
         jwt.verify(token, (decoded) => {
@@ -297,6 +313,14 @@ const adminController = {
                                 message: err,
                             });
                         } else {
+                            res.status(200).json({
+                                status: 'success',
+                                data: { // Data can be null if, for example, delete request was sent
+                                    message: `Removed him from PendingSP Collection and Added to user collection as:${newUser}and to the SP collection as:${newSP}`,
+                                },
+                            });
+                        }
+                    }); // saving SP instance
 
 
                     // create reusable transporter object using the default SMTP transport
@@ -319,16 +343,15 @@ const adminController = {
 
                     // send mail with defined transport object
                     transporter.sendMail(mailOptions, (err, info) => {
-                    });
-                            res.status(200).json({
-                                status: 'success',
-                                data: { // Data can be null if, for example, delete request was sent
-                                    message: `Removed him from PendingSP Collection and Added to user collection as:${newUser}and to the SP collection as:${newSP}`,
-                                },
+                        if (err) {
+                            res.status(500).json({
+                                status: 'error',
+                                message: err,
                             });
                         }
-                    }); // saving SP instance
-
+                        console.log('Message %s sent: %s', info.messageId,
+                            info.response);
+                    });
                 } else if (req.body.disapprove) {
                     // finding the target sp and setting is_declined attr. to true
                     PendingSP.findByIdAndUpdate(spId, {
@@ -365,7 +388,7 @@ const adminController = {
             var value = myArray[i];
             freq[value] == null ? freq[value] = 1 : freq[value]++;
         }
-
+        // console.log(freq);
         //Create Array of Filtered Values
         for (var value in freq) {
             newArray.push(value);
@@ -419,22 +442,29 @@ const adminController = {
         var k = 0;
         var most = 0;
         var least = 0;
-        const token = req.headers['jwt-token']; + jwt.verify(token, (decoded) => {
+        var frequency = [];
+        // const token = req.headers['jwt-token']; + jwt.verify(token, (decoded) => {
 
-            if (decoded.type === 1) {
+        //     if (decoded.type === 1) {
                 StudentInterest.find([]).populate('interest_id').exec((err, interests) => {
+                    // console.log(interests)
                     interests.forEach((rest) => {
-                        userMap[k] = rest.name;
+                        console.log(rest.interest_id.name);
+                        userMap[k] = rest.interest_id.name;
                         k += 1;
                     });
+                    console.log(userMap)
+                    frequency = adminController.Occurances(userMap);
+                    console.log(frequency[0]);
+
                     temp = adminController.sortByFrequencyAndFilter(userMap)
+
                     most = temp[0];
                     least = temp[temp.length - 1];
 
                     if (err) {
                         res.status(500).json({
                             status: 'error',
-
                             message: err,
                         });
                     } else {
@@ -444,7 +474,8 @@ const adminController = {
                             data: {
                                 most,
                                 least,
-                                temp
+                                temp,
+                                frequency
                             },
                         });
                         // res.render('viewAnnouncements', {announcements:announcements});
@@ -453,15 +484,15 @@ const adminController = {
                 });
 
 
-            } else {
-                res.json({
-                    status: 'failure',
-                    data: {
-                        err: 'unauthorized access',
-                    },
-                });
-            }
-        });
+            // } else {
+            //     res.json({
+            //         status: 'failure',
+            //         data: {
+            //             err: 'unauthorized access',
+            //         },
+            //     });
+        //     }
+        // });
     },
 
     deleteSP(req, res) {

@@ -35,11 +35,15 @@
     <!-- <li v-for =" admin in admins"><input type="radio" name="list" value="volvo">{{admin.email}} <button class="btn btn-danger">Delete</button> </li> -->
 
   </ul>
+  <bar></bar>
 </div></template>
 
 <script>
+import Bar from '../examples/BarExample.js'
+
 export default {
   name: 'interests',
+components: { Bar },
   data () {
     return {
   interestname : "",

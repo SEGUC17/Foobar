@@ -175,27 +175,55 @@ const StudentController = {
         }
       });
     },
-    seeProgress(req, res) {
+  seeProgress(req, res) {
+        var userMap = [];
+
+        var k = 0;
         const token = req.headers['jwt-token'];
         jwt.verify(token, (decoded) => {
             if (decoded.type === 2) {
-                Skill.find({
+                Assessment.find({
                     user_id: decoded.id,
-                }, (err, skills) => {
+                }, (err, assessment) => {
                     if (err) {
                         res.status(500).json({
                             status: 'error',
                             message: err.message,
                         });
                     } else {
-                        res.status(200).json({
-                            status: 'success',
-                            data: {
-                                skills,
-                            },
+
+                        Interests.find([], (err, interests) => {
+                            interests.forEach((interest) => {
+                                userMap[k] = 0;
+                                assessment.forEach((assess) => {
+                                    if (interest.name === assess.field) {
+                                        userMap[k] += assess.rating
+
+                                    }
+
+
+
+                                });
+                                k++;
+                            });
+
+                            if (err) {
+                                res.status(500).json({
+                                    status: 'error',
+                                    message: err.message,
+                                });
+                            } else {
+                                res.status(200).json({
+                                    status: 'success',
+                                    data: {
+                                        interest,
+                                        userMap
+                                    },
+                                });
+                            }
                         });
                     }
-                });
+                })
             } else {
                 res.status(500).json({
                     err: 'unauthorized access',
