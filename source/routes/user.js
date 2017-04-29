@@ -3,9 +3,13 @@
   const User = require('../models/User');
   const homeController = require('../controllers/homeController');
   const Student = require('../models/Student');
+  const bcrypt = require('bcrypt-nodejs');
+
   const studentController = require('../controllers/studentController');
   const StudentInterest = require('../models/StudentInterest');
   const sPController = require('../controllers/sPController');
+  const generatePassword = require('password-generator');
+  const nodemailer = require('nodemailer');
 
 
   const router = express.Router();
@@ -58,17 +62,18 @@
 
   router.post('/signup', (req, res) => {
     const email = req.body.email;
-    const password = req.body.password;
+    // const password = req.body.password;
     const name = req.body.name;
-    const password2 = req.body.password2;
+    // const password2 = req.body.password2;
+    const password = generatePassword();
     const university = req.body.university;
 
     req.checkBody('name', 'Name is required').notEmpty();
     req.checkBody('email', 'Email is required').notEmpty();
     req.checkBody('email', 'Must be a valid Email').isEmail();
-    req.checkBody('password', 'Password is required').notEmpty();
+    // req.checkBody('password', 'Password is required').notEmpty();
     req.checkBody('university', 'university is required').notEmpty();
-    req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
+    // req.checkBody('password2', 'Passwords do not match').equals(req.body.password);
 
     const errors = req.validationErrors();
     if (errors) {
@@ -77,15 +82,51 @@
 
       });
     } else {
-      console.log(req.body);
+
+       const transporter = nodemailer.createTransport({
+                        service: 'gmail',
+                        auth: {
+                            user: 'foobar.se@gmail.com',
+                            pass: 'foobar1234',
+                        },
+                    });
+
+                    // setup email data with unicode symbols
+                    const mailOptions = {
+                        from: ' "Foobar" <foobar.se@gmail.com>', // sender address
+                        to: email, // list of receivers
+                        subject: 'System Approval ✔', // Subject line
+                        text: `Congratulations! You have been approved for our system and 
+                        now you can login using your email and password:${
+              password}`
+              , 
+              // plain text body
+                    };
+
+                    // send mail with defined transport object
+                    transporter.sendMail(mailOptions, (err, info) => {
+                        if (err) {
+                            res.status(500).json({
+                                status: 'error',
+                                message: err,
+                            });
+                        }
+                        console.log('Message %s sent: %s', info.messageId,
+                            info.response);
+                    });
+
+      console.log(password);
+    
+      // Password= bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
       const user = new User({
         email: req.body.email,
-        password: req.body.password,
+        // password: user.generateHash(password),
         name: req.body.name,
         type: 2,
         is_deleted: false,
         is_blocked: false,
       });
+      user.password = user.generateHash(password);
       user.save((err) => {
         if (err) {
           return res.status(400).json({

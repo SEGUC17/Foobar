@@ -117,7 +117,7 @@
                      <span v-show="errors.has('email')">{{ errors.first('email') }}</span>
                    </div>
 
-                     <div class="form-group">
+                    <!--  <div class="form-group">
                       <input v-validate="{ rules: { required: true, min:8} }" type="password" name="password" class="form-control efc" id="password" placeholder="Password" v-model="creds.password" required="*">
                       <span v-show="errors.has('password')">{{ errors.first('password') }}</span>
                      </div>
@@ -125,7 +125,7 @@
                      <div class="form-group">
                      <input v-validate="{ rules: { required: true} }" type="password" name="Confirm password" class="form-control efc" id="Confirm password" placeholder="Password" v-model="creds.password2" required="*">
                      <span v-show="errors.has('Confirm password')">{{ errors.first('Confirm password') }}</span>
-                     </div>
+                     </div> -->
 
                       <div class="form-group">
                           <input v-validate="{ rules: { required: true} }" type="text" name="university " class="form-control efc" id="university" placeholder="University" v-model="university" required="*">
@@ -143,13 +143,13 @@
                       </div>
 
                         <div class="form-group">
-                          <div>
-                            <label class="control-label">Interests</label><span style="font-weight: normal; font-size:12px; margin-left: 5px;"> (tell us a bit about what you like)</span>
-                          </div>
-                            <span v-for="interest in this.interests" style="font-size:14px; margin-right:10px;">
-                                  <input type="checkbox" :id="interest" :value="interest" v-model="Interests">
-                                  <label for="interest" style="font-weight: normal;">{{interest.name}}</label>
-                            </span>
+                            <label for="name" class="col-sm-2 control-label">
+                                Interests</label>
+                                <br /><br />
+                                <div v-for="interest in this.interests">
+                                <input type="checkbox" :id="interest" :value="interest" v-model="Interests">
+                                <label for="interest">{{interest.name}}</label>
+                                </div>
                         </div>
 
                     <div class="form-group">
@@ -269,6 +269,7 @@
                           <li><router-link to="/viewOffers"><font size="1">View Offers</font></router-link></li>
                           <li><router-link to="/announcements"><font size="1">Announcements</font></router-link></li>
                           <li><router-link to="/viewReservations"><font size="1">Reservation</font></router-link></li>
+                          <!--Studid : decodeid.body.id-->
                           <li><router-link  :to ="{ name : 'StudentProfile' , params: {Studid : this.decodeid}}"> <font size="1">My Profile</font></router-link></li>
                           <li><router-link  to="/sPs"><font size="1">SPS</font></router-link></li>
                       </ul>
@@ -282,12 +283,19 @@
               <!-- /sidebar menu -->
 
               <!-- /menu footer buttons -->
-              <div class="sidebar-footer">
-                <center>
-                <a data-toggle="tooltip" href="/" v-on:click="logout" style="width:100%;" title="Logout">
+              <div class="sidebar-footer hidden-small">
+                <a data-toggle="tooltip" data-placement="top" title="Settings">
+                  <span class="glyphicon glyphicon-cog" aria-hidden="true"></span>
+                </a>
+                <a data-toggle="tooltip" data-placement="top" title="FullScreen">
+                  <span class="glyphicon glyphicon-fullscreen" aria-hidden="true"></span>
+                </a>
+                <a data-toggle="tooltip" data-placement="top" title="Lock">
+                  <span class="glyphicon glyphicon-eye-close" aria-hidden="true"></span>
+                </a>
+                <a data-toggle="tooltip" href="/" v-on:click="logout" data-placement="top" title="Logout">
                   <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                 </a>
-                </center>
               </div>
               <!-- /menu footer buttons -->
             </div>
@@ -375,6 +383,11 @@
 <script>
 import router from './router'
 import AppNav from './AppNav.vue'
+import Vue from 'vue'
+import VueSweetAlert from 'vue-sweetalert'
+ 
+Vue.use(VueSweetAlert)
+
 export default {
 data () {
     return {
@@ -424,8 +437,8 @@ if(localStorage.getItem('id_token')!=null){
     this.decodeid=decode.body.id
     //console.log(this.decodeid)
     this.user.type = decode.body.type
-    console.log(localStorage.getItem('usertype'))
-    console.log(this.user.type);
+    // console.log(localStorage.getItem('usertype'))
+    // console.log(this.user.type);
     this.name = decode.body.name;
     this.profilepic = decode.body.image
 })
@@ -440,16 +453,17 @@ this.getAllAnnouncements();
 methods: {
   // Send a request to the login URL and save the returned JWT
   login : function() {
+  this.$swal('dodo');
     var app = this;
     app.$http.post('http://localhost:3000/api/users/login', {
-	"email":app.creds.username,
-	"password":  app.creds.password
+  "email":app.creds.username,
+  "password":  app.creds.password
 }).then(data => {
       localStorage.setItem('id_token', data.body.token)
       app.user.authenticated = true
       app.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
         this.decodeid = decode.body.id;
-        console.log(decode.body.type)
+        // console.log(decode.body.type)
         this.user.type = decode.body.type;
         localStorage.setItem('usertype', decode.body.type)
         this.name = decode.body.name;
@@ -467,7 +481,7 @@ methods: {
   getAllAnnouncements: function () {
       this.$http.get('http://localhost:3000/api/announcements/view').then(response => {
         this.announcements=response.data.data.announcements
-        console.log(this.announcements);
+        // console.log(this.announcements);
         this.numberOfPages=Math.ceil(this.announcements.length/this.perPage);
         for(var i = 0 ; i<this.perPage && i<this.announcements.length ; i++){
           this.announcementsInPage.push(this.announcements[i]);
@@ -478,8 +492,8 @@ methods: {
   signup : function() {
     this.$http.post('http://localhost:3000/api/users/signup', {
     "email":this.creds.email,
-    "password":this.creds.password,
-    "password2":this.creds.password2,
+    // "password":this.creds.password,
+    // "password2":this.creds.password2,
     "name":this.creds.name,
     "university":this.university,
     "address":this.address,

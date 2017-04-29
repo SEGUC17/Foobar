@@ -22,6 +22,8 @@ const userSchema = mongoose.Schema({
   is_blocked: Boolean,
 });
 
+
+
 userSchema.plugin(filePlugin, {
   name: 'profileimg',
   upload_to: make_upload_to_model(uploads, 'photos'),
@@ -41,5 +43,6 @@ userSchema.methods.validPassword = function (password) {
   return bcrypt.compareSync(password, this.local.password);
 };
 
-// create the model for users and expose it to our app
 module.exports = mongoose.model('User', userSchema);
+// create the model for users and expose it to our app
+

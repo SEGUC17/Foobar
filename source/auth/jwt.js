@@ -12,12 +12,21 @@ module.exports = {
       if (!user) {
         return cb(null);
       }
-      cb(jwt.sign({
+      else if(user){
+        var validpass = user.validPassword(credentials.password);
+        if(!validpass){
+          console.log('wrongpass');
+        }
+        else{
+           cb(jwt.sign({
         id: user.id,
         name: user.name,
         type: user.type,
         image: user.profileimg,
       }, secret));
+        }
+      }
+     
     });
   },
   verify(token, cb) {
