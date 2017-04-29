@@ -1,6 +1,6 @@
 const PendingSP = require('../models/PendingSP');
 const jwt = require('../auth/jwt');
-
+const User = require('../models/User');
 //  getting all the service providers that applied to our system
 const pendingSPController = {
 
@@ -32,8 +32,7 @@ const pendingSPController = {
         });
     },
 
-
-    Apply(req, res) {
+Apply(req, res) {
         req.checkBody('name', 'Name is required').notEmpty();
         req.checkBody('email', 'Email is required').notEmpty();
         req.checkBody('email', 'Please enter a Vaild Email').isEmail();
@@ -58,6 +57,21 @@ const pendingSPController = {
                 pending.phone_number = req.body.phone_number;
                 pending.description = req.body.description;
                 pending.is_declined = false;
+
+                User.findOne({
+                    email: req.body.email,
+                }, (err, user) => {
+                    if (err) {
+                        res.json(err.message);
+                    } else if (user) {
+
+
+                        res.status(500).json({
+
+                            status: 'error',
+                            data: 'This email is already registered. Change email',
+                        });
+                    } else {
                 pending.save((err, pending) => {
                     if (err) {
                         res.status(500).json({
@@ -71,9 +85,12 @@ const pendingSPController = {
                         });
                     }
                 });
+              }
             });
-        }
-    },
+
+    });
+  }
+  },
 };
 
 module.exports = pendingSPController;
