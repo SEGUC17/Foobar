@@ -345,7 +345,7 @@
                 <div class="col-xs-6" style="position:relative">
                     <hr v-show="!results">
                           <input id="search" type="text" class="searchField" placeholder="TYPE HERE TO SEARCH.." style="min-height:30px;" v-model="search">
-                          <img src='~assets/img/search.png' v-on:click="srch" style="position:absolute; top:50%; right:30px; height:25px; margin-top:-12.5px; cursor:pointer" class = "searchButton">
+                        <router-link to="/quiz"><img src='~assets/img/search.png' v-on:click="srch" style="position:absolute; top:50%; right:30px; height:25px; margin-top:-12.5px; cursor:pointer" class = "searchButton"></router-link>
                     <hr style="margin-top:50px;">
 
 					<div v-show="results">
@@ -389,7 +389,7 @@ export default {
 		  work_6: require('../assets/img/work_6.jpg'),
 		  work_7: require('../assets/img/work_7.jpg'),
 		  work_8: require('../assets/img/work_8.jpg'),
-		  
+
 			name:'',
 			email:'',
 			phone_number:'',

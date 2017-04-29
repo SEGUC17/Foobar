@@ -24,12 +24,12 @@ h4 {
 .callout-dark {
 	padding: 30px;
 	color: #fff;
-	background-color: #c6c6c6;
+	background-color: #353535;
   border-left: 10px solid #1abb9c;
 
 }
 .callout-dark h1{
-  color: #5a738e;
+  color: #ecf0f1;
   font-weight: 300;
   line-height: 1.4;
 }
@@ -42,7 +42,7 @@ h4 {
 }
 
 .callout-dark p {
-	color: #B1B1B1;
+	color: #ecf0f1;
 	font-size: 17px;
 }
 
@@ -89,17 +89,19 @@ h4 {
 
   <div class="container" align="center">
     <div v-for =" announcement in announcementsInPage" class="row-2">
-    <br/><br/><br/>
+    <br/>
+
+
               <div class="row">
             				<div class="callout-dark text-center fade-in-b" v-show="announcement.announcer_id.type===1">
-            					<h4>{{announcement.title}}<b> Admin </b> - {{announcement.announcer_id.email}} </h4>
+            					<h4>{{announcement.title}} - <b> Admin </b> </h4>
             					<h1>{{announcement.content}}.</h1>
             				</div>
             			</div>
 
                   <div class="row"  v-show="announcement.announcer_id.type===3">
                     <div class="callout-light text-center fade-in-b">
-                      <h4>{{announcement.title}}<b> {{announcement.announcer_id.name}} </b> - {{announcement.announcer_id.email}} </h4>
+                      <h4>{{announcement.title}} - <b> {{announcement.announcer_id.name}} </b>  </h4>
                       <h1>{{announcement.content}}.</h1>
                     </div>
                   </div>
@@ -125,7 +127,7 @@ export default {
       announcements:[],
       announcementsInPage:[],
       numberOfPages: 0,
-      perPage: 3
+      perPage: 5
 
     }
   },
@@ -154,5 +156,3 @@ methods:{
   }
 }
 </script>
-
-

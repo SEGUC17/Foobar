@@ -168,7 +168,7 @@ const spController = {
           });
         } else {
           res.status(500).json({
-            err: err.message,
+            err: 'unauthorized access',
           });
         }
       });
@@ -539,66 +539,68 @@ const spController = {
       });
 
     },
-    editPassword(req,res){
-console.log('here');
-       const token = req.headers['jwt-token'];
+    editPassword(req, res) {
+      console.log('here');
+      const token = req.headers['jwt-token'];
       jwt.verify(token, (decoded) => {
         console.log(decoded)
         if (decoded.type === 3) {
-           User.find({ _id: req.body.id },function(err, user){
+          User.find({
+            _id: req.body.id
+          }, function(err, user) {
             console.log(req.body.id);
             console.log(user)
-            if(err)
-            return err;
-            else
-            {
+            if (err)
+              return err;
+            else {
               console.log(user[0].password);
               console.log(req.body.oldPassword)
               console.log(req.body.newPassword)
               console.log(req.body.confirmNewPassword)
-              
-              req.checkBody('oldPassword', 'Your old Password is required').notEmpty();
-              req.checkBody('newPassword', 'A new Password is required').notEmpty();
-              req.checkBody('oldPassword', 'Passwords do not match').equals(user[0].password);
-              req.checkBody('confirmNewPassword', 'Passwords do not match').equals(req.body.newPassword);
+
+              req.checkBody('oldPassword',
+                'Your old Password is required').notEmpty();
+              req.checkBody('newPassword',
+                'A new Password is required').notEmpty();
+              req.checkBody('oldPassword', 'Passwords do not match').equals(
+                user[0].password);
+              req.checkBody('confirmNewPassword',
+                'Passwords do not match').equals(req.body.newPassword);
               var errors = req.validationErrors();
-          
-              if(errors)
-              {
+
+              if (errors) {
                 console.log('errors here');
                 res.status(400).json({
                   err: errors
 
                 });
-              }
-              else
-              {
+              } else {
                 console.log('should modify');
                 User.findByIdAndUpdate(decoded.id, {
-                      $set: {
-                          password: req.body.newPassword,
-                      },
-                  }, {
-                      safe: true,
-                      upsert: true,
-                      new: true,
-                  }, (err, sP) => {
-                    console.log('modified!');
-                      res.status(200).json({
-                          status: 'success',
-                          data: {
-                              message: `Edited Password correctly!`,
-                          },
-                      });
+                  $set: {
+                    password: req.body.newPassword,
+                  },
+                }, {
+                  safe: true,
+                  upsert: true,
+                  new: true,
+                }, (err, sP) => {
+                  console.log('modified!');
+                  res.status(200).json({
+                    status: 'success',
+                    data: {
+                      message: `Edited Password correctly!`,
+                    },
                   });
+                });
               }
             }
 
-              
+
           });
-          
-          
-        }else {
+
+
+        } else {
           res.status(500).json({
             err: err.message,
           });

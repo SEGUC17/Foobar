@@ -27,6 +27,7 @@ import test from '@/components/test.vue'
 import Adminpostannouncement from '@/components/Adminpostannouncement.vue'
 import VeeValidate from 'vee-validate'
 import AppNav from '../AppNav.vue'
+import Quiz from '@/components/TheTest'
 
 
 Vue.use(Router)
@@ -40,6 +41,10 @@ export default new Router({
   }, {
     path: '/test',
     component: test,
+
+  }, {
+    path: '/quiz',
+    component: Quiz,
 
   }, {
     path: '/announcements',

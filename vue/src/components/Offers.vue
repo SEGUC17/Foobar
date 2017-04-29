@@ -70,7 +70,7 @@
         <p>            <div class="container" id="features">
 
 <div class="row">
-          <div v-for =" offer in offers" >
+          <div v-for =" offer in offersInPage" >
 
 
             		<a href="#"><div class="col-md-4 feature">
@@ -87,6 +87,14 @@
   </div>
 </p>
 </section>
+
+<center>
+      <ul class="pagination">
+        <li v-for="n in numberOfPages"><a @click="changePage(n)">{{n}}</a></li>
+      </ul>
+      </center>
+
+
 </div>
 </template>
 <script>
@@ -95,6 +103,9 @@ export default {
   data () {
     return {
       offers:[],
+      offersInPage:[],
+      numberOfPages: 0,
+      perPage: 6,
       counter:[],
       student:{}
     }
@@ -103,13 +114,33 @@ created(){
   this.viewOffers()
 },
 methods:{
-  viewOffers: function(){
-      this.$http.get('http://localhost:3000/api/students/viewoffer',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
-        this.offers= response.data.data.offers;
-        this.student = response.data.data.student;
-                console.log(response.data.data.offers);
-      })
-    },
+  viewOffers: function () {
+    this.$http.get('http://localhost:3000/api/students/viewoffer',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      // this.announcements=response.data.data.announcements
+      this.offers= response.data.data.offers;
+      this.student = response.data.data.student;
+
+      this.numberOfPages=Math.ceil(this.offers.length/this.perPage);
+      for(var i = 0 ; i<this.perPage && i<this.offers.length ; i++){
+        this.offersInPage.push(this.offers[i]);
+      }
+    })
+  },
+  changePage: function(number){
+    var firstPost = (number*this.perPage)-this.perPage
+    var lastPost = number * this.perPage
+    this.offersInPage = []
+    for(var i = firstPost ; i<lastPost && i<this.offers.length ; i++){
+      this.offersInPage.push(this.offers[i]);
+    }
+  },
+  // viewOffers: function(){
+  //     this.$http.get('http://localhost:3000/api/students/viewoffer',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+  //       this.offers= response.data.data.offers;
+  //       this.student = response.data.data.student;
+  //               console.log(response.data.data.offers);
+  //     })
+  //   },
     Apply: function(offer , index){
 
 var x = confirm("Are you sure you want to apply for this offer ?")

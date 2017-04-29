@@ -1,27 +1,49 @@
 <template>
   <div>
-  <div v-for =" n in students.length"> 
+  <div v-for =" n in students.length">
   <form role="form" class="thumbnail">
-        
+
         <div class="form-group">
+          <div class="container">
+
+
+          <div class="row">
+
+
             <label for="name" class="col-sm-2 control-label">Student name: {{students[n-1].user_id.name}}</label>
-            <label for="email" class="col-sm-2 control-label">Student mail: {{students[n-1].user_id.email}}</label><br/>
-            <label for="name" class="col-sm-2 control-label">Offer Name: {{students[n-1].offer_id.title}}</label><br/>
-            <label for="email" class="col-sm-2 control-label">Offer field: {{students[n-1].offer_id.field}}</label><br/>
+            <label for="email" class="col-sm-2 control-label">Student mail: {{students[n-1].user_id.email}}</label>
+            <label for="name" class="col-sm-2 control-label">Offer Name: {{students[n-1].offer_id.title}}</label>
+            <label for="email" class="col-sm-2 control-label">Offer field: {{students[n-1].offer_id.field}}</label>
 
             <label for="rating" class="col-sm-2 control-label">Rating</label>
+          </div>
+        </div>
+
+
+
             <div class="col-sm-10">
-                <input type="number" class="form-control" id="rating" placeholder="Rating" v-model="rating[n-1]" required="*">
+              <br>
+              <br>
+                <input type="number" id="rating" placeholder="Rating" size="10" v-model="rating[n-1]" required="*">
+                <br>
                 <button class="btn btn-primary btn-sm" v-on:click="assess(students[n-1].user_id._id, n-1, students[n-1].offer_id._id, students[n-1].offer_id.field)">Assess</button>
             </div>
+
+
         </div>
-        
+
     </form>
   </div>
 
   </div>
 </template>
 <script>
+
+import Vue from 'vue'
+import StarRating from 'vue-star-rating'
+Vue.component('star-rating', StarRating);
+
+
 export default {
   name: 'SPAssess',
   data () {
