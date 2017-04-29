@@ -384,9 +384,7 @@
 import router from './router'
 import AppNav from './AppNav.vue'
 import Vue from 'vue'
-import VueSweetAlert from 'vue-sweetalert'
  
-Vue.use(VueSweetAlert)
 
 export default {
 data () {

@@ -451,6 +451,9 @@ const spController = {
                   const description = req.body.description;
                   const fields = req.body.fields;
                   const phone_number = req.body.phone_number;
+                  const lat = req.body.lat;
+                  const lang = req.body.lang;
+                  console.log("lat:"+lat+"lang:"+lang);
 
                   SP.update({
                     user_id: decoded.id,
@@ -460,6 +463,8 @@ const spController = {
                     description,
                     fields,
                     phone_number,
+                    lat,
+                    lang,
                   }, (err, sp1) => {
                     if (err) {
                       res.status(500).json({

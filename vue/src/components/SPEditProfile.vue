@@ -3,7 +3,8 @@
 <center>
   <form role="form" class="" @submit.prevent>
           <h2>Edit Your Profile </h2>
-          <img v-if="this.user.profileimg" :src="'http://localhost:3000/'+user.profileimg.path.replace('public','')" style="width:400px">
+            <!--<img v-if="this.user.profileimg.path" :src="'http://localhost:3000/'+this.user.profileimg.path.replace('public','')" alt="">
+            <img v-if="!this.user.profileimg.path" src="~assets/img/missing.png" alt="">-->
           <input ref="avatar2" type="file" name="avatar2" id="avatar2" v-on:change="changedp($event.target.name, $event.target.files)">
 
 
@@ -21,7 +22,7 @@
         <br>
             <label class="col-sm-2 control-label">Location</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="location" :value=profile.location v-model="location" />
+                <input type="text" class="form-control" id="location" :value="this.profile.location" v-model="location" />
             </div>
         </div>
 
@@ -115,7 +116,8 @@
     </div> 
                 </form>
            
-    </center>
+<div id="map"></div>
+</center>
       
             
 
@@ -146,9 +148,13 @@ export default {
       attrs:'',
       images:[],
       videoId :'',
-          confirmNewPassword:"",
+      confirmNewPassword:"",
       oldPassword:"",
-      newPassword:""
+      newPassword:"",
+      successmessages:[{msg:''}],
+      failuremessages:[{msg:''}],
+      lat:'',
+      lang:'',
 
     }
   },
@@ -169,6 +175,7 @@ methods:{
         console.log(this.user)
         this.getVideos();
         this.getImages();
+        this.mapinit();
       })
     },
     getInterests: function () {
@@ -182,8 +189,8 @@ methods:{
         {
           var x = confirm("Are you sure you want to edit these attributes")
           if(x){
-            this.$http.post('http://localhost:3000/api/sPs/profile/edit', {"price_category":this.pricecategory,"location":this.location, "description":this.description, "fields":this.fields, "description":this.description, "phone_number":this.phone_number},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
-            console.log('success');
+            this.$http.post('http://localhost:3000/api/sPs/profile/edit', {"price_category":this.pricecategory,"location":this.location, "description":this.description, "fields":this.fields, "description":this.description, "phone_number":this.phone_number,"lat": this.lat,"lang":this.lang},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+            console.log(this.location);
             alert("Profile Edited")
             this.$router.push({path:'/SPViewMyProfile'})
                     })
@@ -236,6 +243,17 @@ methods:{
     },
     changeVideo: function(url){
         this.attrs = url
+    },
+    mapinit: function() {
+        var input = document.getElementById('location');
+        var autocomplete = new google.maps.places.Autocomplete(input);
+        google.maps.event.addListener(autocomplete, 'place_changed', function () {
+            var place = autocomplete.getPlace();
+            this.lat = place.geometry.location.lat();
+            this.lang = place.geometry.location.lng();
+            console.log("lat:"+this.lat+""+"lang:"+this.lang);
+
+        });
     },
     editPassword: function()
     {

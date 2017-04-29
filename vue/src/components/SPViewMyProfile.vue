@@ -100,6 +100,8 @@ label {
                 <div v-for =" video in videos">
                 <a v-on:click="changeVideo(video.url)"> {{video.title}} </a>
                 </div>
+
+                <div id="map"></div>
  
 
                 </div>
@@ -138,11 +140,14 @@ export default {
       attrs:'',
       images:[],
       videoId :'',
+      lat:'',
+      lang:''
     }
   },
 created(){
   this.getProfile(),
-  this.getInterests()
+  this.getInterests(),
+  this.mapinit()
 },
 methods:{
     getProfile: function () {
@@ -153,8 +158,8 @@ methods:{
         this.description = response.data.data.providerProfile.description;
         this.fields = response.data.data.providerProfile.fields;
         this.phone_number = response.data.data.providerProfile.phone_number;
-        this.user=response.data.data.user["0"];
-        console.log(this.user)
+        this.lat = response.data.data.providerProfile.lat;
+        this.lat = response.data.data.providerProfile.lang;
         this.getVideos();
         this.getImages();
       })
@@ -198,6 +203,19 @@ methods:{
         this.$http.post('http://localhost:3000/api/sPs/changedp',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
             console.log('changed dp');
       })
+    },
+    mapinit: function(){
+      var myLatLng = {lat: this.user.lat, lng: this.user.lang};
+      var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 4,
+        center: myLatLng
+      });
+
+      var marker = new google.maps.Marker({
+        position: myLatLng,
+        map: map,
+        title: 'Hello World!'
+      });
     },
     getVideos: function(){
         let route ='http://localhost:3000/api/sPs/videos/';
