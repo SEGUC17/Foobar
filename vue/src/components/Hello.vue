@@ -8,7 +8,7 @@
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2">
 							<h1 class="to-animate">Do something you love.</h1>
-							<h2 class="to-animate">Search for whatever you're passionate about <a v-on:click="openSrch" style="cursor:pointer">here</a></h2>
+							<h2 class="to-animate">Discover what you're passionate about!</h2>
 						</div>
 					</div>
 				</div>

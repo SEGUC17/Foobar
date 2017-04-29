@@ -165,7 +165,7 @@ methods:{
           });
             this.stripe_instance.open({
               name: inoffer.title,
-              description: 'stuff and stuff',
+              description: inoffer.description,
               amount: price
             })
 
