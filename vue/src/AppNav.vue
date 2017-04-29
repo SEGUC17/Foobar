@@ -269,6 +269,7 @@
                           <li><router-link to="/viewOffers"><font size="1">View Offers</font></router-link></li>
                           <li><router-link to="/announcements"><font size="1">Announcements</font></router-link></li>
                           <li><router-link to="/viewReservations"><font size="1">Reservation</font></router-link></li>
+                          <li><router-link to="/quiz"><font size="1">Test</font></router-link></li>
                           <li><router-link  :to ="{ name : 'StudentProfile' , params: {Studid : this.decodeid}}"> <font size="1">My Profile</font></router-link></li>
                           <li><router-link  to="/sPs"><font size="1">SPS</font></router-link></li>
                       </ul>

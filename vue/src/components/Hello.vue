@@ -376,9 +376,10 @@ export default {
 
             console.log('success');
                     }).catch(function(reason) {
-                        console.log(reason.body.err);
-                this.failuremessages = reason.body.err;
-                console.log(this.failuremessages)
+                        // console.log(reason.body.err);
+                // this.failuremessages = reason.body.err;
+                alert(reason.body.data)
+                // console.log(this.failuremessages)
                 this.successmessages=[{msg:''}];
         });
 
