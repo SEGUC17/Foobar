@@ -249,7 +249,7 @@
                             <li><router-link to="/">Home</router-link></li>
                             <li><router-link to="/announcements">Announcements</router-link></li>
                             <li><router-link to="/SPPostAnnouncement">Post Announcement</router-link></li>
-                            <li><router-link to="/SPPostOffer">Post Offer</router-link></li>
+                            <li v-show="this.user.is_blocked===false"><router-link to="/SPPostOffer" >Post Offer</router-link></li>
                             <li><router-link to="/SPReservations">View Reservations</router-link></li>
                             <li><router-link to="/SPReviews">View Reviews</router-link></li>
                             <li><router-link to="/SPAssess">Assess Students</router-link></li>
@@ -408,11 +408,11 @@ data () {
       showsp:false,
       showstudent:false,
 
-
   // User object will let us check authentication status
   user: {
     authenticated: false,
-    type: 0
+    type: 0,
+    is_blocked:false
   }}},
 
 created() {
@@ -423,9 +423,8 @@ if(localStorage.getItem('id_token')!=null){
   this.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
     this.decodeid=decode.body.id
     //console.log(this.decodeid)
-    this.user.type = decode.body.type
-    console.log(localStorage.getItem('usertype'))
-    console.log(this.user.type);
+    this.user.type = decode.body.type;
+    this.user.is_blocked = decode.body.is_blocked;
     this.name = decode.body.name;
     this.profilepic = decode.body.image
 })
@@ -451,6 +450,7 @@ methods: {
         this.decodeid = decode.body.id;
         console.log(decode.body.type)
         this.user.type = decode.body.type;
+        this.user.is_blocked = decode.body.is_blocked;
         localStorage.setItem('usertype', decode.body.type)
         this.name = decode.body.name;
       })

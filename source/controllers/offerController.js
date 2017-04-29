@@ -31,7 +31,7 @@ const offerController = {
         } else {
             const token = req.headers['jwt-token'];
             jwt.verify(token, (decoded) => {
-                if (decoded.type === 3) {
+                if (decoded.type === 3 && decoded.is_blocked===false) {
                     // making a new offer instance and saving it
                     const newOffer = new Offer({
                         // updated

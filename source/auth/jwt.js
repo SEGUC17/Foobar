@@ -17,6 +17,8 @@ module.exports = {
         name: user.name,
         type: user.type,
         image: user.profileimg,
+        is_deleted: user.is_deleted,
+        is_blocked: user.is_blocked
       }, secret));
     });
   },

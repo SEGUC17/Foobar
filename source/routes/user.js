@@ -48,9 +48,18 @@
             err: 'Wrong Credentials',
           });
         } else {
+        jwt.verify(token, function(decoded) {
+        if (decoded.is_deleted === true) {
+          res.status(500).json({
+              err: 'User not found',
+            });
+        }else{
           res.json({
-            token,
+            token
           });
+        }
+        });
+
         }
       });
     }
