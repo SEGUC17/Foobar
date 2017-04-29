@@ -10,7 +10,6 @@
           <th scope="row">Offer Title</th>
           <th scope="row">Date</th>
           <th scope="row">Status</th>
-
         </tr>
       </thead>
       <tbody>
@@ -20,8 +19,10 @@
           <td>{{reservation.offer_id.title}}</td>
           <td>{{reservation.reservation_date}}</td>
           <td v-if="reservation.status==0">Applied</td>
-          <td v-else-if="reservation.status==1">Approved (Paid)</td>
-          <td v-else-if="reservation.status==2">Disapparoved</td>        
+          <td v-else-if="reservation.status==1">Approved (Paid)<a style="color:red; margin-left:10px; cursor:pointer;" @click.prevent="refund(reservation._id,reservation.charge_id)">Refund</a></td>
+          <td v-else-if="reservation.status==2">Disapparoved</td> 
+          <td v-else-if="reservation.status==3">Refunded</td>
+                 
         </tr>
       </tbody>
     </table>
@@ -42,10 +43,17 @@ created(){
 methods:{
     getReservations: function () {
       this.$http.get('http://localhost:3000/api/students/reservations/view', {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
-        console.log(response.data.data.reservations[0]);
         this.reservations=response.data.data.reservations
       })
-    }}
-
+    }, refund: function(id, charge){
+       if(localStorage.getItem('id_token')!=null){
+          this.$http.post('http://localhost:3000/api/refund',{"charge_id":charge},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response=> {
+            this.$http.post('http://localhost:3000/api/changeStatus',{"id":id},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response=> {
+              this.getReservations();
+            })
+          })
+       }else{alert("You have to be signed in to apply")}
+      }
+    }
 }
 </script>

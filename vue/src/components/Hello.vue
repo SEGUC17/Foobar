@@ -363,18 +363,12 @@
 <script src="https://cdn.jsdelivr.net/vue.resource/1.3.1/vue-resource.min.js"></script>
 
 <script>
-import Vue from 'vue'
-
-
 export default {
   name: 'hello',
   data(){
     return{
 		  results:'',
 		  search:'',
-          stripe_token: {},
-          price: 999,
-          stripe_instance: {},
           order_status: 'READY',
 		  full_image_2: require('../assets/img/full_image_2.jpg'),
 		  img_7: require('../assets/img/img_7.jpg'),
@@ -399,36 +393,6 @@ export default {
       }
     },
   methods: {
-    purchaseStuff: function(){
-          var price = this.price
-          this.stripe_instance = StripeCheckout.configure({
-              key: 'pk_test_930VGCISk9ZC24NhBPmMy3C8',    //put your own publishable key here
-              image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
-              locale: 'auto',
-              token: function(token) {
-                console.log('got a token. sending data to localhost');
-                this.stripe_token= token;
-                console.log(this.stripe_token);
-                this.order_status= "PENDING";
-                Vue.http.post('http://localhost:3000/api/charge', {token_id: this.stripe_token.id, price: price})
-                  .then((response) => {
-                    console.log(response.body);
-                    this.order_status= "SUCCESSFULLY COMPLETED";
-                  },(response) => {
-                    // error callback
-                    console.log(response.body);
-                    this.order_status= "FAILED";
-                  });
-              },
-          });
-            this.stripe_instance.open({
-              name: 'INFINITE INDUSTRIES',
-              description: 'stuff and stuff',
-              amount: this.price
-            })
-            console.log('attempting to get a token');
-
-          },
 	openSrch: function(){
     document.getElementById("searchOverlay").style.height = "100vh";
   	},

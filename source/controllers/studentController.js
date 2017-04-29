@@ -236,8 +236,9 @@ const StudentController = {
                                 offer_id: offer.id,
                                 service_provider_id: offer.sp_id,
                                 reservation_date: Date.now(),
-                                status: 0,
-                                is_assessed: false
+                                status: 1,
+                                is_assessed: false,
+                                charge_id: req.body.charge_id,
                             });
                             reservation.save((err, reservation) => {
                                 if (err) {

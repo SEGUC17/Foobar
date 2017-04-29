@@ -7,6 +7,7 @@ const homeController = require('../controllers/homeController');
 const path = require('path');
 const multer = require('multer');
 const crypto = require('crypto');
+const Reservation = require('../models/Reservation');
 
 const storage = multer.diskStorage({
   destination: 'public/uploads/',
@@ -37,22 +38,38 @@ router.post('/charge', (req, res) => {
   const token_id = req.body.token_id;
   const purchase_price = req.body.price;
 
-  // console.log(token.id +"\n"+purchase_price);
-
   const charge = stripe.charges.create({
     amount: purchase_price, // Amount in cents
     currency: 'usd',
     source: token_id,
     description: 'Example charge',
-  }, (err, charge) => {
+  }, (err, response) => {
     if (err && err.type === 'StripeCardError') {
       // The card has been declined
       res.json({ status: 'failure', reason: 'card was declined' });
     } else {
       console.log(charge);
-      res.json({ status: 'success' });
+      res.json({ status: 'success', response });
     }
   });
+});
+
+router.post('/refund', (req, res) => {
+  stripe.refunds.create({
+    charge: req.body.charge_id,
+  }, function(err, refund) {
+    res.json({ status: 'success', refund});
+  });
+});
+
+router.post('/changeStatus', (req, res) => {
+  console.log(req.body);
+  Reservation.findOneAndUpdate(
+    { "_id" : req.body.id },
+    { $set: { "status" : 3}}, function(err, found){
+      console.log(found);
+      res.json({ status: 'failure', reason: err });
+    })
 });
 
 module.exports = router;
