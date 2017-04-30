@@ -666,7 +666,8 @@ a:active {
 
 			<section id="content1" class="tab-content">
           <h3>{{user.name}}</h3>
-          <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png" class="img-circle img-responsive"> </div>
+          <center><img class="img-circle img-responsive" v-if="user && user.profileimg.path" :src="'http://localhost:3000/'+user.profileimg.path.replace('public','')" style="height:150px; width:150px">
+<img v-else alt="User Pic" src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png" class="img-circle img-responsive"> </center>
 <br></br>
 		      	<p><table class="table table-user-information">
               <tbody>
