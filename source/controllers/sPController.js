@@ -320,17 +320,18 @@ const spController = {
     },
 
     getSPProfile(req, res) { // viewing a specific SP profile
+      
       const query = {
         _id: req.params.id, // Recently Changed to Params
       };
 
       SP.findOne(query, (err, providerProfile) => {
+        if(providerProfile!=undefined)
         User.findOne({
+          
           _id: providerProfile.user_id
         }, (err, user) => {
-          //      console.log(providerProfile);
-          //    console.log(user);
-
+       
           if (err) {
             res.status(500).json({
               status: 'error',
@@ -347,7 +348,7 @@ const spController = {
           }
         });
       });
-    },
+      },
 
     // method used to add a video to the database
     addVideoByURL(req, res) {

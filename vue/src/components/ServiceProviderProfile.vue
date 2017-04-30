@@ -754,7 +754,7 @@ a:active {
 
 			<section id="content3" class="tab-content">
 				<h3>Images todo</h3>
-				<base href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/">
+				
 <div id="slider">
 <figure>
 <img src="austin-fireworks.jpg" alt>
@@ -935,16 +935,27 @@ a:active {
       reviews:[],
       comment:'',
       pastComments:[],
-      reviewid:''
+      reviewid:'',
+      reloadCounter:0
      }
    },
  created(){
-   this.getServiceProvider()
+     if(this.$route.params.id!= null)
+     this.getServiceProvider(this.$route.params.id)
+    
+
 
  },
+  watch: {
+   '$route' (to ,from){
+       if(to!=null)
+       this.getServiceProvider(this.$route.params.id);
+    }},
  methods:{
-    getServiceProvider: function () {
-      let route ='http://localhost:3000/api/students/sP/'.concat(this.$route.params.id);
+    getServiceProvider: function (param) {
+        if(param!=null){
+        console.log(param)
+      let route ='http://localhost:3000/api/students/sP/'.concat(param);
 
        this.$http.get(route, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
       //   console.log(this.$route.params.id);
@@ -952,8 +963,10 @@ a:active {
          this.service=response.data.data.providerProfile;
          this.user =response.data.data.user;
 
-       })
+        
+       })}
      },
+    
 
 
      Offers: function(){
