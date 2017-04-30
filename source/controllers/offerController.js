@@ -18,8 +18,20 @@ const offerController = {
         req.checkBody('start_date', 'StartDate is Wrong Date Format').isDate();
         req.checkBody('end_date', 'EndDate is required').notEmpty();
         req.checkBody('end_date', 'EndDate is Wrong Date Format').isDate();
+//var d = new Date();
 
+console.log(req.body.due_date.toISOString());
+        if(req.body.end_date<req.body.start_date || req.body.due_date>req.body.start_date ){
+            res.status(500).json({
+                success:'failure',
+                data:{
+                    err:'Weird, Dates not correctly choosen!'
+                }
+            })
+        }
+        else{
 
+    
 
         var errors = req.validationErrors();
 
@@ -60,7 +72,9 @@ const offerController = {
       });
 
         }
+        }
     },
+    
 };
 
 
