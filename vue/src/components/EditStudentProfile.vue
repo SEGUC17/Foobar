@@ -4,11 +4,11 @@
       <div class="row">
       <div class="col-md-5  toppad  pull-right col-md-offset-3 ">
              <br>
-    
+
       </div>
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
-   
-   
+
+
           <div class="panel panel-info">
             <div class="panel-heading">
               <h3 class="panel-title">{{user.name}}</h3>
@@ -16,9 +16,9 @@
             <div class="panel-body">
               <div class="row">
                 <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png" class="img-circle img-responsive"> </div>
-                
-               
-                <div class=" col-md-9 col-lg-9 "> 
+
+
+                <div class=" col-md-9 col-lg-9 ">
                  <table class="table table-user-information">
                     <tbody>
                      <tr>
@@ -35,15 +35,15 @@
                        <input type="text"  v-model="university">
                         </td>
                       </tr>
-                     
+
                       <tr>
                         <td>Date of Birth</td>
                         <td>{{student.birthdate}}</td>
                       </tr>
-                   
+
                          <tr>
                              <tr>
-                        <td>Description</td> 
+                        <td>Description</td>
                         <td><textarea v-model="description"></textarea> </td>
                       </tr>
                         <tr>
@@ -53,9 +53,9 @@
                       <tr>
                         <td>Email</td>
                         <td>{{user.email}}</td>
-                    
+
                      <tr align="right">
-                       
+
                      <div class="row">
                                     <div class="col-sm-2">
                                     </div>
@@ -63,7 +63,7 @@
                                       <center>  <button class="btn btn-primary btn-sm" v-on:click="EditStudent()">
                                             Submit</button></center>
                                             <br>
-                                        
+
                                     </div>
                                 </div>
                      </tr>
@@ -76,7 +76,7 @@
               </div>
             </div>
                  <!--  -->
-            
+
           </div>
         </div>
       </div>
@@ -84,10 +84,10 @@
 
 <form role="form" class="" v-on:submit.prevent="editPassword()">
     <div class="modal fade" id="StudentEditPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div v-for =" message in successmessages">                                  
+        <div v-for =" message in successmessages">
                     <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
     </div>
-    <div v-for =" message in failuremessages">                               
+    <div v-for =" message in failuremessages">
                <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
     </div>
            <br><br>
@@ -99,12 +99,12 @@
 
             <div class="modal-body">
             <center>
-                <div class="row">                          
+                <div class="row">
                 Enter Old Password:<input require="required"type="password" style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput1" placeholder="Old Password" v-model="oldPassword" required="*"></input><br/>
                 Enter New Password:<input type="password" style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput2" placeholder="New Password" v-model="newPassword" required="*"></input><br/>
                 Confirm New Password:<input type="password" style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput3" placeholder="Confirm New Password" v-model="confirmNewPassword" required="*"></input>
-                </div>     
-                </center>           
+                </div>
+                </center>
             </div>
 
             <div class="modal-footer">
@@ -135,7 +135,7 @@ export default {
       newPassword:"",
       successmessages:[{msg:''}],
       failuremessages:[{msg:''}]
-     
+
     }
   },
 created(){
@@ -143,12 +143,12 @@ created(){
 },
 methods:{
     getStudent: function () {
-     
-      let route ='http://localhost:3000/api/students/student/'.concat(this.$route.params.EditStudid);
-      
-   
+
+      let route ='http://52.210.115.35:3000/api/students/student/'.concat(this.$route.params.EditStudid);
+
+
       this.$http.get(route, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
-       
+
         this.student=response.data.data.student;
         this.user =response.data.data.user;
         this.name = this.user.name;
@@ -156,15 +156,15 @@ methods:{
         this.address = this.student.address;
         //this.birthdate = response.student.birthdate;
         this.description = this.student.description;
-        
+
         console.log(this.user);
-        
+
       })
     },
     EditStudent: function() {
       var x = confirm("Are you sure you want to edit your profile ?");
       if(x){
-        let route ='http://localhost:3000/api/students/student/';
+        let route ='http://52.210.115.35:3000/api/students/student/';
             console.log(this.name);
       this.$http.post(route, {"name":this.name,"university":this.university, "address":this.address, "birthdate":this.birthdate, "description":this.description,"phone_number":this.phone_number}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
 
@@ -172,7 +172,7 @@ methods:{
         alert("Your profile was editted")
         console.log(this.user);
       })
-        
+
       }
     },
     editPassword: function()
@@ -180,7 +180,7 @@ methods:{
         var x = confirm("Are you sure you want to edit your password")
           if(x)
           {
-            this.$http.post('http://localhost:3000/api/students/student/editpassword', {"oldPassword":this.oldPassword,"newPassword":this.newPassword, "confirmNewPassword":this.confirmNewPassword,"id":this.$route.params.EditStudid},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+            this.$http.post('http://52.210.115.35:3000/api/students/student/editpassword', {"oldPassword":this.oldPassword,"newPassword":this.newPassword, "confirmNewPassword":this.confirmNewPassword,"id":this.$route.params.EditStudid},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
             alert("Updated Password")
                 confirmNewPassword=""
       oldPassword=""
@@ -194,7 +194,7 @@ methods:{
                     });
           }
     }
-   
+
   }
 }
 </script>

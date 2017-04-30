@@ -17,7 +17,7 @@
 
 
 <div class="form-group">
-  <label class="col-md-4 control-label" for="Name (Full name)">Name (Full name)</label>  
+  <label class="col-md-4 control-label" for="Name (Full name)">Name (Full name)</label>
   <div class="col-md-4">
  <div class="input-group">
        <div class="input-group-addon">
@@ -27,13 +27,13 @@
        <input id="Name (Full name)" name="Name (Full name)" type="text" :value="profile.name" placeholder="Name (Full name)" class="form-control input-md">
       </div>
 
-    
+
   </div>
 
-  
+
 </div>
 
-<!-- File Button --> 
+<!-- File Button -->
 <div class="form-group">
   <label class="col-md-4 control-label" for="Upload photo">Upload photo</label>
   <div class="col-md-4">
@@ -45,34 +45,34 @@
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="Available Service Area">Location</label>  
+  <label class="col-md-4 control-label" for="Available Service Area">Location</label>
   <div class="col-md-4">
   <div class="input-group">
        <div class="input-group-addon">
      <i class="fa fa-street-view"></i>
-        
+
        </div>
                 <gmap-autocomplete @place_changed="mapinit" class="form-control input-md" :value="profile.location">
       </gmap-autocomplete>
-    
+
       </div>
-    
+
   </div>
 </div>
 
 
 <!-- Text input-->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="Phone number ">Phone number </label>  
+  <label class="col-md-4 control-label" for="Phone number ">Phone number </label>
   <div class="col-md-4">
   <div class="input-group">
        <div class="input-group-addon">
      <i class="fa fa-phone"></i>
-        
+
        </div>
     <input type="number" class="form-control input-md" id="phone" placeholder="Primary Phone number " :value="profile.phone_number" v-model="phone_number" />
       </div>
-  
+
   </div>
 </div>
 
@@ -80,19 +80,19 @@
 
     <div class="form-group">
         <label class="col-md-4 control-label" for="Gender">Price Category</label>
-    <div class="col-md-4"> 
+    <div class="col-md-4">
     <label class="radio-inline" for="cheap-0">
       <input type="radio" name="cheap-0" id="one" value="Cheap" v-model="pricecategory">
         $
-    </label> 
+    </label>
     <label class="radio-inline" for="cheap-1">
       <input type="radio" name="cheap-1" id="two" value="Moderate" v-model="pricecategory">
         $$
-    </label> 
+    </label>
     <label class="radio-inline" for="cheap-1">
       <input type="radio" name="cheap-1" id="three" value="Expensive" v-model="pricecategory">
         $$$
-    </label> 
+    </label>
         </div>
          {{ pricecategory }}
     </div>
@@ -108,22 +108,22 @@
         <input type="checkbox" id="field.name" :value="field.name" v-model="fields">
         <span >{{field.name}}</span>
         </li>
-    
+
   </div>
 </div>
 
 
 <div class="form-group">
   <label class="col-md-4 control-label" for="Overview (max 200 words)">Overview (max 200 words)</label>
-  <div class="col-md-4">  
-      <textarea  v-model="description" class="form-control" :value="profile.description"></textarea>                   
+  <div class="col-md-4">
+      <textarea  v-model="description" class="form-control" :value="profile.description"></textarea>
   </div>
 </div>
 
 
     <h1>Your Images</h1>
     <li v-for ="image in images">
-       <img :src="'http://localhost:3000/'+image.img.path.replace('public','')" style="width:200px">
+       <img :src="'http://52.210.115.35:3000/'+image.img.path.replace('public','')" style="width:200px">
     </li>
     <input ref="avatar" type="file" name="avatar" id="avatar" v-on:change="upload($event.target.name, $event.target.files)">
     <h1>Your Videos</h1>
@@ -145,11 +145,11 @@
     </div>
 
 <div class="form-group">
-  <label class="col-md-4 control-label" ></label>  
+  <label class="col-md-4 control-label" ></label>
   <div class="col-md-4">
     <span><a href="#" class="btn btn-success" @click.prevent="edit"><span class="glyphicon glyphicon-thumbs-up"></span> Submit</a></span>
     <span><a class="btn btn-danger" style="margin-top:20px;"  data-toggle="modal" data-target="#SPEditPassword">Edit Password</a></span>
-    
+
   </div>
 </div>
 
@@ -161,7 +161,7 @@
 
 </div>
 <div class="col-md-2 hidden-xs">
-            <img v-if="this.user.profileimg && this.user.profileimg.path" :src="'http://localhost:3000/'+this.user.profileimg.path.replace('public','')" class="img-circle profile_img" style="height:100px; width:100px">
+            <img v-if="this.user.profileimg && this.user.profileimg.path" :src="'http://52.210.115.35:3000/'+this.user.profileimg.path.replace('public','')" class="img-circle profile_img" style="height:100px; width:100px">
             <img v-if="this.user.profileimg && !this.user.profileimg.path" src="~assets/img/missing.png" class="img-circle profile_img" style="height:100px; width:100px">
   </div>
 
@@ -179,30 +179,30 @@
             <div class="modal-body">
             <center>
                 <form role="form" class="" v-on:submit.prevent="editPassword()">
-                    <div class="row">                          
+                    <div class="row">
                 Enter Old Password:<input require="required"type="password" style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput1" placeholder="Old Password" v-model="oldPassword" required="*"></input><br/>
                 Enter New Password:<input type="password" style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput2" placeholder="New Password" v-model="newPassword" required="*"></input><br/>
                 Confirm New Password:<input type="password" style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput3" placeholder="Confirm New Password" v-model="confirmNewPassword" required="*"></input>
-                    </div>  
-                </form>   
-                </center>      
+                    </div>
+                </form>
+                </center>
                    <div class="modal-footer">
                 <button class="btn btn-primary add_field_button" style="margin-bottom:20px;">Update Password</button>
-                </div>  </div>  
+                </div>  </div>
                  </div>
           </div>
         </div>
          </div>
-    </div>  
+    </div>
 
-    </div> 
+    </div>
 
 
 </center>
-      
-            
 
-         
+
+
+
 
 </template>
 <script>
@@ -240,7 +240,7 @@ created(){
 },
 methods:{
     getProfile: function () {
-      this.$http.get('http://localhost:3000/api/sPs/profile/view',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.get('http://52.210.115.35:3000/api/sPs/profile/view',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         this.profile=response.data.data.providerProfile
         this.location = response.data.data.providerProfile.location;
         this.pricecategory = response.data.data.providerProfile.price_category;
@@ -254,7 +254,7 @@ methods:{
       })
     },
     getInterests: function () {
-      this.$http.get('http://localhost:3000/api/sPs/interests',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.get('http://52.210.115.35:3000/api/sPs/interests',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         this.interests=response.data.data.interests
       })
     },
@@ -262,7 +262,7 @@ methods:{
         {
           var x = confirm("Are you sure you want to edit these attributes")
           if(x){
-            this.$http.post('http://localhost:3000/api/sPs/profile/edit', {"price_category":this.pricecategory,"location":this.location, "description":this.description, "fields":this.fields, "description":this.description, "phone_number":this.phone_number,"lat": this.lat,"lang":this.lang},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+            this.$http.post('http://52.210.115.35:3000/api/sPs/profile/edit', {"price_category":this.pricecategory,"location":this.location, "description":this.description, "fields":this.fields, "description":this.description, "phone_number":this.phone_number,"lat": this.lat,"lang":this.lang},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
             console.log(this.location);
             alert("Profile Edited")
             this.$router.push({path:'/SPViewMyProfile'})
@@ -270,7 +270,7 @@ methods:{
           }
         },
     newvideo : function(){
-        this.$http.post('http://localhost:3000/api/sPs/videos/upload', {"title":this.title,"videoURL":this.url},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+        this.$http.post('http://52.210.115.35:3000/api/sPs/videos/upload', {"title":this.title,"videoURL":this.url},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
           console.log(data)
         })
     },
@@ -282,7 +282,7 @@ methods:{
             formData.append(fieldName, fileList[x], fileList[x].name);
           });
         formData.append("user_id",this.user._id)
-        this.$http.post('http://localhost:3000/api/sPs/upload',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+        this.$http.post('http://52.210.115.35:3000/api/sPs/upload',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
             this.getImages();
       })
     },
@@ -294,18 +294,18 @@ methods:{
             formData.append(fieldName, fileList[x], fileList[x].name);
           });
         formData.append("user_id",this.user._id)
-        this.$http.post('http://localhost:3000/api/sPs/changedp',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+        this.$http.post('http://52.210.115.35:3000/api/sPs/changedp',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
             console.log('changed dp');
       })
     },
     getVideos: function(){
-        let route ='http://localhost:3000/api/sPs/videos/';
+        let route ='http://52.210.115.35:3000/api/sPs/videos/';
         this.$http.post(route,{"id":this.user._id}).then(response => {
             this.videos = response.body.data.video
       })
     },
     getImages: function(){
-        let route ='http://localhost:3000/api/sPs/images/'.concat(this.user._id);
+        let route ='http://52.210.115.35:3000/api/sPs/images/'.concat(this.user._id);
         this.$http.get(route,{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
             this.images = response.body.data.images
       })
@@ -324,7 +324,7 @@ methods:{
           if(x)
           {
             console.log(this.user);
-            this.$http.post('http://localhost:3000/api/sPs/sP/editpassword', {"oldPassword":this.oldPassword,"newPassword":this.newPassword, "confirmNewPassword":this.confirmNewPassword,"id":this.user._id},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+            this.$http.post('http://52.210.115.35:3000/api/sPs/sP/editpassword', {"oldPassword":this.oldPassword,"newPassword":this.newPassword, "confirmNewPassword":this.confirmNewPassword,"id":this.user._id},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
             alert("Updated Password")
                 confirmNewPassword=""
       oldPassword=""

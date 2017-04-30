@@ -43,7 +43,7 @@ export default {
 methods:{
         postAnnouncement: function ()
         {
-            this.$http.post('http://localhost:3000/api/admins/announcements/post', {"title":this.title,"content":this.content}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+            this.$http.post('http://52.210.115.35:3000/api/admins/announcements/post', {"title":this.title,"content":this.content}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
               swal(
           'Success',
           'Announcement posted',

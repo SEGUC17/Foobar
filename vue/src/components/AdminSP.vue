@@ -50,7 +50,7 @@ created(){
 },
 methods:{
     getAllServiceProviders: function () {
-      this.$http.get('http://localhost:3000/api/admins/sPs').then(response => {
+      this.$http.get('http://52.210.115.35:3000/api/admins/sPs').then(response => {
         this.serviceproviders = response.body.data.users
         this.serviceproviders = this.serviceproviders.filter(function(serviceprovider){
             return serviceprovider.user_id.is_deleted != true
@@ -60,18 +60,18 @@ methods:{
     removesp: function(serviceprovider){
       var x = confirm("Are you sure you want to delete this Service Provider ?")
       if(x){
-      this.$http.delete('http://localhost:3000/api/admins/admin/sp/'.concat(serviceprovider._id),{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.delete('http://52.210.115.35:3000/api/admins/admin/sp/'.concat(serviceprovider._id),{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         alert("Service Provider deleted")
            this.getAllServiceProviders();
       })
     }
 
-    
+
     },
     blocksp:function(serviceprovider){
       var x = confirm("Are you sure you want to delete this Service Provider ?")
       if(x){
-      this.$http.post('http://localhost:3000/api/admins/block/',{email:serviceprovider.user_id.email} ,{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.post('http://52.210.115.35:3000/api/admins/block/',{email:serviceprovider.user_id.email} ,{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         alert("Service Provider deleted")
     })
     }

@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     ee: function () {
-      this.$http.post('http://localhost:3000/admin/addInterest',{name:this.val}).then(response => {
+      this.$http.post('http://52.210.115.35:3000/admin/addInterest',{name:this.val}).then(response => {
         this.msg = response.body.data.name
       })
     }

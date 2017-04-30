@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     created: function () {
-      this.$http.get('http://localhost:3000/admin/announcements/view/').then(response => {
+      this.$http.get('http://52.210.115.35:3000/admin/announcements/view/').then(response => {
         this.msg = response.data.data.announcements
       })
     }

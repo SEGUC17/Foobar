@@ -180,7 +180,7 @@
                  <center> <router-link :to = "{ name: 'service provider' , params: { id: serviceprovider._id }}">
                   <div class="col-md-4 feature">
 
-                      <center><img class="img-circle img-responsive" v-if="serviceprovider.user_id && serviceprovider.user_id.profileimg.path" :src="'http://localhost:3000/'+serviceprovider.user_id.profileimg.path.replace('public','')" style="height:150px; width:150px">
+                      <center><img class="img-circle img-responsive" v-if="serviceprovider.user_id && serviceprovider.user_id.profileimg.path" :src="'http://52.210.115.35:3000/'+serviceprovider.user_id.profileimg.path.replace('public','')" style="height:150px; width:150px">
                       <i class="glyphicon glyphicon-user" style="height:150px; width:150px" v-else></i></center>
                           <h3>Name: {{serviceprovider.user_id.name}}</h3>
                           <div class="title_border"></div>
@@ -402,7 +402,7 @@ export default {
   methods: {
 	applySP: function ()
         {
-            this.$http.post('http://localhost:3000/api/sPs/sP/apply', {"name":this.name,"email":this.email,"phone_number":this.phone_number,"description":this.description}).then(data => {
+            this.$http.post('http://52.210.115.35:3000/api/sPs/sP/apply', {"name":this.name,"email":this.email,"phone_number":this.phone_number,"description":this.description}).then(data => {
 			$('#contactform').fadeOut()
 			$('#successcontact').fadeIn('slow');
 
@@ -432,14 +432,14 @@ reason.body.err ,
         });
 
 	}, srch: function(){
-			this.$http.post('http://localhost:3000/api/students/home', {search: this.search}).then(data => {
+			this.$http.post('http://52.210.115.35:3000/api/students/home', {search: this.search}).then(data => {
 				console.log(data)
 				this.results = data.results
 				}).catch(function(reason) {
 				console.log(reason)
 			});
 		},getAllServiceProviders: function () {
-    this.$http.get('http://localhost:3000/api/admins/sPs').then(response => {
+    this.$http.get('http://52.210.115.35:3000/api/admins/sPs').then(response => {
         console.log(response.data)
         this.serviceproviders=response.data.data.users;
     })
@@ -447,4 +447,3 @@ reason.body.err ,
   }
 }
 </script>
-

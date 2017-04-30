@@ -8,16 +8,16 @@
             <div class="col-sm-10">
              <input v-validate="{ rules: { required: true} }" type="text" name="title" class="form-control" id="title" placeholder="Title" v-model="title" required="*" >
                      <span v-show="errors.has('title')">{{ errors.first('title') }}</span>
-               
+
             </div>
         </div>
-        
+
         <div class="form-group">
             <label for="price" class="col-sm-2 control-label">Price</label>
             <div class="col-sm-10">
             <input v-validate="{ rules: { required: true} }" type="number" name="price" class="form-control" id="price" placeholder="Price" v-model="price" required="*">
                      <span v-show="errors.has('price')">{{ errors.first('price') }}</span>
-                
+
             </div>
         </div>
 
@@ -61,7 +61,7 @@
             <div class="col-sm-10">
              <input v-validate="{ rules: { required: true} }" type="date" name="start_date" class="form-control" id="start_date" v-model="start_date" required="*">
                      <span v-show="errors.has('start_date')">{{ errors.first('start_date') }}</span>
-                
+
             </div>
         </div>
 
@@ -70,10 +70,10 @@
             <div class="col-sm-10">
                <input v-validate="{ rules: { required: true }}" type="date" name="end_date" class="form-control" id="end_date" v-model="end_date" required="*">
                      <span v-show="errors.has('end_date')">{{ errors.first('end_date') }}</span>
-                
+
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-sm-2">
             </div>
@@ -107,10 +107,10 @@ export default {
     this.getInterests()
  },
 methods:{
-        postOffer: function () 
+        postOffer: function ()
         {
 
-            this.$http.post('http://localhost:3000/api/sPs/offers/create', {"title":this.title,"price":this.price, "capacity":this.capacity, "field":this.field, "description":this.description, "due_date":this.due_date, "start_date":this.start_date, "end_date":this.end_date},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+            this.$http.post('http://52.210.115.35:3000/api/sPs/offers/create', {"title":this.title,"price":this.price, "capacity":this.capacity, "field":this.field, "description":this.description, "due_date":this.due_date, "start_date":this.start_date, "end_date":this.end_date},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
               swal(
                   'Success!',
                   'Offer Posted!',
@@ -126,12 +126,12 @@ methods:{
                             'error'
                         )
                         //console.log(reason.body.data.err);
-               
+
         });
-                    
+
         },
         getInterests: function () {
-      this.$http.get('http://localhost:3000/api/sPs/interests',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.get('http://52.210.115.35:3000/api/sPs/interests',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
 
         this.interests=response.data.data.interests
       })
