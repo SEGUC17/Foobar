@@ -35,28 +35,28 @@
         <div class="panel-login">
         <div class="panel-heading">
           <div class="row">
-            
+
             <div class="col-xs-4">
             <a href="#" class="active" id="login-form-link">Login</a>
             </div>
-            
+
             <div class="col-xs-4">
             <a href="#" id="register-form-link">Register</a>
             </div>
-            
+
           </div>
               <hr>
         </div>
-            
+
         <div class="panel-body">
             <div class="row">
               <div class="col-lg-12">
                   <form @submit.prevent="login" id="login-form"  role="form" style="display: block;">
-                    
+
                     <div class="form-group">
                       <input v-if="!reset" type="text" name="email" id="email" tabindex="1" v-model="creds.username" class="form-control efc" placeholder="Email" value="" required="true">
                     </div>
-                    
+
                     <div class="form-group">
                       <input  v-if="!reset" type="password" name="password" id="password" tabindex="2" v-model="creds.password" class="form-control efc" placeholder="Password" required="true">
                     </div>
@@ -73,7 +73,7 @@
                         </div>
                       </div>
                     </div>
-                    
+
                     <div class="form-group">
                       <div class="row">
                         <div class="col-lg-12">
@@ -83,7 +83,7 @@
                         </div>
                       </div>
                     </div>
-                  
+
                   </form>
 
 
@@ -93,7 +93,7 @@
                     <div v-for =" message in successmessages">
                         <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
                     </div>
-                    
+
                     <div v-for =" message in failuremessages">
                         <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
                     </div>
@@ -128,7 +128,7 @@
                       <div>
                         <label class="control-label">Interests</label><span style="font-weight: normal; font-size:12px; margin-left: 5px;"> (tell us a bit about what you like)</span>
                       </div>
-                      
+
                       <span v-for="interest in this.interests" style="font-size:14px; margin-right:10px;">
                             <input type="checkbox" :id="interest" :value="interest" v-model="Interests">
                             <label for="interest" style="font-weight: normal;">{{interest.name}}</label>
@@ -149,7 +149,7 @@
                     <div class="form-group">
                       <input  v-if="reset" type="text" name="email" id="email" tabindex="1" v-model="resetPWEmail" class="form-control efc" placeholder="Email" value="" required="true">
                     </div>
-                    
+
                     <div class="form-group text-center">
                       <label style="color:#52d3aa;">{{message}}</label>
                     </div>
@@ -191,7 +191,7 @@
               <!-- menu profile quick info -->
               <div class="profile clearfix">
                 <div class="profile_pic">
-                      <img v-if="profilepic.path" :src="'http://localhost:3000/'+profilepic.path.replace('public','')" alt="" class="img-circle profile_img" style="height:70px; width:70px">
+                      <img v-if="profilepic.path" :src="'http://54.77.11.251:3000/'+profilepic.path.replace('public','')" alt="" class="img-circle profile_img" style="height:70px; width:70px">
                       <img v-if="!profilepic.path" src="~assets/img/missing.png" alt="" class="img-circle profile_img" style="height:70px; width:70px">
                 </div>
                 <div class="profile_info">
@@ -306,7 +306,7 @@
                 <ul class="nav navbar-nav navbar-right" style="">
                   <li class="dropdown">
                     <a href="" role="button" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                      <img v-if="profilepic.path" :src="'http://localhost:3000/'+profilepic.path.replace('public','')" alt="">
+                      <img v-if="profilepic.path" :src="'http://54.77.11.251:3000/'+profilepic.path.replace('public','')" alt="">
                       <img v-if="!profilepic.path" src="~assets/img/missing.png" alt="">
                       {{ name | capitalize }}
                       <span class=" fa fa-angle-down"></span>
@@ -326,7 +326,7 @@
                        <li v-for="n in announcements">
                          <a>
                         <span class="image">
-                            <img v-if="profilepic.path" :src="'http://localhost:3000/'+profilepic.path.replace('public','')" alt="">
+                            <img v-if="profilepic.path" :src="'http://54.77.11.251:3000/'+profilepic.path.replace('public','')" alt="">
                             <img v-if="!profilepic.path" src="~assets/img/missing.png" alt="">
                         </span>
                           <span>
@@ -423,7 +423,7 @@ created() {
 if(localStorage.getItem('id_token')!=null){
   this.showgent= true
   this.user.authenticated=true
-  this.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
+  this.$http.post('http://54.77.11.251:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
     this.decodeid=decode.body.id
     //console.log(this.decodeid)
     this.user.type = decode.body.type;
@@ -443,13 +443,13 @@ methods: {
   // Send a request to the login URL and save the returned JWT
   login : function() {
     var app = this;
-    app.$http.post('http://localhost:3000/api/users/login', {
+    app.$http.post('http://54.77.11.251:3000/api/users/login', {
 	"email":app.creds.username,
 	"password":  app.creds.password
 }).then(data => {
       localStorage.setItem('id_token', data.body.token)
       app.user.authenticated = true
-      app.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
+      app.$http.post('http://54.77.11.251:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
         this.decodeid = decode.body.id;
         console.log(decode.body.type)
         this.user.type = decode.body.type;
@@ -469,7 +469,7 @@ methods: {
 });
   },
   getAllAnnouncements: function () {
-      this.$http.get('http://localhost:3000/api/announcements/view').then(response => {
+      this.$http.get('http://54.77.11.251:3000/api/announcements/view').then(response => {
         this.announcements=response.data.data.announcements
         console.log(this.announcements);
         this.numberOfPages=Math.ceil(this.announcements.length/this.perPage);
@@ -480,7 +480,7 @@ methods: {
       })
     },
   signup : function() {
-    this.$http.post('http://localhost:3000/api/users/signup', {
+    this.$http.post('http://54.77.11.251:3000/api/users/signup', {
     "email":this.creds.email,
     "name":this.creds.name,
     "university":this.university,
@@ -510,7 +510,7 @@ methods: {
   },
 
   resetPW : function() {
-    this.$http.post('http://localhost:3000/api/users/resetPW', {"email":this.resetPWEmail},{"token": localStorage.getItem('id_token')}).then(decode => {
+    this.$http.post('http://54.77.11.251:3000/api/users/resetPW', {"email":this.resetPWEmail},{"token": localStorage.getItem('id_token')}).then(decode => {
       alert("New Password sent to ".concat(this.resetPWEmail));
       console.log('success');
 
@@ -561,7 +561,7 @@ this.$router.go({path:'/',force:true});
   },
 
   findAllInterests: function() {
-    this.$http.get('http://localhost:3000/api/students/all/interests/').then(response => {
+    this.$http.get('http://54.77.11.251:3000/api/students/all/interests/').then(response => {
         this.interests=response.body.data.interests
       })
   },

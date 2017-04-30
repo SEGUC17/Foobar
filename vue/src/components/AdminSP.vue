@@ -71,7 +71,7 @@ methods:{
     blocksp:function(serviceprovider){
       var x = confirm("Are you sure you want to delete this Service Provider ?")
       if(x){
-      this.$http.post('http://localhost:3000/api/admins/block/',{email:serviceprovider.user_id.email} ,{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.post('http://54.77.11.251:3000/api/admins/block/',{email:serviceprovider.user_id.email} ,{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         alert("Service Provider deleted")
     })
     }

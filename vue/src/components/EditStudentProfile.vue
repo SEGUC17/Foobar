@@ -30,7 +30,7 @@
                         </td>
                     </tr>
                     <tr>
-                          <td>Upload Profile pic: </td>                       
+                          <td>Upload Profile pic: </td>
                           <td><input ref="avatar2" type="file" name="avatar2" id="avatar2" v-on:change="changedp($event.target.name, $event.target.files)"></td>
                     </tr>
                       <tr>
@@ -148,7 +148,7 @@ created(){
 methods:{
     getStudent: function () {
 
-      let route ='http://localhost:3000/api/students/student/'.concat(this.$route.params.EditStudid);
+      let route ='http://54.77.11.251:3000/api/students/student/'.concat(this.$route.params.EditStudid);
 
 
       this.$http.get(route, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
@@ -168,7 +168,7 @@ methods:{
     EditStudent: function() {
       var x = confirm("Are you sure you want to edit your profile ?");
       if(x){
-        let route ='http://localhost:3000/api/students/student/';
+        let route ='http://54.77.11.251:3000/api/students/student/';
             console.log(this.name);
       this.$http.post(route, {"name":this.name,"university":this.university, "address":this.address, "birthdate":this.birthdate, "description":this.description,"phone_number":this.phone_number}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
 
@@ -187,7 +187,7 @@ methods:{
             formData.append(fieldName, fileList[x], fileList[x].name);
           });
         formData.append("user_id",this.user._id)
-        this.$http.post('http://localhost:3000/api/sPs/changedp',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+        this.$http.post('http://54.77.11.251:3000/api/sPs/changedp',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
             console.log('changed dp');
       })
     },
@@ -196,7 +196,7 @@ methods:{
         var x = confirm("Are you sure you want to edit your password")
           if(x)
           {
-            this.$http.post('http://localhost:3000/api/students/student/editpassword', {"oldPassword":this.oldPassword,"newPassword":this.newPassword, "confirmNewPassword":this.confirmNewPassword,"id":this.$route.params.EditStudid},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+            this.$http.post('http://54.77.11.251:3000/api/students/student/editpassword', {"oldPassword":this.oldPassword,"newPassword":this.newPassword, "confirmNewPassword":this.confirmNewPassword,"id":this.$route.params.EditStudid},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
             alert("Updated Password")
                 confirmNewPassword=""
       oldPassword=""

@@ -1,7 +1,7 @@
 <template>
 <center>
 
-        
+
   <form role="form" class="" v-on:submit.prevent="postOffer()">
             <h1 style="color:#52d3aa">Enter Offer Details </h1><br>
         <div align="center" style="width:400px" class="form-group">
@@ -11,7 +11,7 @@
             <span v-show="errors.has('title')">{{ errors.first('title') }}</span>
 
         </div>
-    
+
         <br/>
         <br/>
         <div align="center" style="width:400px" class="form-group">
@@ -42,7 +42,7 @@
         <br/>
         <br/>
         <br/>
-        
+
         <div align="center" style="width:400px" class="form-group">
             <label for="due_date"  style="color:#52d3aa" class="col-sm-2 control-label">Due Date</label>
             <div class="col-sm-10">
@@ -119,7 +119,7 @@ methods:{
         postOffer: function ()
         {
 
-            this.$http.post('http://localhost:3000/api/sPs/offers/create', {"title":this.title,"price":this.price, "capacity":this.capacity, "field":this.field, "description":this.description, "due_date":this.due_date, "start_date":this.start_date, "end_date":this.end_date},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+            this.$http.post('http://54.77.11.251:3000/api/sPs/offers/create', {"title":this.title,"price":this.price, "capacity":this.capacity, "field":this.field, "description":this.description, "due_date":this.due_date, "start_date":this.start_date, "end_date":this.end_date},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
               swal(
                   'Success!',
                   'Offer Posted!',
@@ -140,7 +140,7 @@ methods:{
 
         },
         getInterests: function () {
-      this.$http.get('http://localhost:3000/api/sPs/interests',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.get('http://54.77.11.251:3000/api/sPs/interests',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
 
         this.interests=response.data.data.interests
       })

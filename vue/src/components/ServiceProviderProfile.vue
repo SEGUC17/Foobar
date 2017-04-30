@@ -666,7 +666,7 @@ a:active {
 
 			<section id="content1" class="tab-content">
           <h3>{{user.name}}</h3>
-          <center><img class="img-circle img-responsive" v-if="user && user.profileimg.path" :src="'http://localhost:3000/'+user.profileimg.path.replace('public','')" style="height:150px; width:150px">
+          <center><img class="img-circle img-responsive" v-if="user && user.profileimg.path" :src="'http://54.77.11.251:3000/'+user.profileimg.path.replace('public','')" style="height:150px; width:150px">
 <img v-else alt="User Pic" src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png" class="img-circle img-responsive"> </center>
 <br></br>
 		      	<p><table class="table table-user-information">
@@ -956,7 +956,7 @@ a:active {
     getServiceProvider: function (param) {
         if(param!=null){
         console.log(param)
-      let route ='http://localhost:3000/api/students/sP/'.concat(param);
+      let route ='http://54.77.11.251:3000/api/students/sP/'.concat(param);
 
        this.$http.get(route, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
       //   console.log(this.$route.params.id);
@@ -971,7 +971,7 @@ a:active {
 
 
      Offers: function(){
-       this.$http.post("http://localhost:3000/api/students/serviceproviders/offers", {"id":this.user._id}).then(response => {
+       this.$http.post("http://54.77.11.251:3000/api/students/serviceproviders/offers", {"id":this.user._id}).then(response => {
 
          this.offers=response.body.data.Offers;
 				 console.log(this.offers);
@@ -980,38 +980,38 @@ a:active {
      },
 
      Apply: function(offer){
-       this.$http.post('http://localhost:3000/api/students/offers',{"offer_id":offer._id},{headers : {'jwt-token' : localStorage.getItem('id_token')}})
+       this.$http.post('http://54.77.11.251:3000/api/students/offers',{"offer_id":offer._id},{headers : {'jwt-token' : localStorage.getItem('id_token')}})
      },
 
 
      Video: function(){
-       this.$http.post("http://localhost:3000/api/sPs/videos", {"id":this.user._id}).then(response => {
+       this.$http.post("http://54.77.11.251:3000/api/sPs/videos", {"id":this.user._id}).then(response => {
 
         this.videos=response.body.data.video;
        });
 
      },
      Review: function(){
-       this.$http.post('http://localhost:3000/api/students/serviceproviders/add',{"sp_id":this.user._id, "content":this.review,"rating":this.rating},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+       this.$http.post('http://54.77.11.251:3000/api/students/serviceproviders/add',{"sp_id":this.user._id, "content":this.review,"rating":this.rating},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         alert("Review Added");
          this.getReviews()
        })
 
      },  getReviews: function () {
-         this.$http.post('http://localhost:3000/api/students/reviews/view',{"sp_id":this.user._id}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+         this.$http.post('http://54.77.11.251:3000/api/students/reviews/view',{"sp_id":this.user._id}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
 console.log(response.data.data.reviews)
            this.reviews=response.data.data.reviews
          })
        },
        viewComments: function (review_id) {
-         this.$http.post('http://localhost:3000/api/users/comments/view',{"review_id":review_id}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+         this.$http.post('http://54.77.11.251:3000/api/users/comments/view',{"review_id":review_id}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
            this.reviewid=review_id;
            console.log(this.reviewid);
          this.pastComments =response.data.data.comments
          })
        },
        addComment: function(){
-         this.$http.post('http://localhost:3000/api/users/comments/create', {"content":this.comment,"review_id":this.reviewid}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+         this.$http.post('http://54.77.11.251:3000/api/users/comments/create', {"content":this.comment,"review_id":this.reviewid}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
           alert("Comment Added");
                console.log('success');
               this.viewComments(this.reviewid);

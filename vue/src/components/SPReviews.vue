@@ -293,7 +293,7 @@
                 <div class="info">
                 <h3  class="title">By: {{r.reviewer_id.name}}</h3>
                 <h2 class="title">
-                    <p>   
+                    <p>
                         <div  id="makan3" >
                             <star-rating :rating="r.rating" v-bind:show-rating="false" v-bind:read-only="true"   v-bind:inline="true"></star-rating>
                         </div>
@@ -302,8 +302,8 @@
                     {{r.content}}
                     </p>
                 </h2>
-               
-          
+
+
                 <button class="button button-1 button-1b" @click="viewComments(r._id)"href="#primary" data-toggle="modal">Comments</button>
 
                  <hr>
@@ -314,8 +314,8 @@
                 </div>
                 </div>
 
-            </div>		
-            </div> 
+            </div>
+            </div>
             </div>
 
     <div class="container">
@@ -385,19 +385,19 @@ created(){
 },
 methods:{
     getReviews: function () {
-      this.$http.get('http://localhost:3000/api/sPs/reviews/view', {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.get('http://54.77.11.251:3000/api/sPs/reviews/view', {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         this.reviews=response.data.data.reviews
       })
     },
     viewComments: function (review_id) {
-      this.$http.post('http://localhost:3000/api/users/comments/view',{"review_id":review_id}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.post('http://54.77.11.251:3000/api/users/comments/view',{"review_id":review_id}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         this.reviewid=review_id;
         //console.log(this.reviewid);
         this.pastComments =response.data.data.comments;
           })
     },
     addComment: function(){
-      this.$http.post('http://localhost:3000/api/users/comments/create', {"content":this.comment,"review_id":this.reviewid}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+      this.$http.post('http://54.77.11.251:3000/api/users/comments/create', {"content":this.comment,"review_id":this.reviewid}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
         alert("Comment Added");
             console.log('success');
            this.viewComments(this.reviewid);

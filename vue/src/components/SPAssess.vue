@@ -13,12 +13,12 @@
             <label for="name" class="control-label">Student name: {{students[n-1].user_id.name}}</label><br/>
             <label for="email" class="control-label">Student mail: {{students[n-1].user_id.email}}</label><br/>
             <label for="name" class="control-label">Offer Name: {{students[n-1].offer_id.title}}</label>
-           
+
           </div>
         </div>
 
             <div align="center">
-             
+
               <br>
                 <input type="number" id="rating" placeholder="Rating" size="" v-model="rating[n-1]" required="*">
                 <br/>
@@ -54,14 +54,14 @@ created(){
 },
 methods:{
     getStudents: function () {
-      this.$http.get('http://localhost:3000/api/sPs/students/offer',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.get('http://54.77.11.251:3000/api/sPs/students/offer',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
 
         this.students=response.data.data.students
       })
     },
     assess: function(user_id, index, offer_id, field){
       console.log(user_id+" "+ rating +" "+ offer_id + " "+ field)
-      this.$http.post('http://localhost:3000/api/sPs/students/assess/'.concat(user_id), {"rating":this.rating[index], "offer_id":offer_id, "field":field},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+      this.$http.post('http://54.77.11.251:3000/api/sPs/students/assess/'.concat(user_id), {"rating":this.rating[index], "offer_id":offer_id, "field":field},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
         alert("Student Rated");
             console.log('success');
             this.getStudents();
