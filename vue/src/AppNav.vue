@@ -74,7 +74,10 @@
                       <div class="row">
                         <div class="col-lg-12">
                           <div class="text-center">
-                            <a href="#resetPW-form" tabindex="5" class="forgot-password">Forgot Password?</a>
+                   <div class="form-group">
+                      <input type="text"  tabindex="1" v-model="resetPWEmail" class="form-control efc" placeholder="Email" value="">
+                    </div>
+                              <a @click.prevent="resetPW" tabindex="5" class="forgot-password">Forgot Password?</a>
                           </div>
                         </div>
                       </div>
