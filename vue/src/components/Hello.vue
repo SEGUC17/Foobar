@@ -378,7 +378,21 @@ export default {
                     }).catch(function(reason) {
                         // console.log(reason.body.err);
                 // this.failuremessages = reason.body.err;
-                alert(reason.body.data)
+              if(reason.body.errors!=null)
+              {
+      swal(
+  'Oops...',
+  'Invalid input',
+  'error'
+)
+}else if(reason.body.err!=null){
+  console.log(reason.body)
+  swal(
+'Oops...',
+reason.body.err ,
+'error'
+)
+}
                 // console.log(this.failuremessages)
                 this.successmessages=[{msg:''}];
         });

@@ -15,13 +15,13 @@
     <tbody>
       <tr v-for="admin in admins" :key="admin.email">
         <td>{{admin.email}}</td>
-        <td> <a class="active" @click="removeadmin(key)">✖</a></td>
       </tr>
     </tbody>
   </table>
  <form role="form" class="" @submit.prevent='addAdmin'>
    <div class="form-group">
-         <input type="text" name="admin" v-model=adminemail class="form-control efc" id="admin" placeholder="Add Admin"  required="*" style="width:30%">
+         <input v-validate ="{rules:{required:true,email:true}}"type="text" name="admin" v-model=adminemail class="form-control efc" id="admin" placeholder="Add Admin"  required="*" style="width:30%">
+         <span v-show="errors.has('email')">{{ errors.first('email') }}</span>
    </div>
   <div class="row">
       <div class="col-sm-2">
@@ -61,16 +61,11 @@ methods:{
             console.log(response.body.data.user)
            this.admins.push(response.body.data.user)
            this.adminemail=''
-          })
+         }).catch(function(reason){
+           console.log(reason.body.err.msg);
+         })
         },
-        removeadmin: function(index){
-          var x = confirm("Are you sure you want to delete this Admin ?")
-         if(x){
-            this.$delete(this.admins,index)
-            alert("Admin Deleted")
-            console.log(this.admins)
-        }
-      }
+
   }
 }
 </script>
