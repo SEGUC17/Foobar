@@ -443,6 +443,8 @@ const spController = {
                     description,
                     fields,
                     phone_number,
+                    lat: req.body.lat,
+                    lang: req.body.lang,
                   }, (err, sp1) => {
                     if (err) {
                       res.status(500).json({

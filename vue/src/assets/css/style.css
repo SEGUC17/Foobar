@@ -1330,7 +1330,7 @@ body.elate {
 .elate #map {
   width: 100%;
   height: 500px;
-  position: relative;
+  overflow: visible;
 }
 @media screen and (max-width: 768px) {
   .elate #map {
