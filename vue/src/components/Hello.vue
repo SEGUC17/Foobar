@@ -302,8 +302,8 @@
 							<i class="icon-home"></i>
 							5555 Love Paradise 56 New Clity 5655, <br>Cairo Egypt
 						</li>
-						<li><i class="icon-phone"></i> (123) 465-6789</li>
-						<li><i class="icon-envelope"></i>info@foobar.com</li>
+						<li><i class="icon-phone"></i>+1 (123) 465-6789</li>
+						<li><i class="icon-envelope"></i>foobar.se@gmail.com</li>
 						<li><i class="icon-globe"></i> <a href="#" target="_blank">foobar.com</a></li>
 					</ul>
 				</div>
