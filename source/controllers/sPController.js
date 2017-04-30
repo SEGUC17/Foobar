@@ -440,7 +440,7 @@ const spController = {
                     user_id: decoded.id,
                   }, {
                     price_category,
-                    location,
+                    location: req.body.location,
                     description,
                     fields,
                     phone_number,

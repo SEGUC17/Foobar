@@ -1,58 +1,124 @@
 <template>
 
 <center>
-  <form role="form" class="" @submit.prevent>
-          <h2>Edit Your Profile </h2>
-            <!--<img v-if="this.user.profileimg.path" :src="'http://localhost:3000/'+this.user.profileimg.path.replace('public','')" alt="">
-            <img v-if="!this.user.profileimg.path" src="~assets/img/missing.png" alt="">-->
-          <input ref="avatar2" type="file" name="avatar2" id="avatar2" v-on:change="changedp($event.target.name, $event.target.files)">
+
+<!--TEST SHIT-->
+
+<div class="container">
+<div class="row">
+<div class="col-md-10 ">
+<form class="form-horizontal">
+<fieldset>
+
+<!-- Form Name -->
+<legend>User Profile</legend>
+
+<!-- Text input-->
 
 
-        <span>Price Category: {{ pricecategory }}</span>
-        <br>
-        <input type="radio" id="one" value="Cheap" v-model="pricecategory">
-        <span for="pricecategory">$</span>&nbsp; &nbsp;
-        <input type="radio" id="two" value="Moderate" v-model="pricecategory">
-        <span for="pricecategory">$$</span>&nbsp; &nbsp;
-        <input type="radio" id="three" value="Expensive" v-model="pricecategory">
-        <span for="pricecategory">$$$</span>
+<div class="form-group">
+  <label class="col-md-4 control-label" for="Name (Full name)">Name (Full name)</label>  
+  <div class="col-md-4">
+ <div class="input-group">
+       <div class="input-group-addon">
+        <i class="fa fa-user">
+        </i>
+       </div>
+       <input id="Name (Full name)" name="Name (Full name)" type="text" placeholder="Name (Full name)" class="form-control input-md">
+      </div>
+
+    
+  </div>
+
+  
+</div>
+
+<!-- File Button --> 
+<div class="form-group">
+  <label class="col-md-4 control-label" for="Upload photo">Upload photo</label>
+  <div class="col-md-4">
+    <input ref="avatar2" type="file" name="avatar2" id="avatar2" v-on:change="changedp($event.target.name, $event.target.files)">
+  </div>
+</div>
 
 
-        <div class="form-group">
-        <br>
-            <label class="col-sm-2 control-label">Location</label>
-            <div class="col-sm-10">
-                     <gmap-autocomplete @place_changed="mapinit" class="form-control" v-model="location">
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="Available Service Area">Location</label>  
+  <div class="col-md-4">
+  <div class="input-group">
+       <div class="input-group-addon">
+     <i class="fa fa-street-view"></i>
+        
+       </div>
+                <gmap-autocomplete @place_changed="mapinit" class="form-control input-md">
       </gmap-autocomplete>
-                <!--<input type="text" class="form-control Autocomplete" id="location" :value="this.profile.location"  />-->
-            </div>
-        </div>
+    
+      </div>
+    
+  </div>
+</div>
 
-        <div class="form-group">
-            <label for="description" class="col-sm-2 control-label">Description</label>
-            <div class="col-sm-10">
-                <input type="text" v-model="description" class="form-control" :value="profile.description" ></input>
-            </div>
-        </div>
 
-         <div>
-        <label for="fields" class="col-sm-2 control-label">Fields</label>
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="Phone number ">Phone number </label>  
+  <div class="col-md-4">
+  <div class="input-group">
+       <div class="input-group-addon">
+     <i class="fa fa-phone"></i>
+        
+       </div>
+    <input type="number" class="form-control input-md" id="phone" placeholder="Primary Phone number " :value="profile.phone_number" v-model="phone_number" />
+      </div>
+  
+  </div>
+</div>
+
+
+
+    <div class="form-group">
+        <label class="col-md-4 control-label" for="Gender">Price Category</label>
+    <div class="col-md-4"> 
+    <label class="radio-inline" for="cheap-0">
+      <input type="radio" name="cheap-0" id="one" value="Cheap" v-model="pricecategory">
+        $
+    </label> 
+    <label class="radio-inline" for="cheap-1">
+      <input type="radio" name="cheap-1" id="two" value="Moderate" v-model="pricecategory">
+        $$
+    </label> 
+    <label class="radio-inline" for="cheap-1">
+      <input type="radio" name="cheap-1" id="three" value="Expensive" v-model="pricecategory">
+        $$$
+    </label> 
+        </div>
+         {{ pricecategory }}
+    </div>
+
+
+
+
+<!-- Multiple Checkboxes -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="Fields">Fields</label>
+  <div class="col-md-4">
         <li v-for =" field in interests">
         <input type="checkbox" id="field.name" :value="field.name" v-model="fields">
         <span >{{field.name}}</span>
         </li>
-        <span>Fields: {{ fields }}</span>
-        <br>
-        </div>
+    
+  </div>
+</div>
 
-        <div class="form-group">
-        <br>
-            <label class="col-sm-2 control-label">Phone Number</label>
-            <div class="col-sm-10">
-                <input type="number" class="form-control" id="phone" :value=profile.phone_number v-model="phone_number" />
-            </div>
-        </div>
 
+<div class="form-group">
+  <label class="col-md-4 control-label" for="Overview (max 200 words)">Overview (max 200 words)</label>
+  <div class="col-md-4">  
+      <textarea  v-model="description" class="form-control" :value="profile.description"></textarea>                   
+  </div>
+</div>
 
 
     <h1>Your Images</h1>
@@ -61,31 +127,50 @@
     </li>
     <input ref="avatar" type="file" name="avatar" id="avatar" v-on:change="upload($event.target.name, $event.target.files)">
     <h1>Your Videos</h1>
+    <div class="row">
+        <div class="col-md-8">
     <youtube :video-id="this.attrs"></youtube>
 
     <li v-for =" video in videos">
        <a v-on:click="changeVideo(video.url)"> {{video.title}} </a>
     </li>
+    </div>
+    <div class="col-md-4">
     <form>
-        <input type="text" v-model="title" name="title" placeholder="title">
-        <input type="text" v-model="url" name="url" placeholder="url">
+        <input type="text" class="form-control" v-model="title" name="title" placeholder="title">
+        <input type="text" class="form-control" v-model="url" name="url" placeholder="url">
         <button class="btn btn-primary btn-sm"  v-on:click="newvideo"> Post video</button>
     </form>
+    </div>
+    </div>
 
-        <div class="row">
-            
-           
-            <div class="col-sm-10">
-                <button class="btn btn-primary btn-sm"  v-on:click="edit">Submit Changes</button>
-                <button class="btn btn-primary btn-sm " href="#SPEditPassword" data-toggle="modal">Edit Password</button>
-            </div>
-        </div>
+<div class="form-group">
+  <label class="col-md-4 control-label" ></label>  
+  <div class="col-md-4">
+    <span><a href="#" class="btn btn-success" @click.prevent="edit"><span class="glyphicon glyphicon-thumbs-up"></span> Submit</a></span>
+    <span><a class="btn btn-danger" style="margin-top:20px;"  data-toggle="modal" data-target="#SPEditPassword">Edit Password</a></span>
+    
+  </div>
+</div>
 
-    </form>
- 
-              <form role="form" class="" v-on:submit.prevent="editPassword()">
-             <div class="modal fade" id="SPEditPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-           <br><br>
+
+
+</fieldset>
+</form>
+
+
+</div>
+<div class="col-md-2 hidden-xs">
+            <img v-if="this.user.profileimg && this.user.profileimg.path" :src="'http://localhost:3000/'+this.user.profileimg.path.replace('public','')" class="img-circle profile_img" style="height:100px; width:100px">
+            <img v-if="this.user.profileimg && !this.user.profileimg.path" src="~assets/img/missing.png" class="img-circle profile_img" style="height:100px; width:100px">
+  </div>
+
+
+</div>
+</div>
+    <!--TEST SHIT-->
+
+<div class="modal fade" id="SPEditPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header modal-header-primary">
@@ -93,15 +178,16 @@
             </div>
             <div class="modal-body">
             <center>
-
-                <div class="row">                          
+                <form role="form" class="" v-on:submit.prevent="editPassword()">
+                    <div class="row">                          
                 Enter Old Password:<input require="required"type="password" style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput1" placeholder="Old Password" v-model="oldPassword" required="*"></input><br/>
                 Enter New Password:<input type="password" style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput2" placeholder="New Password" v-model="newPassword" required="*"></input><br/>
                 Confirm New Password:<input type="password" style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput3" placeholder="Confirm New Password" v-model="confirmNewPassword" required="*"></input>
-                </div>     
+                    </div>  
+                </form>   
                 </center>      
                    <div class="modal-footer">
-                <button class="btn btn-primary add_field_button" style="margin-bottom:20px;" >Update Password</button>
+                <button class="btn btn-primary add_field_button" style="margin-bottom:20px;">Update Password</button>
                 </div>  </div>  
                  </div>
           </div>
@@ -110,7 +196,8 @@
     </div>  
 
     </div> 
-                </form>
+
+
 </center>
       
             
@@ -227,9 +314,9 @@ methods:{
         this.attrs = url
     },
     mapinit: function(place) {
+            this.location = place.name
             this.lat = place.geometry.location.lat();
             this.lang = place.geometry.location.lng();
-            console.log(this.lat + "   "+this.lang)
     },
     editPassword: function()
     {

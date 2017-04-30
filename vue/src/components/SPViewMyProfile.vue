@@ -1,57 +1,15 @@
-<style scoped>
-body {
-    font-family: Helvetica Neue, Arial, sans-serif;
-}
-polygon {
-    fill: #42b983;
-    opacity: .75;
-}
-circle {
-    fill: transparent;
-    stroke: #999;
-}
-text {
-    font-family: Helvetica Neue, Arial, sans-serif;
-    font-size: 10px;
-    fill: #666;
-}
-label {
-    display: inline-block;
-    margin-left: 10px;
-    width: 20px;
-}
-#raw {
-    position: absolute;
-    top: 0;
-    left: 300px;
-}
-</style>
-
 <template>
 
   <div>
-<div class="container">
-      <div class="row">
-     <br/>
-     <br/>
-    <div align="center">
-          <img class="img-circle img-responsive" v-if="this.user && this.user.profileimg.path" :src="'http://localhost:3000/'+user.profileimg.path.replace('public','')" style="height:200px; width:200px">
-    </div>
-
-        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
 
 
-          <div class="panel panel-info">
-            <div class="panel-heading">
-            </div>
-            <div class="panel-body">
-              <div class="row">
+          <img v-if="this.user.profileimg.path" :src="'http://localhost:3000/'+profileimg.path.replace('public','')" alt="" class="img-circle profile_img" style="height:200px; width:200px">
+          <img v-if="!this.user.profileimg.path" src="~assets/img/missing.png" alt="" class="img-circle profile_img" style="height:200px; width:200px">
 
-<br />
-                <h3 class="panel-title">Basic Info </h3>
 
-                <div class=" col-md-9 col-lg-9 ">
-                  <table class="table table-user-information">
+                <h3 class="">Basic Info </h3>
+
+                  <table class="">
                     <tbody>
                       <tr>
                         <td>Name </td>
@@ -101,18 +59,12 @@ label {
                 <a v-on:click="changeVideo(video.url)"> {{video.title}} </a>
                 </div>
 
-                </div>
-              </div>
-            </div>
-                 <!--  -->
-          </div>
-        </div>
-      </div>
-    </div>  
+
+
 
   <gmap-map
     :center="center"
-    :zoom="7"
+    :zoom="15"
     style="width: 500px; height: 300px"
   >
     <gmap-marker
@@ -151,7 +103,7 @@ export default {
       images:[],
       videoId :'',
       center: {},
-        markers: [{}],
+      markers: [{}],
     }
   },
 created(){
@@ -170,6 +122,9 @@ methods:{
         this.user=response.data.data.user["0"];
 
         var pf = response.data.data.providerProfile
+
+        console.log(this.user)
+        console.log(pf)
         this.center = {lat: parseFloat(pf.lat), lng: parseFloat(pf.lang)}
         this.markers = [{position: {lat: parseFloat(pf.lat), lng: parseFloat(pf.lang)}}]
         Vue.$gmapDefaultResizeBus.$emit('resize')

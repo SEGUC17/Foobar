@@ -37,11 +37,11 @@ import './assets/js/custom.js'
 import './assets/js/nprogress.js'
 import './assets/js/fastclick.js'
 
+
 import * as VueGoogleMaps from 'vue2-google-maps'
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyDq7HrM5ZibvpbrgXmPjGw5HJKQp3mbc2U',
-    v: '',
     libraries: 'places'
   }
 })
