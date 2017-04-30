@@ -4,14 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Vue2Filters from 'vue2-filters'
-import * as VueGoogleMaps from 'vue2-google-maps'
-Vue.use(VueGoogleMaps, {
-  load: {
-    key: 'AIzaSyDq7HrM5ZibvpbrgXmPjGw5HJKQp3mbc2U',
-    v: 'OPTIONAL VERSION NUMBER',
-    libraries: 'places'
-  }
-})
+
 Vue.use(Vue2Filters)
 
 //User Interface
@@ -43,6 +36,15 @@ import './assets/css/nprogress.css'
 import './assets/js/custom.js'
 import './assets/js/nprogress.js'
 import './assets/js/fastclick.js'
+
+import * as VueGoogleMaps from 'vue2-google-maps'
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyDq7HrM5ZibvpbrgXmPjGw5HJKQp3mbc2U',
+    v: '',
+    libraries: 'places'
+  }
+})
 
 Vue.config.productionTip = false
 

@@ -22,14 +22,16 @@
         <br>
             <label class="col-sm-2 control-label">Location</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="location" :value="this.profile.location" v-model="location" />
+                     <gmap-autocomplete @place_changed="mapinit" class="form-control" v-model="location">
+      </gmap-autocomplete>
+                <!--<input type="text" class="form-control Autocomplete" id="location" :value="this.profile.location"  />-->
             </div>
         </div>
 
         <div class="form-group">
             <label for="description" class="col-sm-2 control-label">Description</label>
             <div class="col-sm-10">
-                <input type="text" v-model="description" :value="profile.description" ></input>
+                <input type="text" v-model="description" class="form-control" :value="profile.description" ></input>
             </div>
         </div>
 
@@ -159,10 +161,9 @@ methods:{
         this.fields = response.data.data.providerProfile.fields;
         this.phone_number = response.data.data.providerProfile.phone_number;
         this.user=response.data.data.user["0"];
-        console.log(this.user)
         this.getVideos();
         this.getImages();
-        this.mapinit();
+        // this.mapinit();
       })
     },
     getInterests: function () {
@@ -225,15 +226,10 @@ methods:{
     changeVideo: function(url){
         this.attrs = url
     },
-    mapinit: function() {
-        var input = document.getElementById('location');
-        var autocomplete = new google.maps.places.Autocomplete(input);
-        google.maps.event.addListener(autocomplete, 'place_changed', function () {
-            var place = autocomplete.getPlace();
+    mapinit: function(place) {
             this.lat = place.geometry.location.lat();
             this.lang = place.geometry.location.lng();
-            console.log("lat:"+this.lat+""+"lang:"+this.lang);
-        });
+            console.log(this.lat + "   "+this.lang)
     },
     editPassword: function()
     {
