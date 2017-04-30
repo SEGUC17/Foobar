@@ -29,6 +29,11 @@ import VeeValidate from 'vee-validate'
 import AppNav from '../AppNav.vue'
 import Quiz from '@/components/TheTest'
 
+import Chartkick from 'chartkick'
+import VueChartkick from 'vue-chartkick'
+import Chart from 'chart.js'
+
+Vue.use(VueChartkick, { Chartkick })
 
 Vue.use(Router)
 Vue.use(vueResource)

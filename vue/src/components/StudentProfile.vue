@@ -104,17 +104,20 @@ label {
       </div>
     </div>
 
+<radar-example></radar-example>
 
   </div>
 </template>
 
 <script>
 
+import RadarExample from '../examples/RadarExample'
+
 export default  {
   name: 'StudentProfile',
-  // components: {
-  //  ServiceProvider
-  // }
+  components: {
+   RadarExample
+  },
   data () {
     return {
       student:{},

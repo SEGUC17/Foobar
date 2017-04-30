@@ -8,6 +8,7 @@ const Review = require('../models/Review');
 const Student = require('../models/Student');
 const Interests = require('../models/Interests');
 const Comment = require('../models/Comment');
+const Assessment = require('../models/Assessment');
 const jwt = require('../auth/jwt');
 const SP = require('../models/ServiceProvider');
 
@@ -215,7 +216,7 @@ const StudentController = {
         }
       });
     },
-  seeProgress(req, res) {
+   seeProgress(req, res) {
         var userMap = [];
 
         var k = 0;
@@ -231,19 +232,24 @@ const StudentController = {
                             message: err.message,
                         });
                     } else {
+                        console.log(decoded.id)
 
                         Interests.find([], (err, interests) => {
                             interests.forEach((interest) => {
+                                console.log(interest)
                                 userMap[k] = 0;
                                 assessment.forEach((assess) => {
+                                    console.log(assess)
                                     if (interest.name === assess.field) {
                                         userMap[k] += assess.rating
+
 
                                     }
 
 
 
                                 });
+                                console.log(userMap)
                                 k++;
                             });
 
@@ -256,7 +262,7 @@ const StudentController = {
                                 res.status(200).json({
                                     status: 'success',
                                     data: {
-                                        interest,
+                                        interests,
                                         userMap
                                     },
                                 });

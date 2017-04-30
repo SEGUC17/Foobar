@@ -37,6 +37,10 @@
         </div>
 
       </div>
+          <div v-show="questionIndex === quiz.questions.length">
+     <pie-chart :data=score()></pie-chart></div>
+
+</div>
 
     </div>
 
@@ -47,7 +51,7 @@ export default{
 data(){
   return{
     quiz : {
-          title: 'What superhero are you?',
+          title: 'who are you?!',
 
           questions: [{
                   text: "You often get so lost in thoughts that you ignore or forget your surroundings.",
@@ -312,23 +316,53 @@ methods: {
             prev: function() {
                 this.questionIndex--;
             },
-            score: function() {
+             score: function() {
                 //find the highest occurence in responses
-                var modeMap = {};
+                // this.count(this.userResponses)
+                var modeMap = [];
+                var frequency = [];
+                var temp = this.unique(this.userResponses);
                 var maxEl = this.userResponses[0],
                     maxCount = 1;
-                for (var i = 0; i < this.userResponses.length; i++) {
-                    var el = this.userResponses[i];
-                    if (modeMap[el] == null)
-                        modeMap[el] = 1;
-                    else
-                        modeMap[el]++;
-                    if (modeMap[el] > maxCount) {
-                        maxEl = el;
-                        maxCount = modeMap[el];
+                for(var j =0; j<temp.length;j++){
+                  maxCount = 1;
+                for (var i = 1; i < this.userResponses.length; i++) {
+                  
+                    if(temp[j]===this.userResponses[i]){
+                      maxCount++
                     }
+                  }
+                  frequency.push(maxCount);
                 }
+
+                for(var i =0; i<temp.length;i++){
+
+                  modeMap.push([temp[i],frequency[i]])
+
+                }
+
+                    console.log(modeMap);
+
+                    // if (modeMap[el] == null)
+                    //     modeMap[el] = 1;
+                    // else
+                    //     modeMap[el]++;
+                    // if (modeMap[el] > maxCount) {
+                    //     maxEl = el;
+                    //     maxCount = modeMap[el];
+                    // }
+                
                 return modeMap;
+            },
+            unique: function(array) {
+              var n = []; 
+          for(var i = 0; i < array.length; i++) 
+          {
+            
+         if (n.indexOf(array[i]) == -1) n.push(array[i]);
+
+          }
+             return n;
             }
 }
 }
