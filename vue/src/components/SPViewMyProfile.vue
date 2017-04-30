@@ -3,7 +3,7 @@
   <div>
 
 
-            <img v-if="this.user.profileimg && this.user.profileimg.path" :src="'http://52.210.115.35:3000/'+this.user.profileimg.path.replace('public','')" class="img-circle profile_img" style="height:100px; width:100px">
+            <img v-if="this.user.profileimg && this.user.profileimg.path" :src="'http://localhost:3000/'+this.user.profileimg.path.replace('public','')" class="img-circle profile_img" style="height:100px; width:100px">
             <img v-if="this.user.profileimg && !this.user.profileimg.path" src="~assets/img/missing.png" class="img-circle profile_img" style="height:100px; width:100px">
 
 
@@ -49,7 +49,7 @@
 
                 <h4>Your Images</h4>
                 <span class="col-lg-3"v-for ="image in images">
-                <img :src="'http://52.210.115.35:3000/'+image.img.path.replace('public','')" style="height:200px; width:200px">&nbsp;&nbsp;&nbsp;&nbsp;
+                <img :src="'http://localhost:3000/'+image.img.path.replace('public','')" style="height:200px; width:200px">&nbsp;&nbsp;&nbsp;&nbsp;
                 </span>
 
                 <h4 >Your Videos</h4>
@@ -112,7 +112,7 @@ created(){
 },
 methods:{
     getProfile: function () {
-      this.$http.get('http://52.210.115.35:3000/api/sPs/profile/view',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.get('http://localhost:3000/api/sPs/profile/view',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         this.profile=response.data.data.providerProfile
         this.location = response.data.data.providerProfile.location;
         this.pricecategory = response.data.data.providerProfile.price_category;
@@ -134,18 +134,18 @@ methods:{
       })
     },
     getInterests: function () {
-      this.$http.get('http://52.210.115.35:3000/api/sPs/interests',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.get('http://localhost:3000/api/sPs/interests',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         this.interests=response.data.data.interests
       })
     },
     edit: function ()
         {
-            this.$http.post('http://52.210.115.35:3000/api/sPs/profile/edit', {"price_category":this.pricecategory,"location":this.location, "description":this.description, "fields":this.fields, "description":this.description, "phone_number":this.phone_number},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+            this.$http.post('http://localhost:3000/api/sPs/profile/edit', {"price_category":this.pricecategory,"location":this.location, "description":this.description, "fields":this.fields, "description":this.description, "phone_number":this.phone_number},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
             console.log('success');
                     })
         },
     newvideo : function(){
-        this.$http.post('http://52.210.115.35:3000/api/sPs/videos/upload', {"title":this.title,"videoURL":this.url},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+        this.$http.post('http://localhost:3000/api/sPs/videos/upload', {"title":this.title,"videoURL":this.url},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
           console.log(data)
         })
     },
@@ -157,7 +157,7 @@ methods:{
             formData.append(fieldName, fileList[x], fileList[x].name);
           });
         formData.append("user_id",this.user._id)
-        this.$http.post('http://52.210.115.35:3000/api/sPs/upload',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+        this.$http.post('http://localhost:3000/api/sPs/upload',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
             this.getImages();
       })
     },
@@ -169,18 +169,18 @@ methods:{
             formData.append(fieldName, fileList[x], fileList[x].name);
           });
         formData.append("user_id",this.user._id)
-        this.$http.post('http://52.210.115.35:3000/api/sPs/changedp',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+        this.$http.post('http://localhost:3000/api/sPs/changedp',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
             console.log('changed dp');
       })
     },
     getVideos: function(){
-        let route ='http://52.210.115.35:3000/api/sPs/videos/';
+        let route ='http://localhost:3000/api/sPs/videos/';
         this.$http.post(route,{"id":this.user._id}).then(response => {
             this.videos = response.body.data.video
       })
     },
     getImages: function(){
-        let route ='http://52.210.115.35:3000/api/sPs/images/'.concat(this.user._id);
+        let route ='http://localhost:3000/api/sPs/images/'.concat(this.user._id);
         this.$http.get(route,{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
             this.images = response.body.data.images
       })

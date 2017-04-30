@@ -123,7 +123,7 @@
 
     <h1>Your Images</h1>
     <li v-for ="image in images">
-       <img :src="'http://52.210.115.35:3000/'+image.img.path.replace('public','')" style="width:200px">
+       <img :src="'http://localhost:3000/'+image.img.path.replace('public','')" style="width:200px">
     </li>
     <input ref="avatar" type="file" name="avatar" id="avatar" v-on:change="upload($event.target.name, $event.target.files)">
     <h1>Your Videos</h1>
@@ -161,7 +161,7 @@
 
 </div>
 <div class="col-md-2 hidden-xs">
-            <img v-if="this.user.profileimg && this.user.profileimg.path" :src="'http://52.210.115.35:3000/'+this.user.profileimg.path.replace('public','')" class="img-circle profile_img" style="height:100px; width:100px">
+            <img v-if="this.user.profileimg && this.user.profileimg.path" :src="'http://localhost:3000/'+this.user.profileimg.path.replace('public','')" class="img-circle profile_img" style="height:100px; width:100px">
             <img v-if="this.user.profileimg && !this.user.profileimg.path" src="~assets/img/missing.png" class="img-circle profile_img" style="height:100px; width:100px">
   </div>
 
@@ -240,7 +240,7 @@ created(){
 },
 methods:{
     getProfile: function () {
-      this.$http.get('http://52.210.115.35:3000/api/sPs/profile/view',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.get('http://localhost:3000/api/sPs/profile/view',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         this.profile=response.data.data.providerProfile
         this.location = response.data.data.providerProfile.location;
         this.pricecategory = response.data.data.providerProfile.price_category;
@@ -254,7 +254,7 @@ methods:{
       })
     },
     getInterests: function () {
-      this.$http.get('http://52.210.115.35:3000/api/sPs/interests',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.get('http://localhost:3000/api/sPs/interests',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         this.interests=response.data.data.interests
       })
     },
@@ -262,7 +262,7 @@ methods:{
         {
           var x = confirm("Are you sure you want to edit these attributes")
           if(x){
-            this.$http.post('http://52.210.115.35:3000/api/sPs/profile/edit', {"price_category":this.pricecategory,"location":this.location, "description":this.description, "fields":this.fields, "description":this.description, "phone_number":this.phone_number,"lat": this.lat,"lang":this.lang},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+            this.$http.post('http://localhost:3000/api/sPs/profile/edit', {"price_category":this.pricecategory,"location":this.location, "description":this.description, "fields":this.fields, "description":this.description, "phone_number":this.phone_number,"lat": this.lat,"lang":this.lang},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
             console.log(this.location);
             alert("Profile Edited")
             this.$router.push({path:'/SPViewMyProfile'})
@@ -270,7 +270,7 @@ methods:{
           }
         },
     newvideo : function(){
-        this.$http.post('http://52.210.115.35:3000/api/sPs/videos/upload', {"title":this.title,"videoURL":this.url},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+        this.$http.post('http://localhost:3000/api/sPs/videos/upload', {"title":this.title,"videoURL":this.url},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
           console.log(data)
         })
     },
@@ -282,7 +282,7 @@ methods:{
             formData.append(fieldName, fileList[x], fileList[x].name);
           });
         formData.append("user_id",this.user._id)
-        this.$http.post('http://52.210.115.35:3000/api/sPs/upload',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+        this.$http.post('http://localhost:3000/api/sPs/upload',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
             this.getImages();
       })
     },
@@ -294,18 +294,18 @@ methods:{
             formData.append(fieldName, fileList[x], fileList[x].name);
           });
         formData.append("user_id",this.user._id)
-        this.$http.post('http://52.210.115.35:3000/api/sPs/changedp',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+        this.$http.post('http://localhost:3000/api/sPs/changedp',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
             console.log('changed dp');
       })
     },
     getVideos: function(){
-        let route ='http://52.210.115.35:3000/api/sPs/videos/';
+        let route ='http://localhost:3000/api/sPs/videos/';
         this.$http.post(route,{"id":this.user._id}).then(response => {
             this.videos = response.body.data.video
       })
     },
     getImages: function(){
-        let route ='http://52.210.115.35:3000/api/sPs/images/'.concat(this.user._id);
+        let route ='http://localhost:3000/api/sPs/images/'.concat(this.user._id);
         this.$http.get(route,{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
             this.images = response.body.data.images
       })
@@ -324,7 +324,7 @@ methods:{
           if(x)
           {
             console.log(this.user);
-            this.$http.post('http://52.210.115.35:3000/api/sPs/sP/editpassword', {"oldPassword":this.oldPassword,"newPassword":this.newPassword, "confirmNewPassword":this.confirmNewPassword,"id":this.user._id},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+            this.$http.post('http://localhost:3000/api/sPs/sP/editpassword', {"oldPassword":this.oldPassword,"newPassword":this.newPassword, "confirmNewPassword":this.confirmNewPassword,"id":this.user._id},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
             alert("Updated Password")
                 confirmNewPassword=""
       oldPassword=""

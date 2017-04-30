@@ -110,7 +110,7 @@ methods:{
         postOffer: function ()
         {
 
-            this.$http.post('http://52.210.115.35:3000/api/sPs/offers/create', {"title":this.title,"price":this.price, "capacity":this.capacity, "field":this.field, "description":this.description, "due_date":this.due_date, "start_date":this.start_date, "end_date":this.end_date},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+            this.$http.post('http://localhost:3000/api/sPs/offers/create', {"title":this.title,"price":this.price, "capacity":this.capacity, "field":this.field, "description":this.description, "due_date":this.due_date, "start_date":this.start_date, "end_date":this.end_date},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
               swal(
                   'Success!',
                   'Offer Posted!',
@@ -131,7 +131,7 @@ methods:{
 
         },
         getInterests: function () {
-      this.$http.get('http://52.210.115.35:3000/api/sPs/interests',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.get('http://localhost:3000/api/sPs/interests',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
 
         this.interests=response.data.data.interests
       })

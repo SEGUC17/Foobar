@@ -75,7 +75,7 @@ export default {
 methods:{
         applySP: function ()
         {
-            this.$http.post('http://52.210.115.35:3000/api/sPs/sP/apply', {"name":this.name,"email":this.email,"phone_number":this.phone_number,"description":this.description}).then(data => {
+            this.$http.post('http://localhost:3000/api/sPs/sP/apply', {"name":this.name,"email":this.email,"phone_number":this.phone_number,"description":this.description}).then(data => {
             alert("You successfully applied");
              this.$router.push({path:'/'});
 

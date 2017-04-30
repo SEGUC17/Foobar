@@ -36,7 +36,7 @@ created(){
 },
 methods:{
     getReviewData: function () {
-      this.$http.get('http://52.210.115.35:3000/api/admins/reviewData', {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.get('http://localhost:3000/api/admins/reviewData', {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         this.most=response.data.data.most
         this.least =response.data.data.least
         this.temp = respone.data.data.temp

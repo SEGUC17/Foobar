@@ -136,7 +136,7 @@ mounted(){
 },
 methods:{
     getAllAnnouncements: function () {
-      this.$http.get('http://52.210.115.35:3000/api/announcements/view').then(response => {
+      this.$http.get('http://localhost:3000/api/announcements/view').then(response => {
         this.announcements=response.data.data.announcements
 
         this.numberOfPages=Math.ceil(this.announcements.length/this.perPage);

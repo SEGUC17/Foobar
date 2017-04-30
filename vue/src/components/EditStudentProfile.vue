@@ -144,7 +144,7 @@ created(){
 methods:{
     getStudent: function () {
 
-      let route ='http://52.210.115.35:3000/api/students/student/'.concat(this.$route.params.EditStudid);
+      let route ='http://localhost:3000/api/students/student/'.concat(this.$route.params.EditStudid);
 
 
       this.$http.get(route, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
@@ -164,7 +164,7 @@ methods:{
     EditStudent: function() {
       var x = confirm("Are you sure you want to edit your profile ?");
       if(x){
-        let route ='http://52.210.115.35:3000/api/students/student/';
+        let route ='http://localhost:3000/api/students/student/';
             console.log(this.name);
       this.$http.post(route, {"name":this.name,"university":this.university, "address":this.address, "birthdate":this.birthdate, "description":this.description,"phone_number":this.phone_number}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
 
@@ -180,7 +180,7 @@ methods:{
         var x = confirm("Are you sure you want to edit your password")
           if(x)
           {
-            this.$http.post('http://52.210.115.35:3000/api/students/student/editpassword', {"oldPassword":this.oldPassword,"newPassword":this.newPassword, "confirmNewPassword":this.confirmNewPassword,"id":this.$route.params.EditStudid},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+            this.$http.post('http://localhost:3000/api/students/student/editpassword', {"oldPassword":this.oldPassword,"newPassword":this.newPassword, "confirmNewPassword":this.confirmNewPassword,"id":this.$route.params.EditStudid},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
             alert("Updated Password")
                 confirmNewPassword=""
       oldPassword=""

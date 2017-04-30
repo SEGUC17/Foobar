@@ -382,19 +382,19 @@ created(){
 },
 methods:{
     getReviews: function () {
-      this.$http.get('http://52.210.115.35:3000/api/sPs/reviews/view', {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.get('http://localhost:3000/api/sPs/reviews/view', {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         this.reviews=response.data.data.reviews
       })
     },
     viewComments: function (review_id) {
-      this.$http.post('http://52.210.115.35:3000/api/users/comments/view',{"review_id":review_id}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.post('http://localhost:3000/api/users/comments/view',{"review_id":review_id}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         this.reviewid=review_id;
         //console.log(this.reviewid);
         this.pastComments =response.data.data.comments;
           })
     },
     addComment: function(){
-      this.$http.post('http://52.210.115.35:3000/api/users/comments/create', {"content":this.comment,"review_id":this.reviewid}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+      this.$http.post('http://localhost:3000/api/users/comments/create', {"content":this.comment,"review_id":this.reviewid}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
         alert("Comment Added");
             console.log('success');
            this.viewComments(this.reviewid);

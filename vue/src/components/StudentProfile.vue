@@ -132,7 +132,7 @@ created(){
 methods:{
     getStudent: function () {
 
-      let route ='http://52.210.115.35:3000/api/students/student/'.concat(this.$route.params.Studid);
+      let route ='http://localhost:3000/api/students/student/'.concat(this.$route.params.Studid);
       this.studid = this.$route.params.Studid ;
       this.$http.get(route, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
 
