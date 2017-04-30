@@ -164,8 +164,8 @@
               <!-- menu profile quick info -->
               <div class="profile clearfix">
                 <div class="profile_pic">
-                      <img v-if="profilepic.path" :src="'http://localhost:3000/'+profilepic.path.replace('public','')" alt="" class="img-circle profile_img">
-                      <img v-if="!profilepic.path" src="~assets/img/missing.png" alt="" class="img-circle profile_img">
+                      <img v-if="profilepic.path" :src="'http://localhost:3000/'+profilepic.path.replace('public','')" alt="" class="img-circle profile_img" style="height:70px; width:70px">
+                      <img v-if="!profilepic.path" src="~assets/img/missing.png" alt="" class="img-circle profile_img" style="height:70px; width:70px">
                 </div>
                 <div class="profile_info">
                   <span>Welcome,</span>
