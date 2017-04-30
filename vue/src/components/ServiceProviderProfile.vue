@@ -853,7 +853,7 @@ a:active {
                   <div class="row">
 
 
-                <input style="height:30px;font-size:10pt" class="form-control input-lg" v-validate="{ rules: { required: true} }" id="myInput1" placeholder="Write a comment" type="text" v-model="comment" required="*">
+                <input style="height:30px;font-size:16px; display:block" class="form-control input-lg" v-validate="{ rules: { required: true} }" id="myInput1" placeholder="Write a comment" type="text" v-model="comment" required="*">
  <!-- <input style="height:50px;font-size:10pt" v-validate="{ rules: { required: true} }" type="text" name="review" class="form-control input-lg" id="review" placeholder="Write a review" v-model="review" > -->
 
                 </div>
@@ -880,7 +880,7 @@ a:active {
   <form role="form"  @submit.prevent= "Review">
     <div>
 <fieldset>
-     <input style="height:50px;font-size:10pt" v-validate="{ rules: { required: true} }" type="text" name="review"  id="review" placeholder="Write a review" v-model="review" required="*">
+     <input style="height:50px;font-size:10px; display:block" v-validate="{ rules: { required: true} }" type="text" name="review"  id="review" placeholder="Write a review" v-model="review" required="*">
      </fieldset>
 
             <!-- <input style="height:50px;font-size:10pt"class="form-control input-lg" id="myInput" placeholder="Write a review" type="text"v-model="review" required="*"><br /><br /><br /> -->

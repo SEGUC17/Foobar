@@ -186,10 +186,8 @@
   -webkit-transition:width 0.5s ease-in-out;
 }
 
-#myInput1		{
-  position: inline;
-
-
+#myInput1{
+  display: inline-block;
   width:90%;
   -webkit-transition:width 0.3s ease-in-out;
 
@@ -340,7 +338,7 @@
               <div class="modal-body">
                 <div class="row">
 
-              <input style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput1" placeholder="Write a comment" type="text"v-model="comment" required="*">
+              <input style="height:30px;font-size:16px; display:inline-block;"class="form-control input-lg" id="myInput1" placeholder="Write a comment" type="text"v-model="comment" required="*">
 
                   
               </div>         

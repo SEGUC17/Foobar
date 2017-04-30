@@ -24,7 +24,7 @@
         <i class="fa fa-user">
         </i>
        </div>
-       <input id="Name (Full name)" name="Name (Full name)" type="text" placeholder="Name (Full name)" class="form-control input-md">
+       <input id="Name (Full name)" name="Name (Full name)" type="text" :value="profile.name" placeholder="Name (Full name)" class="form-control input-md">
       </div>
 
     
@@ -52,7 +52,7 @@
      <i class="fa fa-street-view"></i>
         
        </div>
-                <gmap-autocomplete @place_changed="mapinit" class="form-control input-md">
+                <gmap-autocomplete @place_changed="mapinit" class="form-control input-md" :value="profile.location">
       </gmap-autocomplete>
     
       </div>
