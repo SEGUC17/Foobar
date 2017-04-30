@@ -59,7 +59,7 @@
 		</div>
 	</section>
 
-	<section id="fh5co-work" data-section="about">
+	<!--<section id="fh5co-work" data-section="about">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12 section-heading text-center">
@@ -167,7 +167,38 @@
 				</div>
 			</div>
 		</div>
-	</section>
+	</section>-->
+
+  <section id="fh5co-work" data-section="about">
+		<div class="container">
+      <div class="row">
+      <div class="col-md-12 section-heading text-center">
+					<h2 class="to-animate">Service Providers</h2></div>
+            <div v-for=" serviceprovider in serviceproviders">
+
+
+                 <center> <router-link :to = "{ name: 'service provider' , params: { id: serviceprovider._id }}">
+                  <div class="col-md-4 feature">
+
+                      <center><img class="img-circle img-responsive" v-if="serviceprovider.user_id && serviceprovider.user_id.profileimg.path" :src="'http://localhost:3000/'+serviceprovider.user_id.profileimg.path.replace('public','')" style="height:150px; width:150px">
+                      <i class="glyphicon glyphicon-user" style="height:150px; width:150px" v-else></i></center>
+                          <h3>Name: {{serviceprovider.user_id.name}}</h3>
+                          <div class="title_border"></div>
+                          <p><h5 class="title"></h5>
+              </p>
+                          <p>Email: {{serviceprovider.user_id.email}} </p>
+              <p class="info">Phone Number: {{serviceprovider.phone_number}}<br />
+               Description: {{serviceprovider.description.substring(0, 30)}}<span v-if="serviceprovider.description.length>30">...</span>
+
+
+              </p>
+            </div>
+                  </router-link> </center>
+                  </div>
+
+  </div>
+</div>
+</section>
 
   	<!--<section id="fh5co-services" data-section="services">
 		<div class="container">
@@ -362,8 +393,11 @@ export default {
 			phone_number:'',
 			description:'',
 			successmessages:[{msg:''}],
-			failuremessages:[{msg:''}]
+			failuremessages:[{msg:''}],
+      serviceproviders:[],
       }
+    },created(){
+      this.getAllServiceProviders()
     },
   methods: {
 	applySP: function ()
@@ -404,7 +438,13 @@ reason.body.err ,
 				}).catch(function(reason) {
 				console.log(reason)
 			});
-		}
+		},getAllServiceProviders: function () {
+    this.$http.get('http://localhost:3000/api/admins/sPs').then(response => {
+        console.log(response.data)
+        this.serviceproviders=response.data.data.users;
+    })
+    }
   }
 }
 </script>
+

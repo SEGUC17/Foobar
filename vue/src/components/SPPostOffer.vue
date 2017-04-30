@@ -33,7 +33,7 @@
         <label for="field" class="col-sm-2 control-label">Field</label>
         <div class="col-sm-10">
             <select v-model="field">
-            <option v-for="option in interests" v-bind:value="option.value">
+            <option v-for="option in interests" v-bind:value="option.name">
                 {{ option.name }}
             </option>
             </select >
