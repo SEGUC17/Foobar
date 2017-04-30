@@ -35,11 +35,14 @@
           <div class="panel-login">
             <div class="panel-heading">
               <div class="row">
-                <div class="col-xs-6">
+                <div class="col-xs-4">
                   <a href="#" class="active" id="login-form-link">Login</a>
                 </div>
-                <div class="col-xs-6">
+                <div class="col-xs-4">
                   <a href="#" id="register-form-link">Register</a>
+                </div>
+                <div class="col-xs-4">
+                  <a href="#" id="resetPW-form-link">Forget Password</a>
                 </div>
               </div>
               <hr>
@@ -71,8 +74,27 @@
                       <div class="row">
                         <div class="col-lg-12">
                           <div class="text-center">
-                            <a href="http://phpoll.com/recover" tabindex="5" class="forgot-password">Forgot Password?</a>
+                            <a href="#resetPW-form" tabindex="5" class="forgot-password">Forgot Password?</a>
                           </div>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+
+                  <form @submit.prevent="resetPW" id="resetPW-form"  role="form" style="display: block;">
+                    <div class="form-group">
+                      <input type="text" name="email" id="email" tabindex="6" v-model="resetPWEmail" class="form-control efc" placeholder="Email" value="" required="true">
+                    </div>
+                    
+                    <div class="form-group text-center">
+                      <label style="color:#52d3aa;">{{message}}</label>
+                    </div>
+                    <h5>N.B: An email will be sent to this email with a temporarily new password</h5>
+
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                          <input type="submit"  name="resetPW-submit" id="resetPW-submit" tabindex="7" class="form-control btn btn-login efc" value="Reset Password">
                         </div>
                       </div>
                     </div>
