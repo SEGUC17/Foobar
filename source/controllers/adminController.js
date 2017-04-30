@@ -261,7 +261,6 @@ const adminController = {
     },
 
     approveOrDisapproveSP(req, res) { // approving or disapproving an applied SP
-<<<<<<< HEAD
       const token = req.headers['jwt-token'];
       jwt.verify(token, (decoded) => {
         if (decoded.type === 1) {
@@ -307,6 +306,8 @@ const adminController = {
               user_id: newUser._id,
               description,
               phoneNumber,
+              lat: '',
+              lang: ''
             });
 
             newSP.save((err) => {
@@ -341,89 +342,6 @@ const adminController = {
               to: email, // list of receivers
               subject: 'System Approval ✔', // Subject line
               text: `Congratulations! You have been approved for our system and now you can login using your email and password:${
-=======
-        const token = req.headers['jwt-token'];
-        jwt.verify(token, (decoded) => {
-            if (decoded.type === 1) {
-                const spId = req.body.id;
-                // if approve is selected
-                if (req.body.approve) {
-                    // getting the attributes before removing
-                    const name = req.body.name;
-                    const email = req.body.email;
-                    const phoneNumber = req.body.phone_number;
-                    const description = req.body.description;
-                    const password = generatePassword();
-                    PendingSP.findByIdAndRemove(spId, (err) => {
-                        if (err) {
-                            res.status(500).json({
-                                status: 'error',
-                                message: err,
-                            });
-                        }
-                    });
-
-                    // creating new user since he is approved
-                    const newUser = new User({
-                        name,
-                        type: 3,
-                        is_deleted: false,
-                        is_blocked: false,
-                        email,
-                        password,
-                    });
-
-                    newUser.save((err) => {
-                        if (err) {
-                            res.status(500).json({
-                                status: 'error',
-                                message: err,
-                            });
-                        }
-                    }); // saving user instance
-
-                    // creating new SP account
-                    const newSP = new SP({
-                        user_id: newUser._id,
-                        description,
-                        phoneNumber,
-                        lat:'',
-                        lang:''
-                    });
-
-                    newSP.save((err) => {
-                        if (err) {
-                            res.status(500).json({
-                                status: 'error',
-                                message: err,
-                            });
-                        } else {
-                            res.status(200).json({
-                                status: 'success',
-                                data: { // Data can be null if, for example, delete request was sent
-                                    message: `Removed him from PendingSP Collection and Added to user collection as:${newUser}and to the SP collection as:${newSP}`,
-                                },
-                            });
-                        }
-                    }); // saving SP instance
-
-
-                    // create reusable transporter object using the default SMTP transport
-                    const transporter = nodemailer.createTransport({
-                        service: 'gmail',
-                        auth: {
-                            user: 'foobar.se@gmail.com',
-                            pass: 'foobar1234',
-                        },
-                    });
-
-                    // setup email data with unicode symbols
-                    const mailOptions = {
-                        from: ' "Foobar" <foobar.se@gmail.com>', // sender address
-                        to: email, // list of receivers
-                        subject: 'System Approval ✔', // Subject line
-                        text: `Congratulations! You have been approved for our system and now you can login using your email and password:${
->>>>>>> 54b562aedc006312221de3fc8058a2f1f3441f6c
               password}`, // plain text body
             };
 
@@ -535,11 +453,9 @@ const adminController = {
       StudentInterest.find([]).populate('interest_id').exec((err, interests) => {
         // console.log(interests)
         interests.forEach((rest) => {
-          //    console.log(rest.interest_id.name);
-          if (rest.interest_id != null) {
-            userMap[k] = rest.interest_id.name;
-            k += 1;
-          }
+          console.log(rest.interest_id.name);
+          userMap[k] = rest.interest_id.name;
+          k += 1;
         });
         console.log(userMap)
         frequency = adminController.Occurances(userMap);
@@ -698,51 +614,41 @@ const adminController = {
       const token = req.headers['jwt-token'];
       jwt.verify(token, (decoded) => {
         if (decoded.type === 1) {
-          req.checkBody('email', 'Must be a valid Email').isEmail();
-          const errors = req.validationErrors();
-          if (errors) {
-            res.status(400).json({
-              err: errors,
-
-            });
-          } else {
-            User.findOne({
-              email: req.body.email,
-            }, (err, admin) => {
-              if (err) {
-                res.json(err.message);
-              } else if (admin) {
-                res.status(500).json({
-                  status: 'error',
-                  message: 'This email is already registered. Change email',
-                });
-              } else {
-
-                const password = generatePassword();
-                const newuser = new User({
-                  email: req.body.email,
-                  password,
-                  type: 1,
-                });
-                newuser.save((newusererr) => {
-                  if (newusererr) {
-                    res.status(500).json({
-                      status: 'error',
-                      message: newusererr,
-                    });
-                  } else {
-                    res.status(200).json({
-                      status: 'success',
-                      data: {
-                        message: `Cool job, new admin. Password is: ${password}`,
-                        user: newuser,
-                      },
-                    });
-                  }
-                });
-              }
-            });
-          }
+          User.findOne({
+            email: req.body.email,
+          }, (err, admin) => {
+            if (err) {
+              res.json(err.message);
+            } else if (admin) {
+              res.status(500).json({
+                status: 'error',
+                message: 'This email is already registered. Change email',
+              });
+            } else {
+              const password = generatePassword();
+              const newuser = new User({
+                email: req.body.email,
+                password,
+                type: 1,
+              });
+              newuser.save((newusererr) => {
+                if (newusererr) {
+                  res.status(500).json({
+                    status: 'error',
+                    message: newusererr,
+                  });
+                } else {
+                  res.status(200).json({
+                    status: 'success',
+                    data: {
+                      message: `Cool job, new admin. Password is: ${password}`,
+                      user: newuser,
+                    },
+                  });
+                }
+              });
+            }
+          });
         } else {
           res.status(500).json({
             err: 'unauthorized access',
