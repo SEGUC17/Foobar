@@ -304,6 +304,8 @@ return [a,b];
                         user_id: newUser._id,
                         description,
                         phoneNumber,
+                        lat:'',
+                        lang:''
                     });
 
                     newSP.save((err) => {
