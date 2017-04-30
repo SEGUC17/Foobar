@@ -3,8 +3,8 @@
   <div>
 
 
-          <img v-if="this.user.profileimg.path" :src="'http://localhost:3000/'+profileimg.path.replace('public','')" alt="" class="img-circle profile_img" style="height:200px; width:200px">
-          <img v-if="!this.user.profileimg.path" src="~assets/img/missing.png" alt="" class="img-circle profile_img" style="height:200px; width:200px">
+            <img v-if="this.user.profileimg && this.user.profileimg.path" :src="'http://localhost:3000/'+this.user.profileimg.path.replace('public','')" class="img-circle profile_img" style="height:100px; width:100px">
+            <img v-if="this.user.profileimg && !this.user.profileimg.path" src="~assets/img/missing.png" class="img-circle profile_img" style="height:100px; width:100px">
 
 
                 <h3 class="">Basic Info </h3>
