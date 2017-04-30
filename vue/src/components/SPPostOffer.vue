@@ -111,18 +111,22 @@ methods:{
         {
 
             this.$http.post('http://localhost:3000/api/sPs/offers/create', {"title":this.title,"price":this.price, "capacity":this.capacity, "field":this.field, "description":this.description, "due_date":this.due_date, "start_date":this.start_date, "end_date":this.end_date},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
-              alert("Offer Posted")
+              swal(
+                  'Success!',
+                  'Offer Posted!',
+                  'success'
+              )
               this.$router.push({path:'/',force:true})
             console.log('success');
+
                     }).catch(function(reason) {
                         swal(
                             'Oops!',
                             reason.body.data.err,
                             'error'
                         )
-                this.failuremessages = reason.body.err;
-                console.log(this.failuremessages)
-                this.successmessages=[{msg:''}];
+                        //console.log(reason.body.data.err);
+               
         });
                     
         },
