@@ -78,26 +78,8 @@
                     </div>
                   </form>
 
-                  <form id="register-form" style="display: none;">
-                    <!--<div class="form-group">
-                      <input type="text" name="username" id="username" tabindex="1" class="form-control efc" placeholder="Username" value="">
-                    </div>
-                    <div class="form-group">
-                      <input type="email" name="email" id="email" tabindex="1" class="form-control efc" placeholder="Email Address" value="">
-                    </div>
-                    <div class="form-group">
-                      <input type="password" name="password" id="password" tabindex="2" class="form-control efc" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                      <input type="password" name="confirm-password" id="confirm-password" tabindex="2" class="form-control efc" placeholder="Confirm Password">
-                    </div>
-                    <div class="form-group">
-                      <div class="row">
-                        <div class="col-sm-6 col-sm-offset-3">
-                          <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control efc btn btn-register" value="Register Now">
-                        </div>
-                      </div>
-                    </div>-->
+                  <form @submit.prevent="signup"id="register-form" style="display: none;">
+
 
                     <div v-for =" message in successmessages">
                         <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
@@ -117,15 +99,7 @@
                      <span v-show="errors.has('email')">{{ errors.first('email') }}</span>
                    </div>
 
-                     <div class="form-group">
-                      <input v-validate="{ rules: { required: true, min:8} }" type="password" name="password" class="form-control efc" id="password" placeholder="Password" v-model="creds.password" required="*">
-                      <span v-show="errors.has('password')">{{ errors.first('password') }}</span>
-                     </div>
 
-                     <div class="form-group">
-                     <input v-validate="{ rules: { required: true} }" type="password" name="Confirm password" class="form-control efc" id="Confirm password" placeholder="Password" v-model="creds.password2" required="*">
-                     <span v-show="errors.has('Confirm password')">{{ errors.first('Confirm password') }}</span>
-                     </div>
 
                       <div class="form-group">
                           <input v-validate="{ rules: { required: true} }" type="text" name="university " class="form-control efc" id="university" placeholder="University" v-model="university" required="*">
@@ -155,7 +129,7 @@
                     <div class="form-group">
                       <div class="row">
                         <div class="col-sm-6 col-sm-offset-3">
-                          <input type="submit" v-on:click="signup "name="register-submit" id="register-submit" tabindex="4" class="form-control efc btn btn-register" value="Register Now">
+                          <input type="submit" name="register-submit" id="register-submit" tabindex="4" class="form-control efc btn btn-register" value="Register Now">
                         </div>
                       </div>
                     </div>
@@ -462,7 +436,7 @@ methods: {
         })
        this.showgent = true
 }).catch(function(reason) {
-   this.message = reason.body;
+   this.message = reason.body.err;
 });
   },
   getAllAnnouncements: function () {
@@ -479,8 +453,6 @@ methods: {
   signup : function() {
     this.$http.post('http://localhost:3000/api/users/signup', {
     "email":this.creds.email,
-    "password":this.creds.password,
-    "password2":this.creds.password2,
     "name":this.creds.name,
     "university":this.university,
     "address":this.address,
@@ -489,18 +461,13 @@ methods: {
     "interests":this.Interests
 
 }).then(data => {
-      this.successmessages[0].msg = "Registered Successfully, you can login now";
-      this.failuremessages=[{msg:''}];
-      this.creds.email='';
-      this.creds.name='';
-      this.creds.password='';
-      this.creds.password2='';
-      this.university='';
-      this.description='';
-      this.interests=[];
-      this.birthdate='';
-      this.address='';
-      this.Interests=[];
+  swal(
+    'Signup Successful',
+    'A confirmation email has been sent with your password',
+    'success'
+  )
+ this.failuremessages=[{msg:''}];
+
 
     }).catch(function(reason) {
         this.failuremessages = reason.body.err;

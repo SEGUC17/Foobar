@@ -10,7 +10,9 @@
     description: String,
     fields: [String],
     phone_number: String,
-    first_login: Boolean
+    first_login: Boolean,
+    lat: String,
+    lang: String,
 
   });
 

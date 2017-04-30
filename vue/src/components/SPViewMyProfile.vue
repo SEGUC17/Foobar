@@ -100,26 +100,38 @@ label {
                 <div v-for =" video in videos">
                 <a v-on:click="changeVideo(video.url)"> {{video.title}} </a>
                 </div>
- 
 
                 </div>
               </div>
             </div>
                  <!--  -->
-
           </div>
         </div>
       </div>
-    </div>
+    </div>  
 
+  <gmap-map
+    :center="center"
+    :zoom="7"
+    style="width: 500px; height: 300px"
+  >
+    <gmap-marker
+      v-for="m in markers"
+      :position="m.position"
+      :clickable="true"
+      :draggable="true"
+      @click="center=m.position"
+    ></gmap-marker>
+  </gmap-map>
 
   </div>
 </template>
 
+
 <script>
 import Vue from 'vue'
 import VueYouTubeEmbed from 'vue-youtube-embed'
- Vue.use(VueYouTubeEmbed);
+
 export default {
   name: 'SPReviews',
   data () {
@@ -138,11 +150,13 @@ export default {
       attrs:'',
       images:[],
       videoId :'',
+      center: {},
+        markers: [{}],
     }
   },
 created(){
-  this.getProfile(),
   this.getInterests()
+  this.getProfile()
 },
 methods:{
     getProfile: function () {
@@ -154,7 +168,12 @@ methods:{
         this.fields = response.data.data.providerProfile.fields;
         this.phone_number = response.data.data.providerProfile.phone_number;
         this.user=response.data.data.user["0"];
-        console.log(this.user)
+
+        var pf = response.data.data.providerProfile
+        this.center = {lat: parseFloat(pf.lat), lng: parseFloat(pf.lang)}
+        this.markers = [{position: {lat: parseFloat(pf.lat), lng: parseFloat(pf.lang)}}]
+        Vue.$gmapDefaultResizeBus.$emit('resize')
+
         this.getVideos();
         this.getImages();
       })
@@ -214,6 +233,7 @@ methods:{
     changeVideo: function(url){
         this.attrs = url
     }
+
   }
 }
 </script>

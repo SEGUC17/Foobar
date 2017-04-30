@@ -3,7 +3,8 @@
 <center>
   <form role="form" class="" @submit.prevent>
           <h2>Edit Your Profile </h2>
-          <img v-if="this.user.profileimg" :src="'http://localhost:3000/'+user.profileimg.path.replace('public','')" style="width:400px">
+            <!--<img v-if="this.user.profileimg.path" :src="'http://localhost:3000/'+this.user.profileimg.path.replace('public','')" alt="">
+            <img v-if="!this.user.profileimg.path" src="~assets/img/missing.png" alt="">-->
           <input ref="avatar2" type="file" name="avatar2" id="avatar2" v-on:change="changedp($event.target.name, $event.target.files)">
 
 
@@ -21,22 +22,24 @@
         <br>
             <label class="col-sm-2 control-label">Location</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control" id="location" :value=profile.location v-model="location" />
+                     <gmap-autocomplete @place_changed="mapinit" class="form-control" v-model="location">
+      </gmap-autocomplete>
+                <!--<input type="text" class="form-control Autocomplete" id="location" :value="this.profile.location"  />-->
             </div>
         </div>
 
         <div class="form-group">
             <label for="description" class="col-sm-2 control-label">Description</label>
             <div class="col-sm-10">
-                <input type="text" v-model="description" :value=profile.description ></input>
+                <input type="text" v-model="description" class="form-control" :value="profile.description" ></input>
             </div>
         </div>
 
          <div>
         <label for="fields" class="col-sm-2 control-label">Fields</label>
         <li v-for =" field in interests">
-        <input type="checkbox" id=field.name :value=field.name v-model="fields">
-        <span for=field.name>{{field.name}}</span>
+        <input type="checkbox" id="field.name" :value="field.name" v-model="fields">
+        <span >{{field.name}}</span>
         </li>
         <span>Fields: {{ fields }}</span>
         <br>
@@ -82,12 +85,6 @@
  
               <form role="form" class="" v-on:submit.prevent="editPassword()">
              <div class="modal fade" id="SPEditPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div v-for =" message in successmessages">                                  
-                    <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
-    </div>
-    <div v-for =" message in failuremessages">                               
-               <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
-    </div>
            <br><br>
       <div class="modal-dialog">
           <div class="modal-content">
@@ -114,8 +111,7 @@
 
     </div> 
                 </form>
-           
-    </center>
+</center>
       
             
 
@@ -123,10 +119,8 @@
 
 </template>
 <script>
-
 import Vue from 'vue'
 import VueYouTubeEmbed from 'vue-youtube-embed'
-
  Vue.use(VueYouTubeEmbed);
 export default {
   name: 'SPReviews',
@@ -137,7 +131,6 @@ export default {
       pricecategory:'',
       location:'',
       description:'',
-      fields:[],
       phone_number:'',
       interests:[],
       url:'',
@@ -146,10 +139,12 @@ export default {
       attrs:'',
       images:[],
       videoId :'',
-          confirmNewPassword:"",
+      confirmNewPassword:"",
       oldPassword:"",
-      newPassword:""
-
+      newPassword:"",
+      fields:'',
+      lat:'',
+      lang:'',
     }
   },
 created(){
@@ -166,24 +161,22 @@ methods:{
         this.fields = response.data.data.providerProfile.fields;
         this.phone_number = response.data.data.providerProfile.phone_number;
         this.user=response.data.data.user["0"];
-        console.log(this.user)
         this.getVideos();
         this.getImages();
+        // this.mapinit();
       })
     },
     getInterests: function () {
       this.$http.get('http://localhost:3000/api/sPs/interests',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
-
         this.interests=response.data.data.interests
       })
     },
     edit: function ()
-
         {
           var x = confirm("Are you sure you want to edit these attributes")
           if(x){
-            this.$http.post('http://localhost:3000/api/sPs/profile/edit', {"price_category":this.pricecategory,"location":this.location, "description":this.description, "fields":this.fields, "description":this.description, "phone_number":this.phone_number},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
-            console.log('success');
+            this.$http.post('http://localhost:3000/api/sPs/profile/edit', {"price_category":this.pricecategory,"location":this.location, "description":this.description, "fields":this.fields, "description":this.description, "phone_number":this.phone_number,"lat": this.lat,"lang":this.lang},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+            console.log(this.location);
             alert("Profile Edited")
             this.$router.push({path:'/SPViewMyProfile'})
                     })
@@ -202,11 +195,9 @@ methods:{
             formData.append(fieldName, fileList[x], fileList[x].name);
           });
         formData.append("user_id",this.user._id)
-
         this.$http.post('http://localhost:3000/api/sPs/upload',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
             this.getImages();
       })
-
     },
     changedp: function(fieldName, fileList) {
         // handle file changes
@@ -216,11 +207,9 @@ methods:{
             formData.append(fieldName, fileList[x], fileList[x].name);
           });
         formData.append("user_id",this.user._id)
-
         this.$http.post('http://localhost:3000/api/sPs/changedp',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
             console.log('changed dp');
       })
-
     },
     getVideos: function(){
         let route ='http://localhost:3000/api/sPs/videos/';
@@ -237,6 +226,11 @@ methods:{
     changeVideo: function(url){
         this.attrs = url
     },
+    mapinit: function(place) {
+            this.lat = place.geometry.location.lat();
+            this.lang = place.geometry.location.lng();
+            console.log(this.lat + "   "+this.lang)
+    },
     editPassword: function()
     {
         var x = confirm("Are you sure you want to edit your password")
@@ -251,14 +245,9 @@ methods:{
       $('#SPEditPassword').modal('hide');
             this.$router.push({path:'/SPViewMyProfile',force:true});
                     }).catch(function(reason) {
-                        console.log(reason.body.err);
-                this.failuremessages = reason.body.err;
-                console.log(this.failuremessages)
-                this.successmessages=[{msg:''}];
                     });
           }
     }
   }
-
 }
 </script>

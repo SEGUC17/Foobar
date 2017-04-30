@@ -18,7 +18,7 @@
         </div>
 
         <div class="form-group">
-          
+
             <div class="col-sm-10">
                <textarea v-validate="{ rules: { required: true} }" name="content" class="form-control" id="content" placeholder="Content" v-model="content" required="*"></textarea>
                      <span v-show="errors.has('content')">{{ errors.first('content') }}</span>
@@ -53,7 +53,11 @@ methods:{
         {
             this.$http.post('http://localhost:3000/api/sPs/announcements/post', {"title":this.title,"content":this.content}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
 
-          alert("Announcement Posted")
+          swal(
+            'Success!',
+            'Announcement Posted!',
+            'success'
+          )
           this.$router.push({path:'/'})
 
             console.log('success');

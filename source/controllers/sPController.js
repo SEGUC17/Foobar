@@ -269,24 +269,7 @@ const spController = {
                     },
                   });
                 });
-                /*Reservation.update({
-                    user_id: req.params.id,
-                    offer_id: req.body.offer_id,
-                    sp_id: decoded.id
-                  }, {
-                    is_assessed
-                  }, (err, sp1) => {
-                    if (err) {
-                      res.status(500).json({
-                        status: 'error',
-                        message: err.message,
-                      });
-                    } else {
-                      res.status(200).json({
-                        obj: assessment,
-                        });
-                    }
-                  }); */
+
               }
             });
           } else {
@@ -461,6 +444,8 @@ const spController = {
                     description,
                     fields,
                     phone_number,
+                    lat: req.body.lat,
+                    lang: req.body.lang,
                   }, (err, sp1) => {
                     if (err) {
                       res.status(500).json({

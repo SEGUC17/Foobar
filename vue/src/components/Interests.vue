@@ -7,11 +7,11 @@
   <ul>
     <li v-for=" interest in interests"> {{interest.name}}</li>
   </ul>
-  <form role="form" class="" v-on:submit='addInterest'>
-          <div v-for =" message in successmessages">                                  
+  <form role="form" class="" @submit.prevent='addInterest'>
+          <div v-for =" message in successmessages">
                 <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
                   </div>
-                <div v-for =" message in failuremessages">                               
+                <div v-for =" message in failuremessages">
         <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
       </div>
       <div class="form-group">
@@ -63,8 +63,12 @@ methods:{
     addInterest: function () {
 
       this.$http.post('http://localhost:3000/api/admins/addInterest',{name: this.interestname },{headers : { 'jwt-token' : localStorage.getItem('id_token')}} ).then(response => {
-      this.msg="Interest has been added"
-      alert(this.msg)
+      swal(
+  'Success!',
+  this.interestname +" has been added!",
+  'success'
+);
+console.log(response);
           }).catch(function(reason) {
                 this.failuremessages = reason.body.err;
                 this.successmessages=[{msg:''}];

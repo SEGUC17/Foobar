@@ -754,7 +754,7 @@ a:active {
 
 			<section id="content3" class="tab-content">
 				<h3>Images todo</h3>
-				
+
 <div id="slider">
 <figure>
 <img src="austin-fireworks.jpg" alt>
