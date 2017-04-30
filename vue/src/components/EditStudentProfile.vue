@@ -24,11 +24,15 @@
                      <tr>
                         <td>Name: </td>
                         <td>
-                      <input v-validate="{ rules: { required: true} }" type="text" name="name" class="form-control" id="name"  v-model="name">
-                     <span v-show="errors.has('name')">{{ errors.first('name') }}</span>
+                        <input v-validate="{ rules: { required: true} }" type="text" name="name" class="form-control" id="name"  v-model="name">
+                        <span v-show="errors.has('name')">{{ errors.first('name') }}</span>
                         <!-- <input type="text"  v-model="name"> -->
                         </td>
-                      </tr>
+                    </tr>
+                    <tr>
+                          <td>Upload Profile pic: </td>                       
+                          <td><input ref="avatar2" type="file" name="avatar2" id="avatar2" v-on:change="changedp($event.target.name, $event.target.files)"></td>
+                    </tr>
                       <tr>
                         <td>University: </td>
                         <td>
@@ -174,6 +178,18 @@ methods:{
       })
 
       }
+    },
+    changedp: function(fieldName, fileList) {
+        // handle file changes
+        const formData = new FormData();
+        // append the files to FormData
+        Array.from(Array(fileList.length).keys()).map(x => {
+            formData.append(fieldName, fileList[x], fileList[x].name);
+          });
+        formData.append("user_id",this.user._id)
+        this.$http.post('http://localhost:3000/api/sPs/changedp',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+            console.log('changed dp');
+      })
     },
     editPassword: function()
     {

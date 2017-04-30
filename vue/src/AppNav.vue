@@ -29,33 +29,36 @@
       <div class="modal-dialog">
           <div class="modal-content">
               <div class="modal-body">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <div class="row" style ="border:none;">
         <div class="col-md-12">
-          <div class="panel-login">
-            <div class="panel-heading">
-              <div class="row">
-                <div class="col-xs-4">
-                  <a href="#" class="active" id="login-form-link">Login</a>
-                </div>
-                <div class="col-xs-4">
-                  <a href="#" id="register-form-link">Register</a>
-                </div>
-                <div class="col-xs-4">
-                  <a href="#" id="resetPW-form-link">Forget Password</a>
-                </div>
-              </div>
-              <hr>
+        <div class="panel-login">
+        <div class="panel-heading">
+          <div class="row">
+            
+            <div class="col-xs-4">
+            <a href="#" class="active" id="login-form-link">Login</a>
             </div>
-            <div class="panel-body">
-              <div class="row">
-                <div class="col-lg-12">
+            
+            <div class="col-xs-4">
+            <a href="#" id="register-form-link">Register</a>
+            </div>
+            
+          </div>
+              <hr>
+        </div>
+            
+        <div class="panel-body">
+            <div class="row">
+              <div class="col-lg-12">
                   <form @submit.prevent="login" id="login-form"  role="form" style="display: block;">
+                    
                     <div class="form-group">
-                      <input type="text" name="email" id="email" tabindex="1" v-model="creds.username" class="form-control efc" placeholder="Email" value="" required="true">
+                      <input v-if="!reset" type="text" name="email" id="email" tabindex="1" v-model="creds.username" class="form-control efc" placeholder="Email" value="" required="true">
                     </div>
+                    
                     <div class="form-group">
-                      <input type="password" name="password" id="password" tabindex="2" v-model="creds.password" class="form-control efc" placeholder="Password" required="true">
+                      <input  v-if="!reset" type="password" name="password" id="password" tabindex="2" v-model="creds.password" class="form-control efc" placeholder="Password" required="true">
                     </div>
 
                     <div class="form-group text-center">
@@ -66,50 +69,32 @@
                     <div class="form-group">
                       <div class="row">
                         <div class="col-sm-6 col-sm-offset-3">
-                          <input type="submit"  name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login efc" value="Log In">
+                          <input  v-if="!reset" type="submit"  name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login efc" value="Log In">
                         </div>
                       </div>
                     </div>
+                    
                     <div class="form-group">
                       <div class="row">
                         <div class="col-lg-12">
                           <div class="text-center">
-                   <div class="form-group">
-                      <input type="text"  tabindex="1" v-model="resetPWEmail" class="form-control efc" placeholder="Email" value="">
-                    </div>
-                              <a @click.prevent="resetPW" tabindex="5" class="forgot-password">Forgot Password?</a>
+                              <a  v-if="!reset" v-on:click="setReset()" tabindex="5" href="#resetPW-form" class="forgot-password">Forgot Password?</a>
                           </div>
                         </div>
                       </div>
                     </div>
+                  
                   </form>
 
-                  <form @submit.prevent="resetPW" id="resetPW-form"  role="form" style="display: block;">
-                    <div class="form-group">
-                      <input type="text" name="email" id="email" tabindex="6" v-model="resetPWEmail" class="form-control efc" placeholder="Email" value="" required="true">
-                    </div>
-                    
-                    <div class="form-group text-center">
-                      <label style="color:#52d3aa;">{{message}}</label>
-                    </div>
-                    <h5>N.B: An email will be sent to this email with a temporarily new password</h5>
 
-                    <div class="form-group">
-                      <div class="row">
-                        <div class="col-sm-6 col-sm-offset-3">
-                          <input type="submit"  name="resetPW-submit" id="resetPW-submit" tabindex="7" class="form-control btn btn-login efc" value="Reset Password">
-                        </div>
-                      </div>
-                    </div>
-                  </form>
-
-                  <form @submit.prevent="signup"id="register-form" style="display: none;">
+                  <form @submit.prevent="signup" id="register-form" style="display: none;">
 
 
                     <div v-for =" message in successmessages">
                         <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
-                     </div>
-                         <div v-for =" message in failuremessages">
+                    </div>
+                    
+                    <div v-for =" message in failuremessages">
                         <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
                     </div>
 
@@ -122,34 +107,33 @@
                     <div class="form-group">
                      <input v-validate="{ rules: { required: true, email: true } }" type="text" name="email" class="form-control efc" id="email" placeholder="Email" v-model="creds.email" required="*">
                      <span v-show="errors.has('email')">{{ errors.first('email') }}</span>
-                   </div>
+                    </div>
 
+                    <div class="form-group">
+                      <input v-validate="{ rules: { required: true} }" type="text" name="university " class="form-control efc" id="university" placeholder="University" v-model="university" required="*">
+                      <span v-show="errors.has('university')">{{ errors.first('university') }}</span>
+                    </div>
 
+                    <div class="form-group">
+                      <input v-validate="{ rules: { required: true} }" type="text" name="address" class="form-control efc" id="address" placeholder="Address" v-model="address">
+                      <span v-show="errors.has('address')">{{ errors.first('address') }}</span>
+                    </div>
 
-                      <div class="form-group">
-                          <input v-validate="{ rules: { required: true} }" type="text" name="university " class="form-control efc" id="university" placeholder="University" v-model="university" required="*">
-                          <span v-show="errors.has('university')">{{ errors.first('university') }}</span>
+                    <div class="form-group">
+                      <input v-validate="{ rules: { required: true} }" type="date" name="birthdate" class="form-control efc" id="birthdate" placeholder="Birthdate" v-model="birthdate">
+                      <span v-show="errors.has('birthdate')">{{ errors.first('birthdate') }}</span>
+                    </div>
+
+                    <div class="form-group">
+                      <div>
+                        <label class="control-label">Interests</label><span style="font-weight: normal; font-size:12px; margin-left: 5px;"> (tell us a bit about what you like)</span>
                       </div>
-
-                      <div class="form-group">
-                            <input v-validate="{ rules: { required: true} }" type="text" name="address" class="form-control efc" id="address" placeholder="Address" v-model="address">
-                            <span v-show="errors.has('address')">{{ errors.first('address') }}</span>
-                      </div>
-
-                      <div class="form-group">
-                            <input v-validate="{ rules: { required: true} }" type="date" name="birthdate" class="form-control efc" id="birthdate" placeholder="Birthdate" v-model="birthdate">
-                            <span v-show="errors.has('birthdate')">{{ errors.first('birthdate') }}</span>
-                      </div>
-
-                        <div class="form-group">
-                          <div>
-                            <label class="control-label">Interests</label><span style="font-weight: normal; font-size:12px; margin-left: 5px;"> (tell us a bit about what you like)</span>
-                          </div>
-                            <span v-for="interest in this.interests" style="font-size:14px; margin-right:10px;">
-                                  <input type="checkbox" :id="interest" :value="interest" v-model="Interests">
-                                  <label for="interest" style="font-weight: normal;">{{interest.name}}</label>
-                            </span>
-                        </div>
+                      
+                      <span v-for="interest in this.interests" style="font-size:14px; margin-right:10px;">
+                            <input type="checkbox" :id="interest" :value="interest" v-model="Interests">
+                            <label for="interest" style="font-weight: normal;">{{interest.name}}</label>
+                      </span>
+                    </div>
 
                     <div class="form-group">
                       <div class="row">
@@ -159,9 +143,27 @@
                       </div>
                     </div>
 
-
-
                   </form>
+
+                  <form @submit.prevent="resetPW" id="resetPW-form"  role="form" style="display: block;">
+                    <div class="form-group">
+                      <input  v-if="reset" type="text" name="email" id="email" tabindex="1" v-model="resetPWEmail" class="form-control efc" placeholder="Email" value="" required="true">
+                    </div>
+                    
+                    <div class="form-group text-center">
+                      <label style="color:#52d3aa;">{{message}}</label>
+                    </div>
+                    <h5  v-if="reset">N.B: An email will be sent to this email with a temporarily new password</h5>
+
+                    <div class="form-group">
+                      <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                          <input  v-if="reset" type="submit"  v-on:click="resetPW()" name="resetPW-submit" id="resetPW-submit" tabindex="7" class="form-control btn btn-login efc" value="Reset Password">
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+
                 </div>
               </div>
             </div>
@@ -407,6 +409,7 @@ data () {
       showadmin:false,
       showsp:false,
       showstudent:false,
+      reset: false,
 
   // User object will let us check authentication status
   user: {
@@ -426,7 +429,7 @@ if(localStorage.getItem('id_token')!=null){
     this.user.type = decode.body.type;
     this.user.is_blocked = decode.body.is_blocked;
     this.name = decode.body.name;
-    this.profilepic = decode.body.image
+    this.profilepic = decode.body.image;
 })
 }
 
@@ -453,6 +456,7 @@ methods: {
         this.user.is_blocked = decode.body.is_blocked;
         localStorage.setItem('usertype', decode.body.type)
         this.name = decode.body.name;
+        this.profilepic = decode.body.image;
       })
        $('#myModal').modal('hide');
        this.$router.go({
@@ -501,9 +505,12 @@ methods: {
 });
 
   },
+ setReset: function(){
+    this.reset = true;
+  },
 
   resetPW : function() {
-    this.$http.post('http://localhost:3000/api/users/resetPW', {"email":this.resetPWEmail}).then(data => {
+    this.$http.post('http://localhost:3000/api/users/resetPW', {"email":this.resetPWEmail},{"token": localStorage.getItem('id_token')}).then(decode => {
       alert("New Password sent to ".concat(this.resetPWEmail));
       console.log('success');
 

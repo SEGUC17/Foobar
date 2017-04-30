@@ -53,17 +53,19 @@ label {
             <div class="panel-body">
               <div class="row">
 
-                <div class="col-md-3 col-lg-3 " align="left"> <img alt="User Pic" src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png" class="img-circle img-responsive"> </div>
-                <div align="right">
-                  <svg width="100" height="100"><polygraph></polygraph>
-</svg>
-                </div>
-<br />
-                <h3 class="panel-title">{{user.name}}</h3>
+        <center>   
+        <img v-if="user.profileimg && user.profileimg.path" :src="'http://localhost:3000/'+user.profileimg.path.replace('public','')" class="img-circle profile_img" style="height:150px; width:150px">
+        <img v-else src="~assets/img/missing.png" class="img-circle profile_img" style="height:150px; width:150px">
+        <h2 class="panel-title"></h2>
+        </center>
 
                 <div class=" col-md-9 col-lg-9 ">
                   <table class="table table-user-information">
                     <tbody>
+                       <tr>
+                        <td>Name: </td>
+                        <td>{{user.name}}</td>
+                      </tr>
                       <tr>
                         <td>University: </td>
                         <td>{{student.university}}</td>

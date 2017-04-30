@@ -1,58 +1,83 @@
 <template>
 
-  <div>
+  <div align="center">
 
-
-            <img v-if="this.user.profileimg && this.user.profileimg.path" :src="'http://localhost:3000/'+this.user.profileimg.path.replace('public','')" class="img-circle profile_img" style="height:100px; width:100px">
-            <img v-if="this.user.profileimg && !this.user.profileimg.path" src="~assets/img/missing.png" class="img-circle profile_img" style="height:100px; width:100px">
-
-
-                <h3 class="">Basic Info </h3>
+            <div align="left" class="col-lg-offset-4">
+            <img v-if="this.user.profileimg && this.user.profileimg.path" :src="'http://localhost:3000/'+this.user.profileimg.path.replace('public','')" class="img-circle profile_img" style="height:200px; width:200px">
+            <img v-else src="~assets/img/missing.png" class="img-circle profile_img" style="height:200px; width:200px">
+            </div>
+              <br/>
+              <br/>
+              <br/>
+                <h1>Basic Info </h1>
 
                   <table class="">
                     <tbody>
                       <tr>
-                        <td>Name </td>
+                        <td>Name </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <td>{{user.name}}</td>
                       </tr>
+                      <br/>
                       <tr>
-                        <td>Email </td>
+                        <td>Email </td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <td>{{user.email}}</td>
                       </tr>
+                      <br/>
 
                       <tr>
-                        <td>Price Category</td>
+                        <td>Price Category</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <td> {{ pricecategory }}</td>
                       </tr>
+                      <br/>
 
                     <tr>
                         <tr>
-                            <td>Location</td>
+                            <td>Location</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <td>{{profile.location}}</td>
                         </tr>
+                                              <br/>
+
                         <tr>
-                            <td>Description</td>
+                            <td>Description</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <td>{{profile.description}}</td>
                         </tr>
+                                              <br/>
+
                         <tr>
-                            <td>Phone number</td>
+                            <td>Phone number</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <td>{{profile.phone_number}}</td>
                         </tr>
+                                              <br/>
+
                         <tr>
-                            <td>Fields</td>
+                            <td>Fields</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                             <td>{{ fields }}</td>
                         </tr>
                       </tr>
 
                     </tbody>
                   </table>
-
-                <h4>Your Images</h4>
+                  <br/>
+                  <br/>
+                
+                <h1>Your Images</h1>
                 <span class="col-lg-3"v-for ="image in images">
                 <img :src="'http://localhost:3000/'+image.img.path.replace('public','')" style="height:200px; width:200px">&nbsp;&nbsp;&nbsp;&nbsp;
                 </span>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+<br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
 
-                <h4 >Your Videos</h4>
+                <h3 align="center">Your Videos</h3>
                 <youtube :video-id="this.attrs"></youtube>
 
                 <div v-for =" video in videos">

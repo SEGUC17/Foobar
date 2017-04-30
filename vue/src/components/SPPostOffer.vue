@@ -1,63 +1,60 @@
 <template>
 <center>
+
+        
   <form role="form" class="" v-on:submit.prevent="postOffer()">
-     <h2>Enter Offer Details: </h2>
-        <div class="form-group">
+            <h1 style="color:#52d3aa">Enter Offer Details </h1><br>
+        <div align="center" style="width:400px" class="form-group">
 
-            <label for="title" class="col-sm-2 control-label">Title:</label>
-            <div class="col-sm-10">
-             <input v-validate="{ rules: { required: true} }" type="text" name="title" class="form-control" id="title" placeholder="Title" v-model="title" required="*" >
-                     <span v-show="errors.has('title')">{{ errors.first('title') }}</span>
+            <h4 for="title" style="color:#52d3aa" class="control-label">Title</h4>
+            <input v-validate="{ rules: { required: true} }" type="text" name="title" class="form-control" id="title" placeholder="Title" v-model="title" required="*" >
+            <span v-show="errors.has('title')">{{ errors.first('title') }}</span>
 
-            </div>
         </div>
-
-        <div class="form-group">
-            <label for="price" class="col-sm-2 control-label">Price</label>
-            <div class="col-sm-10">
+    
+        <br/>
+        <br/>
+        <div align="center" style="width:400px" class="form-group">
+            <h4 for="price" style="color:#52d3aa" class="control-label">Price</h4>
             <input v-validate="{ rules: { required: true} }" type="number" name="price" class="form-control" id="price" placeholder="Price" v-model="price" required="*">
-                     <span v-show="errors.has('price')">{{ errors.first('price') }}</span>
-
-            </div>
+            <span v-show="errors.has('price')">{{ errors.first('price') }}</span>
         </div>
-
-        <div class="form-group">
-            <label for="capacity" class="col-sm-2 control-label">Capacity</label>
-            <div class="col-sm-10">
+        <br/>
+        <br/>
+        <div align="center" style="width:400px" class="form-group">
+            <h4 for="capacity" style="color:#52d3aa" class="control-label">Capacity</h4>
              <input v-validate="{ rules: { required: true} }" type="number" name="capacity" class="form-control" id="capacity" placeholder="Capacity" v-model="capacity" required="*">
-                     <span v-show="errors.has('capacity')">{{ errors.first('capacity') }}</span>
-            </div>
+            <span v-show="errors.has('capacity')">{{ errors.first('capacity') }}</span>
         </div>
 
-        <div class="form-group">
-        <label for="field" class="col-sm-2 control-label">Field</label>
-        <div class="col-sm-10">
-            <select v-model="field">
-            <option v-for="option in interests" v-bind:value="option.name">
-                {{ option.name }}
-            </option>
-            </select >
-        </div>
-        <span>{{ field }}</span>
-        </div>
-
-        <div class="form-group">
-            <label  for="description" class="col-sm-2 control-label">Description</label>
+        <br/>
+        <br/>
+        <div align="center" style="width:400px" class="form-group">
+            <h4 for="field" style="color:#52d3aa" class="col-sm-2 control-label">Field:</h4>
             <div class="col-sm-10">
-            <input type="text" name="description" class="form-control" id="description" placeholder="Description" v-model="description"></input>
+                <select style="width:200px;height:30px" v-model="field">
+                <option v-for="option in interests" align="center" v-bind:value="option.name">
+                 {{ option.name }}
+                </option>
+                </select >
             </div>
         </div>
-
-        <div class="form-group">
-            <label for="due_date" class="col-sm-2 control-label">Due Date</label>
+        <br/>
+        <br/>
+        <br/>
+        
+        <div align="center" style="width:400px" class="form-group">
+            <label for="due_date"  style="color:#52d3aa" class="col-sm-2 control-label">Due Date</label>
             <div class="col-sm-10">
             <input v-validate="{ rules: { required: true} }" type="date" name="due_date" class="form-control" id="due_date" v-model="due_date" required="*">
                      <span v-show="errors.has('due_date')">{{ errors.first('due_date') }}</span>
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="start_date" class="col-sm-2 control-label">Start Date</label>
+        <br/>
+        <br/>
+        <div align="center" style="width:400px" class="form-group">
+            <label for="start_date" style="color:#52d3aa" class="col-sm-2 control-label">Start Date</label>
             <div class="col-sm-10">
              <input v-validate="{ rules: { required: true} }" type="date" name="start_date" class="form-control" id="start_date" v-model="start_date" required="*">
                      <span v-show="errors.has('start_date')">{{ errors.first('start_date') }}</span>
@@ -65,21 +62,33 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <label for="end_date" class="col-sm-2 control-label">End Date</label>
+        <br/>
+        <br/>
+        <div align="center" style="width:400px" class="form-group">
+            <label for="end_date" style="color:#52d3aa" class="col-sm-2 control-label">End Date</label>
             <div class="col-sm-10">
                <input v-validate="{ rules: { required: true }}" type="date" name="end_date" class="form-control" id="end_date" v-model="end_date" required="*">
                      <span v-show="errors.has('end_date')">{{ errors.first('end_date') }}</span>
 
             </div>
         </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <div align="center" style="width:400px" class="form-group">
+            <h4  for="description" style="color:#52d3aa" align="left"class="control-label"><b>Description</b></h4>
+            <textarea name="description" class="form-control" id="description" rows="5" v-model="description"></textarea>
+        </div>
 
-        <div class="row">
-            <div class="col-sm-2">
-            </div>
-            <div class="col-sm-10">
-                <button class="btn btn-primary btn-sm" >Post Offer</button>
-            </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <div class="row" align="center">
+                <button class="btn btn-primary btn-sm" style="width:200px;height:50px">Post Offer</button>
         </div>
     </form>
     </center>

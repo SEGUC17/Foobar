@@ -19,22 +19,24 @@
             </ol>
             <!-- The two navigation buttons -->
             <!-- Note: prev is hidden on first question -->
-            <button class="secondary button" v-if="questionIndex > 0" v-on:click="prev">
+            <center><button style="width:50px; background-color:navy" class="secondary button" v-if="questionIndex > 0" v-on:click="prev">
 			        prev
-			      </button>
-            <button class="success button" v-on:click="next">
+			      </button>&nbsp;&nbsp;&nbsp;
+            <button style="width:50px; background-color:navy"class="success button" v-on:click="next">
 			        next
-			      </button>
+			      </button></center>
           </div>
         </div>
 
         <!-- Last page, quiz is finished, display result -->
         <div v-show="questionIndex === quiz.questions.length">
-          <h3>Your Results</h3>
           <p>
-            You are: {{ score() }}
+            Your Score: {{ score() }}
           </p>
         </div>
+        <br/><br/>
+        <h3 align="center">We suggest you the following interests ratios</h3>
+        <br/><br/>
 
       </div>
           <div v-show="questionIndex === quiz.questions.length">

@@ -1,11 +1,11 @@
 <template>
 <div>
-  <h5>The most frequent interest among student is <strong>{{most}}</strong></h5>
-  <h5>The least frequent interest among student is <strong>{{least}}</strong></h5>
+  <h5>The most frequent interest among student is <h1 style="color:#52d3aa"><strong>{{most}}</strong></h1></h5>
+  <h5>The least frequent interest among student is <h1 style="color:#52d3aa"><strong>{{least}}</strong></h1></h5>
 <h4>Interests from the most recommended to the least one  </h4>
 <div>
   <ul>
-    <li v-for=" interest in interests"> {{interest.name}}</li>
+    <h3  style="color:#52d3aa" v-for=" interest in interests"> {{interest.name}}</h3>
   </ul>
   <form role="form" class="" @submit.prevent='addInterest'>
           <div v-for =" message in successmessages">
@@ -14,16 +14,19 @@
                 <div v-for =" message in failuremessages">
         <div style="color:#F25C27; margin-bottom:10px;">{{message.msg}}</div>
       </div>
-      <div class="form-group">
-          <input v-validate="{ rules: { required: true} }" type="text" name="interestname" class="form-control efc" id="interestname" placeholder="Interest Name" v-model="interestname" required="*">
+      <h1 style="color:#52d3aa" align="center"> Add a new Interest to the system</h1>
+      <br/>
+      <br/>
+      <div align="center"class="form-group">
+          <input  v-validate="{ rules: { required: true} }" style="width:400px"type="text" name="interestname" class="form-control efc" id="interestname" placeholder="Interest Name" v-model="interestname" required="*">
           <span v-show="errors.has('interestname ')">{{ errors.first('interestname') }}</span>
       </div>
 
-      <div class="form-group">
-        <div class="row">
-          <div class="col-sm-6 col-sm-offset-3">
-            <input type="submit"  tabindex="4" class="form-control efc" value="Add">
-          </div>
+      <div align="center" class="form-group">
+        <div align="center" class="row">
+         
+            <input type="submit"  style="width:100px"tabindex="4" class="form-control efc" value="Add">
+        
         </div>
       </div>
 

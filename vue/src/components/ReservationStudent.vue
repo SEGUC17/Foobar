@@ -17,7 +17,7 @@
           <td>{{reservation.service_provider_id.name}}</td>
           <td>{{reservation.service_provider_id.email}}</td>
           <td>{{reservation.offer_id.title}}</td>
-          <td>{{reservation.reservation_date}}</td>
+          <td>{{reservation.reservation_date.substring(0,10)}}</td>
           <td v-if="reservation.status==0">Applied</td>
           <td v-else-if="reservation.status==1">Approved (Paid)<a style="color:red; margin-left:10px; cursor:pointer;" @click.prevent="refund(reservation._id,reservation.charge_id)">Refund</a></td>
           <td v-else-if="reservation.status==2">Disapparoved</td>

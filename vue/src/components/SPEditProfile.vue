@@ -122,35 +122,48 @@
 
 
     <h1>Your Images</h1>
-    <li v-for ="image in images">
-       <img :src="'http://localhost:3000/'+image.img.path.replace('public','')" style="width:200px">
-    </li>
+    <span v-for ="image in images">
+       <img :src="'http://localhost:3000/'+image.img.path.replace('public','')" style="width:200px">&nbsp;&nbsp;&nbsp;&nbsp;
+    </span>
+    <br/>
+    <br/>
     <input ref="avatar" type="file" name="avatar" id="avatar" v-on:change="upload($event.target.name, $event.target.files)">
+    <br/>
+    <br/>
+    <div align="center">
+      <span><a class="btn btn-danger" style="margin-top:20px;"  data-toggle="modal" data-target="#SPEditPassword">Edit Password</a></span>
+    </div>
+
+    <div>
+      <span><a href="#" class="btn btn-success" @click.prevent="edit"><span class="glyphicon glyphicon-thumbs-up"></span> Submit</a></span>
+    </div>
+
+<br/>
+<br/>
     <h1>Your Videos</h1>
-    <div class="row">
-        <div class="col-md-8">
+    <div align="center"class="row">
     <youtube :video-id="this.attrs"></youtube>
 
     <li v-for =" video in videos">
        <a v-on:click="changeVideo(video.url)"> {{video.title}} </a>
     </li>
-    </div>
-    <div class="col-md-4">
+    <br/>
+    <br/>
+    <div class="row"align="center">
     <form>
-        <input type="text" class="form-control" v-model="title" name="title" placeholder="title">
-        <input type="text" class="form-control" v-model="url" name="url" placeholder="url">
+        <input style="width:400px"align="center"type="text" class="form-control" v-model="title" name="title" placeholder="title"><br/>
+        <input style="width:400px"type="text" class="form-control" v-model="url" name="url" placeholder="url">
+        <br/>
         <button class="btn btn-primary btn-sm"  v-on:click="newvideo"> Post video</button>
     </form>
     </div>
     </div>
-
+    <br/>
+    <br/>
 <div class="form-group">
-  <label class="col-md-4 control-label" ></label>
-  <div class="col-md-4">
-    <span><a href="#" class="btn btn-success" @click.prevent="edit"><span class="glyphicon glyphicon-thumbs-up"></span> Submit</a></span>
-    <span><a class="btn btn-danger" style="margin-top:20px;"  data-toggle="modal" data-target="#SPEditPassword">Edit Password</a></span>
 
-  </div>
+  <label class="col-md-4 control-label" ></label>
+  
 </div>
 
 

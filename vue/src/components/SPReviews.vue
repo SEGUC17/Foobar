@@ -278,45 +278,48 @@
 <template>
   <div>
 
-      <h3>Reviews</h3>
-          <p><div class="container">
+      <h1 align="center"style="color:#52d3aa" >Reviews</h1>
+          <p align="center"><div align="center"class="container">
 
 
             <div v-for =" r in reviews" >
+                <div align="center"class="">
+                <div class="row">
+                <div class="col-md-3 col-xs-6">
 
+                <div >
+                <div class="icon">
+                <div class="image"></div>
+                <div class="info">
+                <h3  class="title">By: {{r.reviewer_id.name}}</h3>
+                <h2 class="title">
+                    <p>   
+                        <div  id="makan3" >
+                            <star-rating :rating="r.rating" v-bind:show-rating="false" v-bind:read-only="true"   v-bind:inline="true"></star-rating>
+                        </div>
+                    </p>
+                    <p class="info">
+                    {{r.content}}
+                    </p>
+                </h2>
+               
+          
+                <button class="button button-1 button-1b" @click="viewComments(r._id)"href="#primary" data-toggle="modal">Comments</button>
 
-            <div class="container">
+                 <hr>
+                <br/>
+                <br/>
+                </div>
+                </div>
+                </div>
+                </div>
 
-    <div class="row">
-      <div class="col-md-3 col-xs-6">
+            </div>		
+            </div> 
+            </div>
 
-        <div >
-      <div class="icon">
-        <div class="image"></div>
-        <div class="info">
-          <h3 class="title">By: {{r.reviewer_id.name}}</h3>
-            <h2 class="title"><p>   <div  id="makan3" >
-         <star-rating :rating="r.rating" v-bind:show-rating="false" v-bind:read-only="true"   v-bind:inline="true">
-</star-rating>
-</div>
-          </p>
-          <p class="info">{{r.content}}
-        </p></h2>
-          <button class="button button-1 button-1b" @click="viewComments(r._id)"href="#primary" data-toggle="modal">Comments</button>
-
-
-
-
-
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    </div>		</div> </div>
     <div class="container">
-  <div class="row">
+    <div class="row">
       <div class="col-xs-12 col-sm-6 col-lg-4">
     <div>
       <div class="icon">
@@ -326,7 +329,7 @@
           <div class="modal-content">
               <div class="modal-header modal-header-primary">
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                  <h3     align="left">  <div v-for="comment in pastComments">
+                  <h3    align="left">  <div v-for="comment in pastComments">
                         {{comment.commenter_id.name}}: {{comment.content}}
                         <br>
                     </div></h3>
