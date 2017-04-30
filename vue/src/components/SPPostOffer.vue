@@ -115,7 +115,11 @@ methods:{
               this.$router.push({path:'/',force:true})
             console.log('success');
                     }).catch(function(reason) {
-                        console.log(reason.body.err);
+                        swal(
+                            'Oops!',
+                            reason.body.data.err,
+                            'error'
+                        )
                 this.failuremessages = reason.body.err;
                 console.log(this.failuremessages)
                 this.successmessages=[{msg:''}];

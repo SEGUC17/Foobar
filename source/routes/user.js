@@ -59,6 +59,7 @@
     req.checkBody('email', 'Email is required').notEmpty();
     req.checkBody('email', 'Must be a valid Email').isEmail();
     req.checkBody('university', 'university is required').notEmpty();
+    req.checkBody('name', 'Invalid Characters Used! Only letters, spaces, dots and dashes are allowed!').matches("^([a-zA-Z]+[.]?[ ]?|[a-zA-Z]+[-]?)+$");
 
 
     const errors = req.validationErrors();
