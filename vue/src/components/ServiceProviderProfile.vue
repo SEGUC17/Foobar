@@ -754,19 +754,13 @@ a:active {
 
 
 			<section id="content3" class="tab-content">
-				<h3>Images todo</h3>
 
-<div id="slider">
-<figure>
-<img src="austin-fireworks.jpg" alt>
-<img src="taj-mahal_copy.jpg" alt>
-<img src="ibiza.jpg" alt>
-<img src="ankor-wat.jpg" alt>
-<img src="austin-fireworks.jpg" alt>
-</figure>
-</div>
 		      	<p>
-
+              <p>
+      							<span class="col-lg-3"v-for ="image in images">
+      							<img :src="'http://54.77.11.251:3000/'+image.img.path.replace('public','')" style="height:200px; width:200px">&nbsp;&nbsp;&nbsp;&nbsp;
+      							</span>
+      </p>
 </p>
 			</section>
 
@@ -1003,6 +997,12 @@ console.log(response.data.data.reviews)
            this.reviews=response.data.data.reviews
          })
        },
+       getImages: function(){
+            let route ='http://54.77.11.251:3000/api/sPs/images/'.concat(this.user._id);
+            this.$http.get(route).then(response => {
+                this.images = response.body.data.images
+          })
+        },
        viewComments: function (review_id) {
          this.$http.post('http://54.77.11.251:3000/api/users/comments/view',{"review_id":review_id}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
            this.reviewid=review_id;
