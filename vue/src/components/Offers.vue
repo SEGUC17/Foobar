@@ -89,7 +89,7 @@
           <div v-for =" offer in offersInPage" >
 
 
-            		<a href="#" @click.prevent="purchaseStuff(offer)"><div class="col-md-4 feature">
+            		<a href="" @click.prevent="purchaseStuff(offer)"><div class="col-md-4 feature">
                 	   <center><img class="img-circle img-responsive" v-if="offer.sp_id && offer.sp_id.profileimg.path" :src="'http://54.77.11.251:3000/'+offer.sp_id.profileimg.path.replace('public','')" style="height:150px; width:150px">
                     <i class="glyphicon glyphicon-check" style="height:150px; width:150px" v-else></i></center>
                         <h3>{{offer.title}}</h3>

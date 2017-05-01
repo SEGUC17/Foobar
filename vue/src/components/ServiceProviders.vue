@@ -89,6 +89,8 @@
 <div class="row">
           <div v-for=" serviceprovider in serviceproviders">
 
+<div  v-if="!serviceprovider.user_id.is_deleted">
+
 
                 <router-link :to = "{ name: 'service provider' , params: { id: serviceprovider._id }}">
                 <div class="col-md-4 feature">
@@ -108,7 +110,7 @@
           </div>
                 </router-link>
                 </div>
-
+</div>
 </div>
 </div>
 

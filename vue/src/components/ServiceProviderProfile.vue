@@ -708,7 +708,7 @@ a:active {
 								<div v-for =" offer in offers" >
 
 
-											<a href="#"><div class="col-md-4 feature">
+											<a href=""  @click.prevent="purchaseStuff(offer)" ><div class="col-md-4 feature">
 														<i class="glyphicon glyphicon-check"></i>
 															<h3>{{offer.title}}</h3>
 															<div class="title_border"></div>
@@ -920,6 +920,8 @@ a:active {
    // }
    data () {
      return {
+       stripe_token: {},
+       stripe_instance: {},
        service:{},
       user:{},
       offers:{},
@@ -950,6 +952,40 @@ a:active {
        this.getServiceProvider(this.$route.params.id);
     }},
  methods:{
+
+   purchaseStuff: function(inoffer){
+    if(localStorage.getItem('id_token')!=null){
+
+       var price = inoffer.price*100;
+       this.stripe_instance = StripeCheckout.configure({
+           key: 'pk_test_930VGCISk9ZC24NhBPmMy3C8',    //put your own publishable key here
+           image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+           locale: 'auto',
+           token: function(token) {
+             //console.log('got a token. sending data to 54.77.11.251');
+             this.stripe_token= token;
+             //console.log(this.stripe_token);
+             this.order_status= "PENDING";
+             Vue.http.post('http://54.77.11.251:3000/api/charge', {token_id: this.stripe_token.id, price: price})
+               .then((payresponse) => {
+                   Vue.http.post('http://54.77.11.251:3000/api/students/offers',{"offer_id":inoffer._id, "charge_id": payresponse.body.response.id },{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response=> {
+                         alert("You succesfully applied")
+                     }).catch(function(reason) {alert(reason.body.message)});
+               },(response) => {
+                 this.order_status= "FAILED";
+               });
+           },
+       });
+         this.stripe_instance.open({
+           name: inoffer.title,
+           description: 'stuff and stuff',
+           amount: price
+         })
+
+    }else{alert("You have to be signed in to apply")}
+
+       },
+
     getServiceProvider: function (param) {
         if(param!=null){
         //console.log(param)
