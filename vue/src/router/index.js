@@ -33,7 +33,9 @@ import Chartkick from 'chartkick'
 import VueChartkick from 'vue-chartkick'
 import Chart from 'chart.js'
 
-Vue.use(VueChartkick, { Chartkick })
+Vue.use(VueChartkick, {
+  Chartkick
+})
 
 Vue.use(Router)
 Vue.use(vueResource)
@@ -46,10 +48,23 @@ export default new Router({
   }, {
     path: '/test',
     component: test,
-
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('usertype') != 2) {
+        next('/');
+      } else {
+        next()
+      }
+    }
   }, {
     path: '/quiz',
     component: Quiz,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('usertype') != 2) {
+        next('/');
+      } else {
+        next()
+      }
+    }
 
   }, {
     path: '/announcements',
@@ -121,13 +136,38 @@ export default new Router({
     }
   }, {
     path: '/SPReservations',
-    component: SPReservations
+    component: SPReservations,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('usertype') != 3 && localStorage.getItem(
+          'usertype') != 2) {
+        next('/');
+      } else {
+        next()
+      }
+    }
   }, {
     path: '/SPReviews',
-    component: SPReviews
+    component: SPReviews,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('usertype') != 1 && localStorage.getItem(
+          'usertype') != 2 && localStorage.getItem('usertype') != 3) {
+        next('/');
+      } else {
+        next()
+      }
+    }
   }, {
     path: '/sPs',
-    component: ServiceProviders
+    component: ServiceProviders,
+
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('usertype') != 1 && localStorage.getItem(
+          'usertype') != 2 && localStorage.getItem('usertype') != 3) {
+        next('/');
+      } else {
+        next()
+      }
+    }
   }, {
     path: '/viewAdmins',
     component: viewadmin,
@@ -140,10 +180,26 @@ export default new Router({
     }
   }, {
     path: '/viewOffers',
-    component: Offers
+    component: Offers,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('usertype') != 1 && localStorage.getItem(
+          'usertype') != 2 && localStorage.getItem('usertype') != 3) {
+        next('/');
+      } else {
+        next()
+      }
+    }
   }, {
     path: '/viewReservations',
-    component: ReservationStudent
+    component: ReservationStudent,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('usertype') != 1 && localStorage.getItem(
+          'usertype') != 2 && localStorage.getItem('usertype') != 3) {
+        next('/');
+      } else {
+        next()
+      }
+    }
   }, {
     path: '/reviewData',
     component: Interests,
@@ -167,15 +223,39 @@ export default new Router({
   }, {
     path: '/sps/:id',
     name: 'service provider',
-    component: ServiceProviderProfile
+    component: ServiceProviderProfile,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('usertype') != 1 && localStorage.getItem(
+          'usertype') != 2 && localStorage.getItem('usertype') != 3) {
+        next('/');
+      } else {
+        next()
+      }
+    }
   }, {
     path: '/EditStudent/:EditStudid',
     name: 'EditStudent',
-    component: EditStudentProfile
+    component: EditStudentProfile,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('usertype') != 1 && localStorage.getItem(
+          'usertype') != 2 && localStorage.getItem('usertype') != 3) {
+        next('/');
+      } else {
+        next()
+      }
+    }
   }, {
     path: '/student/:Studid',
     name: 'StudentProfile',
-    component: StudentProfile
+    component: StudentProfile,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('usertype') != 1 && localStorage.getItem(
+          'usertype') != 2 && localStorage.getItem('usertype') != 3) {
+        next('/');
+      } else {
+        next()
+      }
+    }
   }, {
     path: '/viewInterests',
     component: Interests,
@@ -188,7 +268,15 @@ export default new Router({
     }
   }, {
     path: '/SPViewMyProfile',
-    component: SPViewMyProfile
+    component: SPViewMyProfile,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('usertype') != 1 && localStorage.getItem(
+          'usertype') != 2 && localStorage.getItem('usertype') != 3) {
+        next('/');
+      } else {
+        next()
+      }
+    }
   }, {
     path: '/pendingSP',
     component: pendingSP,

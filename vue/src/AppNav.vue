@@ -434,7 +434,6 @@ if(localStorage.getItem('id_token')!=null){
 }
 
 this.findAllInterests()
-this.getAllAnnouncements();
 
  },
 
@@ -463,6 +462,8 @@ methods: {
           path: '/testingg',
           force: true
         })
+        this.getAllAnnouncements();
+
        this.showgent = true
 }).catch(function(reason) {
    this.message = reason.body.err;
