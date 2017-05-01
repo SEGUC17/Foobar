@@ -952,11 +952,11 @@ a:active {
  methods:{
     getServiceProvider: function (param) {
         if(param!=null){
-        console.log(param)
+        //console.log(param)
       let route ='http://54.77.11.251:3000/api/students/sP/'.concat(param);
 
        this.$http.get(route, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
-      //   console.log(this.$route.params.id);
+      //   //console.log(this.$route.params.id);
 
          this.service=response.data.data.providerProfile;
          this.user =response.data.data.user;
@@ -971,7 +971,7 @@ a:active {
        this.$http.post("http://54.77.11.251:3000/api/students/serviceproviders/offers", {"id":this.user._id}).then(response => {
 
          this.offers=response.body.data.Offers;
-				 console.log(this.offers);
+				 //console.log(this.offers);
        });
 
      },
@@ -996,7 +996,7 @@ a:active {
 
      },  getReviews: function () {
          this.$http.post('http://54.77.11.251:3000/api/students/reviews/view',{"sp_id":this.user._id}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
-console.log(response.data.data.reviews)
+//console.log(response.data.data.reviews)
            this.reviews=response.data.data.reviews
          })
        },
@@ -1009,14 +1009,14 @@ console.log(response.data.data.reviews)
        viewComments: function (review_id) {
          this.$http.post('http://54.77.11.251:3000/api/users/comments/view',{"review_id":review_id}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
            this.reviewid=review_id;
-           console.log(this.reviewid);
+           //console.log(this.reviewid);
          this.pastComments =response.data.data.comments
          })
        },
        addComment: function(){
          this.$http.post('http://54.77.11.251:3000/api/users/comments/create', {"content":this.comment,"review_id":this.reviewid}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
           alert("Comment Added");
-               console.log('success');
+               //console.log('success');
               this.viewComments(this.reviewid);
               this.comment =''
                        });

@@ -20,7 +20,7 @@
   </table>
  <form role="form" class="" @submit.prevent='addAdmin'>
    <div class="form-group">
-         <input v-validate ="{rules:{required:true,email:true}}"type="text" name="admin" v-model=adminemail class="form-control efc" id="admin" placeholder="Add Admin"  required="*" style="width:30%">
+         <input v-validate ="{rules:{required:true,email:true}}"type="email" name="admin" v-model=adminemail class="form-control efc" id="admin" placeholder="Add Admin"  required="*" style="width:30%">
          <span v-show="errors.has('email')">{{ errors.first('email') }}</span>
    </div>
   <div class="row">
@@ -58,11 +58,15 @@ methods:{
           this.$http.post('http://54.77.11.251:3000/api/admins/admin',{email:this.adminemail},{headers : { 'jwt-token' : localStorage.getItem('id_token')}} ).then(response => {
             this.msg="Admin has been added"
             alert(this.msg)
-            console.log(response.body.data.user)
+            //console.log(response.body.data.user)
            this.admins.push(response.body.data.user)
            this.adminemail=''
          }).catch(function(reason){
-           console.log(reason.body.err.msg);
+           swal(
+              'Oops...',
+                reason.body.err.msg,
+                  'error'
+);
          })
         },
 

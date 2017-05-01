@@ -176,6 +176,8 @@
 					<h2 class="to-animate">Service Providers</h2></div>
             <div v-if="authenticated" v-for=" serviceprovider in serviceproviders">
 
+<div v-if="!serviceprovider.user_id.is_deleted">
+
 
                  <center> <router-link :to = "{ name: 'service provider' , params: { id: serviceprovider._id }}">
                   <div class="col-md-4 feature">
@@ -193,13 +195,13 @@
 
               </p>
             </div>
-                  </router-link> </center>
+                  </router-link> </center></div>
                   </div>
                   <div v-if="!authenticated" v-for=" serviceprovider in serviceproviders">
 
 
                        <center>
-                        <div class="col-md-4 feature">
+                        <div class="col-md-4 feature" v-if="!serviceprovider.user_id.is_deleted">
 
                             <center><img class="img-circle img-responsive" v-if="serviceprovider.user_id && serviceprovider.user_id.profileimg.path" :src="'http://54.77.11.251:3000/'+serviceprovider.user_id.profileimg.path.replace('public','')" style="height:150px; width:150px">
                             <i class="glyphicon glyphicon-user" style="height:150px; width:150px" v-else></i></center>
@@ -438,9 +440,9 @@ export default {
 
              this.$router.push({path:'/'});
 
-            console.log('success');
+            //console.log('success');
                     }).catch(function(reason) {
-                        // console.log(reason.body.err);
+                        // //console.log(reason.body.err);
                 // this.failuremessages = reason.body.err;
               if(reason.body.errors!=null)
               {
@@ -450,27 +452,27 @@ export default {
   'error'
 )
 }else if(reason.body.err!=null){
-  console.log(reason.body)
+  //console.log(reason.body)
   swal(
 'Oops...',
 reason.body.err ,
 'error'
 )
 }
-                // console.log(this.failuremessages)
+                // //console.log(this.failuremessages)
                 this.successmessages=[{msg:''}];
         });
 
 	}, srch: function(){
 			this.$http.post('http://54.77.11.251:3000/api/students/home', {search: this.search}).then(data => {
-				console.log(data)
+				//console.log(data)
 				this.results = data.results
 				}).catch(function(reason) {
-				console.log(reason)
+				//console.log(reason)
 			});
 		},getAllServiceProviders: function () {
     this.$http.get('http://54.77.11.251:3000/api/admins/sPs').then(response => {
-        console.log(response.data)
+        //console.log(response.data)
         this.serviceproviders=response.data.data.users;
     })
     }

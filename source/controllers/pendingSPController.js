@@ -38,8 +38,14 @@ const pendingSPController = {
       req.checkBody('email', 'Please enter a Vaild Email').isEmail();
       req.checkBody('phone_number', 'A Phone Number is required').notEmpty();
       req.checkBody('description', 'Description is required').notEmpty();
+      req.checkBody('phone_number', 'A Phone Number is required').isNumber();
 
-
+      req.checkBody('name',
+        'Invalid Characters Used! Only letters, spaces, dots and dashes are allowed! for name'
+      ).matches("^([a-zA-Z]+[.]?[ ]?|[a-zA-Z]+[-]?)+$");
+      req.checkBody('description',
+        'Invalid Characters Used! Only letters, spaces, dots and dashes are allowed! for description'
+      ).matches("^([a-zA-Z]+[.]?[ ]?|[a-zA-Z]+[-]?)+$");
       var errors = req.validationErrors();
 
       if (errors) {

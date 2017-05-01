@@ -276,7 +276,7 @@ methods:{
           var x = confirm("Are you sure you want to edit these attributes")
           if(x){
             this.$http.post('http://54.77.11.251:3000/api/sPs/profile/edit', {"price_category":this.pricecategory,"location":this.location, "description":this.description, "fields":this.fields, "description":this.description, "phone_number":this.phone_number,"lat": this.lat,"lang":this.lang},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
-            console.log(this.location);
+            ////console.log(this.location);
             alert("Profile Edited")
             this.$router.push({path:'/SPViewMyProfile'})
                     })
@@ -284,7 +284,7 @@ methods:{
         },
     newvideo : function(){
         this.$http.post('http://54.77.11.251:3000/api/sPs/videos/upload', {"title":this.title,"videoURL":this.url},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
-          console.log(data)
+          ////console.log(data)
         })
     },
     upload: function(fieldName, fileList) {
@@ -308,7 +308,7 @@ methods:{
           });
         formData.append("user_id",this.user._id)
         this.$http.post('http://54.77.11.251:3000/api/sPs/changedp',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
-            console.log('changed dp');
+            ////console.log('changed dp');
       })
     },
     getVideos: function(){
@@ -336,7 +336,7 @@ methods:{
         var x = confirm("Are you sure you want to edit your password")
           if(x)
           {
-            console.log(this.user);
+            ////console.log(this.user);
             this.$http.post('http://54.77.11.251:3000/api/sPs/sP/editpassword', {"oldPassword":this.oldPassword,"newPassword":this.newPassword, "confirmNewPassword":this.confirmNewPassword,"id":this.user._id},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
             alert("Updated Password")
                 confirmNewPassword=""

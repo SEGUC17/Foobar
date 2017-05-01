@@ -49,7 +49,7 @@ methods:{
           'Announcement posted',
           'success'
         )
-        console.log(data);
+        //console.log(data);
               this.$router.push({path:'/'})
 
                     }).catch(function(reason) {

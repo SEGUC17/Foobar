@@ -151,9 +151,9 @@ methods:{
               image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
               locale: 'auto',
               token: function(token) {
-                console.log('got a token. sending data to 54.77.11.251');
+                //console.log('got a token. sending data to 54.77.11.251');
                 this.stripe_token= token;
-                console.log(this.stripe_token);
+                //console.log(this.stripe_token);
                 this.order_status= "PENDING";
                 Vue.http.post('http://54.77.11.251:3000/api/charge', {token_id: this.stripe_token.id, price: price})
                   .then((payresponse) => {
@@ -212,7 +212,7 @@ methods:{
     if (this.offers.length >0){
       this.numberOfPages=Math.ceil(this.offers.length/this.perPage);
       for(var i = 0 ; i<this.perPage && i<this.offers.length ; i++){
-        console.log('ana hena')
+        //console.log('ana hena')
         this.offersInPage.push(this.offers[i]);
       }
     } else{
@@ -224,7 +224,7 @@ methods:{
   //     this.$http.get('http://54.77.11.251:3000/api/students/viewoffer',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
   //       this.offers= response.data.data.offers;
   //       this.student = response.data.data.student;
-  //               console.log(response.data.data.offers);
+  //               //console.log(response.data.data.offers);
   //     })
   //   },
     Apply: function(offer , index){

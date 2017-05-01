@@ -126,7 +126,7 @@ methods:{
                   'success'
               )
               this.$router.push({path:'/',force:true})
-            console.log('success');
+            //console.log('success');
 
                     }).catch(function(reason) {
                         swal(
@@ -134,7 +134,7 @@ methods:{
                             reason.body.data.err,
                             'error'
                         )
-                        //console.log(reason.body.data.err);
+                        ////console.log(reason.body.data.err);
 
         });
 

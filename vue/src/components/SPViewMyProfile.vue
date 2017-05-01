@@ -148,8 +148,8 @@ methods:{
 
         var pf = response.data.data.providerProfile
 
-        console.log(this.user)
-        console.log(pf)
+        //console.log(this.user)
+        //console.log(pf)
         this.center = {lat: parseFloat(pf.lat), lng: parseFloat(pf.lang)}
         this.markers = [{position: {lat: parseFloat(pf.lat), lng: parseFloat(pf.lang)}}]
         Vue.$gmapDefaultResizeBus.$emit('resize')
@@ -166,12 +166,12 @@ methods:{
     edit: function ()
         {
             this.$http.post('http://54.77.11.251:3000/api/sPs/profile/edit', {"price_category":this.pricecategory,"location":this.location, "description":this.description, "fields":this.fields, "description":this.description, "phone_number":this.phone_number},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
-            console.log('success');
+            //console.log('success');
                     })
         },
     newvideo : function(){
         this.$http.post('http://54.77.11.251:3000/api/sPs/videos/upload', {"title":this.title,"videoURL":this.url},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
-          console.log(data)
+          //console.log(data)
         })
     },
     upload: function(fieldName, fileList) {
@@ -195,7 +195,7 @@ methods:{
           });
         formData.append("user_id",this.user._id)
         this.$http.post('http://54.77.11.251:3000/api/sPs/changedp',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
-            console.log('changed dp');
+            //console.log('changed dp');
       })
     },
     getVideos: function(){

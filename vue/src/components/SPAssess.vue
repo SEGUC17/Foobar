@@ -60,10 +60,10 @@ methods:{
       })
     },
     assess: function(user_id, index, offer_id, field){
-      console.log(user_id+" "+ rating +" "+ offer_id + " "+ field)
+      //console.log(user_id+" "+ rating +" "+ offer_id + " "+ field)
       this.$http.post('http://54.77.11.251:3000/api/sPs/students/assess/'.concat(user_id), {"rating":this.rating[index], "offer_id":offer_id, "field":field},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
         alert("Student Rated");
-            console.log('success');
+            //console.log('success');
             this.getStudents();
                     })
     },

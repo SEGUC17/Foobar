@@ -134,7 +134,7 @@ created(){
 methods:{
         getAllServiceProviders: function () {
         this.$http.get('http://54.77.11.251:3000/api/admins/sPs').then(response => {
-            console.log(response.data)
+            //console.log(response.data)
             this.serviceproviders=response.data.data.users;
         })
         },
@@ -150,7 +150,7 @@ methods:{
             if (this.serviceproviders.length >0){
             this.numberOfPages=Math.ceil(this.serviceproviders.length/this.perPage);
             for(var i = 0 ; i<this.perPage && i<this.serviceproviders.length ; i++){
-                console.log('ana hena')
+                //console.log('ana hena')
                 this.serviceprovidersInPage.push(this.serviceproviders[i]);
             }
             } else{

@@ -71,7 +71,7 @@ methods:{
   this.interestname +" has been added!",
   'success'
 );
-console.log(response);
+//console.log(response);
           }).catch(function(reason) {
                 this.failuremessages = reason.body.err;
                 this.successmessages=[{msg:''}];
@@ -83,7 +83,7 @@ console.log(response);
 
         this.interests = response.body.data.interests
             }).catch(function(reason) {
-                console.log(reason)
+                //console.log(reason)
           });
         },
         reviewDataAnalysis: function () {

@@ -163,7 +163,7 @@ methods:{
         //this.birthdate = response.student.birthdate;
         this.description = this.student.description;
 
-        console.log(this.user);
+        //console.log(this.user);
 
       })
     },
@@ -171,12 +171,12 @@ methods:{
       var x = confirm("Are you sure you want to edit your profile ?");
       if(x){
         let route ='http://54.77.11.251:3000/api/students/student/';
-            console.log(this.name);
+            //console.log(this.name);
       this.$http.post(route, {"name":this.name,"university":this.university, "address":this.address, "birthdate":this.birthdate, "description":this.description,"phone_number":this.phone_number}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
 
         this.$router.push({ name : 'StudentProfile' , params: { Studid : this.$route.params.EditStudid }});
         alert("Your profile was editted")
-        console.log(this.user);
+        //console.log(this.user);
       })
 
       }
@@ -190,7 +190,7 @@ methods:{
           });
         formData.append("user_id",this.user._id)
         this.$http.post('http://54.77.11.251:3000/api/sPs/changedp',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
-            console.log('changed dp');
+            //console.log('changed dp');
       })
     },
     editPassword: function()
@@ -205,9 +205,9 @@ methods:{
       newPassword=""
             this.$router.push({name : 'StudentProfile' , params: { Studid : this.$route.params.EditStudid }})
                     }).catch(function(reason) {
-                        console.log(reason.body.err);
+                        //console.log(reason.body.err);
                 this.failuremessages = reason.body.err;
-                console.log(this.failuremessages)
+                //console.log(this.failuremessages)
                 this.successmessages=[{msg:''}];
                     });
           }

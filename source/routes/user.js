@@ -66,7 +66,12 @@
       'Invalid Characters Used! Only letters, spaces, dots and dashes are allowed!'
     ).matches("^([a-zA-Z]+[.,]?[ ]?|[a-zA-Z]+[-]?)+$");
 
-
+    req.checkBody('description',
+      'Invalid Characters Used! Only letters, spaces, dots and dashes are allowed!'
+    ).matches("^([a-zA-Z]+[.,]?[ ]?|[a-zA-Z]+[-]?)+$");
+    req.checkBody('address',
+      'Invalid Characters Used! Only letters, spaces, dots and dashes are allowed!'
+    ).matches("^([a-zA-Z]+[.,]?[ ]?|[a-zA-Z]+[-]?)+$");
     const errors = req.validationErrors();
     if (errors) {
       res.status(400).json({

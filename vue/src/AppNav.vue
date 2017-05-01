@@ -183,7 +183,7 @@
           <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
               <div class="navbar nav_title" style="border: 0;">
-                <a href="" class="site_title"><i class="fa fa-paw"></i> <span>FOOBAR</span></a>
+                <a href="/" class="site_title"><i class="fa fa-paw"></i> <span>FOOBAR</span></a>
               </div>
 
               <div class="clearfix"></div>
@@ -336,7 +336,7 @@
                           <span class="message">
                             {{n.content.substring(0, 30)}}
                           </span>
-                        
+
                       </li>
 
                       <li>
@@ -425,7 +425,7 @@ if(localStorage.getItem('id_token')!=null){
   this.user.authenticated=true
   this.$http.post('http://54.77.11.251:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
     this.decodeid=decode.body.id
-    //console.log(this.decodeid)
+    ////console.log(this.decodeid)
     this.user.type = decode.body.type;
     this.user.is_blocked = decode.body.is_blocked;
     this.name = decode.body.name;
@@ -451,7 +451,7 @@ methods: {
       app.user.authenticated = true
       app.$http.post('http://54.77.11.251:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
         this.decodeid = decode.body.id;
-        console.log(decode.body.type)
+      //  //console.log(decode.body.type)
         this.user.type = decode.body.type;
         this.user.is_blocked = decode.body.is_blocked;
         localStorage.setItem('usertype', decode.body.type)
@@ -471,12 +471,12 @@ methods: {
   getAllAnnouncements: function () {
       this.$http.get('http://54.77.11.251:3000/api/announcements/view').then(response => {
         this.announcements=response.data.data.announcements
-        console.log(this.announcements);
+      //  //console.log(this.announcements);
         this.numberOfPages=Math.ceil(this.announcements.length/this.perPage);
         for(var i = 0 ; i<this.perPage && i<this.announcements.length ; i++){
           this.announcementsInPage.push(this.announcements[i]);
         }
-        console.log(this.announcementsInPage)
+      //  //console.log(this.announcementsInPage)
       })
     },
   signup : function() {
@@ -512,7 +512,7 @@ methods: {
   resetPW : function() {
     this.$http.post('http://54.77.11.251:3000/api/users/resetPW', {"email":this.resetPWEmail},{"token": localStorage.getItem('id_token')}).then(decode => {
       alert("New Password sent to ".concat(this.resetPWEmail));
-      console.log('success');
+      //console.log('success');
 
   }).catch(function(reason) {
         this.failuremessages = reason.body.err;

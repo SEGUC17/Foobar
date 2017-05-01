@@ -79,11 +79,11 @@ methods:{
             alert("You successfully applied");
              this.$router.push({path:'/'});
 
-            console.log('success');
+            //console.log('success');
                     }).catch(function(reason) {
-                        console.log(reason.body.err);
+                        //console.log(reason.body.err);
                 this.failuremessages = reason.body.err;
-                console.log(this.failuremessages)
+                //console.log(this.failuremessages)
                 this.successmessages=[{msg:''}];
         });
 

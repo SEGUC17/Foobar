@@ -392,14 +392,14 @@ methods:{
     viewComments: function (review_id) {
       this.$http.post('http://54.77.11.251:3000/api/users/comments/view',{"review_id":review_id}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         this.reviewid=review_id;
-        //console.log(this.reviewid);
+        ////console.log(this.reviewid);
         this.pastComments =response.data.data.comments;
           })
     },
     addComment: function(){
       this.$http.post('http://54.77.11.251:3000/api/users/comments/create', {"content":this.comment,"review_id":this.reviewid}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
         alert("Comment Added");
-            console.log('success');
+            //console.log('success');
            this.viewComments(this.reviewid);
            this.comment =''
                     });
