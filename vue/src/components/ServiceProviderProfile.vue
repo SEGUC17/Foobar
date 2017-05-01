@@ -870,7 +870,7 @@ a:active {
 		</div>
 		<!-- /Boxes de Acoes -->
 	</div>
-  <div class="row">
+  <div class="row" v-if="user.type==2">
   <form role="form"  @submit.prevent= "Review">
     <div>
 <fieldset>
