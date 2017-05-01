@@ -6,7 +6,7 @@ const announcementController = {
 
   getAllAnnouncements(req, res) { // viewing all announcements
       const token = req.headers['jwt-token'];
-      if (token !== null && token !== undefined) {
+      if (token !== null) {
         jwt.verify(token, (decoded) => {
           Announcement.find({}).populate('announcer_id').exec((err,
             announcements) => {
