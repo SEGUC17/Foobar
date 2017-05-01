@@ -471,7 +471,7 @@ methods: {
 });
   },
   getAllAnnouncements: function () {
-      this.$http.get('http://54.77.11.251:3000/api/announcements/view').then(response => {
+      this.$http.get('http://54.77.11.251:3000/api/announcements/view',{"token": localStorage.getItem('id_token')}).then(response => {
         this.announcements=response.data.data.announcements
       //  //console.log(this.announcements);
         this.numberOfPages=Math.ceil(this.announcements.length/this.perPage);
