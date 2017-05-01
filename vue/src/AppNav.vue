@@ -13,9 +13,9 @@
               <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                   <li class="active"><a href="#" data-nav-section="home"><span>Home</span></a></li>
-                  <li><a href="#" data-nav-section="about"><span>Students</span></a></li>
+                  <li><a href="#" data-nav-section="about"><span>Our SPS</span></a></li>
                   <li><a href="#" data-nav-section="funfacts"><span>Facts</span></a></li>
-                  <li><a href="#" data-nav-section="contact"><span>Service Providers</span></a></li>
+                  <li><a href="#" data-nav-section="contact"><span>Join Us</span></a></li>
                   <li><a class="external" data-toggle="modal" data-target="#myModal" style="cursor:pointer;"><span>Enter</span></a></li>
                 </ul>
               </div>
@@ -312,7 +312,7 @@
                       <span class=" fa fa-angle-down"></span>
                     </a>
                     <ul class="dropdown-menu dropdown-usermenu pull-right" style="">
-                      <li><a href="javascript:;"> Profile</a></li>
+                      <li><router-link  :to ="{ name : 'StudentProfile' , params: {Studid : this.decodeid}}">Profile</router-link> </li>
                       <li><a  href="/" v-on:click="logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                     </ul>
                   </li>
