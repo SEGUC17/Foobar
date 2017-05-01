@@ -324,19 +324,19 @@
                     </a>
                     <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                        <li v-for="n in announcements">
-                         <a>
+
                         <span class="image">
                             <img v-if="profilepic.path" :src="'http://54.77.11.251:3000/'+profilepic.path.replace('public','')" alt="">
                             <img v-if="!profilepic.path" src="~assets/img/missing.png" alt="">
                         </span>
                           <span>
-                            <span>{{n.title}}</span>
+                            <span>{{n.title.substring(0, 30)}}</span>
                             <span class="time">{{n.createdAt.substring(0, 10)}}</span>
                           </span>
                           <span class="message">
                             {{n.content.substring(0, 30)}}
                           </span>
-                        </a>
+                        
                       </li>
 
                       <li>

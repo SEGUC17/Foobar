@@ -15,7 +15,9 @@
             </div>
             <div class="panel-body">
               <div class="row">
-                <div class="col-md-3 col-lg-3 " align="center"> <img alt="User Pic" src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png" class="img-circle img-responsive"> </div>
+                <div class="col-md-3 col-lg-3 " align="center">         <img v-if="user.profileimg && user.profileimg.path" :src="'http://54.77.11.251:3000/'+user.profileimg.path.replace('public','')" class="img-circle profile_img" style="height:150px; width:150px">        <img v-else src="~assets/img/missing.png" class="img-circle profile_img" style="height:150px; width:150px">
+
+</div>
 
 
                 <div class=" col-md-9 col-lg-9 ">

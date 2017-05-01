@@ -931,7 +931,10 @@ a:active {
       comment:'',
       pastComments:[],
       reviewid:'',
-      reloadCounter:0
+      reloadCounter:0,
+      images:[],
+
+
      }
    },
  created(){
