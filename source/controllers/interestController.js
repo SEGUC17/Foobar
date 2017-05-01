@@ -52,7 +52,7 @@ const interestController = {
             message: err.message,
           });
         } else {
-          //console.log(interests);
+          ////console.log(interests);
           res.status(200).json({
             status: 'success',
             data: {

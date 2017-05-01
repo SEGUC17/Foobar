@@ -75,7 +75,7 @@ const StudentController = {
 
 
     addReview(req, res) {
-        //    console.log(1);
+        //    ////console.log(1);
         //req.checkBody('rating', 'Rating is required').notEmpty();
         req.checkBody('content', 'Content is required').notEmpty();
 
@@ -232,14 +232,14 @@ const StudentController = {
                             message: err.message,
                         });
                     } else {
-                        console.log(decoded.id)
+                        ////console.log(decoded.id)
 
                         Interests.find([], (err, interests) => {
                             interests.forEach((interest) => {
-                                console.log(interest)
+                                ////console.log(interest)
                                 userMap[k] = 0;
                                 assessment.forEach((assess) => {
-                                    console.log(assess)
+                                    ////console.log(assess)
                                     if (interest.name === assess.field) {
                                         userMap[k] += assess.rating
 
@@ -249,7 +249,7 @@ const StudentController = {
 
 
                                 });
-                                console.log(userMap)
+                                ////console.log(userMap)
                                 k++;
                             });
 
@@ -300,7 +300,7 @@ const StudentController = {
                                 message: "You can't register now",
                             });
                         } else if (offer.capacity > 0) {
-                            console.log(offer.sp_id);
+                            ////console.log(offer.sp_id);
                             const reservation = new Reservation({
 
                                 user_id: decoded.id,
@@ -325,7 +325,7 @@ const StudentController = {
                                                 status: 'error',
                                                 message: err.message,
                                             });
-                                            console.log(err);
+                                            ////console.log(err);
                                         } else {
                                             res.status(200).json({
                                                 status: 'success',
@@ -353,7 +353,7 @@ const StudentController = {
         });
     },
     viewStudent(req, res) {
-        console.log(req.params.id);
+        ////console.log(req.params.id);
         User.findOne({
             _id: req.params.id,
         }, (err, user) => {
@@ -367,8 +367,8 @@ const StudentController = {
                     user_id: req.params.id,
                 }, (err, student) => {
                     // Render
-                    console.log(student);
-                    console.log(user);
+                    ////console.log(student);
+                    ////console.log(user);
                     res.status(200).json({
                         status: 'success',
                         data: {
@@ -386,7 +386,7 @@ const StudentController = {
         const token = req.headers['jwt-token'];
         jwt.verify(token, (decoded) => {
             if (decoded.type === 2) {
-                console.log(1);
+                ////console.log(1);
                 Review.find({
                     sp_id: req.body.sp_id
                 }).populate('reviewer_id').populate('sp_id').exec((err,
@@ -403,7 +403,7 @@ const StudentController = {
                                 reviews,
                             },
                         });
-                        console.log(reviews);
+                        ////console.log(reviews);
                     }
                 });
             } else {
@@ -422,24 +422,24 @@ const StudentController = {
                     if (err)
                         return err;
                     else {
-                        console.log(user[0].password);
-                        console.log(req.body.oldPassword)
-                        console.log(req.body.newPassword)
-                        console.log(req.body.confirmNewPassword)
-                        
+                        ////console.log(user[0].password);
+                        ////console.log(req.body.oldPassword)
+                        ////console.log(req.body.newPassword)
+                        ////console.log(req.body.confirmNewPassword)
+
                         req.checkBody('oldPassword', 'Your old Password is required').notEmpty();
                         req.checkBody('newPassword', 'A new Password is required').notEmpty();
                         req.checkBody('oldPassword', 'Passwords do not match').equals(user[0].password);
                         req.checkBody('confirmNewPassword', 'Confirm Password does not match newPassword').equals(req.body.newPassword);
                         var errors = req.validationErrors();
                         if (errors) {
-                            console.log('errors here');
+                            ////console.log('errors here');
                             res.status(400).json({
                                 err: errors
 
                             });
                         } else {
-                            console.log('should modify');
+                            ////console.log('should modify');
                             User.findByIdAndUpdate(decoded.id, {
                                 $set: {
                                     password: req.body.newPassword,
@@ -449,7 +449,7 @@ const StudentController = {
                                 upsert: true,
                                 new: true,
                             }, (err, sP) => {
-                                console.log('modified!');
+                                ////console.log('modified!');
                                 res.status(200).json({
                                     status: 'success',
                                     data: {

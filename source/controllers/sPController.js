@@ -22,7 +22,7 @@ const spController = {
       var errors = req.validationErrors();
 
       if (errors) {
-        //  console.log(errors);
+        //  //console.log(errors);
         res.status(400).json({
           err: errors
 
@@ -72,7 +72,7 @@ const spController = {
             message: err.message,
           });
         } else {
-          //    console.log(images)
+          //    //console.log(images)
           res.status(200).json({
             status: 'success',
             data: {
@@ -101,13 +101,13 @@ const spController = {
                 message: err.message,
               })
             } else {
-              //      console.log(offers);
+              //      //console.log(offers);
               var offers_ids = [];
               var i = offers.length - 1;
               for (i; i > -1; i--) {
                 offers_ids[i] = offers[i]._id;
               }
-              //  console.log(offers_ids);
+              //  //console.log(offers_ids);
 
               Reservation.find({
                 offer_id: {
@@ -157,7 +157,7 @@ const spController = {
                 message: err.message,
               });
             } else {
-              console.log(reviews)
+              //console.log(reviews)
               res.status(200).json({
                 status: 'success',
                 data: {
@@ -221,7 +221,7 @@ const spController = {
         }
       });
     },
-     assessStudent(req, res) {
+    assessStudent(req, res) {
       req.checkBody('rating', 'Rating is required').notEmpty();
 
 
@@ -320,35 +320,35 @@ const spController = {
     },
 
     getSPProfile(req, res) { // viewing a specific SP profile
-      
+
       const query = {
         _id: req.params.id, // Recently Changed to Params
       };
 
       SP.findOne(query, (err, providerProfile) => {
-        if(providerProfile!=undefined)
-        User.findOne({
-          
-          _id: providerProfile.user_id
-        }, (err, user) => {
-       
-          if (err) {
-            res.status(500).json({
-              status: 'error',
-              message: err.message,
-            });
-          } else {
-            res.status(200).json({
-              status: 'success',
-              data: {
-                providerProfile,
-                user,
-              },
-            });
-          }
-        });
+        if (providerProfile != undefined)
+          User.findOne({
+
+            _id: providerProfile.user_id
+          }, (err, user) => {
+
+            if (err) {
+              res.status(500).json({
+                status: 'error',
+                message: err.message,
+              });
+            } else {
+              res.status(200).json({
+                status: 'success',
+                data: {
+                  providerProfile,
+                  user,
+                },
+              });
+            }
+          });
       });
-      },
+    },
 
     // method used to add a video to the database
     addVideoByURL(req, res) {
@@ -362,7 +362,7 @@ const spController = {
       //     err: errors
       //
       //   });
-      //   console.log(errors);
+      //   //console.log(errors);
       // else {
       const token = req.headers['jwt-token'];
       jwt.verify(token, (decoded) => {
@@ -458,11 +458,11 @@ const spController = {
                   }, {
                     price_category,
                     location: req.body.location,
-                    description,
-                    fields,
-                    phone_number,
-                    lat: req.body.lat,
-                    lang: req.body.lang,
+                      description,
+                      fields,
+                      phone_number,
+                      lat: req.body.lat,
+                      lang: req.body.lang,
                   }, (err, sp1) => {
                     if (err) {
                       res.status(500).json({
@@ -543,23 +543,23 @@ const spController = {
 
     },
     editPassword(req, res) {
-      console.log('here');
+      //console.log('here');
       const token = req.headers['jwt-token'];
       jwt.verify(token, (decoded) => {
-        console.log(decoded)
+        //console.log(decoded)
         if (decoded.type === 3) {
           User.find({
             _id: req.body.id
           }, function(err, user) {
-            console.log(req.body.id);
-            console.log(user)
+            //console.log(req.body.id);
+            //console.log(user)
             if (err)
               return err;
             else {
-              console.log(user[0].password);
-              console.log(req.body.oldPassword)
-              console.log(req.body.newPassword)
-              console.log(req.body.confirmNewPassword)
+              //console.log(user[0].password);
+              //console.log(req.body.oldPassword)
+              //console.log(req.body.newPassword)
+              //console.log(req.body.confirmNewPassword)
 
               req.checkBody('oldPassword',
                 'Your old Password is required').notEmpty();
@@ -572,13 +572,13 @@ const spController = {
               var errors = req.validationErrors();
 
               if (errors) {
-                console.log('errors here');
+                //console.log('errors here');
                 res.status(400).json({
                   err: errors
 
                 });
               } else {
-                console.log('should modify');
+                //console.log('should modify');
                 User.findByIdAndUpdate(decoded.id, {
                   $set: {
                     password: req.body.newPassword,
@@ -588,7 +588,7 @@ const spController = {
                   upsert: true,
                   new: true,
                 }, (err, sP) => {
-                  console.log('modified!');
+                  //console.log('modified!');
                   res.status(200).json({
                     status: 'success',
                     data: {

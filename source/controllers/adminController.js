@@ -353,7 +353,7 @@ const adminController = {
                   message: err,
                 });
               }
-              console.log('Message %s sent: %s', info.messageId,
+              //console.log('Message %s sent: %s', info.messageId,
                 info.response);
             });
           } else if (req.body.disapprove) {
@@ -392,7 +392,7 @@ const adminController = {
         var value = myArray[i];
         freq[value] == null ? freq[value] = 1 : freq[value]++;
       }
-      // console.log(freq);
+      // //console.log(freq);
       //Create Array of Filtered Values
       for (var value in freq) {
         newArray.push(value);
@@ -451,16 +451,16 @@ const adminController = {
 
       //     if (decoded.type === 1) {
       StudentInterest.find([]).populate('interest_id').exec((err, interests) => {
-        // console.log(interests)
+        // //console.log(interests)
         interests.forEach((rest) => {
           if(rest.interest_id!== undefined &&rest.interest_id!==null){
-          console.log(rest.interest_id.name);
+          //console.log(rest.interest_id.name);
           userMap[k] = rest.interest_id.name;
           k += 1;}
         });
-        console.log(userMap)
+        //console.log(userMap)
         frequency = adminController.Occurances(userMap);
-        console.log(frequency[0]);
+        //console.log(frequency[0]);
 
         temp = adminController.sortByFrequencyAndFilter(userMap)
 

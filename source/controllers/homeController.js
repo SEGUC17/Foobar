@@ -111,9 +111,9 @@ const homeController = {
                     user_id: decoded.id
                   }, (err, student) => {
                     if (err) {
-                      console.log(err);
+                      //console.log(err);
                     } else if (z !== 0) {
-                      //  console.log(student);
+                      //  //console.log(student);
 
                       res.status(200).json({
                         status: 'success',
@@ -129,7 +129,7 @@ const homeController = {
               });
             });
             if (z === 0) {
-              //  console.log(1);
+              //  //console.log(1);
               Offer.find({}).populate('sp_id').exec((err, offers) => {
 
                 if (err) {
@@ -144,9 +144,9 @@ const homeController = {
                     user_id: decoded.id
                   }, (err, student) => {
                     if (err) {
-                      console.log(err);
+                      //console.log(err);
                     } else {
-                      //  console.log(student);
+                      //  //console.log(student);
 
                       res.status(200).json({
                         status: 'success',
@@ -188,7 +188,7 @@ const homeController = {
       var errors = req.validationErrors();
 
       if (errors) {
-        console.log("error RPW");
+        //console.log("error RPW");
         res.status(400).json({
           err: errors
 
@@ -196,7 +196,7 @@ const homeController = {
       } else {
         const email = req.body.email;
         const password = generatePassword();
-        //  console.log(password);
+        //  //console.log(password);
         User.findOne({
           email: email,
         }, (err, user) => {
@@ -245,7 +245,7 @@ const homeController = {
               message: error,
             });
           }
-          console.log('Message %s sent: %s', info.messageId, info.response);
+          //console.log('Message %s sent: %s', info.messageId, info.response);
         });
       }
     },
