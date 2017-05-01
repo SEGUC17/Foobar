@@ -456,13 +456,14 @@ methods: {
         localStorage.setItem('usertype', decode.body.type)
         this.name = decode.body.name;
         this.profilepic = decode.body.image;
+        this.getAllAnnouncements();
+
       })
        $('#myModal').modal('hide');
        this.$router.go({
           path: '/testingg',
           force: true
         })
-        this.getAllAnnouncements();
 
        this.showgent = true
 }).catch(function(reason) {
