@@ -17,15 +17,15 @@ RadarChart.extend({
 
     created() {
         this.getReviewData()
-            
+
     },
     methods: {
-    
+
 
         getReviewData: function() {
-          
-            let route = 'http://localhost:3000/api/students/progress';
-            
+
+            let route = 'http://54.77.11.251:3000/api/students/progress';
+
             this.$http.get(route, { headers: { 'jwt-token': localStorage.getItem('id_token') } }).then(response => {
 
 
@@ -38,14 +38,14 @@ RadarChart.extend({
                     this.dataRatings.push(this.ratings[i]);
                     // if (i === 1) {
                  }   //     console.log("ahmed");
-              
-                  } 
+
+                  }
                       else{
                     this.temp.push("No Assessments")
                     this.dataRatings.push(0)
                 }
 
-                
+
                 this.render();
 
             })
@@ -63,7 +63,7 @@ RadarChart.extend({
 
                 labels: this.temp,
                 datasets: [{
-                    
+
                         label: 'My Second dataset',
                         backgroundColor: 'rgba(255,99,132,0.2)',
                         borderColor: 'rgba(255,99,132,1)',
@@ -72,7 +72,7 @@ RadarChart.extend({
                         pointHoverBackgroundColor: '#fff',
                         pointHoverBorderColor: 'rgba(255,99,132,1)',
                         data: this.dataRatings
-                    
+
                 }]
             }), {
                 responsive: true,
