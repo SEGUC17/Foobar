@@ -354,7 +354,7 @@ const adminController = {
                 });
               }
               //console.log('Message %s sent: %s', info.messageId,
-                info.response);
+              //  info.response);
             });
           } else if (req.body.disapprove) {
             // finding the target sp and setting is_declined attr. to true
@@ -453,10 +453,12 @@ const adminController = {
       StudentInterest.find([]).populate('interest_id').exec((err, interests) => {
         // //console.log(interests)
         interests.forEach((rest) => {
-          if(rest.interest_id!== undefined &&rest.interest_id!==null){
-          //console.log(rest.interest_id.name);
-          userMap[k] = rest.interest_id.name;
-          k += 1;}
+          if (rest.interest_id !== undefined && rest.interest_id !==
+            null) {
+            //console.log(rest.interest_id.name);
+            userMap[k] = rest.interest_id.name;
+            k += 1;
+          }
         });
         //console.log(userMap)
         frequency = adminController.Occurances(userMap);

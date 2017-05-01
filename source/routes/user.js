@@ -90,54 +90,54 @@
         is_blocked: false,
       });
       user.save((err) => {
+        if (err) {
+          return res.status(400).json({
+            err: [{
+              msg: 'Email is already taken'
+            }],
+          });
+        }
+
+
+        const newStudent = new Student({
+          user_id: user._id,
+          university: req.body.university,
+          address: req.body.address,
+          birthdate: req.body.birthdate,
+          description: req.body.description,
+
+        });
+
+
+
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: 'foobar.se@gmail.com',
+            pass: 'foobar1234',
+          },
+        });
+
+        // setup email data with unicode symbols
+        const mailOptions = {
+          from: ' "Foobar" <foobar.se@gmail.com>', // sender address
+          to: email, // list of receivers
+          subject: 'System Approval ✔', // Subject line
+          text: `Congratulations! You have been approved for our system and now you can login using your email and password:${
+    password}`, // plain text body
+        };
+
+        // send mail with defined transport object
+        transporter.sendMail(mailOptions, (err, info) => {
           if (err) {
-            return res.status(400).json({
-              err: [{
-                msg: 'Email is already taken'
-              }],
+            res.status(500).json({
+              status: 'error',
+              message: err,
             });
           }
-
-
-          const newStudent = new Student({
-            user_id: user._id,
-            university: req.body.university,
-            address: req.body.address,
-            birthdate: req.body.birthdate,
-            description: req.body.description,
-
-          });
-
-
-
-          const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-              user: 'foobar.se@gmail.com',
-              pass: 'foobar1234',
-            },
-          });
-
-          // setup email data with unicode symbols
-          const mailOptions = {
-            from: ' "Foobar" <foobar.se@gmail.com>', // sender address
-            to: email, // list of receivers
-            subject: 'System Approval ✔', // Subject line
-            text: `Congratulations! You have been approved for our system and now you can login using your email and password:${
-    password}`, // plain text body
-          };
-
-          // send mail with defined transport object
-          transporter.sendMail(mailOptions, (err, info) => {
-              if (err) {
-                res.status(500).json({
-                  status: 'error',
-                  message: err,
-                });
-              }
-              //console.log('Message %s sent: %s', info.messageId,
-              info.response);
-          });
+          //console.log('Message %s sent: %s', info.messageId,
+          //  info.response);
+        });
 
         const interests = req.body.interests;
         //console.log(user);
@@ -180,7 +180,7 @@
           message: 'Signup success',
         });
       });
-  }
+    }
   });
   router.post('/resetPW', homeController.resetPassword);
   router.post('/decode', homeController.getsignedvals); // decoding token from front end
