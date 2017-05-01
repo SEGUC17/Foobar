@@ -54,11 +54,11 @@
                   <form @submit.prevent="login" id="login-form"  role="form" style="display: block;">
 
                     <div class="form-group">
-                      <input v-if="!reset" type="text" name="email" id="email" tabindex="1" v-model="creds.username" class="form-control efc" placeholder="Email" value="" required="true">
+                      <input v-show="!reset" type="text" name="email" id="email" tabindex="1" v-model="creds.username" class="form-control efc" placeholder="Email" value="" required="true">
                     </div>
 
                     <div class="form-group">
-                      <input  v-if="!reset" type="password" name="password" id="password" tabindex="2" v-model="creds.password" class="form-control efc" placeholder="Password" required="true">
+                      <input  v-show="!reset" type="password" name="password" id="password" tabindex="2" v-model="creds.password" class="form-control efc" placeholder="Password" required="true">
                     </div>
 
                     <div class="form-group text-center">
@@ -69,7 +69,7 @@
                     <div class="form-group">
                       <div class="row">
                         <div class="col-sm-6 col-sm-offset-3">
-                          <input  v-if="!reset" type="submit"  name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login efc" value="Log In">
+                          <input  v-show="!reset" type="submit"  name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login efc" value="Log In">
                         </div>
                       </div>
                     </div>
@@ -78,7 +78,7 @@
                       <div class="row">
                         <div class="col-lg-12">
                           <div class="text-center">
-                              <a  v-if="!reset" v-on:click="setReset()" tabindex="5" href="#resetPW-form" class="forgot-password">Forgot Password?</a>
+                              <a  v-show="!reset" v-on:click="setReset()" tabindex="5" href="#resetPW-form" class="forgot-password">Forgot Password?</a>
                           </div>
                         </div>
                       </div>
@@ -147,7 +147,7 @@
 
                   <form @submit.prevent="resetPW" id="resetPW-form"  role="form" style="display: block;">
                     <div class="form-group">
-                      <input  v-if="reset" type="text" name="email" id="email" tabindex="1" v-model="resetPWEmail" class="form-control efc" placeholder="Email" value="" required="true">
+                      <input  v-show="reset" type="text" name="email" id="email" tabindex="1" v-model="resetPWEmail" class="form-control efc" placeholder="Email" value="" required="true">
                     </div>
 
                     <div class="form-group text-center">
@@ -158,7 +158,7 @@
                     <div class="form-group">
                       <div class="row">
                         <div class="col-sm-6 col-sm-offset-3">
-                          <input  v-if="reset" type="submit"  v-on:click="resetPW()" name="resetPW-submit" id="resetPW-submit" tabindex="7" class="form-control btn btn-login efc" value="Reset Password">
+                          <input  v-if="reset" type="submit"   name="resetPW-submit" id="resetPW-submit" tabindex="7" class="form-control btn btn-login efc" value="Reset Password">
                         </div>
                       </div>
                     </div>
@@ -331,7 +331,7 @@
                         </span>
                           <span>
                             <span>{{n.title}}</span>
-                            <span class="time">{{n.createdAt}}</span>
+                            <span class="time">{{n.createdAt.substring(0, 10)}}</span>
                           </span>
                           <span class="message">
                             {{n.content}}
