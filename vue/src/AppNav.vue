@@ -334,7 +334,7 @@
                             <span class="time">{{n.createdAt.substring(0, 10)}}</span>
                           </span>
                           <span class="message">
-                            {{n.content}}
+                            {{n.content.substring(0, 30)}}
                           </span>
                         </a>
                       </li>

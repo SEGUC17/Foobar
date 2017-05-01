@@ -174,7 +174,7 @@
       <div class="row">
       <div class="col-md-12 section-heading text-center">
 					<h2 class="to-animate">Service Providers</h2></div>
-            <div v-for=" serviceprovider in serviceproviders">
+            <div v-if="authenticated" v-for=" serviceprovider in serviceproviders">
 
 
                  <center> <router-link :to = "{ name: 'service provider' , params: { id: serviceprovider._id }}">
@@ -195,6 +195,29 @@
             </div>
                   </router-link> </center>
                   </div>
+                  <div v-if="!authenticated" v-for=" serviceprovider in serviceproviders">
+
+
+                       <center>
+                        <div class="col-md-4 feature">
+
+                            <center><img class="img-circle img-responsive" v-if="serviceprovider.user_id && serviceprovider.user_id.profileimg.path" :src="'http://54.77.11.251:3000/'+serviceprovider.user_id.profileimg.path.replace('public','')" style="height:150px; width:150px">
+                            <i class="glyphicon glyphicon-user" style="height:150px; width:150px" v-else></i></center>
+                                <h3>Name: {{serviceprovider.user_id.name}}</h3>
+                                <div class="title_border"></div>
+                                <p><h5 class="title"></h5>
+                    </p>
+                                <p>Email: {{serviceprovider.user_id.email}} </p>
+                    <p class="info">Phone Number: {{serviceprovider.phone_number}}<br />
+                     Description: {{serviceprovider.description.substring(0, 30)}}<span v-if="serviceprovider.description.length>30">...</span>
+
+
+                    </p>
+                  </div>
+                      </center>
+                        </div>
+
+
 
   </div>
 </div>
@@ -395,8 +418,15 @@ export default {
 			successmessages:[{msg:''}],
 			failuremessages:[{msg:''}],
       serviceproviders:[],
+
+        authenticated: false,
+
+
       }
     },created(){
+      if(localStorage.getItem('id_token')!=null){
+        this.authenticated=true
+      }
       this.getAllServiceProviders()
     },
   methods: {
