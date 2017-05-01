@@ -655,7 +655,7 @@ a:active {
 			<input id="tab2" type="radio" name="tabs" v-on:click="Offers">
 			<label for="tab2"><span>Offers</span></label>
 
-			<input id="tab3" type="radio" name="tabs">
+			<input id="tab3" type="radio" name="tabs" v-on:click="getImages">
 			<label for="tab3"></i><span>Images</span></label>
 
 			<input id="tab4" type="radio" name="tabs" v-on:click="Video">
