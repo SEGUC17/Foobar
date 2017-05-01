@@ -870,7 +870,7 @@ a:active {
 		</div>
 		<!-- /Boxes de Acoes -->
 	</div>
-  <div class="row" v-if="user.type==2">
+  <div class="row" v-if="type==2">
   <form role="form"  @submit.prevent= "Review">
     <div>
 <fieldset>
@@ -936,14 +936,18 @@ a:active {
       reloadCounter:0,
       images:[],
 
-
+type:''
      }
    },
  created(){
      if(this.$route.params.id!= null)
      this.getServiceProvider(this.$route.params.id)
 
+     this.$http.post('http://54.77.11.251:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
+       ////console.log(this.decodeid)
+       this.type = decode.body.type;
 
+   })
 
  },
   watch: {
