@@ -356,7 +356,7 @@ const StudentController = {
         ////console.log(req.params.id);
         User.findOne({
             _id: req.params.id,
-        }, (err, user) => {
+        },{password:0}, (err, user) => {
             if (err) {
                 res.status(500).json({
                     status: 'error',
@@ -389,7 +389,7 @@ const StudentController = {
                 ////console.log(1);
                 Review.find({
                     sp_id: req.body.sp_id
-                }).populate('reviewer_id').populate('sp_id').exec((err,
+                }).populate('reviewer_id',{password:0}).populate('sp_id',{password:0}).exec((err,
                     reviews) => {
                     if (err) {
                         res.status(500).json({

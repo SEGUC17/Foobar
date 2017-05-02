@@ -8,7 +8,7 @@ const announcementController = {
       const token = req.headers['jwt-token'];
       if (token !== null) {
         jwt.verify(token, (decoded) => {
-          Announcement.find({}).populate('announcer_id').exec((err,
+          Announcement.find({}).populate('announcer_id',{password:0}).exec((err,
             announcements) => {
             if (err) {
               res.status(500).json({

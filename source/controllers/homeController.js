@@ -95,7 +95,7 @@ const homeController = {
                     }
                   });
                 });
-                Offer.find({}).populate('sp_id').exec((err, off) => {
+                Offer.find({}).populate('sp_id',{password:0}).exec((err, off) => {
                   tempInterest.forEach((name) => {
                     off.forEach((offerfield) => {
                       if (name == offerfield.field) {
@@ -130,7 +130,7 @@ const homeController = {
             });
             if (z === 0) {
               //  //console.log(1);
-              Offer.find({}).populate('sp_id').exec((err, offers) => {
+              Offer.find({}).populate('sp_id',{password:0}).exec((err, offers) => {
 
                 if (err) {
                   return res.status(500).json({

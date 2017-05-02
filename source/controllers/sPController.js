@@ -114,7 +114,7 @@ const spController = {
                   $in: offers_ids
                 },
                 is_assessed: false
-              }).populate('user_id').populate('offer_id').exec((err,
+              }).populate('user_id',{password:0}).populate('offer_id').exec((err,
                 students) => {
                 if (err) {
                   res.status(500).json({
@@ -149,7 +149,7 @@ const spController = {
         if (decoded.type === 3) {
           Review.find({
             sp_id: decoded.id
-          }).populate('reviewer_id').populate('sp_id').exec((err,
+          }).populate('reviewer_id',{password:0}).populate('sp_id',{password:0}).exec((err,
             reviews) => {
             if (err) {
               res.status(500).json({
@@ -178,7 +178,7 @@ const spController = {
       jwt.verify(token, (decoded) => {
         Comment.find({
           review_id: req.body.review_id
-        }).populate('commenter_id').exec((err, comments) => {
+        }).populate('commenter_id',{password:0}).exec((err, comments) => {
           if (err) {
             res.status(500).json({
               status: 'error',

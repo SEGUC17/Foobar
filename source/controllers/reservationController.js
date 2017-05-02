@@ -12,7 +12,7 @@ const reservationController = {
           user_id: decoded.id,
         };
 
-        Reservation.find(query).populate('user_id').populate('offer_id').populate('service_provider_id').exec((err, reservations) => {
+        Reservation.find(query).populate('user_id',{password:0}).populate('offer_id').populate('service_provider_id',{password:0}).exec((err, reservations) => {
           if (err) {
             res.status(500).json({
               status: 'error',
@@ -33,7 +33,7 @@ const reservationController = {
           service_provider_id: decoded.id,
         };
 
-        Reservation.find(query).populate('user_id').populate('offer_id').populate('service_provider_id').exec((err, reservations) => {
+        Reservation.find(query).populate('user_id',{password:0}).populate('offer_id').populate('service_provider_id',{password:0}).exec((err, reservations) => {
           if (err) {
             res.status(500).json({
               status: 'error',
