@@ -61,17 +61,17 @@
     req.checkBody('university', 'university is required').notEmpty();
     req.checkBody('name',
       'Invalid Characters Used! Only letters, spaces, dots and dashes are allowed!'
-    ).matches("^([a-zA-Z]+[.]?[ ]?|[a-zA-Z]+[-]?)+$");
+    ).matches("^([a-zA-Z0-9!@#$%^*_|]");
     req.checkBody('university',
       'Invalid Characters Used! Only letters, spaces, dots and dashes are allowed!'
-    ).matches("^([a-zA-Z]+[.,]?[ ]?|[a-zA-Z]+[-]?)+$");
+    ).matches("^([a-zA-Z0-9!@#$%^*_|]");
 
     req.checkBody('description',
       'Invalid Characters Used! Only letters, spaces, dots and dashes are allowed!'
-    ).matches("^([a-zA-Z]+[.,]?[ ]?|[a-zA-Z]+[-]?)+$");
+    ).matches("^([a-zA-Z0-9!@#$%^*_|]");
     req.checkBody('address',
       'Invalid Characters Used! Only letters, spaces, dots and dashes are allowed!'
-    ).matches("^([a-zA-Z]+[.,]?[ ]?|[a-zA-Z]+[-]?)+$");
+    ).matches("^([a-zA-Z0-9!@#$%^*_|]");
     const errors = req.validationErrors();
     if (errors) {
       res.status(400).json({
