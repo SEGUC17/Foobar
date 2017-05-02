@@ -300,6 +300,9 @@ const spController = {
     getAllSPProfiles(req, res) { // viewing a summary of all SP profiles
       // const token = req.headers['jwt-token'];
       // jwt.verify(token, (decoded) => {
+        const token = req.headers['jwt-token'];
+        jwt.verify(token, (decoded) => {
+          
       SP.find({}).populate('user_id').exec((err, users) => {
         if (err) {
           res.status(500).json({
@@ -317,6 +320,8 @@ const spController = {
         }
         // });
       });
+    
+  });
     },
 
     getSPProfile(req, res) { // viewing a specific SP profile

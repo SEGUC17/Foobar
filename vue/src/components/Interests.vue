@@ -65,7 +65,7 @@ this.getInterests();
 methods:{
     addInterest: function () {
 
-      this.$http.post('http://54.77.11.251:3000/api/admins/addInterest',{name: this.interestname },{headers : { 'jwt-token' : localStorage.getItem('id_token')}} ).then(response => {
+      this.$http.post('http://localhost:3000/api/admins/addInterest',{name: this.interestname },{headers : { 'jwt-token' : localStorage.getItem('id_token')}} ).then(response => {
       swal(
   'Success!',
   this.interestname +" has been added!",
@@ -79,7 +79,7 @@ methods:{
       },
       getInterests: function () {
 
-      this.$http.get('http://54.77.11.251:3000/api/students/all/interests',{headers : { 'jwt-token' : localStorage.getItem('id_token')}} ).then(response => {
+      this.$http.get('http://localhost:3000/api/students/all/interests',{headers : { 'jwt-token' : localStorage.getItem('id_token')}} ).then(response => {
 
         this.interests = response.body.data.interests
             }).catch(function(reason) {
@@ -87,7 +87,7 @@ methods:{
           });
         },
         reviewDataAnalysis: function () {
-          this.$http.get('http://54.77.11.251:3000/api/admins/reviewinterest',{headers : { 'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+          this.$http.get('http://localhost:3000/api/admins/reviewinterest',{headers : { 'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
             this.most= response.body.data.most,
             this.least = response.body.data.least
           })

@@ -95,7 +95,7 @@
                 <router-link :to = "{ name: 'service provider' , params: { id: serviceprovider._id }}">
                 <div class="col-md-4 feature">
 
-                    <center><img class="img-circle img-responsive" v-if="serviceprovider.user_id && serviceprovider.user_id.profileimg.path" :src="'http://54.77.11.251:3000/'+serviceprovider.user_id.profileimg.path.replace('public','')" style="height:150px; width:150px">
+                    <center><img class="img-circle img-responsive" v-if="serviceprovider.user_id && serviceprovider.user_id.profileimg.path" :src="'http://localhost:3000/'+serviceprovider.user_id.profileimg.path.replace('public','')" style="height:150px; width:150px">
                     <i class="glyphicon glyphicon-user" style="height:150px; width:150px" v-else></i></center>
                         <h3>Name: {{serviceprovider.user_id.name}}</h3>
                         <div class="title_border"></div>
@@ -135,13 +135,13 @@ created(){
 },
 methods:{
         getAllServiceProviders: function () {
-        this.$http.get('http://54.77.11.251:3000/api/admins/sPs').then(response => {
+        this.$http.get('http://localhost:3000/api/admins/sPs').then(response => {
             //console.log(response.data)
             this.serviceproviders=response.data.data.users;
         })
         },
         search: function(){
-            this.$http.post('http://54.77.11.251:3000/api/students/searchSPs',{"search":this.srch},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response=> {
+            this.$http.post('http://localhost:3000/api/students/searchSPs',{"search":this.srch},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response=> {
             this.serviceproviders = response.body.data.sps
             this.reload()
         })

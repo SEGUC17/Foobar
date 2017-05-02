@@ -20,7 +20,7 @@ const Video = require('../source/models/Video');
 const app = express();
 
 app.use(cors({
-  origin: 'http://54.77.11.251:8080',
+  origin: 'http://localhost:8080',
 }));
 
 app.use(bodyParser.urlencoded({

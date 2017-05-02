@@ -28,6 +28,12 @@ userSchema.plugin(filePlugin, {
   relative_to: uploads_base,
 });
 
+userSchema.methods.toJSON = function() {
+  var obj = this.toObject()
+  delete obj.password
+  return obj
+}
+
 
 // methods ======================
 

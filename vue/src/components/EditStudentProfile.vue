@@ -15,14 +15,15 @@
             </div>
             <div class="panel-body">
               <div class="row">
-                <div class="col-md-3 col-lg-3 " align="center">         <img v-if="user.profileimg && user.profileimg.path" :src="'http://54.77.11.251:3000/'+user.profileimg.path.replace('public','')" class="img-circle profile_img" style="height:150px; width:150px">        <img v-else src="~assets/img/missing.png" class="img-circle profile_img" style="height:150px; width:150px">
-
-</div>
-
-
+                
                 <div class=" col-md-9 col-lg-9 ">
                  <table class="table table-user-information">
+
+                 <center> <div class="col-md-3 col-lg-3 " align="center">         <img v-if="user.profileimg && user.profileimg.path" :src="'http://localhost:3000/'+user.profileimg.path.replace('public','')" class="img-circle profile_img" style="height:150px; width:150px">        <img v-else src="~assets/img/missing.png" class="img-circle profile_img" style="height:150px; width:150px">
+                </div></center>
+
                     <tbody>
+                    <br>
                      <tr>
                         <td>Name: </td>
                         <td>
@@ -44,13 +45,15 @@
 
                       <tr>
                         <td>Date of Birth</td>
-                        <td>{{student.birthdate}}</td>
+                        <td>
+                          <input type="date"  v-model="birthdate" :value="this.birthdate">
+                        </td>
                       </tr>
 
                          <tr>
                              <tr>
                         <td>Description</td>
-                        <td><textarea v-model="description"></textarea> </td>
+                        <td><textarea v-model="description" :value="this.description"></textarea> </td>
                       </tr>
                         <tr>
                         <td>Home Address</td>
@@ -150,7 +153,7 @@ created(){
 methods:{
     getStudent: function () {
 
-      let route ='http://54.77.11.251:3000/api/students/student/'.concat(this.$route.params.EditStudid);
+      let route ='http://localhost:3000/api/students/student/'.concat(this.$route.params.EditStudid);
 
 
       this.$http.get(route, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
@@ -160,7 +163,7 @@ methods:{
         this.name = this.user.name;
         this.university = this.student.university;
         this.address = this.student.address;
-        //this.birthdate = response.student.birthdate;
+        this.birthdate = this.student.birthdate;
         this.description = this.student.description;
 
         //console.log(this.user);
@@ -170,7 +173,7 @@ methods:{
     EditStudent: function() {
       var x = confirm("Are you sure you want to edit your profile ?");
       if(x){
-        let route ='http://54.77.11.251:3000/api/students/student/';
+        let route ='http://localhost:3000/api/students/student/';
             //console.log(this.name);
       this.$http.post(route, {"name":this.name,"university":this.university, "address":this.address, "birthdate":this.birthdate, "description":this.description,"phone_number":this.phone_number}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
 
@@ -189,7 +192,7 @@ methods:{
             formData.append(fieldName, fileList[x], fileList[x].name);
           });
         formData.append("user_id",this.user._id)
-        this.$http.post('http://54.77.11.251:3000/api/sPs/changedp',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+        this.$http.post('http://localhost:3000/api/sPs/changedp',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
             //console.log('changed dp');
       })
     },
@@ -198,7 +201,7 @@ methods:{
         var x = confirm("Are you sure you want to edit your password")
           if(x)
           {
-            this.$http.post('http://54.77.11.251:3000/api/students/student/editpassword', {"oldPassword":this.oldPassword,"newPassword":this.newPassword, "confirmNewPassword":this.confirmNewPassword,"id":this.$route.params.EditStudid},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+            this.$http.post('http://localhost:3000/api/students/student/editpassword', {"oldPassword":this.oldPassword,"newPassword":this.newPassword, "confirmNewPassword":this.confirmNewPassword,"id":this.$route.params.EditStudid},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
             alert("Updated Password")
                 confirmNewPassword=""
       oldPassword=""

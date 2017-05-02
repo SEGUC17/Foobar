@@ -43,7 +43,7 @@ created(){
 },
 methods:{
     getAllStudents: function (key) {
-      this.$http.get('http://54.77.11.251:3000/api/admins/viewstudents',{headers : { 'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.get('http://localhost:3000/api/admins/viewstudents',{headers : { 'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         //console.log(response.body.data.students)
         this.students=response.body.data.students
         this.students= this.students.filter(function(student){
@@ -53,7 +53,7 @@ methods:{
     },   deleteS: function (key,name) {
 
 
-          this.$http.post('http://54.77.11.251:3000/api/admins/deletes',{email : key},{headers : { 'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+          this.$http.post('http://localhost:3000/api/admins/deletes',{email : key},{headers : { 'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
 
             this.removestudent(key,name)
           })
@@ -73,7 +73,7 @@ this.getAllStudents()
       blockS(email,name){
 
 
-        this.$http.post('http://54.77.11.251:3000/api/admins/blocks/',{email: email} ,{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+        this.$http.post('http://localhost:3000/api/admins/blocks/',{email: email} ,{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
           swal(
             'Success!',
             name +' has been blocked.',
