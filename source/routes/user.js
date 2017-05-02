@@ -60,15 +60,15 @@
     req.checkBody('email', 'Must be a valid Email').isEmail();
     req.checkBody('university', 'university is required').notEmpty();
     req.checkBody('name',
-      'Invalid Characters Used! Only letters, spaces, dots and dashes are allowed!'
-    ).matches("^([a-zA-Z0-9!@#$%^*_|]");
+      'Invalid Characters Used in name field! Only letters, spaces, dots and dashes are allowed!'
+    ).matches("/^[A-Za-z0-9 ]{3,20}$/");
     req.checkBody('university',
-      'Invalid Characters Used! Only letters, spaces, dots and dashes are allowed!'
-    ).matches("^([a-zA-Z0-9!@#$%^*_|]");
+      'Invalid Characters Used in university field! Only letters, spaces, dots and dashes are allowed!'
+    ).matches("/^[A-Za-z0-9_]{3,20}$/");
 
     req.checkBody('address',
-      'Invalid Characters Used! Only letters, spaces, dots and dashes are allowed!'
-    ).matches("^([a-zA-Z0-9!@#$%^*_|]");
+      'Invalid Characters Used in address field! Only letters, spaces, dots and dashes are allowed!'
+    ).matches("/^[A-Za-z0-9_]{3,20}$/");
     const errors = req.validationErrors();
     if (errors) {
       res.status(400).json({
