@@ -66,9 +66,6 @@
       'Invalid Characters Used! Only letters, spaces, dots and dashes are allowed!'
     ).matches("^([a-zA-Z0-9!@#$%^*_|]");
 
-    req.checkBody('description',
-      'Invalid Characters Used! Only letters, spaces, dots and dashes are allowed!'
-    ).matches("^([a-zA-Z0-9!@#$%^*_|]");
     req.checkBody('address',
       'Invalid Characters Used! Only letters, spaces, dots and dashes are allowed!'
     ).matches("^([a-zA-Z0-9!@#$%^*_|]");
