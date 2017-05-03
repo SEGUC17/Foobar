@@ -214,7 +214,7 @@
                     <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                       <ul class="nav child_menu">
                           <li>
-                            <router-link to="Adminpostannouncement">Post</router-link>
+                            <router-link to="Adminpostannouncement">Post Announcement</router-link>
                           </li>
                           <li>
                             <router-link to="/reviewData"> Review Data</router-link>

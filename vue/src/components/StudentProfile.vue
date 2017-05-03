@@ -73,7 +73,7 @@ label {
 
                       <tr>
                         <td>Date of Birth</td>
-                        <td>{{student.birthdate.substring(0, 10)}}</td>
+                        <td ><p v-if="student.birthdate!=undefined">{{student.birthdate.substring(0, 10)}} </p></td>
                       </tr>
 
                          <tr>
