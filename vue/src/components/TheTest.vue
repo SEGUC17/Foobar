@@ -138,10 +138,10 @@ data(){
                       }
                   ]
               },{
-                  text: "You do not mind being at the center of attention.",
+                  text: "People can rarely upset you.",
                   responses: [{
                           text: 'Agree',
-                          value: 'Leading'
+                          value: 'Cultural'
                       },
                       {
                           text: 'Neutral',
@@ -149,7 +149,7 @@ data(){
                       },
                       {
                           text: 'Disagree',
-                          value: 'Arts'
+                          value: 'Music'
                       }
                   ]
               },{
