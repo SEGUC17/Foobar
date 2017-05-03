@@ -54,7 +54,7 @@ label {
               <div class="row">
 
         <center>
-        <img v-if="user.profileimg && user.profileimg.path" :src="'http://localhost:3000/'+user.profileimg.path.replace('public','')" class="img-circle profile_img" style="height:150px; width:150px">
+        <img v-if="user.profileimg && user.profileimg.path" :src="'http://54.77.11.251:3000/'+user.profileimg.path.replace('public','')" class="img-circle profile_img" style="height:150px; width:150px">
         <img v-else src="~assets/img/missing.png" class="img-circle profile_img" style="height:150px; width:150px">
         <h2 class="panel-title"></h2>
         </center>
@@ -134,7 +134,7 @@ created(){
 methods:{
     getStudent: function () {
 
-      let route ='http://localhost:3000/api/students/student/'.concat(this.$route.params.Studid);
+      let route ='http://54.77.11.251:3000/api/students/student/'.concat(this.$route.params.Studid);
       this.studid = this.$route.params.Studid ;
       this.$http.get(route, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
 

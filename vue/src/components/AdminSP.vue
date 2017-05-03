@@ -50,7 +50,7 @@ created(){
 },
 methods:{
     getAllServiceProviders: function () {
-      this.$http.get('http://localhost:3000/api/admins/sPs').then(response => {
+      this.$http.get('http://54.77.11.251:3000/api/admins/sPs').then(response => {
         this.serviceproviders = response.body.data.users
         this.serviceproviders = this.serviceproviders.filter(function(serviceprovider){
             return serviceprovider.user_id.is_deleted != true
@@ -59,17 +59,17 @@ methods:{
     },
     removesp: function(serviceprovider){
 
-      this.$http.delete('http://localhost:3000/api/admins/admin/sp/'.concat(serviceprovider._id),{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.delete('http://54.77.11.251:3000/api/admins/admin/sp/'.concat(serviceprovider._id),{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
       swal("Success","Service Provider deleted",'success')
            this.getAllServiceProviders();
       })
-    
+
 
 
     },
     blocksp:function(serviceprovider){
 
-      this.$http.post('http://localhost:3000/api/admins/block/',{email:serviceprovider.user_id.email} ,{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.post('http://54.77.11.251:3000/api/admins/block/',{email:serviceprovider.user_id.email} ,{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         swal("Success","Service Provider blocked",'success')
     })
 

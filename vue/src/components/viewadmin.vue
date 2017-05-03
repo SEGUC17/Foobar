@@ -50,12 +50,12 @@ created(){
 },
 methods:{
     getAlladmins: function () {
-      this.$http.get('http://localhost:3000/api/admins/admins',{headers : { 'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.get('http://54.77.11.251:3000/api/admins/admins',{headers : { 'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         this.admins=response.body.data.admins
       })
     },
     addAdmin: function () {
-          this.$http.post('http://localhost:3000/api/admins/admin',{email:this.adminemail},{headers : { 'jwt-token' : localStorage.getItem('id_token')}} ).then(response => {
+          this.$http.post('http://54.77.11.251:3000/api/admins/admin',{email:this.adminemail},{headers : { 'jwt-token' : localStorage.getItem('id_token')}} ).then(response => {
             this.msg="Admin has been added"
             swal("Success",this.msg,'success')
             //console.log(response.body.data.user)

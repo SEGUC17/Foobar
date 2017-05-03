@@ -191,7 +191,7 @@
               <!-- menu profile quick info -->
               <div class="profile clearfix">
                 <div class="profile_pic">
-                      <img v-if="profilepic.path" :src="'http://localhost:3000/'+profilepic.path.replace('public','')" alt="" class="img-circle profile_img" style="height:70px; width:70px">
+                      <img v-if="profilepic.path" :src="'http://54.77.11.251:3000/'+profilepic.path.replace('public','')" alt="" class="img-circle profile_img" style="height:70px; width:70px">
                       <img v-if="!profilepic.path" src="~assets/img/missing.png" alt="" class="img-circle profile_img" style="height:70px; width:70px">
                 </div>
                 <div class="profile_info">
@@ -305,7 +305,7 @@
                 <ul class="nav navbar-nav navbar-right" style="">
                   <li class="dropdown">
                     <a href="" role="button" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                      <img v-if="profilepic.path" :src="'http://localhost:3000/'+profilepic.path.replace('public','')" alt="">
+                      <img v-if="profilepic.path" :src="'http://54.77.11.251:3000/'+profilepic.path.replace('public','')" alt="">
                       <img v-if="!profilepic.path" src="~assets/img/missing.png" alt="">
                       {{ name | capitalize }}
                       <span class=" fa fa-angle-down"></span>
@@ -419,7 +419,7 @@ created() {
 if(localStorage.getItem('id_token')!=null){
   this.showgent= true
   this.user.authenticated=true
-  this.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
+  this.$http.post('http://54.77.11.251:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
     this.decodeid=decode.body.id
     ////console.log(this.decodeid)
     this.user.type = decode.body.type;
@@ -440,13 +440,13 @@ methods: {
   // Send a request to the login URL and save the returned JWT
   login : function() {
     var app = this;
-    app.$http.post('http://localhost:3000/api/users/login', {
+    app.$http.post('http://54.77.11.251:3000/api/users/login', {
 	"email":app.creds.username,
 	"password":  app.creds.password
 }).then(data => {
       localStorage.setItem('id_token', data.body.token)
       app.user.authenticated = true
-      app.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
+      app.$http.post('http://54.77.11.251:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
         this.getAllAnnouncements();
 
         this.decodeid = decode.body.id;
@@ -470,7 +470,7 @@ methods: {
 });
   },
   getAllAnnouncements: function () {
-      this.$http.get('http://localhost:3000/api/announcements/view',{"token": localStorage.getItem('id_token')}).then(response => {
+      this.$http.get('http://54.77.11.251:3000/api/announcements/view',{"token": localStorage.getItem('id_token')}).then(response => {
         this.announcements=response.data.data.announcements
       //  //console.log(this.announcements);
         this.numberOfPages=Math.ceil(this.announcements.length/this.perPage);
@@ -481,7 +481,7 @@ methods: {
       })
     },
   signup : function() {
-    this.$http.post('http://localhost:3000/api/users/signup', {
+    this.$http.post('http://54.77.11.251:3000/api/users/signup', {
     "email":this.creds.email,
     "name":this.creds.name,
     "university":this.university,
@@ -511,7 +511,7 @@ methods: {
   },
 
   resetPW : function() {
-    this.$http.post('http://localhost:3000/api/users/resetPW', {"email":this.resetPWEmail},{"token": localStorage.getItem('id_token')}).then(decode => {
+    this.$http.post('http://54.77.11.251:3000/api/users/resetPW', {"email":this.resetPWEmail},{"token": localStorage.getItem('id_token')}).then(decode => {
       alert("New Password sent to ".concat(this.resetPWEmail));
       //console.log('success');
 
@@ -562,7 +562,7 @@ this.$router.go({path:'/',force:true});
   },
 
   findAllInterests: function() {
-    this.$http.get('http://localhost:3000/api/students/all/interests/').then(response => {
+    this.$http.get('http://54.77.11.251:3000/api/students/all/interests/').then(response => {
         this.interests=response.body.data.interests
       })
   },

@@ -24,7 +24,7 @@ RadarChart.extend({
 
       getReviewData: function() {
 
-        let route = 'http://localhost:3000/api/students/progress';
+        let route = 'http://54.77.11.251:3000/api/students/progress';
 
         this.$http.get(route, {
           headers: {

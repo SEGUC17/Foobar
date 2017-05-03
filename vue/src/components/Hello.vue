@@ -95,7 +95,7 @@
                  <center> <router-link :to = "{ name: 'service provider' , params: { id: serviceprovider._id }}">
                   <div class="col-md-4 feature">
 
-                      <center><img class="img-circle img-responsive" v-if="serviceprovider.user_id && serviceprovider.user_id.profileimg.path" :src="'http://localhost:3000/'+serviceprovider.user_id.profileimg.path.replace('public','')" style="height:150px; width:150px">
+                      <center><img class="img-circle img-responsive" v-if="serviceprovider.user_id && serviceprovider.user_id.profileimg.path" :src="'http://54.77.11.251:3000/'+serviceprovider.user_id.profileimg.path.replace('public','')" style="height:150px; width:150px">
                       <i class="glyphicon glyphicon-user" style="height:150px; width:150px" v-else></i></center>
                           <h3>Name: {{serviceprovider.user_id.name}}</h3>
                           <div class="title_border"></div>
@@ -116,7 +116,7 @@
                        <center>
                       <a  v-on:click="messag"> <div class="col-md-4 feature" v-if="!serviceprovider.user_id.is_deleted">
 
-                            <center><img class="img-circle img-responsive" v-if="serviceprovider.user_id && serviceprovider.user_id.profileimg.path" :src="'http://localhost:3000/'+serviceprovider.user_id.profileimg.path.replace('public','')" style="height:150px; width:150px">
+                            <center><img class="img-circle img-responsive" v-if="serviceprovider.user_id && serviceprovider.user_id.profileimg.path" :src="'http://54.77.11.251:3000/'+serviceprovider.user_id.profileimg.path.replace('public','')" style="height:150px; width:150px">
                             <i class="glyphicon glyphicon-user" style="height:150px; width:150px" v-else></i></center>
                                 <h3>Name: {{serviceprovider.user_id.name}}</h3>
                                 <div class="title_border"></div>
@@ -189,7 +189,7 @@
 					<h2 class="to-animate">Join Us</h2>
 					<div class="row">
 						<div class="col-md-8 col-md-offset-2 subtext to-animate">
-							<h3>Become a service provider & get a chance to reach thousands of students! Apply below.</h3>
+							<h3>Become a service provider and get a chance to reach thousands of students! Apply below.</h3>
 						</div>
 					</div>
 				</div>
@@ -310,7 +310,7 @@ export default {
   methods: {
 	applySP: function ()
         {
-            this.$http.post('http://localhost:3000/api/sPs/sP/apply', {"name":this.name,"email":this.email,"phone_number":this.phone_number,"description":this.description}).then(data => {
+            this.$http.post('http://54.77.11.251:3000/api/sPs/sP/apply', {"name":this.name,"email":this.email,"phone_number":this.phone_number,"description":this.description}).then(data => {
 			$('#contactform').fadeOut()
 			$('#successcontact').fadeIn('slow');
 
@@ -351,14 +351,14 @@ messag: function(){
 ,
 
   srch: function(){
-			this.$http.post('http://localhost:3000/api/students/home', {search: this.search}).then(data => {
+			this.$http.post('http://54.77.11.251:3000/api/students/home', {search: this.search}).then(data => {
 				//console.log(data)
 				this.results = data.results
 				}).catch(function(reason) {
 				//console.log(reason)
 			});
 		},getAllServiceProviders: function () {
-    this.$http.get('http://localhost:3000/api/admins/sPs').then(response => {
+    this.$http.get('http://54.77.11.251:3000/api/admins/sPs').then(response => {
         //console.log(response.data)
         this.serviceproviders=response.data.data.users;
         var i = 0;

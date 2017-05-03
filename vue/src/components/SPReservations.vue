@@ -47,21 +47,21 @@ created(){
 },
 methods:{
     getReservations: function () {
-      this.$http.get('http://localhost:3000/api/sPs/reservations/view', {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+      this.$http.get('http://54.77.11.251:3000/api/sPs/reservations/view', {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
         this.reservations=response.data.data.reservations
       })
     },
     approve:function(reservation_id){
 
-        this.$http.post('http://localhost:3000/api/sPs/reservations/approve',{"id":reservation_id, "approve":true}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+        this.$http.post('http://54.77.11.251:3000/api/sPs/reservations/approve',{"id":reservation_id, "approve":true}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
           swal("Success","Reservation Approved",'success')
         this.getReservations();
         })
-      
+
     },
     disapprove: function(reservation_id){
 
-        this.$http.post('http://localhost:3000/api/sPs/reservations/approve',{"id": reservation_id, "approve":false}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+        this.$http.post('http://54.77.11.251:3000/api/sPs/reservations/approve',{"id": reservation_id, "approve":false}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
           swal("Success","Reservation Disapproved",'success')
 
         this.getReservations();

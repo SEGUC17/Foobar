@@ -85,7 +85,7 @@
 
 
             		<a href="" @click.prevent="purchaseStuff(offer)"><div class="col-md-4 feature">
-                	   <center><img class="img-circle img-responsive" v-if="offer.sp_id && offer.sp_id.profileimg.path" :src="'http://localhost:3000/'+offer.sp_id.profileimg.path.replace('public','')" style="height:150px; width:150px">
+                	   <center><img class="img-circle img-responsive" v-if="offer.sp_id && offer.sp_id.profileimg.path" :src="'http://54.77.11.251:3000/'+offer.sp_id.profileimg.path.replace('public','')" style="height:150px; width:150px">
                     <i class="glyphicon glyphicon-check" style="height:150px; width:150px" v-else></i></center>
                         <h3>{{offer.title}}</h3>
                         <h3>{{offer.sp_id.name}}</h3>
@@ -132,7 +132,7 @@ created(){
 },
 methods:{
     search: function(){
-      this.$http.post('http://localhost:3000/api/students/home',{"search":this.srch},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response=> {
+      this.$http.post('http://54.77.11.251:3000/api/students/home',{"search":this.srch},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response=> {
         this.offers = response.body.data.offers
         this.reload()
       })
@@ -145,13 +145,13 @@ methods:{
               image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
               locale: 'auto',
               token: function(token) {
-                //console.log('got a token. sending data to localhost');
+                //console.log('got a token. sending data to 54.77.11.251');
                 this.stripe_token= token;
                 //console.log(this.stripe_token);
                 this.order_status= "PENDING";
-                Vue.http.post('http://localhost:3000/api/charge', {token_id: this.stripe_token.id, price: price})
+                Vue.http.post('http://54.77.11.251:3000/api/charge', {token_id: this.stripe_token.id, price: price})
                   .then((payresponse) => {
-                      Vue.http.post('http://localhost:3000/api/students/offers',{"offer_id":inoffer._id, "charge_id": payresponse.body.response.id },{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response=> {
+                      Vue.http.post('http://54.77.11.251:3000/api/students/offers',{"offer_id":inoffer._id, "charge_id": payresponse.body.response.id },{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response=> {
                             swal("Success","You succesfully applied",'success')
                         }).catch(function(reason) {swal("Oops...",reason.body.message,'error')});
                   },(response) => {
@@ -167,7 +167,7 @@ methods:{
        }else{swal("Oops..","You have to be signed in to apply",'error')}
           },
   viewOffers: function () {
-    this.$http.get('http://localhost:3000/api/students/viewalloffers',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+    this.$http.get('http://54.77.11.251:3000/api/students/viewalloffers',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
       // this.announcements=response.data.data.announcements
       this.offers= response.data.data.offers;
       this.student = response.data.data.student;
@@ -178,7 +178,7 @@ methods:{
     })
   },
     allOffers: function () {
-    this.$http.get('http://localhost:3000/api/students/alloffers',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+    this.$http.get('http://54.77.11.251:3000/api/students/alloffers',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
       // // this.announcements=response.data.data.announcements
       // this.offers= response.data.data.offers;
       // this.student = response.data.data.student;
@@ -212,10 +212,10 @@ methods:{
 
     Apply: function(offer , index){
 
-      this.$http.post('http://localhost:3000/api/students/offers',{"offer_id":offer._id},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response=> {
+      this.$http.post('http://54.77.11.251:3000/api/students/offers',{"offer_id":offer._id},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response=> {
         swal("Success","You succesfully applied",'success')
       })
-    
+
   }
 }
 }
