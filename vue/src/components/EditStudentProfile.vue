@@ -1,3 +1,13 @@
+<style scoped>
+#content10 {
+    width: 400px;
+    margin: 0 auto;
+    background-color: #f7f7f7;
+
+}
+</style>
+
+
 <template>
   <div>
 <div class="container">
@@ -14,9 +24,9 @@
               <h3 class="panel-title">{{user.name}}</h3>
             </div>
             <div class="panel-body">
-              <div class="row">
+              <div class="row" >
 
-                <div class=" col-md-9 col-lg-9 ">
+                <div class=" col-md-9 col-lg-9 " >
                  <table class="table table-user-information">
 
                  <center> <div class="col-md-3 col-lg-3 " align="center">         <img v-if="user.profileimg && user.profileimg.path" :src="'http://localhost:3000/'+user.profileimg.path.replace('public','')" class="img-circle profile_img" style="height:150px; width:150px">        <img v-else src="~assets/img/missing.png" class="img-circle profile_img" style="height:150px; width:150px">
@@ -64,7 +74,7 @@
                         <td>{{user.email}}</td>
 
                      <tr align="center">
-                       <div class="form-group">
+                       <div class="form-group" >
                          <label class="col-md-4 control-label" for="Fields">Fields</label>
                          <br>
                          <div class="form-group">
@@ -75,10 +85,10 @@
 </span>
                          </div>
                        </div>
-                     <div class="row">
+                     <div class="row" >
                                     <div class="col-sm-2">
                                     </div>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-10" >
                                       <center>  <button class="btn btn-primary btn-sm" v-on:click="EditStudent()">
                                             Submit</button></center>
                                             <br>
@@ -89,8 +99,11 @@
 
                     </tbody>
                   </table>
-                  <button class="col-md-5 btn btn-primary btn-sm " href="#StudentEditPassword" data-toggle="modal">Edit Password</button>
+                  <div class="" >
 
+
+                  <button class="col-md-5 btn btn-primary btn-sm " href="#StudentEditPassword" data-toggle="modal">Edit Password</button>
+  </div>
                 </div>
               </div>
             </div>
@@ -219,23 +232,26 @@ this.interests =response.body.data.interests;
     },
     editPassword: function()
     {
-        var x = confirm("Are you sure you want to edit your password")
-          if(x)
-          {
+
             this.$http.post('http://localhost:3000/api/students/student/editpassword', {"oldPassword":this.oldPassword,"newPassword":this.newPassword, "confirmNewPassword":this.confirmNewPassword,"id":this.$route.params.EditStudid},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
+              $('#StudentEditPassword').modal('hide');
+
             swal("Success","Updated Password",'success')
-                confirmNewPassword=""
-      oldPassword=""
-      newPassword=""
-            this.$router.push({name : 'StudentProfile' , params: { Studid : this.$route.params.EditStudid }})
+            this.confirmNewPassword=""
+      this.oldPassword=""
+      this.newPassword=""
+
                     }).catch(function(reason) {
-                        //console.log(reason.body.err);
-                this.failuremessages = reason.body.err;
-                //console.log(this.failuremessages)
-                this.successmessages=[{msg:''}];
+                      if(reason!==null&&reason!=undefined){
+                      if(reason.body){
+                      for(var i=0;i<reason.data.err.length;i++)
+                    swal("Oops..",reason.data.err[i].msg,'error')}}
+
+
+
                     });
           }
-    }
+
 
   }
 }

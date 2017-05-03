@@ -368,12 +368,12 @@ methods:{
       this.oldPassword=""
     this.newPassword=""
       $('#SPEditPassword').modal('hide');
-      console.log(1)
+
             swal("Success","Updated Password",'success')
 
 
                     }).catch(function(reason) {
-                      console.log(reason)
+
                       if(reason!==null&&reason!=undefined){
                       if(reason.body){
                       for(var i=0;i<reason.data.err.length;i++)
