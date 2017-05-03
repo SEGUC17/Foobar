@@ -28,7 +28,7 @@ import Adminpostannouncement from '@/components/Adminpostannouncement.vue'
 import VeeValidate from 'vee-validate'
 import AppNav from '../AppNav.vue'
 import Quiz from '@/components/TheTest'
-
+import AllOffers from '@/components/AllOffers'
 import Chartkick from 'chartkick'
 import VueChartkick from 'vue-chartkick'
 import Chart from 'chart.js'
@@ -246,6 +246,22 @@ export default new Router({
   }, {
     path: '/viewOffers',
     component: Offers,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('usertype') != 1 && localStorage.getItem(
+          'usertype') != 2 && localStorage.getItem('usertype') != 3) {
+        next('/');
+        swal(
+          'Oops...',
+          'You shall not pass!!',
+          'error'
+        )
+      } else {
+        next()
+      }
+    }
+  }, {
+    path: '/AllOffers',
+    component: AllOffers,
     beforeEnter: (to, from, next) => {
       if (localStorage.getItem('usertype') != 1 && localStorage.getItem(
           'usertype') != 2 && localStorage.getItem('usertype') != 3) {

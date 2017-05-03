@@ -104,7 +104,7 @@ const homeController = {
                     }
                   });
                 });
-                Offer.find({}).populate('sp_id', {
+                Offer.find({}).sort({$natural:-1}).populate('sp_id', {
                   password: 0
                 }).exec((err, off) => {
                   //console.log(off)
@@ -191,6 +191,39 @@ const homeController = {
               });
             });
 
+          } else {
+            return res.status(500).json({
+              err: 'unauthorized access',
+            });
+          }
+        }
+      });
+    },viewAllOffers(req, res) {
+      const token = req.headers['jwt-token'];
+      jwt.verify(token, (decoded) => {
+        if (decoded !== null) {
+          if (decoded.type === 2) {
+            Offer.find({}).sort({$natural:-1}).populate('sp_id').exec((err, offers) => {
+                  
+                  Student.findOne({
+                    user_id: decoded.id
+                  }, (err, student) => {
+                    if (err) {
+                      res.status(400).json({
+                        err: err
+                      });
+                    } else{
+                      res.status(200).json({
+                        status: 'success',
+                        data: {
+                          offers,
+                          student,
+
+                        },
+                      });
+                    }
+                  });
+                });
           } else {
             return res.status(500).json({
               err: 'unauthorized access',

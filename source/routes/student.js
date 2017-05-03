@@ -38,7 +38,9 @@ router.post('/student/', studentController.editStudent); // Student could edit h
 
 router.post('/offers/', studentController.applyOffer); // Student could apply for an offer
 
-router.get('/viewoffer', homeController.viewOffers); // Student can view offers
+router.get('/viewoffer', homeController.viewOffers); // Student can view his offers
+
+router.get('/viewalloffers', homeController.viewAllOffers); // Student can view all offers
 
 router.get('/profile', homeController.findProfile); // msh3arf feen
 

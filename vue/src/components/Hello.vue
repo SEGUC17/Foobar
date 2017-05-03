@@ -167,7 +167,7 @@
 				<div class="col-md-3 col-sm-6 col-xs-12">
 					<div class="fh5co-counter to-animate">
 						<i class="fh5co-counter-icon icon-cup to-animate-2"></i>
-						<span class="fh5co-counter-number js-counter" data-from="0" data-to="1000000" data-speed="5068" data-refresh-interval="50">1000000</span>
+						<span class="fh5co-counter-number js-counter" data-from="0" data-to="100000" data-speed="5068" data-refresh-interval="50">1000000</span>
 						<span class="fh5co-counter-label">Cup of coffees</span>
 					</div>
 				</div>

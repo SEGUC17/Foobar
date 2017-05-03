@@ -195,7 +195,7 @@
                       <img v-if="!profilepic.path" src="~assets/img/missing.png" alt="" class="img-circle profile_img" style="height:70px; width:70px">
                 </div>
                 <div class="profile_info">
-                  <span>Welcome,</span>
+                  <span>Welcome</span>
                   <h2>{{ name | capitalize }}</h2>
                 </div>
                 <div class="clearfix"></div>
@@ -265,7 +265,8 @@
                     <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                       <ul class="nav child_menu">
                           <li><router-link to="/">Home</router-link></li>
-                          <li><router-link to="/viewOffers">View Offers</router-link></li>
+                          <li><router-link to="/viewOffers">Your Offers</router-link></li>
+                          <li><router-link to="/AllOffers">All Offers</router-link></li>
                           <li><router-link to="/announcements">Announcements</router-link></li>
                           <li><router-link to="/viewReservations">Reservation</router-link></li>
                           <li><router-link to="/quiz">Test</router-link></li>
