@@ -76,7 +76,7 @@ methods:{
         applySP: function ()
         {
             this.$http.post('http://localhost:3000/api/sPs/sP/apply', {"name":this.name,"email":this.email,"phone_number":this.phone_number,"description":this.description}).then(data => {
-            alert("You successfully applied");
+            swal("Success","You successfully applied",'success');
              this.$router.push({path:'/'});
 
             //console.log('success');

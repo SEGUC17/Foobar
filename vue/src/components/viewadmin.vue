@@ -57,7 +57,7 @@ methods:{
     addAdmin: function () {
           this.$http.post('http://localhost:3000/api/admins/admin',{email:this.adminemail},{headers : { 'jwt-token' : localStorage.getItem('id_token')}} ).then(response => {
             this.msg="Admin has been added"
-            alert(this.msg)
+            swal("Success",this.msg,'success')
             //console.log(response.body.data.user)
            this.admins.push(response.body.data.user)
            this.adminemail=''

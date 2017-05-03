@@ -33,6 +33,9 @@ import Chartkick from 'chartkick'
 import VueChartkick from 'vue-chartkick'
 import Chart from 'chart.js'
 
+import VueCarousel from 'vue-carousel';
+
+
 Vue.use(VueChartkick, {
   Chartkick
 })
@@ -40,7 +43,7 @@ Vue.use(VueChartkick, {
 Vue.use(Router)
 Vue.use(vueResource)
 Vue.use(VeeValidate);
-
+Vue.use(VueCarousel);
 export default new Router({
   routes: [{
     path: '/',
@@ -51,6 +54,11 @@ export default new Router({
     beforeEnter: (to, from, next) => {
       if (localStorage.getItem('usertype') != 2) {
         next('/');
+        swal(
+          'Oops...',
+          'You shall not pass!!',
+          'error'
+        )
       } else {
         next()
       }
@@ -61,6 +69,11 @@ export default new Router({
     beforeEnter: (to, from, next) => {
       if (localStorage.getItem('usertype') != 2) {
         next('/');
+        swal(
+          'Oops...',
+          'You shall not pass!!',
+          'error'
+        )
       } else {
         next()
       }
@@ -76,6 +89,11 @@ export default new Router({
     beforeEnter: (to, from, next) => {
       if (localStorage.getItem('usertype') != 1) {
         next('/');
+        swal(
+          'Oops...',
+          'You shall not pass!!',
+          'error'
+        )
       } else {
         next()
       }
@@ -86,6 +104,11 @@ export default new Router({
     beforeEnter: (to, from, next) => {
       if (localStorage.getItem('usertype') != 3) {
         next('/');
+        swal(
+          'Oops...',
+          'You shall not pass!!',
+          'error'
+        )
       } else {
         next()
       }
@@ -97,6 +120,11 @@ export default new Router({
       console.log(localStorage.getItem('usertype'));
       if (localStorage.getItem('usertype') != 3) {
         next('/');
+        swal(
+          'Oops...',
+          'You shall not pass!!',
+          'error'
+        )
       } else {
         next()
       }
@@ -107,6 +135,11 @@ export default new Router({
     beforeEnter: (to, from, next) => {
       if (localStorage.getItem('usertype') != 3) {
         next('/');
+        swal(
+          'Oops...',
+          'You shall not pass!!',
+          'error'
+        )
       } else {
         next()
       }
@@ -117,6 +150,11 @@ export default new Router({
     beforeEnter: (to, from, next) => {
       if (localStorage.getItem('usertype') != 3) {
         next('/');
+        swal(
+          'Oops...',
+          'You shall not pass!!',
+          'error'
+        )
       } else {
         next()
       }
@@ -130,6 +168,11 @@ export default new Router({
     beforeEnter: (to, from, next) => {
       if (localStorage.getItem('usertype') != 1) {
         next('/');
+        swal(
+          'Oops...',
+          'You shall not pass!!',
+          'error'
+        )
       } else {
         next()
       }
@@ -141,6 +184,11 @@ export default new Router({
       if (localStorage.getItem('usertype') != 3 && localStorage.getItem(
           'usertype') != 2) {
         next('/');
+        swal(
+          'Oops...',
+          'You shall not pass!!',
+          'error'
+        )
       } else {
         next()
       }
@@ -152,6 +200,11 @@ export default new Router({
       if (localStorage.getItem('usertype') != 1 && localStorage.getItem(
           'usertype') != 2 && localStorage.getItem('usertype') != 3) {
         next('/');
+        swal(
+          'Oops...',
+          'You shall not pass!!',
+          'error'
+        )
       } else {
         next()
       }
@@ -164,6 +217,11 @@ export default new Router({
       if (localStorage.getItem('usertype') != 1 && localStorage.getItem(
           'usertype') != 2 && localStorage.getItem('usertype') != 3) {
         next('/');
+        swal(
+          'Oops...',
+          'You shall not pass!!',
+          'error'
+        )
       } else {
         next()
       }
@@ -175,6 +233,11 @@ export default new Router({
       if (localStorage.getItem('usertype') != 1) {
         next('/');
       } else {
+        swal(
+          'Oops...',
+          'You shall not pass!!',
+          'error'
+        )
         next()
       }
     }
@@ -185,6 +248,11 @@ export default new Router({
       if (localStorage.getItem('usertype') != 1 && localStorage.getItem(
           'usertype') != 2 && localStorage.getItem('usertype') != 3) {
         next('/');
+        swal(
+          'Oops...',
+          'You shall not pass!!',
+          'error'
+        )
       } else {
         next()
       }
@@ -193,9 +261,14 @@ export default new Router({
     path: '/viewReservations',
     component: ReservationStudent,
     beforeEnter: (to, from, next) => {
-      if (localStorage.getItem('usertype') != 1 && localStorage.getItem(
-          'usertype') != 2 && localStorage.getItem('usertype') != 3) {
+      if (localStorage.getItem('usertype') != 2 && localStorage.getItem(
+          'usertype') != 3) {
         next('/');
+        swal(
+          'Oops...',
+          'You shall not pass!!',
+          'error'
+        )
       } else {
         next()
       }
@@ -206,6 +279,11 @@ export default new Router({
     beforeEnter: (to, from, next) => {
       if (localStorage.getItem('usertype') != 1) {
         next('/');
+        swal(
+          'Oops...',
+          'You shall not pass!!',
+          'error'
+        )
       } else {
         next()
       }
@@ -216,6 +294,11 @@ export default new Router({
     beforeEnter: (to, from, next) => {
       if (localStorage.getItem('usertype') != 1) {
         next('/');
+        swal(
+          'Oops...',
+          'You shall not pass!!',
+          'error'
+        )
       } else {
         next()
       }
@@ -228,6 +311,11 @@ export default new Router({
       if (localStorage.getItem('usertype') != 1 && localStorage.getItem(
           'usertype') != 2 && localStorage.getItem('usertype') != 3) {
         next('/');
+        swal(
+          'Oops...',
+          'You shall not pass!!',
+          'error'
+        )
       } else {
         next()
       }
@@ -237,9 +325,13 @@ export default new Router({
     name: 'EditStudent',
     component: EditStudentProfile,
     beforeEnter: (to, from, next) => {
-      if (localStorage.getItem('usertype') != 1 && localStorage.getItem(
-          'usertype') != 2 && localStorage.getItem('usertype') != 3) {
+      if (localStorage.getItem('usertype') != 2) {
         next('/');
+        swal(
+          'Oops...',
+          'You shall not pass!!',
+          'error'
+        )
       } else {
         next()
       }
@@ -252,6 +344,11 @@ export default new Router({
       if (localStorage.getItem('usertype') != 1 && localStorage.getItem(
           'usertype') != 2 && localStorage.getItem('usertype') != 3) {
         next('/');
+        swal(
+          'Oops...',
+          'You shall not pass!!',
+          'error'
+        )
       } else {
         next()
       }
@@ -262,6 +359,11 @@ export default new Router({
     beforeEnter: (to, from, next) => {
       if (localStorage.getItem('usertype') != 1) {
         next('/');
+        swal(
+          'Oops...',
+          'You shall not pass!!',
+          'error'
+        )
       } else {
         next()
       }
@@ -270,9 +372,13 @@ export default new Router({
     path: '/SPViewMyProfile',
     component: SPViewMyProfile,
     beforeEnter: (to, from, next) => {
-      if (localStorage.getItem('usertype') != 1 && localStorage.getItem(
-          'usertype') != 2 && localStorage.getItem('usertype') != 3) {
+      if (localStorage.getItem('usertype') != 3) {
         next('/');
+        swal(
+          'Oops...',
+          'You shall not pass!!',
+          'error'
+        )
       } else {
         next()
       }
@@ -283,6 +389,11 @@ export default new Router({
     beforeEnter: (to, from, next) => {
       if (localStorage.getItem('usertype') != 1) {
         next('/')
+        swal(
+          'Oops...',
+          'You shall not pass!!',
+          'error'
+        )
       } else {
         next()
       }

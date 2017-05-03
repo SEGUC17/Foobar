@@ -114,7 +114,9 @@ const spController = {
                   $in: offers_ids
                 },
                 is_assessed: false
-              }).populate('user_id',{password:0}).populate('offer_id').exec((err,
+              }).populate('user_id', {
+                password: 0
+              }).populate('offer_id').exec((err,
                 students) => {
                 if (err) {
                   res.status(500).json({
@@ -149,7 +151,11 @@ const spController = {
         if (decoded.type === 3) {
           Review.find({
             sp_id: decoded.id
-          }).populate('reviewer_id',{password:0}).populate('sp_id',{password:0}).exec((err,
+          }).populate('reviewer_id', {
+            password: 0
+          }).populate('sp_id', {
+            password: 0
+          }).exec((err,
             reviews) => {
             if (err) {
               res.status(500).json({
@@ -178,7 +184,9 @@ const spController = {
       jwt.verify(token, (decoded) => {
         Comment.find({
           review_id: req.body.review_id
-        }).populate('commenter_id',{password:0}).exec((err, comments) => {
+        }).populate('commenter_id', {
+          password: 0
+        }).exec((err, comments) => {
           if (err) {
             res.status(500).json({
               status: 'error',
@@ -300,28 +308,28 @@ const spController = {
     getAllSPProfiles(req, res) { // viewing a summary of all SP profiles
       // const token = req.headers['jwt-token'];
       // jwt.verify(token, (decoded) => {
-        const token = req.headers['jwt-token'];
-        jwt.verify(token, (decoded) => {
-          
-      SP.find({}).populate('user_id').exec((err, users) => {
-        if (err) {
-          res.status(500).json({
-            status: 'error',
-            message: err.message,
-          });
-        } else {
-          res.status(200).json({
-            status: 'success',
-            data: {
-              message: 'summary of SP profiles retrieved successfully',
-              users,
-            },
-          });
-        }
-        // });
+      const token = req.headers['jwt-token'];
+      jwt.verify(token, (decoded) => {
+
+        SP.find({}).populate('user_id').exec((err, users) => {
+          if (err) {
+            res.status(500).json({
+              status: 'error',
+              message: err.message,
+            });
+          } else {
+            res.status(200).json({
+              status: 'success',
+              data: {
+                message: 'summary of SP profiles retrieved successfully',
+                users,
+              },
+            });
+          }
+          // });
+        });
+
       });
-    
-  });
     },
 
     getSPProfile(req, res) { // viewing a specific SP profile
@@ -558,9 +566,13 @@ const spController = {
           }, function(err, user) {
             //console.log(req.body.id);
             //console.log(user)
-            if (err)
-              return err;
-            else {
+            if (err) {
+              console.log(1)
+              res.status(400).json({
+                err: err.message
+
+              });
+            } else {
               //console.log(user[0].password);
               //console.log(req.body.oldPassword)
               //console.log(req.body.newPassword)
@@ -570,20 +582,22 @@ const spController = {
                 'Your old Password is required').notEmpty();
               req.checkBody('newPassword',
                 'A new Password is required').notEmpty();
-              req.checkBody('oldPassword', 'Passwords do not match').equals(
+              req.checkBody('oldPassword', 'Wrong old Password').equals(
                 user[0].password);
               req.checkBody('confirmNewPassword',
-                'Passwords do not match').equals(req.body.newPassword);
-              var errors = req.validationErrors();
+                "Passwords don't match").equals(req.body.newPassword)
 
+              var errors = req.validationErrors();
+              //  console.log(user)
               if (errors) {
-                //console.log('errors here');
+                //  console.log('errors here');
+
                 res.status(400).json({
+
                   err: errors
 
                 });
               } else {
-                //console.log('should modify');
                 User.findByIdAndUpdate(decoded.id, {
                   $set: {
                     password: req.body.newPassword,
@@ -594,12 +608,20 @@ const spController = {
                   new: true,
                 }, (err, sP) => {
                   //console.log('modified!');
-                  res.status(200).json({
-                    status: 'success',
-                    data: {
-                      message: `Edited Password correctly!`,
-                    },
-                  });
+                  if (err) {
+                    res.status(400).json({
+                      err: err.message,
+                    });
+                  } else {
+                    console.log('should modify');
+
+                    res.status(200).json({
+                      status: 'success',
+                      data: {
+                        message: `Edited Password correctly!`,
+                      },
+                    });
+                  }
                 });
               }
             }

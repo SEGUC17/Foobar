@@ -15,7 +15,7 @@
             </div>
             <div class="panel-body">
               <div class="row">
-                
+
                 <div class=" col-md-9 col-lg-9 ">
                  <table class="table table-user-information">
 
@@ -63,8 +63,18 @@
                         <td>Email</td>
                         <td>{{user.email}}</td>
 
-                     <tr align="right">
-
+                     <tr align="center">
+                       <div class="form-group">
+                         <label class="col-md-4 control-label" for="Fields">Fields</label>
+                         <br>
+                         <div class="form-group">
+                               <span v-for =" field in interests" style="font-size:14px; margin-right:5px;">
+<br>
+                              <input type="checkbox" id="field.name" :value="field" v-model="fields">
+  <label for="field.name" style="font-weight: normal;">{{field.name}}</label>
+</span>
+                         </div>
+                       </div>
                      <div class="row">
                                     <div class="col-sm-2">
                                     </div>
@@ -143,6 +153,8 @@ export default {
       oldPassword:"",
       newPassword:"",
       successmessages:[{msg:''}],
+      interests:[],
+fields:'',
       failuremessages:[{msg:''}]
 
     }
@@ -163,26 +175,33 @@ methods:{
         this.name = this.user.name;
         this.university = this.student.university;
         this.address = this.student.address;
-        this.birthdate = this.student.birthdate;
+        this.birthdate = this.student.birthdate.substring(0,10);
         this.description = this.student.description;
 
-        //console.log(this.user);
 
+
+  this.$http.get('http://localhost:3000/api/students/interests/view', {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+
+this.fields =response.body.data.interest1;
+this.interests =response.body.data.interests;
+
+        //console.log(this.user);
+});
       })
     },
     EditStudent: function() {
-      var x = confirm("Are you sure you want to edit your profile ?");
-      if(x){
+
         let route ='http://localhost:3000/api/students/student/';
             //console.log(this.name);
-      this.$http.post(route, {"name":this.name,"university":this.university, "address":this.address, "birthdate":this.birthdate, "description":this.description,"phone_number":this.phone_number}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
-
+      this.$http.post(route, {"name":this.name,"university":this.university, "address":this.address, "birthdate":this.birthdate, "description":this.description,"phone_number":this.phone_number,"interests":this.fields}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
+ console.log(this.fields)
         this.$router.push({ name : 'StudentProfile' , params: { Studid : this.$route.params.EditStudid }});
-        alert("Your profile was editted")
+        swal("Success","Your profile was editted",'success'
+      )
         //console.log(this.user);
       })
 
-      }
+
     },
     changedp: function(fieldName, fileList) {
         // handle file changes
@@ -194,6 +213,8 @@ methods:{
         formData.append("user_id",this.user._id)
         this.$http.post('http://localhost:3000/api/sPs/changedp',formData, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
             //console.log('changed dp');
+            vm.$forceUpdate();
+
       })
     },
     editPassword: function()
@@ -202,7 +223,7 @@ methods:{
           if(x)
           {
             this.$http.post('http://localhost:3000/api/students/student/editpassword', {"oldPassword":this.oldPassword,"newPassword":this.newPassword, "confirmNewPassword":this.confirmNewPassword,"id":this.$route.params.EditStudid},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
-            alert("Updated Password")
+            swal("Success","Updated Password",'success')
                 confirmNewPassword=""
       oldPassword=""
       newPassword=""

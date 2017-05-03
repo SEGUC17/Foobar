@@ -1,5 +1,21 @@
 <style scoped>
 
+#content10 {
+    width: 400px;
+    margin: 0 auto;
+    background-color: #ffffff;
+}
+
+#content11 {
+    width: 800px;
+    margin: 0 auto;
+    background-color: #ffffff;
+}
+#content12 {
+    width: 650px;
+    margin: 0 auto;
+    background-color: #ffffff;
+}
 
 #features {
     margin-top:20px;
@@ -526,18 +542,23 @@ a:active {
 }
 
 #myInput		{
-  position: relative;
+position: inline;
+display:inline-block;
   left:10px;
   top: 50px;
+  border: none;
+   border-bottom: 2px solid lightseagreen;
 
   width:20%;
   -webkit-transition:width 0.3s ease-in-out;
 
 }
 #myInput:focus	{
-  position: relative;
+position: inline;
+display:inline-block;
   left:10px;
-
+  border: none;
+     border-bottom: 2px solid lightseagreen;
   top: 50px;
   width:90%;
 
@@ -629,7 +650,7 @@ a:active {
       color:#fff;
       padding:9px 15px;
       border-bottom:1px solid #eee;
-      background-color: #428bca;
+      background-color: #2a3f54;
       -webkit-border-top-left-radius: 5px;
       -webkit-border-top-right-radius: 5px;
       -moz-border-radius-topleft: 5px;
@@ -666,8 +687,8 @@ a:active {
 
 			<section id="content1" class="tab-content">
           <h3>{{user.name}}</h3>
-          <center><img class="img-circle img-responsive" v-if="user && user.profileimg.path" :src="'http://localhost:3000/'+user.profileimg.path.replace('public','')" style="height:150px; width:150px">
-<img v-else alt="User Pic" src="http://babyinfoforyou.com/wp-content/uploads/2014/10/avatar-300x300.png" class="img-circle img-responsive"> </center>
+          <center><img class="img-circle img-responsive" v-if="user && user.profileimg && user.profileimg.path" :src="'http://localhost:3000/'+user.profileimg.path.replace('public','')" style="height:150px; width:150px">
+<img v-else alt="User Pic" src="~assets/img/missing.png" class="img-circle img-responsive" style="height:150px; width:150px"> </center>
 <br></br>
 		      	<p><table class="table table-user-information">
               <tbody>
@@ -684,10 +705,13 @@ a:active {
                   <td>Email</td>
                   <td>{{user.email}}</td>
                 </tr>
+                <tr>
+
+
                   <td>Phone Number</td>
                   <td>{{service.phone_number}}
                   </td>
-
+    </tr>
                 </tr>
 
               </tbody>
@@ -724,84 +748,72 @@ a:active {
 
 			</div>
 			</section>
-		      	<!-- <p> -->
-              <!-- <div v-for =" offer in offers" >
 
-
-              <div class="container">
-
-    <div class="row">
-        <div class="col-md-3 col-xs-6">
-
-        	<div class="box">
-				<div class="icon">
-					<div class="image"></div>
-					<div class="info">
-						<h2 class="title">{{offer.title}}</h2>
-    					<h3 class="title"><p>Description: {{offer.description}}
-						</p>
-            <p class="info">Price: {{offer.price}}<br /> Start Date: {{offer.start_date.substring(0, 10)}}<br /> End Date: {{offer.end_date.substring(0, 10)}}
-          </p></h3>
-            <button class="button button-1 button-1b" @click="Apply(offer)">Apply</button>
-
-						</div>
-					</div>
-				</div>
-
-			</div>
-
-	</div>		</div> </div></p> -->
 
 
 			<section id="content3" class="tab-content">
 
 		      	<p>
-              <p>
-      							<span class="col-lg-3"v-for ="image in images">
-      							<img :src="'http://localhost:3000/'+image.img.path.replace('public','')" style="height:200px; width:200px">&nbsp;&nbsp;&nbsp;&nbsp;
-      							</span>
-      </p>
+              <p><div id="content11">
+
+
+                        <carousel >
+                                  <slide v-for="slide in images" >
+
+                                      <img :src="'http://localhost:3000/'+slide.img.path.replace('public','')" style="width:300px"></img>
+
+
+                                  </slide>
+                                </carousel>
+
+  </div>      </p>
 </p>
 			</section>
 
-			<section id="content4" class="tab-content">
+			<section id="content4"  >
 
 		      	<p>      <div class="container">
               <hr>
-<div v-for ="video in videos" >
-<div class="center">
+<div v-for ="video in videos"   id="content12">
 
-  <div class="info">
 
-  <h3 class="title"> {{video.title}}</h3>
+  <div class="info" >
+<center>
+
+
+  <h3 class="title" style="color:#52d3aa"> {{video.title}}</h3></center>
 </div>
+<div class="" >
+
+
   <youtube :video-id="video.url"></youtube>
 
 </div>
-
 <hr>
 </div>
 </div></p>
 			</section>
 
 			<section id="content5" class="tab-content">
-				<h3>Reviews</h3>
-		      	<p><div class="container">
+			<h1 style="color:#52d3aa">Reviews</h1>
+		      	<p><div class="container" >
 
 
-              <div v-for =" r in reviews" >
+              <div v-for =" r in reviews">
+
+<center>
 
 
-              <div class="container">
+              <div class="container"  id="content10">
 
       <div  class="row">
         <div class="col-md-3 col-xs-6">
 <center>
-          <div class="container">
+          <div class="container" id="content10">
         <div class="icon">
           <div class="image"></div>
           <div class="info">
-            <h3 class="title">By: {{r.reviewer_id.name}}</h3>
+            <h3 class="title" style="color:#52d3aa">By: {{r.reviewer_id.name}}</h3>
               <h2 class="title"><p>   <div  id="makan3" >
            <star-rating :rating="r.rating" v-bind:show-rating="false" v-bind:read-only="true"   v-bind:inline="true">
 </star-rating>
@@ -809,7 +821,7 @@ a:active {
             </p>
             <p class="info">{{r.content}}
           </p></h2>
-            <button class="button button-1 button-1b" @click="viewComments(r._id)"href="#primary" data-toggle="modal">Comments</button>
+            <button class="btn btn-primary btn-sm" @click="viewComments(r._id)"href="#primary" data-toggle="modal">Comments</button>
 
 
 
@@ -822,7 +834,7 @@ a:active {
 
       </div>
 
-      </div>		</div> </div>
+      </div>		</div> </center></div>
       <div class="container">
     <div class="row">
         <!-- Boxes de Acoes -->
@@ -836,13 +848,18 @@ a:active {
             <div class="modal-content">
                 <div class="modal-header modal-header-primary">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    <h3     align="left">  <div v-for="comment in pastComments">
-                          {{comment.commenter_id.name}}: {{comment.content}}
-                          <br>
-                      </div></h3>
+                    
+
+                      <h4   align="left">  <div v-for="comment in pastComments">
+                          <center>       {{comment.commenter_id.name}}:</center>
+
+                            <center>    <h3 style="color:#52d3aa">{{comment.content}}</h3></center>
+                              <br>
+                          </div></h4>
+
 
                 </div>
-                <form role="form" class="" v-on:submit="addComment">
+                <form role="form" class="" @submit.prevent="addComment">
                 <div class="modal-body">
                   <div class="row">
 
@@ -856,7 +873,7 @@ a:active {
                 <div class="modal-footer">
 
 
-                    <button class="btn btn-primary add_field_button" style="margin-bottom:20px;">Post comment</button>
+                    <button class="btn btn-primary btn-sm" style="margin-bottom:20px;">Post comment</button>
 
                                  </div>
                                  </form>
@@ -874,7 +891,7 @@ a:active {
   <form role="form"  @submit.prevent= "Review">
     <div>
 <fieldset>
-     <input style="height:50px;font-size:10px; display:block" v-validate="{ rules: { required: true} }" type="text" name="review"  id="review" placeholder="Write a review" v-model="review" required="*">
+ <input class="form-control input-lg" v-validate="{ rules: { required: true} }" id="myInput" placeholder="Write a review"  v-model="review" type="text"required="*">
      </fieldset>
 
             <!-- <input style="height:50px;font-size:10pt"class="form-control input-lg" id="myInput" placeholder="Write a review" type="text"v-model="review" required="*"><br /><br /><br /> -->
@@ -883,7 +900,7 @@ a:active {
             </div>
 <div id="makan2" style="width:80%">
 
-  <button class="button button-1 button-1a">Add Review</button>
+  <button class="btn btn-primary btn-sm">Add Review</button>
   </div>
      </div>
         </form>
@@ -954,6 +971,7 @@ type:''
    '$route' (to ,from){
        if(to!=null)
        this.getServiceProvider(this.$route.params.id);
+
     }},
  methods:{
 
@@ -973,8 +991,8 @@ type:''
              Vue.http.post('http://localhost:3000/api/charge', {token_id: this.stripe_token.id, price: price})
                .then((payresponse) => {
                    Vue.http.post('http://localhost:3000/api/students/offers',{"offer_id":inoffer._id, "charge_id": payresponse.body.response.id },{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response=> {
-                         alert("You succesfully applied")
-                     }).catch(function(reason) {alert(reason.body.message)});
+                         swal("Success","You succesfully applied",'success')
+                     }).catch(function(reason) {swal("Oops..",reason.body.message,'error')});
                },(response) => {
                  this.order_status= "FAILED";
                });
@@ -986,7 +1004,7 @@ type:''
            amount: price
          })
 
-    }else{alert("You have to be signed in to apply")}
+    }else{swal("Oops...","You have to be signed in to apply",'error')}
 
        },
 
@@ -1011,7 +1029,7 @@ type:''
        this.$http.post("http://localhost:3000/api/students/serviceproviders/offers", {"id":this.user._id}).then(response => {
 
          this.offers=response.body.data.Offers;
-				 //console.log(this.offers);
+				 console.log(response);
        });
 
      },
@@ -1030,7 +1048,7 @@ type:''
      },
      Review: function(){
        this.$http.post('http://localhost:3000/api/students/serviceproviders/add',{"sp_id":this.user._id, "content":this.review,"rating":this.rating},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
-        alert("Review Added");
+        swal("Success","Review Added",'success');
          this.getReviews()
        })
 
@@ -1055,7 +1073,7 @@ type:''
        },
        addComment: function(){
          this.$http.post('http://localhost:3000/api/users/comments/create', {"content":this.comment,"review_id":this.reviewid}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
-          alert("Comment Added");
+          swal("Success","Comment Added",'success');
                //console.log('success');
               this.viewComments(this.reviewid);
               this.comment =''

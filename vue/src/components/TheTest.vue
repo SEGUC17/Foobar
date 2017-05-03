@@ -1,7 +1,10 @@
 <template>
 <div class="tab_container">
-      <h1>{{ quiz.title }}</h1>
+  <center>
 
+
+      <h3>{{ quiz.title }}</h3>
+  </center>
       <div class="callout">
 
         <div v-for="(question, index) in quiz.questions">
@@ -19,10 +22,13 @@
             </ol>
             <!-- The two navigation buttons -->
             <!-- Note: prev is hidden on first question -->
-            <center><button style="width:50px; background-color:navy" class="secondary button" v-if="questionIndex > 0" v-on:click="prev">
+            <center><button  class="btn btn-primary btn-sm" v-if="questionIndex > 0" v-on:click="prev">
 			        prev
 			      </button>&nbsp;&nbsp;&nbsp;
-            <button style="width:50px; background-color:navy"class="success button" v-on:click="next">
+            <button v-if="userResponses[questionIndex]==null" class="btn btn-primary btn-sm" v-on:click="next" disabled="">			        next
+</button>
+
+            <button v-if="userResponses[questionIndex]!=null" class="btn btn-primary btn-sm" v-on:click="next">
 			        next
 			      </button></center>
           </div>
@@ -30,18 +36,15 @@
 
         <!-- Last page, quiz is finished, display result -->
         <div v-show="questionIndex === quiz.questions.length">
-          <p>
-            Your Score: {{ score() }}
-          </p>
-        </div>
+
         <br/><br/>
         <h3 align="center">We suggest you the following interests ratios</h3>
         <br/><br/>
 
       </div>
           <div v-show="questionIndex === quiz.questions.length">
-     <pie-chart :data=score()></pie-chart></div>
-
+     <pie-chart :data="score()"></pie-chart></div>
+</div>
 </div>
 
     </div>
@@ -329,7 +332,7 @@ methods: {
                 for(var j =0; j<temp.length;j++){
                   maxCount = 1;
                 for (var i = 1; i < this.userResponses.length; i++) {
-                  
+
                     if(temp[j]===this.userResponses[i]){
                       maxCount++
                     }
@@ -353,14 +356,14 @@ methods: {
                     //     maxEl = el;
                     //     maxCount = modeMap[el];
                     // }
-                
+
                 return modeMap;
             },
             unique: function(array) {
-              var n = []; 
-          for(var i = 0; i < array.length; i++) 
+              var n = [];
+          for(var i = 0; i < array.length; i++)
           {
-            
+
          if (n.indexOf(array[i]) == -1) n.push(array[i]);
 
           }

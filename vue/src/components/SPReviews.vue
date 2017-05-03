@@ -1,4 +1,10 @@
 <style scoped>
+#content10 {
+    width: 400px;
+    margin: 0 auto;
+    background-color: #f7f7f7;
+
+}
 
 /* General button style (reset) */
 .button {
@@ -263,7 +269,7 @@
     color:#fff;
     padding:9px 15px;
     border-bottom:1px solid #eee;
-    background-color: #428bca;
+    background-color: #2a3f54;
     -webkit-border-top-left-radius: 5px;
     -webkit-border-top-right-radius: 5px;
     -moz-border-radius-topleft: 5px;
@@ -282,41 +288,43 @@
           <p align="center"><div align="center"class="container">
 
 
-            <div v-for =" r in reviews" >
-                <div align="center"class="">
-                <div class="row">
-                <div class="col-md-3 col-xs-6">
 
-                <div >
-                <div class="icon">
-                <div class="image"></div>
-                <div class="info">
-                <h3  class="title">By: {{r.reviewer_id.name}}</h3>
-                <h2 class="title">
-                    <p>
-                        <div  id="makan3" >
-                            <star-rating :rating="r.rating" v-bind:show-rating="false" v-bind:read-only="true"   v-bind:inline="true"></star-rating>
+                          <div v-for =" r in reviews">
+
+            <center>
+
+
+                          <div class="container"  id="content10">
+
+                  <div  class="row">
+                    <div class="col-md-3 col-xs-6">
+            <center>
+                      <div class="container" id="content10">
+                    <div class="icon">
+                      <div class="image"></div>
+                      <div class="info">
+                        <h3 class="title" style="color:#52d3aa">By: {{r.reviewer_id.name}}</h3>
+                          <h2 class="title"><p>   <div  id="makan3" >
+                       <star-rating :rating="r.rating" v-bind:show-rating="false" v-bind:read-only="true"   v-bind:inline="true">
+            </star-rating>
+            </div>
+                        </p>
+                        <p class="info">{{r.content}}
+                      </p></h2>
+                        <button class="btn btn-primary btn-sm" @click="viewComments(r._id)"href="#primary" data-toggle="modal">Comments</button>
+
+
+
+
+
                         </div>
-                    </p>
-                    <p class="info">
-                    {{r.content}}
-                    </p>
-                </h2>
+                      </div>
+                    </div>
+                    </center>
 
+                  </div>
 
-                <button class="button button-1 button-1b" @click="viewComments(r._id)"href="#primary" data-toggle="modal">Comments</button>
-
-                 <hr>
-                <br/>
-                <br/>
-                </div>
-                </div>
-                </div>
-                </div>
-
-            </div>
-            </div>
-            </div>
+                  </div>		</div> </center></div>
 
     <div class="container">
     <div class="row">
@@ -329,13 +337,15 @@
           <div class="modal-content">
               <div class="modal-header modal-header-primary">
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                  <h3    align="left">  <div v-for="comment in pastComments">
-                        {{comment.commenter_id.name}}: {{comment.content}}
+                <h4   align="left">  <div v-for="comment in pastComments">
+                    <center>       {{comment.commenter_id.name}}:</center>
+
+                      <center>    <h3 style="color:#52d3aa">{{comment.content}}</h3></center>
                         <br>
-                    </div></h3>
+                    </div></h4>
 
               </div>
-              <form role="form" class="" v-on:submit='addComment'>
+              <form role="form" class="" @submit.prevent='addComment'>
 
 
               <div class="modal-body">
@@ -350,7 +360,7 @@
               <div class="modal-footer">
 
 
-                  <button class="btn btn-primary add_field_button" style="margin-bottom:20px;">Post comment</button>
+                  <button class="btn btn-primary add_field_button" style="margin-bottom:20px;" type="submit">Post comment</button>
 
                                </div>
                                </form>
@@ -398,10 +408,11 @@ methods:{
     },
     addComment: function(){
       this.$http.post('http://localhost:3000/api/users/comments/create', {"content":this.comment,"review_id":this.reviewid}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
-        alert("Comment Added");
+        swal("Success","Comment Added",'success');
             //console.log('success');
            this.viewComments(this.reviewid);
            this.comment =''
+
                     });
     }
     }

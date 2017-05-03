@@ -20,7 +20,7 @@
             <div align="center">
 
               <br>
-                <input type="number" id="rating" placeholder="Rating" size="" v-model="rating[n-1]" required="*">
+                <input type="number" min="0" max="10" id="rating" placeholder="Rating" size="" v-model="rating[n-1]" required="*">
                 <br/>
                 <br/>
                 <button class="btn btn-primary btn-sm" v-on:click="assess(students[n-1].user_id._id, n-1, students[n-1].offer_id._id, students[n-1].offer_id.field)">Assess</button>
@@ -62,7 +62,7 @@ methods:{
     assess: function(user_id, index, offer_id, field){
       //console.log(user_id+" "+ rating +" "+ offer_id + " "+ field)
       this.$http.post('http://localhost:3000/api/sPs/students/assess/'.concat(user_id), {"rating":this.rating[index], "offer_id":offer_id, "field":field},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
-        alert("Student Rated");
+        swal("Success","Student Rated",'success');
             //console.log('success');
             this.getStudents();
                     })

@@ -8,6 +8,7 @@ const generatePassword = require('password-generator'); // a dependency that gen
 // 'use strict';
 const nodemailer = require('nodemailer'); // a dependency that sends an email to user
 const jwt = require('../auth/jwt');
+var _ = require('underscore');
 
 
 const homeController = {
@@ -83,22 +84,35 @@ const homeController = {
               student_id: decoded.id
             }, (err, interests) => {
               interests.forEach((StudentInterest) => {
+
                 userMap[k] = StudentInterest.interest_id;
                 k += 1;
               });
+              //  console.log(userMap[0]);
               Interest.find([], (err, inter) => {
+                //  console.log(inter)
                 userMap.forEach((stud) => {
+                  //console.log(stud)
+
                   inter.forEach((interest) => {
-                    if (stud == interest._id) {
+                    //    console.log(interest._id)
+
+                    if (_.isEqual(interest._id, stud)) {
+                      //console.log(interest.name)
                       tempInterest[x] = interest.name;
                       x++;
                     }
                   });
                 });
-                Offer.find({}).populate('sp_id',{password:0}).exec((err, off) => {
+                Offer.find({}).populate('sp_id', {
+                  password: 0
+                }).exec((err, off) => {
+                  //console.log(off)
                   tempInterest.forEach((name) => {
                     off.forEach((offerfield) => {
-                      if (name == offerfield.field) {
+                      //        console.log(offerfield.field)
+                      if (_.isEqual(name, offerfield.field)) {
+                        //    console.log(11)
                         offers[z] = offerfield;
                         z += 1;
                       }
@@ -110,11 +124,14 @@ const homeController = {
                   Student.findOne({
                     user_id: decoded.id
                   }, (err, student) => {
-                    if (err) {
-                      //console.log(err);
-                    } else if (z !== 0) {
+                    if (err && z !== 0) {
+                      return res.status(500).json({
+                        status: 'error',
+                        message: err.message,
+                      });
+                      return 0;
+                    } else if (z != 0) {
                       //  //console.log(student);
-
                       res.status(200).json({
                         status: 'success',
                         data: {
@@ -123,53 +140,57 @@ const homeController = {
 
                         },
                       });
+                      return 0;
+                    } else if (z === 0) {
+                      Offer.find({}).populate('sp_id', {
+                        password: 0
+                      }).exec((err, offers) => {
+
+                        if (err) {
+                          return res.status(500).json({
+                            status: 'error',
+                            message: err.message,
+                          });
+                          return 0;
+                        } else {
+
+
+                          Student.findOne({
+                            user_id: decoded.id
+                          }, (err, student) => {
+                            if (err) {
+                              //console.log(err);
+                            } else {
+                              //  //console.log(student);
+
+                              res.status(200).json({
+                                status: 'success',
+                                data: {
+                                  offers,
+                                  student,
+
+                                },
+                              });
+                              return 0;
+                            }
+                          });
+
+
+
+                        }
+
+
+
+                      });
+
+
+
                     }
                   });
                 });
               });
             });
-            if (z === 0) {
-              //  //console.log(1);
-              Offer.find({}).populate('sp_id',{password:0}).exec((err, offers) => {
 
-                if (err) {
-                  return res.status(500).json({
-                    status: 'error',
-                    message: err.message,
-                  });
-                } else {
-
-
-                  Student.findOne({
-                    user_id: decoded.id
-                  }, (err, student) => {
-                    if (err) {
-                      //console.log(err);
-                    } else {
-                      //  //console.log(student);
-
-                      res.status(200).json({
-                        status: 'success',
-                        data: {
-                          offers,
-                          student,
-
-                        },
-                      });
-                    }
-                  });
-
-
-
-                }
-
-
-
-              });
-
-
-
-            }
           } else {
             return res.status(500).json({
               err: 'unauthorized access',

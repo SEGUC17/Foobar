@@ -1,3 +1,21 @@
+<style scoped>
+.carousel-3d-container figure {
+  margin:0;
+}
+
+.carousel-3d-container figcaption {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  bottom: 0;
+  position: absolute;
+  bottom: 0;
+  padding: 15px;
+  font-size: 12px;
+  min-width: 100%;
+  box-sizing: border-box;
+}
+</style>
 <template>
 
 <center>
@@ -24,7 +42,7 @@
         <i class="fa fa-user">
         </i>
        </div>
-       <input id="Name (Full name)" name="Name (Full name)" type="text" :value="profile.name" placeholder="Name (Full name)" class="form-control input-md">
+       <input id="Name (Full name)" name="Name (Full name)" type="text" :value="user.name" placeholder="Name (Full name)" class="form-control input-md">
       </div>
 
 
@@ -122,9 +140,18 @@
 
 
     <h1>Your Images</h1>
-    <span v-for ="image in images">
-       <img :src="'http://localhost:3000/'+image.img.path.replace('public','')" style="width:200px">&nbsp;&nbsp;&nbsp;&nbsp;
-    </span>
+    <span>
+    <carousel >
+      <slide v-for="slide in slides" >
+
+          <img :src="'http://localhost:3000/'+slide.img.path.replace('public','')" style="width:300px"></img>
+
+
+      </slide>
+    </carousel>
+</span>
+
+
     <br/>
     <br/>
     <input ref="avatar" type="file" name="avatar" id="avatar" v-on:change="upload($event.target.name, $event.target.files)">
@@ -142,9 +169,9 @@
 <br/>
     <h1>Your Videos</h1>
     <div align="center"class="row">
-    <youtube :video-id="this.attrs"></youtube>
+    <youtube v-if="videos.length>0" :video-id="this.attrs"></youtube>
 
-    <li v-for =" video in videos">
+    <li v-for =" video in videos" >
        <a v-on:click="changeVideo(video.url)"> {{video.title}} </a>
     </li>
     <br/>
@@ -191,17 +218,17 @@
             </div>
             <div class="modal-body">
             <center>
-                <form role="form" class="" v-on:submit.prevent="editPassword()">
+                <form role="form" class="" @submit.prevent="editPassword()">
                     <div class="row">
                 Enter Old Password:<input require="required"type="password" style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput1" placeholder="Old Password" v-model="oldPassword" required="*"></input><br/>
                 Enter New Password:<input type="password" style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput2" placeholder="New Password" v-model="newPassword" required="*"></input><br/>
                 Confirm New Password:<input type="password" style="height:30px;font-size:10pt"class="form-control input-lg" id="myInput3" placeholder="Confirm New Password" v-model="confirmNewPassword" required="*"></input>
                     </div>
-                </form>
-                </center>
+
                    <div class="modal-footer">
-                <button class="btn btn-primary add_field_button" style="margin-bottom:20px;">Update Password</button>
-                </div>  </div>
+                     <center>
+                <button class="btn btn-primary add_field_button" type="submit"  style="margin-bottom:20px;">Update Password</button>   </center>
+                </div>         </form> </center></div>
                  </div>
           </div>
         </div>
@@ -245,6 +272,7 @@ export default {
       fields:'',
       lat:'',
       lang:'',
+      slides:'',
     }
   },
 created(){
@@ -271,17 +299,15 @@ methods:{
         this.interests=response.data.data.interests
       })
     },
-    edit: function ()
-        {
-          var x = confirm("Are you sure you want to edit these attributes")
-          if(x){
+    edit: function ()  {
+
             this.$http.post('http://localhost:3000/api/sPs/profile/edit', {"price_category":this.pricecategory,"location":this.location, "description":this.description, "fields":this.fields, "description":this.description, "phone_number":this.phone_number,"lat": this.lat,"lang":this.lang},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
             ////console.log(this.location);
-            alert("Profile Edited")
+            swal("Success","Profile Edited",'success')
             this.$router.push({path:'/SPViewMyProfile'})
                     })
           }
-        },
+        ,
     newvideo : function(){
         this.$http.post('http://localhost:3000/api/sPs/videos/upload', {"title":this.title,"videoURL":this.url},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
           ////console.log(data)
@@ -314,13 +340,15 @@ methods:{
     getVideos: function(){
         let route ='http://localhost:3000/api/sPs/videos/';
         this.$http.post(route,{"id":this.user._id}).then(response => {
+
             this.videos = response.body.data.video
+
       })
     },
     getImages: function(){
         let route ='http://localhost:3000/api/sPs/images/'.concat(this.user._id);
         this.$http.get(route,{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
-            this.images = response.body.data.images
+            this.slides = response.body.data.images
       })
     },
     changeVideo: function(url){
@@ -333,20 +361,25 @@ methods:{
     },
     editPassword: function()
     {
-        var x = confirm("Are you sure you want to edit your password")
-          if(x)
-          {
+
             ////console.log(this.user);
             this.$http.post('http://localhost:3000/api/sPs/sP/editpassword', {"oldPassword":this.oldPassword,"newPassword":this.newPassword, "confirmNewPassword":this.confirmNewPassword,"id":this.user._id},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(data => {
-            alert("Updated Password")
-                confirmNewPassword=""
-      oldPassword=""
-      newPassword=""
+              this.confirmNewPassword=""
+      this.oldPassword=""
+    this.newPassword=""
       $('#SPEditPassword').modal('hide');
-            this.$router.push({path:'/SPViewMyProfile',force:true});
+      console.log(1)
+            swal("Success","Updated Password",'success')
+
+
                     }).catch(function(reason) {
+                      console.log(reason)
+                      if(reason!==null&&reason!=undefined){
+                      if(reason.body){
+                      for(var i=0;i<reason.data.err.length;i++)
+                    swal("Oops..",reason.data.err[i].msg,'error')}}
                     });
-          }
+
     }
   }
 }

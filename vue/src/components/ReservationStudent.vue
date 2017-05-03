@@ -52,7 +52,7 @@ methods:{
               this.getReservations();
             })
           })
-       }else{alert("You have to be signed in to apply")}
+       }else{swal("Success","You have to be signed in to apply",'success')}
       }
     }
 }

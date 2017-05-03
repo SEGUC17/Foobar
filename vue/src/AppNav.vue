@@ -234,9 +234,7 @@
                           <li>
                             <router-link to="/pendingSP">Pending Requests</router-link>
                           </li>
-                          <li>
-                            <router-link to="/viewInterests">Interests</router-link>
-                          </li>
+
                       </ul>
                     </li>
                   </ul>
@@ -323,28 +321,25 @@
                       <span class="badge bg-green">{{announcements.length}}</span>
                     </a>
                     <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                       <li v-for="n in announcements">
 
-                        <span class="image">
-                            <img v-if="profilepic.path" :src="'http://localhost:3000/'+profilepic.path.replace('public','')" alt="">
-                            <img v-if="!profilepic.path" src="~assets/img/missing.png" alt="">
-                        </span>
+                       <li v-for="n in announcements.slice(0,10)">
+
+
                           <span>
-                            <span>{{n.title.substring(0, 30)}}</span>
-                            <span class="time">{{n.createdAt.substring(0, 10)}}</span>
+                          <h2 style="color:#52d3aa">  <span>{{n.title.substring(0, 30)}}</span> </h2>
                           </span>
                           <span class="message">
                             {{n.content.substring(0, 30)}}
-                          </span>
+                          </span> -    <span class="time">{{n.createdAt.substring(0, 10)}}</span>
 
                       </li>
 
                       <li>
                         <div class="text-center">
-                          <a href="/announcements">
+                          <router-link to="/announcements">
                             <strong>See All Alerts</strong>
                             <i class="fa fa-angle-right"></i>
-                          </a>
+                          </router-link>
                         </div>
                       </li>
                     </ul>
@@ -430,6 +425,8 @@ if(localStorage.getItem('id_token')!=null){
     this.user.is_blocked = decode.body.is_blocked;
     this.name = decode.body.name;
     this.profilepic = decode.body.image;
+    this.getAllAnnouncements();
+
 })
 }
 
@@ -449,6 +446,8 @@ methods: {
       localStorage.setItem('id_token', data.body.token)
       app.user.authenticated = true
       app.$http.post('http://localhost:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
+        this.getAllAnnouncements();
+
         this.decodeid = decode.body.id;
       //  //console.log(decode.body.type)
         this.user.type = decode.body.type;
@@ -456,7 +455,6 @@ methods: {
         localStorage.setItem('usertype', decode.body.type)
         this.name = decode.body.name;
         this.profilepic = decode.body.image;
-        this.getAllAnnouncements();
 
       })
        $('#myModal').modal('hide');

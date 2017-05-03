@@ -16,7 +16,7 @@ router.get('/', (req, res) => { // student home page
   console.log('student homepage is here');
 });
 
-
+router.get('/interests/view', studentController.viewMyInterests);
 router.get('/announcements/view', announcementController.getAllAnnouncements); // viewing announcements
 
 
@@ -26,7 +26,7 @@ router.post('/serviceproviders/add/', studentController.addReview); // student c
 
 router.get('/reservations/view', reservationController.getReservations); // viewing his reservations
 
-router.get('/all/interests', interestController.findAllInterests); // viewing his reservations
+router.get('/all/interests', interestController.findAllInterests);
 
 router.get('/sP/:id', sPController.getSPProfile); // viewing a specific SP profile
 

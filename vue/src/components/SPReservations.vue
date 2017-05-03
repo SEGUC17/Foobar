@@ -52,23 +52,21 @@ methods:{
       })
     },
     approve:function(reservation_id){
-      var x = confirm("Are you sure you want to approve this reservation ?")
-      if(x){
+
         this.$http.post('http://localhost:3000/api/sPs/reservations/approve',{"id":reservation_id, "approve":true}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
-          alert("Reservation Approved")
+          swal("Success","Reservation Approved",'success')
         this.getReservations();
         })
-      }
+      
     },
     disapprove: function(reservation_id){
-      var x = confirm("Are you sure you want to disapprove this reservation ?")
-      if(x){
+
         this.$http.post('http://localhost:3000/api/sPs/reservations/approve',{"id": reservation_id, "approve":false}, {headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
-          alert("Reservation Approved")
+          swal("Success","Reservation Disapproved",'success')
 
         this.getReservations();
         })
-      }
+
     }
   }
 }

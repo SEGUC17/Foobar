@@ -61,9 +61,15 @@
                   <br/>
 
                 <h1>Your Images</h1>
-                <span class="col-lg-3"v-for ="image in images">
-                <img :src="'http://localhost:3000/'+image.img.path.replace('public','')" style="height:200px; width:200px">&nbsp;&nbsp;&nbsp;&nbsp;
-                </span>
+<span>              <carousel >
+                  <slide v-for="slide in images" >
+
+                      <img :src="'http://localhost:3000/'+slide.img.path.replace('public','')" style="width:300px"></img>
+
+
+                  </slide>
+                </carousel>
+              </span>
                 <br/>
                 <br/>
                 <br/>
@@ -78,15 +84,15 @@
                 <br/>
 
                 <h3 align="center">Your Videos</h3>
-                <youtube :video-id="this.attrs"></youtube>
+                <youtube v-if="videos.length>0" :video-id="this.attrs"></youtube>
 
                 <div v-for =" video in videos">
                 <a v-on:click="changeVideo(video.url)"> {{video.title}} </a>
                 </div>
 
+<br><br><br>
 
-
-
+<h3 align="center">Your Location</h3>
   <gmap-map
     :center="center"
     :zoom="15"

@@ -81,164 +81,13 @@
 		<div class="slant"></div>
 	</section>
 
-	<section id="fh5co-intro">
-		<div class="container">
-			<div class="row row-bottom-padded-lg">
-				<div class="fh5co-block to-animate" :style="{ backgroundImage: 'url(' + img_7 + ')' }">
-					<div class="overlay-darker"></div>
-					<div class="overlay"></div>
-					<div class="fh5co-text">
-						<i class="fh5co-intro-icon icon-bulb"></i>
-						<h2>Plan</h2>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-						<!--<p><a href="#" class="btn btn-primary">Get In Touch</a></p>-->
-					</div>
-				</div>
-				<div class="fh5co-block to-animate" :style="{ backgroundImage: 'url(' + img_8 + ')' }">
-					<div class="overlay-darker"></div>
-					<div class="overlay"></div>
-					<div class="fh5co-text">
-						<i class="fh5co-intro-icon icon-wrench"></i>
-						<h2>Develop</h2>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-						<!--<p><a href="#" class="btn btn-primary">Click Me</a></p>-->
-					</div>
-				</div>
-				<div class="fh5co-block to-animate" :style="{ backgroundImage: 'url(' + img_10 + ')' }">
-					<div class="overlay-darker"></div>
-					<div class="overlay"></div>
-					<div class="fh5co-text">
-						<i class="fh5co-intro-icon icon-rocket"></i>
-						<h2>Launch</h2>
-						<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-						<!--<p><a href="#" class="btn btn-primary">Why Us?</a></p>-->
-					</div>
-				</div>
-			</div>
-			<div class="row watch-video text-center to-animate">
-				<span>Watch the video</span>
-
-				<a href="https://vimeo.com/channels/staffpicks/93951774" class="popup-vimeo btn-video"><i class="icon-play2"></i></a>
-			</div>
-		</div>
-	</section>
-
-	<!--<section id="fh5co-work" data-section="about">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12 section-heading text-center">
-					<h2 class="to-animate">Benefit</h2>
-					<div class="row">
-						<div class="col-md-8 col-md-offset-2 subtext to-animate">
-							<h3>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</h3>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row row-bottom-padded-sm">
-				<div class="col-md-4 col-sm-6 col-xxs-12">
-					<a :href="work_1" class="fh5co-project-item image-popup to-animate">
-						<img src="~assets/img/work_1.jpg" alt="Image" class="img-responsive">
-						<div class="fh5co-text">
-						<h2>Project 1</h2>
-						<span>Branding</span>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-4 col-sm-6 col-xxs-12">
-					<a :href="work_2" class="fh5co-project-item image-popup to-animate">
-						<img src="~assets/img/work_2.jpg" alt="Image" class="img-responsive">
-						<div class="fh5co-text">
-						<h2>Project 2</h2>
-						<span>Web</span>
-						</div>
-					</a>
-				</div>
-
-				<div class="clearfix visible-sm-block"></div>
-
-				<div class="col-md-4 col-sm-6 col-xxs-12">
-					<a :href="work_3" class="fh5co-project-item image-popup to-animate">
-						<img src="~assets/img/work_3.jpg" alt="Image" class="img-responsive">
-						<div class="fh5co-text">
-						<h2>Project 3</h2>
-						<span>Web</span>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-4 col-sm-6 col-xxs-12">
-					<a :href="work_4" class="fh5co-project-item image-popup to-animate">
-						<img src="~assets/img/work_4.jpg" alt="Image" class="img-responsive">
-						<div class="fh5co-text">
-						<h2>Project 4</h2>
-						<span>UI/UX</span>
-						</div>
-					</a>
-				</div>
-
-				<div class="clearfix visible-sm-block"></div>
-
-				<div class="col-md-4 col-sm-6 col-xxs-12">
-					<a :href="work_5" class="fh5co-project-item image-popup to-animate">
-						<img src="~assets/img/work_5.jpg" alt="Image" class="img-responsive">
-						<div class="fh5co-text">
-						<h2>Project 1</h2>
-						<span>Photography</span>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-4 col-sm-6 col-xxs-12">
-					<a :href="work_6" class="fh5co-project-item image-popup to-animate">
-						<img src="~assets/img/work_6.jpg" alt="Image" class="img-responsive">
-						<div class="fh5co-text">
-						<h2>Project 2</h2>
-						<span>Illustration</span>
-						</div>
-					</a>
-				</div>
-
-				<div class="clearfix visible-sm-block"></div>
-
-				<div class="col-md-4 col-sm-6 col-xxs-12">
-					<a :href="work_7" class="fh5co-project-item image-popup to-animate">
-						<img src="~assets/img/work_7.jpg" alt="Image" class="img-responsive">
-						<div class="fh5co-text">
-						<h2>Project 3</h2>
-						<span>Web</span>
-						</div>
-					</a>
-				</div>
-				<div class="col-md-4 col-sm-6 col-xxs-12">
-					<a :href="work_8" class="fh5co-project-item image-popup to-animate">
-						<img src="~assets/img/work_8.jpg" alt="Image" class="img-responsive">
-						<div class="fh5co-text">
-						<h2>Project 4</h2>
-						<span>Sketch</span>
-						</div>
-					</a>
-				</div>
-
-				<div class="clearfix visible-sm-block"></div>
-
-				<div class="col-md-4 col-sm-6 col-xxs-12">
-					<a :href="work_1" class="fh5co-project-item image-popup to-animate">
-						<img src="~assets/img/work_1.jpg" alt="Image" class="img-responsive">
-						<div class="fh5co-text">
-						<h2>Project 2</h2>
-						<span>Illustration</span>
-						</div>
-					</a>
-				</div>
-			</div>
-		</div>
-	</section>-->
 
   <section id="fh5co-work" data-section="about">
 		<div class="container">
       <div class="row">
       <div class="col-md-12 section-heading text-center">
 					<h2 class="to-animate">Service Providers</h2></div>
-            <div v-if="authenticated" v-for=" serviceprovider in serviceproviders">
+            <div v-if="authenticated" v-for=" serviceprovider in serviceproviders.slice(0,9)">
 
 <div v-if="!serviceprovider.user_id.is_deleted">
 
@@ -261,11 +110,11 @@
             </div>
                   </router-link> </center></div>
                   </div>
-                  <div v-if="!authenticated" v-for=" serviceprovider in serviceproviders">
+                  <div v-if="!authenticated" v-for=" serviceprovider in serviceproviders.slice(0,9)">
                   	<div v-if="!serviceprovider.user_id.is_deleted">
 
                        <center>
-                        <div class="col-md-4 feature" v-if="!serviceprovider.user_id.is_deleted">
+                      <a  v-on:click="messag"> <div class="col-md-4 feature" v-if="!serviceprovider.user_id.is_deleted">
 
                             <center><img class="img-circle img-responsive" v-if="serviceprovider.user_id && serviceprovider.user_id.profileimg.path" :src="'http://localhost:3000/'+serviceprovider.user_id.profileimg.path.replace('public','')" style="height:150px; width:150px">
                             <i class="glyphicon glyphicon-user" style="height:150px; width:150px" v-else></i></center>
@@ -279,7 +128,7 @@
 
 
                     </p>
-                  </div>
+                  </div></a>
                       </center>
                       </div>
                         </div>
@@ -290,46 +139,7 @@
 </div>
 </section>
 
-  	<!--<section id="fh5co-services" data-section="services">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-12 section-heading text-left">
-					<h2 class=" left-border to-animate">Services</h2>
-					<div class="row">
-						<div class="col-md-8 subtext to-animate">
-							<h3>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</h3>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-6 col-sm-6 fh5co-service to-animate">
-					<i class="icon to-animate-2 icon-anchor"></i>
-					<h3>Brand &amp; Strategy</h3>
-					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean</p>
-				</div>
-				<div class="col-md-6 col-sm-6 fh5co-service to-animate">
-					<i class="icon to-animate-2 icon-layers2"></i>
-					<h3>Web &amp; Interface</h3>
-					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean</p>
-				</div>
 
-				<div class="clearfix visible-sm-block"></div>
-
-				<div class="col-md-6 col-sm-6 fh5co-service to-animate">
-					<i class="icon to-animate-2 icon-video2"></i>
-					<h3>Photo &amp; Video</h3>
-					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean</p>
-				</div>
-				<div class="col-md-6 col-sm-6 fh5co-service to-animate">
-					<i class="icon to-animate-2 icon-monitor"></i>
-					<h3>CMS &amp; eCommerce</h3>
-					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean</p>
-				</div>
-
-			</div>
-		</div>
-	</section>-->
 
   	<section id="fh5co-counters" data-section="funfacts" style="background-image: url(images/full_image_1.jpg);" data-stellar-background-ratio="0.5">
 		<div class="fh5co-overlay"></div>
@@ -343,28 +153,28 @@
 				<div class="col-md-3 col-sm-6 col-xs-12">
 					<div class="fh5co-counter to-animate">
 						<i class="fh5co-counter-icon icon-briefcase to-animate-2"></i>
-						<span class="fh5co-counter-number js-counter" data-from="0" data-to="89" data-speed="5000" data-refresh-interval="50">89</span>
+						<span class="fh5co-counter-number js-counter" data-from="0" data-to="15" data-speed="2" data-refresh-interval="50">89</span>
 						<span class="fh5co-counter-label">Finished projects</span>
 					</div>
 				</div>
 				<div class="col-md-3 col-sm-6 col-xs-12">
 					<div class="fh5co-counter to-animate">
 						<i class="fh5co-counter-icon icon-code to-animate-2"></i>
-						<span class="fh5co-counter-number js-counter" data-from="0" data-to="2343409" data-speed="5000" data-refresh-interval="50">2343409</span>
+						<span class="fh5co-counter-number js-counter" data-from="0" data-to="20000" data-speed="10" data-refresh-interval="50">20000</span>
 						<span class="fh5co-counter-label">Line of codes</span>
 					</div>
 				</div>
 				<div class="col-md-3 col-sm-6 col-xs-12">
 					<div class="fh5co-counter to-animate">
 						<i class="fh5co-counter-icon icon-cup to-animate-2"></i>
-						<span class="fh5co-counter-number js-counter" data-from="0" data-to="1302" data-speed="5000" data-refresh-interval="50">1302</span>
+						<span class="fh5co-counter-number js-counter" data-from="0" data-to="1000000" data-speed="5068" data-refresh-interval="50">1000000</span>
 						<span class="fh5co-counter-label">Cup of coffees</span>
 					</div>
 				</div>
 				<div class="col-md-3 col-sm-6 col-xs-12">
 					<div class="fh5co-counter to-animate">
 						<i class="fh5co-counter-icon icon-people to-animate-2"></i>
-						<span class="fh5co-counter-number js-counter" data-from="0" data-to="52" data-speed="5000" data-refresh-interval="50">52</span>
+						<span class="fh5co-counter-number js-counter" data-from="0" data-to="1" data-speed="" data-refresh-interval="50">52</span>
 						<span class="fh5co-counter-label">Happy clients</span>
 					</div>
 				</div>
@@ -372,7 +182,7 @@
 		</div>
 	</section>
 
-	<section id="fh5co-contact" data-section="contact">
+	<section id="fh5co-contact" data-section="contact" v-if="!this.authenticated">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12 section-heading text-center">
@@ -529,7 +339,18 @@ reason.body.err ,
                 this.successmessages=[{msg:''}];
         });
 
-	}, srch: function(){
+	},
+messag: function(){
+  console.log(1);
+  swal(
+'Oops...',
+"Please login to view our serviceproviders" ,
+'warning'
+)
+}
+,
+
+  srch: function(){
 			this.$http.post('http://localhost:3000/api/students/home', {search: this.search}).then(data => {
 				//console.log(data)
 				this.results = data.results

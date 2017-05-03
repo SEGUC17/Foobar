@@ -156,7 +156,7 @@ methods:{
                 this.serviceprovidersInPage.push(this.serviceproviders[i]);
             }
             } else{
-            alert('no results')
+            swal("Oops..",'no results','warning')
             }
 
         }

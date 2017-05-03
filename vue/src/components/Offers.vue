@@ -1,6 +1,4 @@
 <style scoped>
-
-
 #features {
     margin-top:20px;
 }
@@ -56,9 +54,6 @@
     margin-top: 12px;
     margin-bottom: 8px;
 }
-
-
-
 </style>
 
 
@@ -66,7 +61,9 @@
   <div>
 
         <div class="page-title">
-              
+              <div class="title_left">
+                <h3>Your offers</h3>
+              </div>
 
               <div class="title_right">
                 <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
@@ -142,7 +139,6 @@ methods:{
   },
       purchaseStuff: function(inoffer){
        if(localStorage.getItem('id_token')!=null){
-
           var price = inoffer.price*100;
           this.stripe_instance = StripeCheckout.configure({
               key: 'pk_test_930VGCISk9ZC24NhBPmMy3C8',    //put your own publishable key here
@@ -156,8 +152,8 @@ methods:{
                 Vue.http.post('http://localhost:3000/api/charge', {token_id: this.stripe_token.id, price: price})
                   .then((payresponse) => {
                       Vue.http.post('http://localhost:3000/api/students/offers',{"offer_id":inoffer._id, "charge_id": payresponse.body.response.id },{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response=> {
-                            alert("You succesfully applied")
-                        }).catch(function(reason) {alert(reason.body.message)});
+                            swal("Success","You succesfully applied",'success')
+                        }).catch(function(reason) {swal("Oops...",reason.body.message,'error')});
                   },(response) => {
                     this.order_status= "FAILED";
                   });
@@ -168,16 +164,13 @@ methods:{
               description: 'stuff and stuff',
               amount: price
             })
-
-       }else{alert("You have to be signed in to apply")}
-
+       }else{swal("Oops..","You have to be signed in to apply",'error')}
           },
   viewOffers: function () {
     this.$http.get('http://localhost:3000/api/students/viewoffer',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
       // this.announcements=response.data.data.announcements
       this.offers= response.data.data.offers;
       this.student = response.data.data.student;
-
       this.numberOfPages=Math.ceil(this.offers.length/this.perPage);
       for(var i = 0 ; i<this.perPage && i<this.offers.length ; i++){
         this.offersInPage.push(this.offers[i]);
@@ -189,7 +182,6 @@ methods:{
       // // this.announcements=response.data.data.announcements
       // this.offers= response.data.data.offers;
       // this.student = response.data.data.student;
-
       // this.numberOfPages=Math.ceil(this.offers.length/this.perPage);
       // for(var i = 0 ; i<this.perPage && i<this.offers.length ; i++){
       //   this.offersInPage.push(this.offers[i]);
@@ -214,29 +206,17 @@ methods:{
         this.offersInPage.push(this.offers[i]);
       }
     } else{
-      alert('no results')
+      swal("Oops..",'no results','warning')
     }
-
   },
-  // viewOffers: function(){
-  //     this.$http.get('http://localhost:3000/api/students/viewoffer',{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response => {
-  //       this.offers= response.data.data.offers;
-  //       this.student = response.data.data.student;
-  //               //console.log(response.data.data.offers);
-  //     })
-  //   },
+
     Apply: function(offer , index){
-
     var x = confirm("Are you sure you want to apply for this offer ?")
-
       if(x){
-
       this.$http.post('http://localhost:3000/api/students/offers',{"offer_id":offer._id},{headers : {'jwt-token' : localStorage.getItem('id_token')}}).then(response=> {
-        alert("You succesfully applied")
+        swal("Success","You succesfully applied",'success')
       })
-
     }
-
   }
 }
 }
