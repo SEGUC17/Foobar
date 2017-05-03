@@ -232,12 +232,14 @@ export default new Router({
     beforeEnter: (to, from, next) => {
       if (localStorage.getItem('usertype') != 1) {
         next('/');
-      } else {
         swal(
           'Oops...',
           'You shall not pass!!',
           'error'
         )
+      } else {
+
+
         next()
       }
     }
