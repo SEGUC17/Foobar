@@ -447,13 +447,15 @@ methods: {
       localStorage.setItem('id_token', data.body.token)
       app.user.authenticated = true
       app.$http.post('http://54.77.11.251:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
+        localStorage.setItem('usertype', decode.body.type)
+
+
         this.getAllAnnouncements();
 
         this.decodeid = decode.body.id;
       //  //console.log(decode.body.type)
         this.user.type = decode.body.type;
         this.user.is_blocked = decode.body.is_blocked;
-        localStorage.setItem('usertype', decode.body.type)
         this.name = decode.body.name;
         this.profilepic = decode.body.image;
 

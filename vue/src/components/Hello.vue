@@ -327,11 +327,11 @@ export default {
   'Invalid input',
   'error'
 )
-}else if(reason.body.err!=null){
+}else if(reason.body!=null){
   //console.log(reason.body)
   swal(
 'Oops...',
-reason.body.err ,
+'Invalid input' ,
 'error'
 )
 }
@@ -341,7 +341,7 @@ reason.body.err ,
 
 	},
 messag: function(){
-  console.log(1);
+//  console.log(1);
   swal(
 'Oops...',
 "Please login to view our serviceproviders" ,
