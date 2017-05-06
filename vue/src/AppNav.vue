@@ -420,6 +420,8 @@ if(localStorage.getItem('id_token')!=null){
   this.showgent= true
   this.user.authenticated=true
   this.$http.post('http://54.77.11.251:3000/api/users/decode',{"token": localStorage.getItem('id_token')}).then(decode => {
+    localStorage.setItem('usertype', decode.body.type)
+
     this.decodeid=decode.body.id
     ////console.log(this.decodeid)
     this.user.type = decode.body.type;
@@ -540,7 +542,7 @@ this.$router.go({path:'/',force:true});
     this.birthdate='';
     this.address='';
     this.Interests=[];
-    localStorage.setItem('usertype', 0)
+    localStorage.removeItem('usertype');
 
 
 
