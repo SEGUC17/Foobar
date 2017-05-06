@@ -82,6 +82,20 @@ export default new Router({
   }, {
     path: '/announcements',
     component: Announcements,
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem('usertype') != 1 && localStorage.getItem(
+          'usertype') != 2 && localStorage.getItem('usertype') != 3) {
+        next('/');
+        swal(
+          'Oops...',
+          'You shall not pass!!',
+          'error'
+        )
+      } else {
+        next()
+      }
+    }
+
 
   }, {
     path: '/Adminpostannouncement',
